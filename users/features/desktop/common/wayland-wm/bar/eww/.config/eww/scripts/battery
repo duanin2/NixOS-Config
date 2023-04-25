@@ -1,0 +1,55 @@
+#!/bin/sh
+
+bat=/sys/class/power_supply/BAT1
+per="$(cat "$bat/capacity")"
+
+icon() {
+	if [ "$per" -ge "95" ]; then
+		icon="󰁹"
+		[ $(cat "$bat/status") = Charging ] && icon="󰂅"
+	elif [ "$per" -ge "85" ]; then
+		icon="󰂂"
+		[ $(cat "$bat/status") = Charging ] && icon="󰂋"
+	elif [ "$per" -ge "75" ]; then
+		icon="󰂁"
+		[ $(cat "$bat/status") = Charging ] && icon="󰂊"
+	elif [ "$per" -ge "65" ]; then
+		icon="󰂀"
+		[ $(cat "$bat/status") = Charging ] && icon="󰢞"
+	elif [ "$per" -ge "55" ]; then
+		icon="󰁿"
+		[ $(cat "$bat/status") = Charging ] && icon="󰂉"
+	elif [ "$per" -ge "45" ]; then
+		icon="󰁾"
+		[ $(cat "$bat/status") = Charging ] && icon="󰂉"
+	elif [ "$per" -ge "35" ]; then
+		icon="󰁽"
+		[ $(cat "$bat/status") = Charging ] && icon="󰢝"
+	elif [ "$per" -ge "25" ]; then
+		icon="󰁼"
+		[ $(cat "$bat/status") = Charging ] && icon="󰂇"
+	elif [ "$per" -ge "15" ]; then
+		icon="󰁻"
+		[ $(cat "$bat/status") = Charging ] && icon="󰢝"
+		notify-send -u critical "Battery Low" "Connect Charger"
+	elif [ "$per" -ge "5" ]; then
+		icon="󰁺"
+		[ $(cat "$bat/status") = Charging ] && icon="󰢜"
+		notify-send -u critical "Battery Low" "Connect Charger"
+	elif [ "$per" -ge "0" ]; then
+		icon="󰂎"
+		[ $(cat "$bat/status") = Charging ] && icon="󰢟"
+		notify-send -u critical "Battery Low" "Connect Charger"
+	else
+	  echo 󰂑 && exit
+	fi
+	echo "$icon"
+}
+
+percent() {
+	echo $per
+}
+
+[ "$1" = "icon" ] && icon && exit
+[ "$1" = "percent" ] && percent && exit
+exit

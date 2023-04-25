@@ -1,0 +1,27 @@
+#!/bin/sh
+
+ssid="$(nmcli -t con show --active | grep -E ".*:wlp[0-9]+s[0-9]+" | awk -F: '{ print $1 }')"
+signal="$(nmcli -t -f all dev show $(nmcli -t con show --active | grep -E ".*:wlp[0-9]+s[0-9]+" | awk -F: '{ print $4 }') | grep -E "AP\[[0-9]+\].SIGNAL:[0-9]+" | awk -F: '{ print $2 }')"
+
+symbol() {
+  icon="󰤮"
+  if [ $signal -gt 80 ]; then
+    icon="󰤨"
+  elif [ $signal -gt 60 ]; then
+    icon="󰤥"
+  elif [ $signal -gt 40 ]; then
+    icon="󰤢"
+  elif [ $signal -gt 20 ]; then
+    icon="󰤟"
+  elif [ $signal -ge 0 ]; then
+    icon="󰤯"
+  fi
+  echo $icon
+}
+
+name() {
+  echo "Connected to $ssid"
+}
+
+[ "$1" = "icon" ] && symbol && exit
+[ "$1" = "name" ] && name && exit

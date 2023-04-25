@@ -1,0 +1,21 @@
+#!/bin/sh
+
+getActiveWorkspace() {
+  hyprctl -j monitors | jq ".[] | select(.focused?) | .activeWorkspace.id"
+}
+
+getWindows() {
+  hyprctl -j clients | jq ".[] | select((.workspace.id == $(getActiveWorkspace) or .workspace.name == \"special\") and .class != \"\")"
+}
+
+getWindowTitles() {
+  getWindows | jq ".title" | sed 's/"//g'
+}
+
+icon() {
+  IFS=$'\n'
+  for window in $(getWindowTitles); do
+    echo $window
+  done
+  unset IFS
+}
