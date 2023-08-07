@@ -16,67 +16,6 @@
         })
       ];
     });
-    eww-systray = prev.callPackage prev.eww {
-      rustPlatform = prev.rustPlatform // {
-        buildRustPackage = args: prev.rustPlatform.buildRustPackage (args // {
-          src = prev.fetchFromGithub {
-            owner = "ralismark";
-            repo = "eww";
-            rev = "tray-3";
-            hash = "";
-          };
-          cargoHash = "";
-
-          nativeBuildInputs = (args.nativeBuildInputs or []) ++ (with final; [
-            wrapGAppsHook
-          ]);
-          buildInputs = (args.buildInputs or []) ++ (with final; [
-            glib
-            librsvg
-            libdbusmenu-gtk3
-          ]);
-        });
-      };
-    };
-    mesa-next = (prev.mesa.override {
-      meson = inputs.nixpkgs-staging.legacyPackages.x86_64-linux.meson.override {
-        lib = final.lib;
-        stdenv = final.stdenv;
-        fetchFromGitHub = final.fetchFromGitHub;
-        fetchpatch = final.fetchpatch;
-        installShellFiles = final.installShellFiles;
-        ninja = final.ninja;
-        pkg-config = final.pkg-config;
-        python3 = final.python3;
-        zlib = final.zlib;
-        coreutils = final.coreutils;
-        substituteAll = prev.substituteAll;
-        Foundation = final.Foundtation;
-        OpenGL = final.OpenGL;
-        AppKit = final.AppKit;
-        Cocoa = final.Cocoa;
-        libxcrypt = final.libxcrypt;
-      };
-      
-      galliumDrivers = [
-        "iris"
-        "zink"
-	"swrast"
-      ];
-      vulkanDrivers = [
-        "intel"
-        "swrast"
-      ];
-    }).overrideAttrs (old: {
-      version = "23.1.5";
-      hash = "";
-
-      mesonFlags = (old.mesonFlags or []) ++ [
-        "-Dgallium-vdpau=false"
-        "-Dgallium-va=false"
-        "-Dgallium-xa=false"
-      ];
-    });
     gamescope = (prev.gamescope.override {
       wlroots = final.wlroots_0_16;
     }).overrideAttrs (old: {
