@@ -25,7 +25,7 @@
         owner = "ValveSoftware";
 	repo = "gamescope";
 	rev = "master";
-	hash = "sha256-UpY9O6X2YLYCpXkAXzjQwk+yiRj2cMlVbi+OtIHEdI8=";
+	hash = "sha256-EcfWvxlRazGCtMJmXL5Mj1QwmS2zWJXptFV14SwzNXc=";
       };
     });
   };
