@@ -73,6 +73,8 @@ in {
     identityPaths = [
       "/root/.ssh/id_ed25519"
       "/root/.ssh/id_rsa"
+      "/persist/system/etc/ssh/ssh_host_ed25519_key"
+      "/persist/system/etc/ssh/ssh_host_rsa_key"
     ];
     secrets = {
       duanin2Password.file = ../secrets/users/duanin2/password.age;
