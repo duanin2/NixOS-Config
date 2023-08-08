@@ -624,10 +624,5 @@ polkit.addRule(function(action, subject) {
 
   system = {
     stateVersion = "23.11";
-    replaceRuntimeDependencies = [
-      # Use newer mesa
-      { original = pkgs.mesa; replacement = pkgs.mesa-next; }
-      { original = pkgs.mesa.drivers; replacement = pkgs.mesa-next.drivers; }
-    ];
   };
 }
