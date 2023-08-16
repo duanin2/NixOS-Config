@@ -96,6 +96,10 @@
 	        mode = [ ''"\\.nix\\'"'' ];
 	        hook = [ "(nix-mode . subword-mode)" ];
 	      };
+
+        magit = {
+          enable = true;
+        };
       };
     };
   };
