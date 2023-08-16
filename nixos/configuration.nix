@@ -2,47 +2,8 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running `nixos-help`).
 
-{ config, pkgs, inputs, outputs, ... }:
+{ config, pkgs, chaotic, inputs, outputs, ... }:
 let
-  nixos-update = pkgs.writeShellScriptBin "update" ''
-[[ -z $NIX_CONFIG_LOCATION ]] && NIX_CONFIG_LOCATION=/etc/nixos
-[[ -z $NIX_CONFIG_HOSTNAME ]] && NIX_CONFIG_HOSTNAME=${config.networking.hostName}
-[[ -z $NIX_CONFIG_USER ]] && NIX_CONFIG_USER=$USER
-
-export NIX_CONFIG="experimental-features = nix-command flakes"
-
-isDone=0
-
-sudo -v
-
-{
-  while [[ $isDone == 0 ]]; do
-    sudo -nv
-    ${pkgs.coreutils-full}/bin/sleep 30
-  done
-} &> /dev/null &
-
-echo "$(${pkgs.ncurses}/bin/tput setaf 10)Staging changes in $NIX_CONFIG_LOCATION$(${pkgs.ncurses}/bin/tput sgr0)"
-sudo --preserve-env=NIX_CONFIG -n ${pkgs.bash}/bin/bash -c "cd $NIX_CONFIG_LOCATION; ${pkgs.git}/bin/git add ." || isDone=2
-
-echo "$(${pkgs.ncurses}/bin/tput setaf 10)Updating flake lock for flake $NIX_CONFIG_LOCATION$(${pkgs.ncurses}/bin/tput sgr0)"
-sudo --preserve-env=NIX_CONFIG -n ${pkgs.bash}/bin/bash -c "${pkgs.nixStable}/bin/nix flake update --quiet $NIX_CONFIG_LOCATION" || isDone=2
-
-echo "$(${pkgs.ncurses}/bin/tput setaf 10)Rebuilding system from flake $NIX_CONFIG_LOCATION for system $NIX_CONFIG_HOSTNAME$(${pkgs.ncurses}/bin/tput sgr0)"
-sudo --preserve-env=NIX_CONFIG -n ${pkgs.bash}/bin/bash -c "${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --quiet --impure --flake $NIX_CONFIG_LOCATION#$NIX_CONFIG_HOSTNAME" || isDone=2
-
-echo "$(${pkgs.ncurses}/bin/tput setaf 10)Rebuilding user from flake $NIX_CONFIG_LOCATION for user $NIX_CONFIG_USER@$NIX_CONFIG_HOSTNAME$(${pkgs.ncurses}/bin/tput sgr0)"
-${pkgs.home-manager}/bin/home-manager switch --impure --flake "$NIX_CONFIG_LOCATION#$NIX_CONFIG_USER@$NIX_CONFIG_HOSTNAME" || isDone=2
-
-if [[ isDone == 2 ]]; then
-  echo "$(${pkgs.ncurses}/bin/tput setaf 9)The update didn't finish successfully$(${pkgs.ncurses}/bin/tput sgr0)"
-  exit 1
-else
-  isDone=1
-  echo "$(${pkgs.ncurses}/bin/tput setaf 10)The update finished successfully$(${pkgs.ncurses}/bin/tput sgr0)"
-  exit 0
-fi
-  '';
   swayGreetd = pkgs.writeText "sway-greetd-config" ''
 exec "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway; systemctl --user stop pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr; systemctl --user start pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr"
 exec "${config.programs.regreet.package}/bin/regreet; swaymsg exit"
@@ -69,15 +30,27 @@ in {
     };
   };
 
+  chaotic.nyx = {
+    overlay = {
+      enable = true;
+      onTopOf = "flake-nixpkgs";
+
+      flakeNixpkgs.config = config.nixpkgs.config;
+    };
+    cache.enable = true;
+  };
+
   age = {
     identityPaths = [
       "/root/.ssh/id_ed25519"
       "/root/.ssh/id_rsa"
+      "/etc/ssh/ssh_host_ed25519_key"
+      "/etc/ssh/ssh_host_rsa_key"
       "/persist/system/etc/ssh/ssh_host_ed25519_key"
       "/persist/system/etc/ssh/ssh_host_rsa_key"
     ];
     secrets = {
-      duanin2Password.file = ../secrets/users/duanin2/password.age;
+      duanin2Password.file = ../secrets/Duanin2Laptop/duanin2/password.age;
       # cryptKey = {
         # file = ../secrets/Duanin2Laptop/cryptkey.age;
 
@@ -215,7 +188,8 @@ in {
     };
 
     # Use linux-zen kernel from unstable channel
-    kernelPackages = pkgs.linuxPackagesFor pkgs.linuxKernel.kernels.linux_zen;
+    #kernelPackages = pkgs.linuxPackages_cachyos;
+    kernelPackages = pkgs.linuxPackages_zen;
   };
 
   services.udev = {
@@ -233,7 +207,7 @@ ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0458", ATTR{idProduct}=="0186"
   zramSwap = {
     enable = true;
     priority = 32767;
-    memoryPercent = 80;
+    memoryPercent = 95;
     algorithm = "zstd";
   };
 
@@ -308,11 +282,13 @@ function launchbg() {
           glxinfo
           mesa
           
-          gamescope
+          gamescope_git
           vkbasalt
-          mangohud
+          mangohud_git
+          mangohud32_git
 	        gamemode
 
+          # Dependencies
           libgdiplus
 	        keyutils
 	        libkrb5
@@ -345,7 +321,7 @@ function launchbg() {
     };
     gamescope = {
       enable = true;
-      package = pkgs.gamescope;
+      package = pkgs.gamescope_git;
       capSysNice = true;
       env = {
         __NV_PRIME_RENDER_OFFLOAD = "1";
@@ -366,18 +342,17 @@ function launchbg() {
   };
 
   hardware = {
-    # enable OpenGL
     opengl = {
       enable = true;
-      
+
       driSupport = true;
       driSupport32Bit = true;
 
-      # Install drivers
-      extraPackages = with pkgs; [ ];
-      extraPackages32 = with pkgs.pkgsi686Linux; [ ];
+      extraPackages = (with pkgs; [])
+                      ++ (with pkgs.mesa; []);
+      extraPackages32 = (with pkgs.pkgsi686Linux; [])
+                        ++ (with pkgs.pkgsi686Linux.mesa; []);
     };
-
     nvidia = {
       # Needed for most wayland compositors
       modesetting.enable = true;
@@ -503,19 +478,15 @@ esac
     enable = true;
     xwayland = {
       enable = true;
-      hidpi = true;
     };
-    nvidiaPatches = true;
+    nvidiaPatches = false;
   };
   
   # Flatpak
   services.flatpak.enable = true;
   xdg.portal = {
     enable = true;
-    extraPortals = [
-      # inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland # Hyprland
-    ];
-    # xdgOpenUsePortals = true;
+    extraPortals = [ ];
   };
 
   # Greetd
@@ -568,11 +539,11 @@ esac
   users = {
     users.duanin2 = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "network" ]; # Enable ‘${pkgs.sudo}’ for the user.
-      shell = pkgs.zsh;
-      passwordFile = config.age.secrets.duanin2Password.path;
+      extraGroups = [ "wheel" "network" ];
+      hashedPassword = (builtins.readFile config.age.secrets.duanin2Password.path);
     };
     defaultUserShell = pkgs.zsh;
+    mutableUsers = false;
   };
 
   # List packages installed in system profile. To search, run:
@@ -582,7 +553,6 @@ esac
     git
     home-manager
     inputs.agenix.packages.${pkgs.system}.default
-    nixos-update
     (pkgs.uutils-coreutils.override {prefix = "";})
     seatd
     vulkan-tools

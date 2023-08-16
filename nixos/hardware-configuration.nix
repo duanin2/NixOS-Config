@@ -19,14 +19,14 @@
     "/" = {
       device = "none";
       fsType = "tmpfs";
-      options = [ "defaults" "size=4G" "mode=755" "lazytime" ];
+      options = [ "defaults" "size=4M" "mode=755" "lazytime" ];
       neededForBoot = true;
     };
 
     "/tmp" = {
       device = "none";
       fsType = "tmpfs";
-      options = [ "defaults" "size=4G" "mode=755" "lazytime" ];
+      options = [ "defaults" "size=8G" "mode=755" "lazytime" ];
     };
 
     "/nix" = {

@@ -4,7 +4,6 @@
   inputs = {
     # Nixpkgs
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    nixpkgs-staging.url = "nixpkgs/staging";
 
     # Home manager
     home-manager = {
@@ -17,12 +16,15 @@
       url = "github:ryantm/agenix";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-	darwin.follows = "";
+	      darwin.follows = "";
       };
     };
 
     # NUR
     nur.url = "github:nix-community/NUR";
+
+    # Chaotic's Nyx
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 
     # NixOS hardware
     hardware.url = "nixos-hardware";
@@ -32,7 +34,7 @@
 
     # Hyprland
     hyprland = {
-      url = "github:hyprwm/Hyprland/v0.27.2";
+      url = "github:hyprwm/Hyprland/v0.28.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland-plugins = {
@@ -49,10 +51,13 @@
     mozilla.url = "github:mozilla/nixpkgs-mozilla";
 
     # Nix colors
-    # base16-schemes.url = "github:tinted-theming/base16-schemes";
+    base16-schemes = {
+      url = "github:tinted-theming/base16-schemes";
+      flake = false;
+    };
     nix-colors = {
       url = "github:misterio77/nix-colors";
-      # inputs.base16-schemes.follows = "base16-schemes";
+      inputs.base16-schemes.follows = "base16-schemes";
     };
   };
 
@@ -104,14 +109,22 @@
             };
           in {
             # My nixos configuration file
-            imports = [ ./nixos/configuration.nix ];
+            imports = [
+              ./nixos/configuration.nix
+            ];
           })
         ] ++ (with inputs; [
+          # Chaotic's nix
+          chaotic.nixosModules.default
+
           # Impermanence
           impermanence.nixosModule
 
           # Agenix
-	  agenix.nixosModules.default
+	        agenix.nixosModules.default
+
+          # Hyprland
+          hyprland.nixosModules.default
         ]) ++ (with inputs.hardware.nixosModules; [
           # NixOS hardware
           common-cpu-intel
@@ -147,14 +160,20 @@
             ];
           })
         ] ++ (with inputs; [
+          # Chaotic's nix
+          chaotic.homeManagerModules.default
+
           # Impermanence
           impermanence.nixosModules.home-manager.impermanence
 
           # Agenix
-	  agenix.homeManagerModules.default
+	        agenix.homeManagerModules.default
 
           # Nix colors
           nix-colors.homeManagerModules.default
+
+          # Hyprland
+          hyprland.homeManagerModules.default
         ]);
       };
     };
