@@ -1,6 +1,6 @@
 { ... }: {
   enable = true;
-  #package = pkgs.mangohud_git;
+  package = pkgs.mangohud_git;
 
   settings = {
     # Display

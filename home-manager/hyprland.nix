@@ -9,7 +9,7 @@ env = XCURSOR_SIZE,18
 
 exec-once = ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1
 
-windowrulev2 = fullscreen,class:^((stormworks)\.exe|())$
+windowrulev2 = fullscreen,class:^((stormworks64)\.exe|())$
 
 input {
   kb_layout = cz

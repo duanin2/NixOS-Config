@@ -7,6 +7,7 @@
 in {
   imports = [
     ./emacs.nix
+    ./gtk.nix
   ];
 
   nixpkgs = {
@@ -122,11 +123,12 @@ in {
     alacritty = (import ./alacritty.nix) { inherit config; };
     gpg = (import ./gpg.nix) { inherit config; };
     git = (import ./git.nix) { inherit pkgs; };
-    mangohud = (import ./mangohud.nix) { inherit config pkgs; };
+    mangohud = (import ./mangohud.nix) { inherit pkgs; };
     ssh = import ./ssh.nix;
     zsh = (import ./zsh.nix) { inherit config; };
   in {
-    inherit gpg git mangohud ssh zsh;
+    inherit alacritty gpg git mangohud ssh zsh;
+    mangohud.package = pkgs.mangohud_git;
     home-manager.enable = true;
     firefox = {
       enable = true;
