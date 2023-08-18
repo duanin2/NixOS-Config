@@ -1,7 +1,7 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 
-{ inputs, outputs, lib, config, pkgs, ... }: let
+{ inputs, outputs, lib, config, chaotic, pkgs, ... }: let
   nix-colors = inputs.nix-colors;
   nix-colors-lib = inputs.nix-colors.lib.contrib { inherit pkgs; };
 in {
@@ -31,13 +31,19 @@ in {
     };
   };
 
+  chaotic.nyx = {
+    cache.enable = true;
+    overlay = {
+      enable = true;
+      flakeNixpkgs.config = config.nixpkgs.config;
+      onTopOf = "flake-nixpkgs";
+    };
+  };
+
   nix = {
     package = pkgs.nixVersions.unstable;
     
     checkConfig = true;
-    settings = {
-      use-xdg-base-directories = true;
-    };
   };
 
   home = {
@@ -128,7 +134,6 @@ in {
     zsh = (import ./zsh.nix) { inherit config; };
   in {
     inherit alacritty gpg git mangohud ssh zsh;
-    mangohud.package = pkgs.mangohud_git;
     home-manager.enable = true;
     firefox = {
       enable = true;

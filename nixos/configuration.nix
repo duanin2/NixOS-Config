@@ -67,36 +67,6 @@ in {
     enable = true; # DO NOT DISABLE
     package = pkgs.nixVersions.unstable;
 
-    settings = {
-      trusted-users = [
-        "root"
-        "@wheel"
-      ];
-      auto-optimise-store = true;
-      accept-flake-config = true;
-      builders-use-substitutes = true;
-      connect-timeout = 5;
-      cores = 4;
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
-      fallback = true;
-      http-connections = 0;
-      log-lines = 20;
-      max-jobs = 1;
-      preallocate-contents = true;
-      use-xdg-base-directories = true;
-
-      substituters = [
-        "hyprland.cachix.org"
-        "nix-community.cachix.org"
-      ];
-      trusted-public-keys = [
-        "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      ];
-    };
     checkConfig = true;
     checkAllErrors = true;
     channel.enable = false;

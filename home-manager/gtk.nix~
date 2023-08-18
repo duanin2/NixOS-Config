@@ -1,29 +1,19 @@
-{ config, pkgs, ... }: let
-  preferDarkTheme = true;
-in {
+{ config, pkgs, ... }: {
   gtk = {
     enable = true;
 
     gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
 
-    gtk3.extraConfig = ''
-gtk-application-prefer-dark-theme=${if (preferDarkTheme or false) then "true" else "false"}
-    '';
-
-    gtk4.extraConfig = ''
-gtk-application-prefer-dark-theme=${if (preferDarkTheme or false) then "true" else "false"}
-    '';
-
     cursorTheme = {
       package = pkgs.catppuccin-cursors;
       name = "Catppuccin-Cursors-Frappe-Green";
-      size = 24;
+      size = 10;
     };
     font = {
       name = "Noto Sans";
       size = 10;
     };
-    theme = {
+    iconTheme = {
       package = (pkgs.catppuccin-gtk.override {
         accents = [ "green" ];
         size = "compact";
@@ -31,5 +21,5 @@ gtk-application-prefer-dark-theme=${if (preferDarkTheme or false) then "true" el
       });
       name = "Catppuccin-Frappe-Compact-Green-dark";
     };
-  };
+  }
 }

@@ -1,4 +1,4 @@
-{ ... }: {
+{ config, ... }: {
   enable = true;
   
   settings = {

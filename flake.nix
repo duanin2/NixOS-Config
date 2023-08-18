@@ -24,7 +24,13 @@
     nur.url = "github:nix-community/NUR";
 
     # Chaotic's Nyx
-    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    chaotic = {
+      url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
 
     # NixOS hardware
     hardware.url = "nixos-hardware";
@@ -66,7 +72,52 @@
     forAllSystems = inputs.nixpkgs.lib.genAttrs [
       "x86_64-linux"
     ];
+    nixConfig = {
+      trusted-users = [
+        "root"
+        "@wheel"
+      ];
+      auto-optimise-store = true;
+      accept-flake-config = true;
+      builders-use-substitutes = true;
+      connect-timeout = 5;
+      cores = 4;
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      fallback = true;
+      http-connections = 0;
+      log-lines = 20;
+      max-jobs = 1;
+      preallocate-contents = true;
+      use-xdg-base-directories = true;
+
+      substituters = [
+        # Hyprland
+        "hyprland.cachix.org"
+
+        # nix-community
+        "nix-community.cachix.org"
+
+        # Chaotic's Nyx
+        "https://nyx.chaotic.cx"
+      ];
+      trusted-public-keys = [
+        # Hyprland
+        "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+
+        # nix-community
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+
+        # Chaotic's Nyx
+        "nyx.chaotic.cx-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
+        "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
+      ];
+    };
   in rec {
+    inherit nixConfig;
+    
     # Packages
     packages = forAllSystems (system: let 
       pkgs = inputs.nixpkgs.legacyPackages.${system};
@@ -113,6 +164,9 @@
               ./nixos/configuration.nix
             ];
           })
+
+          # Set nix configuration
+          { nix.settings = nixConfig; }
         ] ++ (with inputs; [
           # Chaotic's nix
           chaotic.nixosModules.default
@@ -159,6 +213,9 @@
               ./home-manager/home.nix
             ];
           })
+
+          # Set nix configuration
+          { nix.settings = nixConfig; }
         ] ++ (with inputs; [
           # Chaotic's nix
           chaotic.homeManagerModules.default
