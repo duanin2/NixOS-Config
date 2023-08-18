@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 
@@ -124,7 +124,7 @@ in {
     };
 
     preferDarkTheme = mkOption {
-      type = types.boolean;
+      type = types.bool;
       default = false;
       description = "Whether to use a dark theme or not.";
     };
@@ -206,10 +206,10 @@ in {
       + "\n";
 
     xdg.configFile."gtk-3.0/settings.ini".text =
-      toGtk3Ini { Settings = gtk3Ini; };
+      toGtkIni { Settings = gtk3Ini; };
 
     xdg.configFile."gtk-4.0/settings.ini".text =
-      toGtk3Ini { Settings = gtk4Ini; };
+      toGtkIni { Settings = gtk4Ini; };
 
     dconf.settings."org/gnome/desktop/interface" = dconfIni;
   });

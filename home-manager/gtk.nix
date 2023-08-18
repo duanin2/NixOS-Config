@@ -3,8 +3,8 @@
     enable = true;
 
     cursorTheme = {
-      package = pkgs.catppuccin-cursors;
-      name = "Catppuccin-Cursors-Frappe-Green";
+      package = pkgs.catppuccin-cursors.frappeGreen;
+      name = "Catppuccin-Frappe-Green-Cursors";
       size = 24;
     };
     font = {
