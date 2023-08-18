@@ -187,7 +187,7 @@ in {
     } // optionalAttrs (cfg.cursorTheme != null && cfg.cursorTheme.size != null) {
       cursor-size = cfg.cursorTheme.size;
     } // {
-      color-scheme = ${if cfg.preferDarkTheme then "prefer-dark" else "prefer-light"};
+      color-scheme = if cfg.preferDarkTheme then "prefer-dark" else "prefer-light";
     };
 
     optionalPackage = opt: optional (opt != null && opt.package != null) opt.package;
