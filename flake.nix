@@ -231,7 +231,9 @@
 
           # Hyprland
           hyprland.homeManagerModules.default
-        ]);
+        ]) ++ [
+          homeManagerModules.gtk
+        ];
       };
     };
   };

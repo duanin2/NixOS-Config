@@ -4,4 +4,7 @@
 {
   # List your module files here
   # my-module = import ./my-module.nix;
+
+  # GTK Configuration
+  gtk = import ./gtk.nix;
 }
