@@ -93,6 +93,7 @@
       max-jobs = 1;
       preallocate-contents = true;
       use-xdg-base-directories = true;
+      allow-import-from-derivation = true;
 
       substituters = [
         # Hyprland
