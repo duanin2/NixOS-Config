@@ -122,11 +122,23 @@ in {
         # EFI Support
         efiSupport = true;
 
-        # FIX: Find a way to load EFI variable set by Linux on my laptop
+        # TODO: Find a way to load EFI variables set by Linux on my laptop
         efiInstallAsRemovable = true;
 
         # MemTest86
         memtest86.enable = true;
+
+        # Don't copy the kernels
+        copyKernels = false;
+        storePath = "/@persist/nix/store";
+
+        # Theme
+        theme = "${(pkgs.fetchFromGitHub {
+          owner = "catppuccin";
+          repo = "grub";
+          rev = "main";
+          hash = "";
+        })}/src/catppuccin-frappe-grub-theme";
       };
       efi = {
         efiSysMountPoint = "/boot/efi";
@@ -159,7 +171,7 @@ in {
 
     # Use linux-zen kernel from unstable channel
     #kernelPackages = pkgs.linuxPackages_cachyos;
-    kernelPackages = pkgs.linuxPackages_zen;
+    kernelPackages = pkgs.linuxPackages_cachyos;
   };
 
   services.udev = {
@@ -301,6 +313,11 @@ function launchbg() {
       };
     };
   };
+
+  chaotic.steam.extraCompatPackages = with pkgs; [
+    luxtorpedia
+    proton-ge-custom
+  ];
 
   # Waydroid
   virtualisation = {
