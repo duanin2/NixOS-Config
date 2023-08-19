@@ -139,7 +139,7 @@ in {
       efi = {
         efiSysMountPoint = "/boot/efi";
 
-        # FIX: Change to true, once `boot.loader.grub.efiInstallAsRemovable = true;` is no longer needed on my laptop
+        # TODO: Change to true, once `boot.loader.grub.efiInstallAsRemovable = true;` is no longer needed on my laptop
         canTouchEfiVariables = false;
       };
     };
