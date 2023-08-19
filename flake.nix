@@ -178,7 +178,7 @@
 	        agenix.nixosModules.default
 
           # Hyprland
-          hyprland.nixosModules.default
+          #hyprland.nixosModules.default
         ]) ++ (with inputs.hardware.nixosModules; [
           # NixOS hardware
           common-cpu-intel

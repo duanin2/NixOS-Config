@@ -83,10 +83,6 @@ in {
     };
   };
 
-  programs.direnv = {
-    enable = true;
-  };
-
   # Impermanence
   environment.persistence."/persist/system" = {
     directories = [
@@ -169,8 +165,7 @@ in {
       "kernel.nmi_watchdog" = 0;
     };
 
-    # Use linux-zen kernel from unstable channel
-    #kernelPackages = pkgs.linuxPackages_cachyos;
+    # Use CachyOS kernel from Chaotic's Nyx flake
     kernelPackages = pkgs.linuxPackages_cachyos;
   };
 
@@ -182,7 +177,7 @@ in {
 ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
 
 ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="05c6", ATTR{idProduct}=="9205", ATTR{power/autosuspend}="-1"
-ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0458", ATTR{idProduct}=="0186", ATTR{power/autosuspend}="10"
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0458", ATTR{idProduct}=="0186", ATTR{power/autosuspend}="-1"
     '';
   };
 
