@@ -19,6 +19,7 @@ in {
       # Overlays from this flake
       outputs.overlays.additions
       outputs.overlays.modifications
+      outputs.overlays.unstable-packages
 
       # Emacs
       inputs.emacs.overlays.default
@@ -459,11 +460,16 @@ esac
 
   # Enable Hyprland Wayland compositor
   programs.hyprland = {
+    package = (pkgs.hyprland.override {
+      wayland-protocols = (pkgs.unstable.wayland-protocols.override {
+        inherit (pkgs) lib stdenv fetchurl pkg-config meson ninja wayland-scanner python3 wayland;
+      });
+    });
     enable = true;
     xwayland = {
       enable = true;
     };
-    nvidiaPatches = false;
+    nvidiaPatches = true;
   };
   
   # Flatpak

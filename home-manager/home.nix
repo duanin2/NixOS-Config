@@ -116,7 +116,12 @@ in {
     extraConfig = (import ./hyprland.nix) { inherit pkgs; };
   in {
     inherit extraConfig;
-    
+
+    package = (pkgs.hyprland.override {
+      wayland-protocols = (pkgs.unstable.wayland-protocols.override {
+        inherit (pkgs) lib stdenv fetchurl pkg-config meson ninja wayland-scanner python3 wayland;
+      });
+    });
     enable = true;
     xwayland = {
       enable = true;
