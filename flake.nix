@@ -177,9 +177,6 @@
 
           # Agenix
 	        agenix.nixosModules.default
-
-          # Hyprland
-          #hyprland.nixosModules.default
         ]) ++ (with inputs.hardware.nixosModules; [
           # NixOS hardware
           common-cpu-intel
@@ -229,9 +226,6 @@
 
           # Nix colors
           nix-colors.homeManagerModules.default
-
-          # Hyprland
-          hyprland.homeManagerModules.default
         ]) ++ [
           homeManagerModules.gtk
         ];

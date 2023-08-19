@@ -21,6 +21,9 @@ in {
 
       # Emacs
       inputs.emacs.overlays.default
+
+      # Hyprland
+      inputs.hyprland.overlays.default
     ];
     # Nixpkgs config
     config = {
