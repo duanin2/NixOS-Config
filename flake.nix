@@ -1,13 +1,13 @@
 {
-  description = "Your new nix config";
+  description = "Configuration for my nix machines.";
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
 
     # Home manager
     home-manager = {
-      url = "home-manager";
+      url = "home-manager/release-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
