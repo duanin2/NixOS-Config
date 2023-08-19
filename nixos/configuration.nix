@@ -456,7 +456,11 @@ esac
 
   # Enable Hyprland Wayland compositor
   programs.hyprland = {
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    package = (inputs.hyprland.packages.${pkgs.system}.hyprland.override {
+      wayland-protocols = (inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.wayland-protocols.override {
+        inherit (pkgs) lib stdenv fetchurl pkg-config meson ninja wayland-scanner python3 wayland;
+      })
+    });
     enable = true;
     xwayland = {
       enable = true;
