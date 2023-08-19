@@ -531,7 +531,6 @@ esac
     file
 
     win-virtio
-    win-qemu
     virt-manager
   ];
 
