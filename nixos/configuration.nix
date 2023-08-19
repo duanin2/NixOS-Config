@@ -137,7 +137,7 @@ in {
           owner = "catppuccin";
           repo = "grub";
           rev = "main";
-          hash = "";
+          hash = "sha256-/bSolCta8GCZ4lP0u5NVqYQ9Y3ZooYCNdTwORNvR7M0=";
         })}/src/catppuccin-frappe-grub-theme";
       };
       efi = {
