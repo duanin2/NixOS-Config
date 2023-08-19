@@ -41,4 +41,12 @@
       nativeBuildInputs = old.nativeBuildInputs ++ (with final; [ wrapGAppsHook ]);
     });
   };
+
+  # Makes nixpkgs unstable accessible through pkgs.unstable
+  unstable-packages = final: _prev: {
+    unstable = import inputs.nixpkgs-unstable {
+      system = final.system;
+      config.allowUnfree = true;
+    };
+  };
 }

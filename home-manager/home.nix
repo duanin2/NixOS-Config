@@ -15,6 +15,7 @@ in {
       # Overlays from this flake
       outputs.overlays.additions
       outputs.overlays.modifications
+      outputs.overlays.unstable-packages
 
       # Mozilla packages
       inputs.mozilla.overlay
