@@ -315,7 +315,7 @@ function launchbg() {
   };
 
   chaotic.steam.extraCompatPackages = with pkgs; [
-    luxtorpedia
+    luxtorpeda
     proton-ge-custom
   ];
 
