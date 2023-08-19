@@ -166,7 +166,7 @@ in {
     };
 
     # Use CachyOS kernel from Chaotic's Nyx flake
-    kernelPackages = pkgs.linuxPackages_cachyos;
+    kernelPackages = pkgs.linuxPackages_zen;
   };
 
   services.udev = {
