@@ -70,9 +70,14 @@
 
   outputs = { self, ... }@inputs: let
     inherit (self) outputs;
-    forAllSystems = inputs.nixpkgs.lib.genAttrs [
+    nixpkgs-lib = inputs.nixpkgs.lib;
+    hm-lib = inputs.home-manager.lib;
+    lib = nixpkgs-lib;
+    
+    forAllSystems = lib.genAttrs [
       "x86_64-linux"
     ];
+    
     nixConfig = {
       trusted-users = [
         "root"
@@ -118,7 +123,7 @@
       ];
     };
   in rec {
-    inherit nixConfig;
+    inherit nixConfig nixpkgs-lib hm-lib;
     
     # Packages
     packages = forAllSystems (system: let 
@@ -134,7 +139,10 @@
     );
 
     # Your custom packages and modifications, exported as overlays
-    overlays = import ./overlays { inherit inputs; };
+    overlays = import ./overlays {
+      inherit inputs;
+      lib = nixpkgs-lib;
+    };
     # Reusable nixos modules you might want to export
     # These are usually stuff you would upstream into nixpkgs
     nixosModules = import ./modules/nixos;
@@ -147,7 +155,8 @@
     nixosConfigurations = {
       Duanin2Laptop = let 
         system = "x86_64-linux";
-      in inputs.nixpkgs.lib.nixosSystem {
+        lib = nixpkgs-lib;
+      in lib.nixosSystem {
         inherit system;
         specialArgs = { inherit inputs outputs; };
         modules = [
@@ -195,7 +204,8 @@
     homeConfigurations = {
       "duanin2@Duanin2Laptop" = let 
         system = "x86_64-linux";
-      in inputs.home-manager.lib.homeManagerConfiguration {
+        lib = hm-lib;
+      in lib.homeManagerConfiguration {
         pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = { inherit inputs outputs; };
         modules = [
