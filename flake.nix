@@ -3,12 +3,11 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # Home manager
     home-manager = {
-      url = "home-manager/release-23.05";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -41,14 +40,11 @@
 
     # Hyprland
     hyprland = {
-      url = "github:hyprwm/Hyprland/v0.28.0";
+      url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
-      inputs.hyprland.follows = "hyprland";
-    };
-
+    
+    # Emacs overlay
     emacs = {
       url = "emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -102,8 +98,8 @@
 
       substituters = [
         # Hyprland
-        "hyprland.cachix.org"
-
+        "https://hyprland.cachix.org"
+        
         # nix-community
         "nix-community.cachix.org"
 
@@ -113,7 +109,7 @@
       trusted-public-keys = [
         # Hyprland
         "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-
+        
         # nix-community
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
 
@@ -187,6 +183,9 @@
 
           # Agenix
 	        agenix.nixosModules.default
+
+          # Hyprland
+          hyprland.nixosModules.default
         ]) ++ (with inputs.hardware.nixosModules; [
           # NixOS hardware
           common-cpu-intel
@@ -237,6 +236,9 @@
 
           # Nix colors
           nix-colors.homeManagerModules.default
+
+          # Hyprland
+          hyprland.homeManagerModules.default
         ]) ++ [
           homeManagerModules.gtk
         ];

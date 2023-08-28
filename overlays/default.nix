@@ -3,7 +3,7 @@
 {
   # This one brings our custom packages from the 'pkgs' directory
   additions = final: _prev: import ../pkgs { pkgs = final; };
-
+  
   # This one contains whatever you want to overlay
   # You can change versions, add patches, set compilation flags, anything really.
   # https://nixos.wiki/wiki/Overlays
@@ -33,42 +33,14 @@
       };
       patches = [ ];
       
-      buildInputs = old.buildInputs ++ (with final; [
-        glib
-        librsvg
-        libdbusmenu-gtk3
-      ]);
-      nativeBuildInputs = old.nativeBuildInputs ++ (with final; [ wrapGAppsHook ]);
+      buildInputs = old.buildInputs
+                    ++ (with final; [
+                      glib
+                      librsvg
+                      libdbusmenu-gtk3
+                    ]);
+      nativeBuildInputs = old.nativeBuildInputs
+                          ++ (with final; [ wrapGAppsHook ]);
     });
-  };
-
-  # Replace packages with newer versions
-  updates = final: prev: {
-    wayland-protocols = final.unstable.wayland-protocols.override { inherit (final) lib stdenv fetchurl pkg-config meson ninja wayland-scanner python3 wayland; };
-    wayland = final.unstable.wayland.override { inherit (final) lib stdenv fetchurl substituteAll meson pkg-config ninja wayland-scanner expat libxml2 libffi epoll-shim graphviz-nox doxygen libxslt xmlto python3 docbook_xsl docbook_xml_dtd_45 docbook_xml_dtd_42; };
-
-    mesa = final.mesa_git.override {
-      inherit (final) stdenv lib fetchurl fetchpatch meson pkg-config ninja intltool bison flex file python3Packages wayland-scanner expat libdrm xorg wayland wayland-protocols openssl llvmPackages_15 libffi libomxil-bellagio libva-minimal libelf libvdpau libglvnd libunwind vulkan-loader glslang OpenGL Xplugin valgrind-light libclc jdupes rustc rust-bindgen spirv-llvm-translator zstd directx-headers udev;
-
-      galliumDrivers = [
-        "swrast"
-        "zink"
-        "iris"
-      ];
-      vulkanDrivers = [
-        "swrast"
-        "intel"
-      ];
-    };
-
-    meson = (final.meson_next.override { inherit (final) lib stdenv fetchpatch installShellFiles ninja pkg-config python3 zlib coreutils substituteAll Foundation OpenGL AppKit Cocoa libxcrypt; }).overrideAttrs (old: { });
-  };
-
-  # Makes nixpkgs unstable accessible through pkgs.unstable
-  unstable-packages = final: _prev: {
-    unstable = import inputs.nixpkgs-unstable {
-      system = final.system;
-      config.allowUnfree = true;
-    };
   };
 }

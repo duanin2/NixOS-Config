@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, pkgs, ... }: {
   enable = true;
   
   settings = {
@@ -23,7 +23,7 @@
     import = [
       (pkgs.fetchurl {
         url = "https://github.com/catppuccin/alacritty/raw/main/catppuccin-frappe.yml";
-        hash = "";
+        hash = "sha256-TywgT/Gf0TjcuHGNzgAMNvueCo23BEL2b9cGJaT2vkw=";
       })
     ];
   };

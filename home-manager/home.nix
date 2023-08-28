@@ -15,17 +15,12 @@ in {
       # Overlays from this flake
       outputs.overlays.additions
       outputs.overlays.modifications
-      outputs.overlays.unstable-packages
-      outputs.overlays.updates
 
       # Mozilla packages
       inputs.mozilla.overlay
 
       # Emacs
       inputs.emacs.overlays.default
-
-      # Hyprland
-      inputs.hyprland.overlays.default
     ];
     # Nixpkgs config
     config = {
@@ -54,7 +49,7 @@ in {
   home = {
     username = "duanin2";
     homeDirectory = "/home/duanin2";
-    stateVersion = "23.11";
+    stateVersion = "23.05";
 
     packages = with pkgs; [
       keepassxc
@@ -99,8 +94,8 @@ in {
       })
       qbittorrent
 
-      libsForQt5.ark
-      pcmanfm-qt
+      lxqt.lxqt-archiver
+      lxqt.pcmanfm-qt
     ];
   };
 
@@ -118,17 +113,10 @@ in {
   in {
     inherit extraConfig;
 
-    package = (pkgs.hyprland.override {
-      wayland-protocols = (pkgs.unstable.wayland-protocols.override {
-        inherit (pkgs) lib stdenv fetchurl pkg-config meson ninja wayland-scanner python3 wayland;
-      });
-    });
     enable = true;
-    xwayland = {
-      enable = true;
-      hidpi = true;
-    };
-    nvidiaPatches = true;
+    
+    xwayland.enable = true;
+    enableNvidiaPatches = true;
 
     systemdIntegration = true;
     recommendedEnvironment = true;
@@ -136,7 +124,7 @@ in {
 
   # Enable home-manager and git
   programs = let
-    alacritty = (import ./alacritty.nix) { inherit config; };
+    alacritty = (import ./alacritty.nix) { inherit config pkgs; };
     gpg = (import ./gpg.nix) { inherit config; };
     git = (import ./git.nix) { inherit pkgs; };
     mangohud = (import ./mangohud.nix) { inherit pkgs; };

@@ -19,14 +19,9 @@ in {
       # Overlays from this flake
       outputs.overlays.additions
       outputs.overlays.modifications
-      outputs.overlays.unstable-packages
-      outputs.overlays.updates
 
       # Emacs
       inputs.emacs.overlays.default
-
-      # Hyprland
-      inputs.hyprland.overlays.default
     ];
     # nixpkgs configuration
     config = {
@@ -91,7 +86,6 @@ in {
   # Impermanence
   environment.persistence."/persist/system" = {
     directories = [
-      "/etc/nixos" # NixOS config
       "/etc/NetworkManager/system-connections" # NetworkManager stuff
       "/etc/ssh" # SSH config
   
@@ -100,6 +94,9 @@ in {
 
       # Waydroid
       "/home/.waydroid"
+
+      # Nix
+      "/root/.cache/nix"
     ];
     files = [
       "/etc/machine-id" # For normal functioning of "/var/log"
@@ -195,7 +192,7 @@ ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0458", ATTR{idProduct}=="0186"
 
   virtualisation = {
     libvirtd = {
-      enable = true;
+      enable = false;
 
       onShutdown = "shutdown";
       onBoot = "ignore";
@@ -314,10 +311,10 @@ function launchbg() {
     };
   };
 
-  chaotic.steam.extraCompatPackages = with pkgs; [
-    luxtorpeda
-    proton-ge-custom
-  ];
+  #chaotic.steam.extraCompatPackages = with pkgs; [
+    #luxtorpeda
+    #proton-ge-custom
+  #];
 
   # Waydroid
   virtualisation = {
@@ -462,14 +459,12 @@ esac
   # Enable Hyprland Wayland compositor
   programs.hyprland = {
     enable = true;
-    xwayland = {
-      enable = true;
-    };
-    nvidiaPatches = true;
+
+    xwayland.enable = true;
+    enableNvidiaPatches = true;
   };
   
-  # Flatpak
-  services.flatpak.enable = true;
+# Flatpak
   xdg.portal = {
     enable = true;
     extraPortals = [ ];
