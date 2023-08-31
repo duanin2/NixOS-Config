@@ -60,7 +60,6 @@ in {
       vkbasalt
       replay-sorcery
       gamemode
-      the-powder-toy
 
       # Ricing
       (pkgs.eww-systray.override {
