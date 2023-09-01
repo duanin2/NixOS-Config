@@ -82,8 +82,8 @@
       auto-optimise-store = true;
       accept-flake-config = true;
       builders-use-substitutes = true;
-      connect-timeout = 5;
-      cores = 4;
+      connect-timeout = 10;
+      cores = 2;
       experimental-features = [
         "nix-command"
         "flakes"
@@ -91,10 +91,21 @@
       fallback = true;
       http-connections = 0;
       log-lines = 20;
-      max-jobs = 1;
+      max-jobs = 2;
       preallocate-contents = true;
       use-xdg-base-directories = true;
       allow-import-from-derivation = true;
+      
+      keep-going = true;
+      keep-failed = false;
+      keep-outputs = true;
+      keep-env-derivations = false;
+      keep-derivations = false;
+      
+      max-free = 5368709120;
+      min-free = 1073741824;
+      min-free-check-interval = 20;
+      
 
       substituters = [
         # Hyprland
@@ -166,8 +177,8 @@
               nurpkgs = import inputs.nixpkgs { inherit system; };
             };
           in {
-            # My nixos configuration file
             imports = [
+              # NixOS Config
               ./nixos/configuration.nix
             ];
           })
@@ -215,9 +226,11 @@
               nurpkgs = import inputs.nixpkgs { inherit system; };
             };
           in {
-            # My home-manager configuration file
             imports = [
+              # Emacs configuration
               nurNoPkgs.repos.rycee.hmModules.emacs-init
+
+              # Home Manager Config
               ./home-manager/home.nix
             ];
           })
