@@ -30,16 +30,6 @@ in {
     };
   };
 
-  chaotic.nyx = {
-    overlay = {
-      enable = true;
-      onTopOf = "flake-nixpkgs";
-
-      flakeNixpkgs.config = config.nixpkgs.config;
-    };
-    cache.enable = true;
-  };
-
   age = {
     identityPaths = [
       "/root/.ssh/id_ed25519"
@@ -60,26 +50,6 @@ in {
 
         # symlink = false;
       # };
-    };
-  };
-
-  nix = {
-    enable = true; # DO NOT DISABLE
-    package = pkgs.nixVersions.unstable;
-
-    checkConfig = true;
-    checkAllErrors = true;
-    channel.enable = false;
-
-    daemonIOSchedPriority = 0;
-    daemonIOSchedClass = "best-effort";
-    daemonCPUSchedPolicy = "batch";
-
-    gc = {
-      randomizedDelaySec = "60min";
-      persistent = true;
-      dates = "weekly";
-      automatic = true;
     };
   };
 

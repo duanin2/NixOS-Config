@@ -73,64 +73,94 @@
     forAllSystems = lib.genAttrs [
       "x86_64-linux"
     ];
-    
-    nixConfig = {
-      trusted-users = [
-        "root"
-        "@wheel"
-      ];
-      auto-optimise-store = true;
-      accept-flake-config = true;
-      builders-use-substitutes = true;
-      connect-timeout = 10;
-      cores = 2;
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
-      fallback = true;
-      http-connections = 0;
-      log-lines = 20;
-      max-jobs = 2;
-      preallocate-contents = true;
-      use-xdg-base-directories = true;
-      allow-import-from-derivation = true;
-      
-      keep-going = true;
-      keep-failed = false;
-      keep-outputs = true;
-      keep-env-derivations = false;
-      keep-derivations = false;
-      
-      max-free = 5368709120;
-      min-free = 1073741824;
-      min-free-check-interval = 20;
-      
 
-      substituters = [
-        # Hyprland
-        "https://hyprland.cachix.org"
+    nix = {
+      enable = true; # DO NOT DISABLE
+
+      checkConfig = true;
+      checkAllErrors = true;
+      channel.enable = false;
+      
+      daemonIOSchedPriority = 0;
+      daemonIOSchedClass = "best-effort";
+      daemonCPUSchedPolicy = "batch";
+
+      gc = {
+        randomizedDelaySec = "60min";
+        persistent = true;
+        dates = "weekly";
+        automatic = true;
+      };
+
+      settings = {
+        trusted-users = [
+          "root"
+          "@wheel"
+        ];
+        auto-optimise-store = true;
+        accept-flake-config = true;
+        builders-use-substitutes = true;
+        connect-timeout = 10;
+        cores = 2;
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
+        fallback = true;
+        http-connections = 0;
+        log-lines = 20;
+        max-jobs = 2;
+        preallocate-contents = true;
+        use-xdg-base-directories = true;
+        allow-import-from-derivation = true;
         
-        # nix-community
-        "nix-community.cachix.org"
-
-        # Chaotic's Nyx
-        "https://nyx.chaotic.cx"
-      ];
-      trusted-public-keys = [
-        # Hyprland
-        "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+        keep-going = true;
+        keep-failed = false;
+        keep-outputs = true;
+        keep-env-derivations = false;
+        keep-derivations = false;
         
-        # nix-community
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        max-free = 5368709120;
+        min-free = 1073741824;
+        min-free-check-interval = 20;
+        
 
-        # Chaotic's Nyx
-        "nyx.chaotic.cx-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
-        "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
-      ];
+        substituters = [
+          # Hyprland
+          "https://hyprland.cachix.org"
+          
+          # nix-community
+          "nix-community.cachix.org"
+          
+          # Chaotic's Nyx
+          "https://nyx.chaotic.cx"
+        ];
+        trusted-public-keys = [
+          # Hyprland
+          "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+          
+          # nix-community
+          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+          
+          # Chaotic's Nyx
+          "nyx.chaotic.cx-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
+          "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
+        ];
+      };
+    };
+
+    chaoticNyx = {
+      cache.enable = true;
+      overlay = {
+        enable = true;
+        onTopOf = "user-pkgs";
+      };
     };
   in rec {
-    inherit nixConfig nixpkgs-lib hm-lib;
+    inherit nixpkgs-lib hm-lib;
+
+    # Nix config
+    nixConfig = nix.settings;
     
     # Packages
     packages = forAllSystems (system: let 
@@ -158,7 +188,7 @@
     homeManagerModules = import ./modules/home-manager;
 
     # NixOS configuration entrypoint
-    # Available through 'nixos-rebuild --flake .#your-hostname'
+    # Available through 'nixos-rebuild --flake .#hostname'
     nixosConfigurations = {
       Duanin2Laptop = let 
         system = "x86_64-linux";
@@ -166,10 +196,34 @@
       in lib.nixosSystem {
         inherit system;
         specialArgs = { inherit inputs outputs; };
-        modules = [
+        modules = (with inputs; [
+          # Chaotic's nix
+          chaotic.nixosModules.default
+          
+          # Impermanence
+          impermanence.nixosModule
+            
+          # Agenix
+	        agenix.nixosModules.default
+          
+          # Hyprland
+          hyprland.nixosModules.default
+          
+          # Home Manager
+          home-manager.nixosModules.default
+        ])
+        ++ (with inputs.hardware.nixosModules; [
+          common-cpu-intel
+          common-gpu-intel
+          common-gpu-nvidia
+          common-pc-laptop-acpi_call
+          common-pc-laptop-ssd
+          common-pc
+        ])
+        ++ [
           # Set configuration revision
           { system.configurationRevision = if self ? rev then self.rev else "dirty"; }
-
+          
           # NUR
           { nixpkgs.overlays = [ inputs.nur.overlay ]; }
           ({ pkgs, ... }: let
@@ -180,80 +234,51 @@
             imports = [
               # NixOS Config
               ./nixos/configuration.nix
-            ];
-          })
-
-          # Set nix configuration
-          { nix.settings = nixConfig; }
-        ] ++ (with inputs; [
-          # Chaotic's nix
-          chaotic.nixosModules.default
-
-          # Impermanence
-          impermanence.nixosModule
-
-          # Agenix
-	        agenix.nixosModules.default
-
-          # Hyprland
-          hyprland.nixosModules.default
-        ]) ++ (with inputs.hardware.nixosModules; [
-          # NixOS hardware
-          common-cpu-intel
-          common-gpu-intel
-          common-gpu-nvidia
-          common-pc-laptop-acpi_call
-          common-pc-laptop-ssd
-          common-pc
-        ]);
-      };
-    };
-
-    # Standalone home-manager configuration entrypoint
-    # Available through 'home-manager --flake .#your-username@your-hostname'
-    homeConfigurations = {
-      "duanin2@Duanin2Laptop" = let 
-        system = "x86_64-linux";
-        lib = hm-lib;
-      in lib.homeManagerConfiguration {
-        pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = { inherit inputs outputs; };
-        modules = [
-          # NUR
-          { nixpkgs.overlays = [ inputs.nur.overlay ]; }
-          ({ pkgs, ... }: let
-            nurNoPkgs = import inputs.nur {
-              nurpkgs = import inputs.nixpkgs { inherit system; };
-            };
-          in {
-            imports = [
-              # Emacs configuration
-              nurNoPkgs.repos.rycee.hmModules.emacs-init
 
               # Home Manager Config
-              ./home-manager/home.nix
+              {
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  users = {
+                    "duanin2" = import ./nixos/home-manager/duanin2/home.nix;
+                  };
+                };
+              }
             ];
           })
-
+          
           # Set nix configuration
-          { nix.settings = nixConfig; }
-        ] ++ (with inputs; [
-          # Chaotic's nix
-          chaotic.homeManagerModules.default
+          {
+            nix = nix // {
+              package = (inputs.nixpkgs.legacyPackages.${system}.pkgs).nixVersions.unstable;
+            };
 
-          # Impermanence
-          impermanence.nixosModules.home-manager.impermanence
+            home-manager.users = {
+              "duanin2" = { inherit nix; };
+            };
+          }
 
-          # Agenix
-	        agenix.homeManagerModules.default
+          # Chaotic's Nyx
+          {
+            chaotic.nyx = chaoticNyx;
+            
+            home-manager.users = let lib = hm-lib; in {
+              "duanin2" = {
+                chaotic.nyx = chaoticNyx;
+              };
+            };
+          }
 
-          # Nix colors
-          nix-colors.homeManagerModules.default
-
-          # Hyprland
-          hyprland.homeManagerModules.default
-        ]) ++ [
-          homeManagerModules.gtk
+          # Home Manager
+          {
+            home-manager.users = let lib = hm-lib; in {
+              "duanin2" = {
+                # Imports
+                imports = [ ];
+              };
+            };
+          }
         ];
       };
     };
