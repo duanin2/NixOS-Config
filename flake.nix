@@ -319,7 +319,7 @@
               };
 
               daemonIOSchedPriority = 0;
-              deamonIOSchedClass = "best-effort";
+              daemonIOSchedClass = "best-effort";
               daemonCPUSchedPolicy = "other";
 
               nix.channel.enable = false;
