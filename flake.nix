@@ -322,7 +322,7 @@
               daemonIOSchedClass = "best-effort";
               daemonCPUSchedPolicy = "other";
 
-              nix.channel.enable = false;
+              channel.enable = false;
             };
 
             home-manager.users = {
