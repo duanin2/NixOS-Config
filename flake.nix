@@ -324,9 +324,9 @@
           })
           
           # Set nix configuration
-          ({ pkgs, ... }: {
+          ({ pkgs, ... }: let
             args = { inherit pkgs; };
-            
+          in {
             nix = (nixCommon args) // (nixNixosCommon args) // { };
 
             home-manager.users = {
