@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }: {
+{ outputs, lib, config, pkgs, ... }: {
   gtk = {
     enable = true;
 

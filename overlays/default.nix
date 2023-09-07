@@ -16,31 +16,5 @@
         })
       ];
     });
-    eww-systray = prev.eww.overrideAttrs (old: {
-      version = "git";
-      
-      src = prev.fetchFromGitHub {
-        owner = "ralismark";
-        repo = "eww";
-        rev = "tray-3";
-        hash = "sha256-b/ipIavlmnEq4f1cQOrOCZRnIly3uXEgFbWiREKsh20=";
-      };
-      cargoDeps = prev.rustPlatform.importCargoLock {
-        lockFile = (prev.fetchurl {
-          url = "https://raw.githubusercontent.com/ralismark/eww/tray-3/Cargo.lock";
-          hash = "sha256-Jy03au+JBpD1APFkVbcq/gmk1DcPVYUZ9kzDl6VuEBs=";
-        });
-      };
-      patches = [ ];
-      
-      buildInputs = old.buildInputs
-                    ++ (with final; [
-                      glib
-                      librsvg
-                      libdbusmenu-gtk3
-                    ]);
-      nativeBuildInputs = old.nativeBuildInputs
-                          ++ (with final; [ wrapGAppsHook ]);
-    });
   };
 }

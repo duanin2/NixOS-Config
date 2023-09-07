@@ -16,7 +16,6 @@
       url = "github:ryantm/agenix";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-	      darwin.follows = "";
       };
     };
 
@@ -53,6 +52,19 @@
     # Mozilla packages
     mozilla.url = "github:mozilla/nixpkgs-mozilla";
 
+    # Eww systray
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    eww = {
+      url = "github:ralismark/eww/tray-3";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        rust-overlay.follows = "rust-overlay";
+      };
+    };
+
     # Nix colors
     base16-schemes = {
       url = "github:tinted-theming/base16-schemes";
@@ -78,19 +90,13 @@
       enable = true; # DO NOT DISABLE
 
       checkConfig = true;
-      checkAllErrors = true;
-      channel.enable = false;
       
-      daemonIOSchedPriority = 0;
-      daemonIOSchedClass = "best-effort";
-      daemonCPUSchedPolicy = "batch";
-
-      gc = {
-        randomizedDelaySec = "60min";
-        persistent = true;
-        dates = "weekly";
-        automatic = true;
-      };
+      #gc = {
+      #  randomizedDelaySec = "60min";
+      #  persistent = true;
+      #  dates = "weekly";
+      #  automatic = true;
+      #};
 
       settings = {
         trusted-users = [
@@ -194,7 +200,7 @@
         system = "x86_64-linux";
         lib = nixpkgs-lib;
       in lib.nixosSystem {
-        inherit system;
+        inherit system lib;
         specialArgs = { inherit inputs outputs; };
         modules = (with inputs; [
           # Chaotic's nix
@@ -226,7 +232,7 @@
           
           # NUR
           { nixpkgs.overlays = [ inputs.nur.overlay ]; }
-          ({ pkgs, ... }: let
+          ({ inputs, pkgs, ... }: let
             nurNoPkgs = import inputs.nur {
               nurpkgs = import inputs.nixpkgs { inherit system; };
             };
@@ -236,46 +242,59 @@
               ./nixos/configuration.nix
 
               # Home Manager Config
-              {
+              ({ inputs, ... }: let
+                lib = hm-lib;
+              in {
                 home-manager = {
                   useGlobalPkgs = true;
                   useUserPackages = true;
                   users = {
-                    "duanin2" = import ./nixos/home-manager/duanin2/home.nix;
+                    "duanin2" = {
+                      _module.args = {
+                        inherit inputs outputs;
+                      };
+                      
+                      imports = [
+                        # Config
+                        ./nixos/home-manager/duanin2/home.nix
+                      ] ++ (with nurNoPkgs.repos; [
+                        # NUR
+                        rycee.hmModules.emacs-init
+                      ]) ++ (with inputs; [
+                        # Chaotic's Nyx
+                        chaotic.homeManagerModules.default
+
+                        # Nix Colors
+                        nix-colors.homeManagerModules.default
+
+                        # GTK
+                        outputs.homeManagerModules.gtk
+                      ]);
+                    };
                   };
                 };
-              }
+              })
             ];
           })
           
           # Set nix configuration
-          {
+          ({ pkgs, ... }: {
             nix = nix // {
-              package = (inputs.nixpkgs.legacyPackages.${system}.pkgs).nixVersions.unstable;
+              package = pkgs.nixVersions.unstable;
             };
 
             home-manager.users = {
               "duanin2" = { inherit nix; };
             };
-          }
+          })
 
           # Chaotic's Nyx
           {
             chaotic.nyx = chaoticNyx;
             
-            home-manager.users = let lib = hm-lib; in {
+            home-manager.users = {
               "duanin2" = {
                 chaotic.nyx = chaoticNyx;
-              };
-            };
-          }
-
-          # Home Manager
-          {
-            home-manager.users = let lib = hm-lib; in {
-              "duanin2" = {
-                # Imports
-                imports = [ ];
               };
             };
           }

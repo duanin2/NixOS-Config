@@ -1,6 +1,4 @@
 { inputs, pkgs, nurNoPkgs, config, ... }: {
-  imports = [ nurNoPkgs.repos.rycee.hmModules.emacs-init ];
-  
   programs.emacs = {
     enable = true;
     package = pkgs.emacs-pgtk;

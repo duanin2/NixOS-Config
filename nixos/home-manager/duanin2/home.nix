@@ -1,7 +1,7 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 
-{ inputs, outputs, lib, config, nix-colors, chaotic, pkgs, ... }: let
+{ inputs, lib, config, nix-colors, chaotic, pkgs, ... }: let
   nix-colors = inputs.nix-colors;
   nix-colors-lib = nix-colors.lib.contrib { inherit pkgs; };
 in {
@@ -26,9 +26,7 @@ in {
       gamemode
 
       # Ricing
-      (pkgs.eww-systray.override {
-        withWayland = true;
-      })
+      eww-wayland
 
       (pkgs.bottles.override {
         extraPkgs = pkgs: with pkgs; [
@@ -82,7 +80,6 @@ in {
     enableNvidiaPatches = true;
 
     systemdIntegration = true;
-    recommendedEnvironment = true;
   };
 
   # Enable home-manager and git

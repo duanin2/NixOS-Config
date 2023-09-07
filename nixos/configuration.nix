@@ -22,6 +22,13 @@ in {
 
       # Emacs
       inputs.emacs.overlays.default
+
+      # Firefox
+      inputs.mozilla.overlays.firefox
+
+      # Eww systray
+      inputs.rust-overlay.overlays.default
+      inputs.eww.overlays.default
     ];
     # nixpkgs configuration
     config = {
