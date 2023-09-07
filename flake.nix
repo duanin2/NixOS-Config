@@ -303,7 +303,7 @@
           
           # Set nix configuration
           ({ pkgs, ... }: let
-            nixCommon = nix // { package = pkgs.nixVersions.unstable };
+            nixCommon = nix // { package = pkgs.nixVersions.unstable; };
           in {
             nix = nixCommon // {
               optimise = {
