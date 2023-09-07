@@ -86,8 +86,9 @@
       "x86_64-linux"
     ];
 
-    nix = {
+    nixCommon = { pkgs, ... }: {
       enable = true; # DO NOT DISABLE
+      package = (pkgs.nixVersions.unstable or []);
 
       checkConfig = true;
 
@@ -154,7 +155,6 @@
         min-free = 1073741824;
         min-free-check-interval = 20;
         
-
         substituters = [
           # Hyprland
           "https://hyprland.cachix.org"
@@ -179,6 +179,28 @@
       };
     };
 
+    nixNixosCommon = { ... }: {
+      optimise = {
+        automatic = true;
+        dates = "daily";
+      };
+      
+      gc = {
+        randomizedDelaySec = "60min";
+        persistent = true;
+        dates = "weekly";
+        automatic = true;
+      };
+      
+      daemonIOSchedPriority = 0;
+      daemonIOSchedClass = "best-effort";
+      daemonCPUSchedPolicy = "other";
+      
+      channel.enable = false;
+    };
+
+    nixHmCommon = { ... }: { };
+
     chaoticNyx = {
       cache.enable = true;
       overlay = {
@@ -190,7 +212,7 @@
     inherit nixpkgs-lib hm-lib;
 
     # Nix config
-    nixConfig = nix.settings;
+    nixConfig = (nixCommon {}).settings;
     
     # Packages
     packages = forAllSystems (system: let 
@@ -302,31 +324,13 @@
           })
           
           # Set nix configuration
-          ({ pkgs, ... }: let
-            nixCommon = nix // { package = pkgs.nixVersions.unstable; };
-          in {
-            nix = nixCommon // {
-              optimise = {
-                automatic = true;
-                dates = "daily";
-              };
-              
-              gc = {
-                randomizedDelaySec = "60min";
-                persistent = true;
-                dates = "weekly";
-                automatic = true;
-              };
-
-              daemonIOSchedPriority = 0;
-              daemonIOSchedClass = "best-effort";
-              daemonCPUSchedPolicy = "other";
-
-              channel.enable = false;
-            };
+          ({ pkgs, ... }: {
+            args = { inherit pkgs; };
+            
+            nix = (nixCommon args) // (nixNixosCommon args) // { };
 
             home-manager.users = {
-              "duanin2" = { nix = nixCommon; };
+              "duanin2" = { nix = (nixCommon args) // (nixHmCommon args) // { }; };
             };
           })
 
