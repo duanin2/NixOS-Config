@@ -320,7 +320,7 @@
 
               daemonIOSchedPriority = 0;
               deamonIOSchedClass = "best-effort";
-              deamonIOSchedPolicy = "other";
+              daemonCPUSchedPolicy = "other";
 
               nix.channel.enable = false;
             };
