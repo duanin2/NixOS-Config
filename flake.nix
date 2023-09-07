@@ -90,13 +90,37 @@
       enable = true; # DO NOT DISABLE
 
       checkConfig = true;
-      
-      #gc = {
-      #  randomizedDelaySec = "60min";
-      #  persistent = true;
-      #  dates = "weekly";
-      #  automatic = true;
-      #};
+
+      registry = {
+        "nixpkgs" = {
+          flake = inputs.nixpkgs;
+          exact = true;
+        };
+        "home-manager" = {
+          flake = inputs.home-manager;
+          exact = true;
+        };
+        "agenix" = {
+          flake = inputs.agenix;
+          exact = true;
+        };
+        "nur" = {
+          flake = inputs.nur;
+          exact = true;
+        };
+        "chaotic" = {
+          flake = inputs.chaotic;
+          exact = true;
+        };
+        "hyprland" = {
+          flake = inputs.hyprland;
+          exact = true;
+        };
+        "eww" = {
+          flake = inputs.eww;
+          exact = true;
+        };
+      };
 
       settings = {
         trusted-users = [
@@ -278,13 +302,31 @@
           })
           
           # Set nix configuration
-          ({ pkgs, ... }: {
-            nix = nix // {
-              package = pkgs.nixVersions.unstable;
+          ({ pkgs, ... }: let
+            nixCommon = nix // { package = pkgs.nixVersions.unstable };
+          in {
+            nix = nixCommon // {
+              optimise = {
+                automatic = true;
+                dates = "daily";
+              };
+              
+              gc = {
+                randomizedDelaySec = "60min";
+                persistent = true;
+                dates = "weekly";
+                automatic = true;
+              };
+
+              daemonIOSchedPriority = 0;
+              deamonIOSchedClass = "best-effort";
+              deamonIOSchedPolicy = "other";
+
+              nix.channel.enable = false;
             };
 
             home-manager.users = {
-              "duanin2" = { inherit nix; };
+              "duanin2" = { nix = nixCommon; };
             };
           })
 
