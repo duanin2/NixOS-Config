@@ -86,9 +86,9 @@
       "x86_64-linux"
     ];
 
-    nixCommon = { pkgs, ... }: {
+    nixCommon = { lib, pkgs, ... }: {
       enable = true; # DO NOT DISABLE
-      package = (pkgs.nixVersions.unstable or []);
+      package = pkgs.nixVersions.unstable;
 
       checkConfig = true;
 
@@ -324,8 +324,8 @@
           })
           
           # Set nix configuration
-          ({ pkgs, ... }: let
-            args = { inherit pkgs; };
+          ({ lib, pkgs, ... }: let
+            args = { inherit lib pkgs; };
           in {
             nix = (nixCommon args) // (nixNixosCommon args) // { };
 
