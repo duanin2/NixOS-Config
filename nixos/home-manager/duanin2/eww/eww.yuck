@@ -37,7 +37,7 @@
                    :style "padding: 2px 6px;"
                    (box :space-evenly false
                         :spacing 6
-                        (image :path "../../.cache/eww/images/start-logo.png"
+                        (image :path "../../.local/share/eww/images/start-logo.png"
                                :image-width 24
                                :image-height 24)
                         (label :text "Start"
@@ -45,7 +45,7 @@
                                :show-truncated true))))
 
 (deflisten taskbar-content :initial "(box :space-evenly false)"
-                         "../../.cache/eww/scripts/tasks.js")
+                         "../../.local/share/eww/scripts/tasks.js")
 (defwidget taskbar []
            (box (for entry in taskbar-content
                      (taskbar-task :focused {entry.isFocused}
