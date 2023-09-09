@@ -1,5 +1,5 @@
 { pkgs }: ''
-#!${pkgs.nodejs_20}
+#!${pkgs.nodejs_20}/bin/node
 const timers = require('node:timers/promises')
 const execFile = require('node:util').promisify(require('node:child_process').execFile)
 
@@ -7,17 +7,17 @@ async function focus(window, focusedWorkspace) {
     let command = `hyprctl --batch "keyword general:no_cursor_warps true;`
 
     if (window.workspace.id < 0) {
-				command += `dispatch movetoworkspacesilent ${focusedWorkspace.id},address:${window.address};`
+				command += `dispatch movetoworkspacesilent $\{focusedWorkspace.id},address:$\{window.address};`
     }
-    command += `dispatch focuswindow address:${window.address};`
+    command += `dispatch focuswindow address:$\{window.address};`
     command += `keyword general:no_cursor_warps false"`
     return command
 }
 async function minimize(window) {
-    return `hyprctl dispatch movetoworkspacesilent special,address:${window.address}`
+    return `hyprctl dispatch movetoworkspacesilent special,address:$\{window.address}`
 }
 async function close(window) {
-    return `hyprctl dispatch closewindow address:${window.address}`
+    return `hyprctl dispatch closewindow address:$\{window.address}`
 }
 
 async function genJSON(windows, focusedWorkspace, focusedWindow) {
