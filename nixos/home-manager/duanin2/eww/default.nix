@@ -16,7 +16,7 @@
       };
       "scripts/tasks.js" = {
         enable = true;
-        text = import ./tasks.nix;
+        text = (import ./tasks.nix { pkgs, ... });
         target = "eww/scripts/tasks.nix";
       };
     };

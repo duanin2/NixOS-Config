@@ -1,4 +1,4 @@
-{ pkgs }: ''
+{ pkgs, ... }: ''
 #!${pkgs.nodejs_20}/bin/node
 const timers = require('node:timers/promises')
 const execFile = require('node:util').promisify(require('node:child_process').execFile)
