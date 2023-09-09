@@ -88,7 +88,7 @@
 
     nixCommon = { lib, pkgs, ... }: {
       enable = true; # DO NOT DISABLE
-      package = pkgs.nixVersions.unstable;
+      package = lib.mkDefault pkgs.nixVersions.unstable;
 
       checkConfig = true;
 
@@ -182,7 +182,7 @@
     nixNixosCommon = { ... }: {
       optimise = {
         automatic = true;
-        dates = "daily";
+        dates = [ "1d" ];
       };
       
       gc = {
