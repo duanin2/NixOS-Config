@@ -1,5 +1,5 @@
 (deflisten xdg :initial ""
-					 `echo "{dataHome:\"${XDG_DATA_HOME:-$HOME/.cache}\",configHome:\"${XDG_CONFIG_HOME:-$HOME/.config}\"}"`)
+					 `echo "{dataHome:\"$XDG_DATA_HOME\",configHome:\"$XDG_CONFIG_HOME\"}"`)
 
 (defwindow bar
            :monitor 0
