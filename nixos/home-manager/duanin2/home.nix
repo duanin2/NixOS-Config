@@ -8,6 +8,7 @@ in {
   imports = [
     ./emacs.nix
     ./gtk.nix
+    ./eww
   ];
 
   home = {
