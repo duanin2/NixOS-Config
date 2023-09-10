@@ -29,7 +29,7 @@
            (box :space-evenly false
                 :orientation "h"
                 :halign "end"
-								; (systray :pack-direction "rtl")
+								(systray :pack-direction "rtl")
                 (sys)))
 
 (defwidget start-button []
