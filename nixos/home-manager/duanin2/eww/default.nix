@@ -18,7 +18,7 @@
         enable = true;
         executable = true;
         text = (import ./tasks.nix { inherit pkgs; });
-        target = "eww/scripts/tasks.nix";
+        target = "eww/scripts/tasks.js";
       };
     };
   };
