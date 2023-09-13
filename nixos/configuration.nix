@@ -169,7 +169,7 @@ ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0458", ATTR{idProduct}=="0186"
 
   virtualisation = {
     libvirtd = {
-      enable = false;
+      enable = true;
 
       onShutdown = "shutdown";
       onBoot = "ignore";
