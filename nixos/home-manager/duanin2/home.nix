@@ -16,6 +16,14 @@ in {
     homeDirectory = "/home/duanin2";
     stateVersion = "23.05";
 
+    persistence."/persist/user/${config.home.username}" = {
+      directories = [
+        ".cache/nix"
+      ];
+      files = [];
+      allowOther = true;
+    };
+
     packages = with pkgs; [
       keepassxc
       git-credential-keepassxc

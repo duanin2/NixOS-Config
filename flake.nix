@@ -315,6 +315,9 @@
 
                         # GTK
                         outputs.homeManagerModules.gtk
+
+                        # Impermanence
+                        impermanence.homeManagerModules.default
                       ]);
                     };
                   };
