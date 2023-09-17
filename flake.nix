@@ -317,7 +317,7 @@
                         outputs.homeManagerModules.gtk
 
                         # Impermanence
-                        impermanence.homeManagerModules.default
+                        impermanence.nixosModules.home-manager.impermanence
                       ]);
                     };
                   };
