@@ -286,6 +286,10 @@ function launchbg() {
         __VK_LAYER_NV_optimus = "NVIDIA_only";
       };
     };
+    fuse = {
+      userAllowOther = true;
+      mountMax = 32767;
+    };
   };
 
   #chaotic.steam.extraCompatPackages = with pkgs; [
