@@ -17,10 +17,8 @@ in {
     stateVersion = "23.05";
 
     persistence."/persist/user/${config.home.username}" = {
-      directories = [
-        ".cache/nix"
-      ];
-      files = [];
+      directories = [ ];
+      files = [ ];
       allowOther = true;
     };
 
