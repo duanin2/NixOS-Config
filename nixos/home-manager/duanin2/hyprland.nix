@@ -1,11 +1,28 @@
-{ pkgs, ... }: let
+{ config, pkgs, ... }: let
   mod = "SUPER";
   
   term = "${pkgs.alacritty}/bin/alacritty";
 in ''
 monitor = eDP-1,1920x1080@60,0x0,1
 
-env = XCURSOR_SIZE,18
+env = GTK_THEME,${config.gtk.theme.name}
+env = XCURSOR_THEME,${config.gtk.cursorTheme.name}
+env = XCURSOR_SIZE,${config.gtk.cursorTheme.size}
+
+# Toolkit backend
+env GDK_BACKEND,wayland,x11
+env QT_QPA_PLATFORM,wayland;xcb
+env SDL_VIDEODRIVER,wayland
+env CLUTTER_BACKEND,wayland
+
+# XDG
+env XDG_CURRENT_DESKTOP,Hyprland
+env XDG_SESSION_TYPE,wayland
+env XDG_SESSION_DESKTOP,Hyprland
+
+# Qt
+env QT_AUTO_SCREEN_SCALE_FACTOR,1
+env QT_WAYLAND_DISABLE_WINDOWDECORATION,1
 
 exec-once = ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1
 

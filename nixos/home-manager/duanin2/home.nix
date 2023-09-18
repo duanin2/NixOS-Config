@@ -82,6 +82,7 @@ in {
     inherit extraConfig;
 
     enable = true;
+    package = inputs.hyprland.packages.x86_64-linux.hyprland.override { inherit (pkgs) mesa; };
     
     xwayland.enable = true;
     enableNvidiaPatches = true;

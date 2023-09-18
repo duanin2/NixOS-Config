@@ -29,6 +29,24 @@ in {
       # Eww systray
       inputs.rust-overlay.overlays.default
       inputs.eww.overlays.default
+
+      # mesa
+      (final: prev: let
+        newAttrs = {
+          galliumDrivers = [
+            "swrast"
+            "zink"
+            "iris"
+          ];
+          vulkanDrivers = [
+            "swrast"
+            "intel"
+          ];
+        };
+      in {
+        mesa = final.mesa_git.override newAttrs;
+        pkgsi686Linux.mesa = final.mesa32_git.override newAttrs;
+      })
     ];
     # nixpkgs configuration
     config = {
@@ -440,6 +458,7 @@ esac
   # Enable Hyprland Wayland compositor
   programs.hyprland = {
     enable = true;
+    package = inputs.hyprland.packages.x86_64-linux.hyprland.override { inherit (pkgs) mesa; };
 
     xwayland.enable = true;
     enableNvidiaPatches = true;
