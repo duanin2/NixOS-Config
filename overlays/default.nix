@@ -31,8 +31,8 @@
         "intel"
       ];
     };
-  in {
-    mesa = final.mesa_git.override newAttrs;
-    pkgsi686Linux.mesa = final.mesa32_git.override newAttrs;
+  in rec {
+    mesa = inputs.chaotic.packages.x86_64-linux.mesa_git.override newAttrs;
+    pkgsi686Linux.mesa = inputs.chaotic.packages.x86_64-linux.final.mesa32_git.override newAttrs;
   };
 }

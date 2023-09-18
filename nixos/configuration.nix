@@ -19,7 +19,7 @@ in {
       # Overlays from this flake
       outputs.overlays.additions
       outputs.overlays.modifications
-      outputs.overlays.mesa
+      #outputs.overlays.mesa
 
       # Emacs
       inputs.emacs.overlays.default
@@ -239,24 +239,11 @@ function launchbg() {
           glxinfo
           mesa
           
-          gamescope_git
+          config.packages.gamescope.package
           vkbasalt
           mangohud_git
           mangohud32_git
 	        gamemode
-
-          # Dependencies
-          libgdiplus
-	        keyutils
-	        libkrb5
-	        libpng
-	        libpulseaudio
-	        libvorbis
-	        stdenv.cc.cc.lib
-	        xorg.libXcursor
-	        xorg.libXi
-	        xorg.libXinerama
-	        xorg.libXScrnSaver
         ];
         extraEnv = {
           MANGOHUD = "1";

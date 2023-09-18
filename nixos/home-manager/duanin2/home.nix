@@ -47,19 +47,6 @@ in {
 	        steam
 
           xterm
-
-          # Dependencies
-          libgdiplus
-	        keyutils
-	        libkrb5
-	        libpng
-	        libpulseaudio
-	        libvorbis
-	        stdenv.cc.cc.lib
-	        xorg.libXcursor
-	        xorg.libXi
-	        xorg.libXinerama
-	        xorg.libXScrnSaver
         ];	
       })
       qbittorrent
