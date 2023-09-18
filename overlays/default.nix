@@ -17,4 +17,22 @@
       ];
     });
   };
+
+  # mesa git
+  mesa = final: prev: let
+    newAttrs = {
+      galliumDrivers = [
+        "swrast"
+        "zink"
+        "iris"
+      ];
+      vulkanDrivers = [
+        "swrast"
+        "intel"
+      ];
+    };
+  in {
+    mesa = final.mesa_git.override newAttrs;
+    pkgsi686Linux.mesa = final.mesa32_git.override newAttrs;
+  };
 }

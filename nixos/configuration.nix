@@ -29,24 +29,6 @@ in {
       # Eww systray
       inputs.rust-overlay.overlays.default
       inputs.eww.overlays.default
-
-      # mesa
-      (final: prev: let
-        newAttrs = {
-          galliumDrivers = [
-            "swrast"
-            "zink"
-            "iris"
-          ];
-          vulkanDrivers = [
-            "swrast"
-            "intel"
-          ];
-        };
-      in {
-        mesa = final.mesa_git.override newAttrs;
-        pkgsi686Linux.mesa = final.mesa32_git.override newAttrs;
-      })
     ];
     # nixpkgs configuration
     config = {
