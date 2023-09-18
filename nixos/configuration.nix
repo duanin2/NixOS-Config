@@ -19,6 +19,7 @@ in {
       # Overlays from this flake
       outputs.overlays.additions
       outputs.overlays.modifications
+      outpits.overlays.mesa
 
       # Emacs
       inputs.emacs.overlays.default
