@@ -239,7 +239,7 @@ function launchbg() {
           glxinfo
           mesa
           
-          config.packages.gamescope.package
+          config.programs.gamescope.package
           vkbasalt
           mangohud_git
           mangohud32_git
