@@ -2,6 +2,8 @@
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 
 { inputs, lib, config, nix-colors, chaotic, pkgs, ... }: let
+  extraArgs = { inherit config pkgs; };
+  
   nix-colors = inputs.nix-colors;
   nix-colors-lib = nix-colors.lib.contrib { inherit pkgs; };
 in {
@@ -77,7 +79,7 @@ in {
 
   # Enable Hyprland Wayland compositor
   wayland.windowManager.hyprland = let
-    extraConfig = (import ./hyprland.nix) { inherit pkgs; };
+    extraConfig = (import ./hyprland.nix) extraArgs;
   in {
     inherit extraConfig;
 
@@ -92,12 +94,12 @@ in {
 
   # Enable home-manager and git
   programs = let
-    alacritty = (import ./alacritty.nix) { inherit config pkgs; };
-    gpg = (import ./gpg.nix) { inherit config; };
-    git = (import ./git.nix) { inherit pkgs; };
-    mangohud = (import ./mangohud.nix) { inherit pkgs; };
+    alacritty = (import ./alacritty.nix) extraArgs;
+    gpg = (import ./gpg.nix) extraArgs;
+    git = (import ./git.nix) extraArgs;
+    mangohud = (import ./mangohud.nix) extraArgs;
     ssh = import ./ssh.nix;
-    zsh = (import ./zsh.nix) { inherit config; };
+    zsh = (import ./zsh.nix) extraArgs;
   in {
     inherit alacritty gpg git mangohud ssh zsh;
     home-manager.enable = true;
