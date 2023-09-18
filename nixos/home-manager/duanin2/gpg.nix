@@ -1,4 +1,4 @@
-{ config }: {
+{ config, ... }: {
   enable = true;
 
   homedir = "${config.xdg.dataHome}/gnupg";
