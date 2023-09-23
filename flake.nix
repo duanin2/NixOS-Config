@@ -151,7 +151,6 @@
         keep-env-derivations = false;
         keep-derivations = false;
         
-        max-free = 5368709120;
         min-free = 1073741824;
         min-free-check-interval = 20;
         
@@ -188,7 +187,7 @@
       gc = {
         randomizedDelaySec = "60min";
         persistent = true;
-        dates = "weekly";
+        dates = "daily";
         automatic = true;
       };
       
