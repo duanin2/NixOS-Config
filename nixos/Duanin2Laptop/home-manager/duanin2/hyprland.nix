@@ -5,6 +5,8 @@
 in ''
 monitor = eDP-1,1920x1080@60,0x0,1
 
+
+# Environment
 env = GTK_THEME,${config.gtk.theme.name}
 env = XCURSOR_THEME,${config.gtk.cursorTheme.name}
 env = XCURSOR_SIZE,${toString config.gtk.cursorTheme.size}
@@ -24,7 +26,12 @@ env XDG_SESSION_DESKTOP,Hyprland
 env QT_AUTO_SCREEN_SCALE_FACTOR,1
 env QT_WAYLAND_DISABLE_WINDOWDECORATION,1
 
-exec-once = ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1
+
+# Autostart
+exec-once = ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 # polkit agent
+exec-once = ${pkgs.networkmanagerapplet}/bin/nm-applet # network manager
+exec-once = ${pkgs.blueman}/bin/blueman-applet # bluetooth
+
 
 windowrulev2 = fullscreen,class:^((stormworks64)\.exe|())$
 
