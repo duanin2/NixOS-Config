@@ -46,7 +46,7 @@ in {
       "/persist/system/etc/ssh/ssh_host_rsa_key"
     ];
     secrets = {
-      duanin2Password.file = ../secrets/Duanin2Laptop/duanin2/password.age;
+      duanin2Password.file = ../../secrets/Duanin2Laptop/duanin2/password.age;
       # cryptKey = {
         # file = ../secrets/Duanin2Laptop/cryptkey.age;
 
