@@ -40,10 +40,8 @@ in {
 
   age = {
     identityPaths = [
-      "/root/.ssh/id_ed25519"
-      "/root/.ssh/id_rsa"
-      "/etc/ssh/ssh_host_ed25519_key"
-      "/etc/ssh/ssh_host_rsa_key"
+      "/persist/system/root/.ssh/id_ed25519"
+      "/persist/system/root/.ssh/id_rsa"
       "/persist/system/etc/ssh/ssh_host_ed25519_key"
       "/persist/system/etc/ssh/ssh_host_rsa_key"
     ];
@@ -280,19 +278,10 @@ function launchbg() {
     };
   };
 
-  #chaotic.steam.extraCompatPackages = with pkgs; [
-    #luxtorpeda
-    #proton-ge-custom
-  #];
-
-  # Waydroid
-  virtualisation = {
-    waydroid.enable = true;
-    lxd = {
-      enable = true;
-      recommendedSysctlSettings = true;
-    };
-  };
+  chaotic.steam.extraCompatPackages = with pkgs; [
+    luxtorpeda
+    proton-ge-custom
+  ];
 
   hardware = {
     opengl = {
@@ -463,6 +452,12 @@ esac
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+
+  # Bluetooth
+  hardware.bluetooth = {
+    enable = true;
+  };
+  services.blueman.enable = true;
 
   # Enable sound.
   sound.enable = true;
