@@ -30,7 +30,9 @@ env QT_WAYLAND_DISABLE_WINDOWDECORATION,1
 # Autostart
 exec-once = ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 # polkit agent
 exec-once = ${pkgs.networkmanagerapplet}/bin/nm-applet # network manager
-exec-once = ${pkgs.blueman}/bin/blueman-applet # bluetooth
+exec-once = blueman-applet # bluetooth
+exec-once = keepassxc
+exec-once = steam
 
 
 windowrulev2 = fullscreen,class:^((stormworks64)\.exe|())$
