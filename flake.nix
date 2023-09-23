@@ -285,7 +285,7 @@
           in {
             imports = [
               # NixOS Config
-              ./nixos/configuration.nix
+              ./nixos/Duanin2Laptop/configuration.nix
 
               # Home Manager Config
               ({ inputs, ... }: let
@@ -302,7 +302,7 @@
                       
                       imports = [
                         # Config
-                        ./nixos/home-manager/duanin2/home.nix
+                        ./nixos/Duanin2Laptop/home-manager/duanin2/home.nix
                       ] ++ (with nurNoPkgs.repos; [
                         # NUR
                         rycee.hmModules.emacs-init
