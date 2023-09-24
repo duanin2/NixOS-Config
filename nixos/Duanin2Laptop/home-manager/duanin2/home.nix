@@ -90,10 +90,6 @@ in {
   in {
     inherit alacritty gpg git mangohud ssh zsh;
     home-manager.enable = true;
-    firefox = {
-      enable = true;
-      package = pkgs.latest.firefox-nightly-bin;
-    };
   };
 
   services = {
