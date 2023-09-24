@@ -53,6 +53,9 @@ in {
 
       lxqt.lxqt-archiver
       lxqt.pcmanfm-qt
+
+      # Web Browser
+      nyxtx
     ];
   };
 
