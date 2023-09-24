@@ -53,6 +53,8 @@ in {
 
       # Web Browser
       nyxt
+
+      fd
     ];
   };
 
