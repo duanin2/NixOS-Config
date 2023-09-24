@@ -34,9 +34,6 @@ in {
       replay-sorcery
       gamemode
 
-      # Ricing
-      eww-wayland
-
       (pkgs.bottles.override {
         extraPkgs = pkgs: with pkgs; [
           gamescope_git
@@ -55,7 +52,7 @@ in {
       lxqt.pcmanfm-qt
 
       # Web Browser
-      nyxtx
+      nyxt
     ];
   };
 
