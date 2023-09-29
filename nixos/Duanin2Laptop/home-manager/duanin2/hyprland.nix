@@ -35,7 +35,7 @@ exec-once = eww open bar
 exec-once = sleep 1; ${pkgs.networkmanagerapplet}/bin/nm-applet # network manager
 exec-once = sleep 1; blueman-applet # bluetooth
 exec-once = sleep 1; keepassxc
-exec-once = sleep 1; steam -console -nofriendsui -silent
+exec-once = sleep 1; steam -console -nofriendsui -silent -no-browser
 
 
 windowrulev2 = fullscreen,class:^((stormworks64)\.exe|())$
