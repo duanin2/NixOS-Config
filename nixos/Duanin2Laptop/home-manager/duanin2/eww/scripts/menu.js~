@@ -1,0 +1,5 @@
+#!/usr/bin/env -S nix shell nixpkgs#nodejs_20 -c node
+const { env } = require('node:process')
+
+const xdgDataDirs = [ env.XDG_DATA_HOME ] + env.XDG_DATA_DIRS.split(":")
+console.log(xdgDataDirs)

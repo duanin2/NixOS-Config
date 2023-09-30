@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, pkgs, ... }:
 
 with lib;
 
@@ -124,7 +124,7 @@ in {
     };
 
     preferDarkTheme = mkOption {
-      type = types.bool;
+      type = types.boolean;
       default = false;
       description = "Whether to use a dark theme or not.";
     };
@@ -133,7 +133,8 @@ in {
   config = mkIf cfg.enable (let
     gtk4Ini = optionalAttrs (cfg.font != null) {
       gtk-font-name = let
-        fontSize = optionalString (cfg.font.size != null) " ${toString cfg.font.size}";
+        fontSize =
+          optionalString (cfg.font.size != null) " ${toString cfg.font.size}";
       in "${cfg.font.name}" + fontSize;
     } // optionalAttrs (cfg.theme != null) { gtk-theme-name = cfg.theme.name; }
     // optionalAttrs (cfg.iconTheme != null) {
@@ -164,7 +165,8 @@ in {
 
     gtk2Ini = optionalAttrs (cfg.font != null) {
       gtk-font-name = let
-        fontSize = optionalString (cfg.font.size != null) " ${toString cfg.font.size}";
+        fontSize =
+          optionalString (cfg.font.size != null) " ${toString cfg.font.size}";
       in "${cfg.font.name}" + fontSize;
     } // optionalAttrs (cfg.theme != null) { gtk-theme-name = cfg.theme.name; }
     // optionalAttrs (cfg.iconTheme != null) {
@@ -174,43 +176,5 @@ in {
     } // optionalAttrs (cfg.cursorTheme != null && cfg.cursorTheme.size != null) {
       gtk-cursor-theme-size = cfg.cursorTheme.size;
     };
-
-    dconfIni = optionalAttrs (cfg.font != null) {
-      font-name = let
-        fontSize = optionalString (cfg.font.size != null) " ${toString cfg.font.size}";
-      in "${cfg.font.name}" + fontSize;
-    } // optionalAttrs (cfg.theme != null) { gtk-theme = cfg.theme.name; }
-    // optionalAttrs (cfg.iconTheme != null) {
-      icon-theme = cfg.iconTheme.name;
-    } // optionalAttrs (cfg.cursorTheme != null) {
-      cursor-theme = cfg.cursorTheme.name;
-    } // optionalAttrs (cfg.cursorTheme != null && cfg.cursorTheme.size != null) {
-      cursor-size = cfg.cursorTheme.size;
-    } // {
-      color-scheme = if cfg.preferDarkTheme then "prefer-dark" else "prefer-light";
-    };
-
-    optionalPackage = opt: optional (opt != null && opt.package != null) opt.package;
-  in {
-    home.packages = concatMap optionalPackage [
-      cfg.font
-      cfg.theme
-      cfg.iconTheme
-      cfg.cursorTheme
-    ];
-
-    home.sessionVariables.GTK2_RC_FILES = "${config.xdg.configHome}/gtk-2.0/gtkrc";
-
-    xdg.configFile."gtk-2.0/gtkrc".text =
-      concatMapStrings (l: l + "\n") (mapAttrsToList formatGtk2Option gtk2Ini)
-      + "\n";
-
-    xdg.configFile."gtk-3.0/settings.ini".text =
-      toGtkIni { Settings = gtk3Ini; };
-
-    xdg.configFile."gtk-4.0/settings.ini".text =
-      toGtkIni { Settings = gtk4Ini; };
-
-    dconf.settings."org/gnome/desktop/interface" = dconfIni;
-  });
+  );
 }
