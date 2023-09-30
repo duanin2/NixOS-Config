@@ -86,7 +86,6 @@ in {
     alacritty = (import ./alacritty.nix) extraArgs;
     gpg = (import ./gpg.nix) extraArgs;
     git = (import ./git.nix) extraArgs;
-    mangohud = (import ./mangohud.nix) extraArgs;
     ssh = import ./ssh.nix;
     zsh = (import ./zsh.nix) extraArgs;
   in {
