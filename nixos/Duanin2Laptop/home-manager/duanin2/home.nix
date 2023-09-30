@@ -59,7 +59,6 @@ in {
       rar
       unrar
       rpmextract
-      tar
       gzip
       bzip2
       pbzip2
