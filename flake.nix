@@ -88,7 +88,7 @@
 
     nixCommon = { lib, pkgs, ... }: {
       enable = true; # DO NOT DISABLE
-      package = lib.mkDefault pkgs.nixVersions.unstable;
+      package = lib.mkDefault pkgs.nixVersions.stable;
 
       checkConfig = true;
 
