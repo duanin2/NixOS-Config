@@ -50,6 +50,25 @@ in {
       qbittorrent
 
       lxqt.lxqt-archiver
+      7zz
+      arj
+      cabextract
+      cpio
+      lzham
+      lha
+      rar
+      unrar
+      rpmextract
+      tar
+      gzip
+      bzip2
+      pbzip2
+      lrzip
+      lzip
+      lzop
+      xz
+      unzip
+      zip
       lxqt.pcmanfm-qt
 
       # Web Browser
