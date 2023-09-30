@@ -109,7 +109,7 @@ in {
     ssh = import ./ssh.nix;
     zsh = (import ./zsh.nix) extraArgs;
   in {
-    inherit alacritty gpg git mangohud ssh zsh;
+    inherit alacritty gpg git ssh zsh;
     home-manager.enable = true;
   };
 
