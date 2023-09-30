@@ -50,7 +50,6 @@ in {
       qbittorrent
 
       lxqt.lxqt-archiver
-      7zz
       arj
       cabextract
       cpio
