@@ -33,6 +33,7 @@ in {
       vkbasalt
       replay-sorcery
       gamemode
+      goverlay
 
       (pkgs.bottles.override {
         extraPkgs = pkgs: with pkgs; [
