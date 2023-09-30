@@ -19,12 +19,7 @@ async function close(window) {
     return `hyprctl dispatch closewindow address:${window.address}`
 }
 
-async function genJSON() {
-    const windows = JSON.parse((await execFile('hyprctl', ['clients', '-j'])).stdout)
-    const focusedWorkspace = JSON.parse((await execFile('hyprctl', ['activeworkspace', '-j'])).stdout)
-
-    const focusedWindow = JSON.parse((await execFile('hyprctl', ['activewindow', '-j'])).stdout)
-
+async function genJSON(windows, focusedWorkspace, focusedWindow) {
     let out = []
 
     for (window of windows) {
@@ -39,18 +34,28 @@ async function genJSON() {
 						title: window.title
 				}
 		}
-    out = JSON.stringify(out)
     return out
 }
 
 (async function() {
-    let prevJson
-    for await (const json of timers.setInterval(1000, genJSON)) {
-				jsonRes = await json()
-				if (prevJson === jsonRes) {
+		let windows, focusedWindow, focusedWorkspace
+		let prevWindows, prevFocusedWindow, prevFocusedWorkspace 
+		for await (const json of timers.setInterval(1000, genJSON)) {
+				prevWindows = windows
+				prevFocusedWindow = focusedWindow
+				prevFocusedWorkspace = focusedWorkspace
+				
+				try {
+						windows = (await execFile('hyprctl', ['clients', '-j'])).stdout
+						focusedWindow = (await execFile('hyprctl', ['activewindow', '-j'])).stdout
+						focusedWorkspace = (await execFile('hyprctl', ['activeworkspace', '-j'])).stdout
+				} catch (err) {
+						console.error(err)
 						continue
 				}
-				prevJson = jsonRes
-				console.log(jsonRes)
-    }
+
+				if (windows != prevWindows || focusedWindow != prevFocusedWindow || focusedWorkspace != prevFocusedWorkspace) {
+						console.log(JSON.stringify(await genJSON(JSON.parse(windows), JSON.parse(focusedWorkspace), JSON.parse(focusedWindow))))
+				}
+		}
 })()

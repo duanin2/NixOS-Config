@@ -1,19 +1,17 @@
-{ config, pkgs, ... }: {
+{ outputs, lib, config, pkgs, ... }: {
   gtk = {
     enable = true;
 
-    gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
-
     cursorTheme = {
-      package = pkgs.catppuccin-cursors;
-      name = "Catppuccin-Cursors-Frappe-Green";
-      size = 10;
+      package = pkgs.catppuccin-cursors.frappeGreen;
+      name = "Catppuccin-Frappe-Green-Cursors";
+      size = 24;
     };
     font = {
       name = "Noto Sans";
       size = 10;
     };
-    iconTheme = {
+    theme = {
       package = (pkgs.catppuccin-gtk.override {
         accents = [ "green" ];
         size = "compact";
@@ -21,5 +19,6 @@
       });
       name = "Catppuccin-Frappe-Compact-Green-dark";
     };
-  }
+    preferDarkTheme = true;
+  };
 }

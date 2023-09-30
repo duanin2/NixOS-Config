@@ -1,9 +1,4 @@
-{
-  inputs    ,
-  pkgs      ,
-  config    ,
-  ...
-}: {
+{ inputs, pkgs, nurNoPkgs, config, ... }: {
   programs.emacs = {
     enable = true;
     package = pkgs.emacs-pgtk;
@@ -40,6 +35,7 @@
 (when (version<= "26.0.50" emacs-version)
       (global-display-line-numbers-mode))
       '';
+      
       usePackage = {
         catppuccin-theme = {
           enable = true;
@@ -63,6 +59,7 @@
       };
     };
   };
+  
   services.emacs = {
     enable = true;
 

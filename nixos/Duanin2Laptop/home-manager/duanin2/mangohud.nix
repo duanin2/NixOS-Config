@@ -1,10 +1,11 @@
-{ ... }: {
+{ pkgs, ... }: {
   enable = true;
   package = pkgs.mangohud_git;
 
   settings = {
     # Display
-    vsync = 0;
+    vsync = 1;
+    gl_vsync = 0;
 
     # Basic info
     custom_text_center = "MangoHUD";
@@ -13,7 +14,8 @@
 
     # GPU
     gpu_temp = true;
-    gpu_text = "GPU";
+    gpu_core_clock = true;
+    gpu_mem_clock = true;
     gpu_load_change = true;
     gpu_load_value = "25,50,75";
     gpu_load_color = "41FC02,ADFC02,FC9002,FC1302";
@@ -22,11 +24,19 @@
 
     # CPU
     cpu_temp = true;
-    cpu_text = "CPU";
     cpu_mhz = true;
     cpu_load_change = true;
     cpu_load_value = "25,50,75";
     cpu_load_color = "41FC02,ADFC02,FC9002,FC1302";
+
+    # IO
+    io_read = true;
+    io_write = true;
+
+    # Memory
+    vram = true;
+    ram = true;
+    swap = true;
 
     # Battery info
     battery = true;
@@ -40,6 +50,12 @@
     fps_color = "FC0202,FCFC02,23FC02";
     frametime = true;
     frame_timing = true;
+    dynamic_frame_timing = true;
+
+    # External programs
+    gamemode = true;
+    vkbasalt = true;
+    fsr = true;
     
     # Layout
     position = "top-left";
