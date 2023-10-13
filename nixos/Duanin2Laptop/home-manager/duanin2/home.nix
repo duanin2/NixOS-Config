@@ -56,7 +56,6 @@ in {
       lzham
       lha
       rar
-      unrar
       rpmextract
       gzip
       bzip2
@@ -65,14 +64,15 @@ in {
       lzip
       lzop
       xz
-      unzip
       zip
+      unzip
       lxqt.pcmanfm-qt
+
+      # Inkscape
+      inkscape-with-extensions
 
       # Web Browser
       nyxt
-
-      fd
     ];
   };
 

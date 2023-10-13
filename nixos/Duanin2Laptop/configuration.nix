@@ -505,6 +505,10 @@ esac
     glxinfo
     bc
     file
+    neofetch
+    htop
+    nvtop
+    acpi
 
     win-virtio
     virt-manager
