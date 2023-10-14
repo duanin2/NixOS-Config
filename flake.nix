@@ -49,9 +49,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Mozilla packages
-    mozilla.url = "github:mozilla/nixpkgs-mozilla";
-
     # Eww systray
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
