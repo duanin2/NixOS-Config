@@ -151,7 +151,7 @@ in {
     };
 
     # Use Zen kernel from nixpkgs
-    kernelPackages = pkgs.linuxKernel.kernels.linux_zen;
+    kernelPackages = (pkgs.linuxPackagesFor pkgs.linux_cachyos);
   };
 
   services.udev = {
