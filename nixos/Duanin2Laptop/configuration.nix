@@ -27,6 +27,16 @@ in {
       # Eww systray
       inputs.rust-overlay.overlays.default
       inputs.eww.overlays.default
+
+      # Replace several packages with git versions
+      (final: prev: {
+        mesa = final.mesa_git;
+        pkgsi686Linux.mesa = final.mesa_32;
+
+        wayland = final.wayland_git;
+        wayland_protocols = final.wayland_protocols_git;
+        wayland_scanner = final.wayland_scanner_git;
+      })
     ];
     # nixpkgs configuration
     config = {
@@ -141,7 +151,7 @@ in {
     };
 
     # Use CachyOS kernel from Chaotic's Nyx flake
-    kernelPackages = pkgs.linuxPackages_zen;
+    kernelPackages = pkgs.linux_chachyos;
   };
 
   services.udev = {
@@ -414,7 +424,7 @@ esac
   # Enable Hyprland Wayland compositor
   programs.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages.x86_64-linux.hyprland.override { inherit (pkgs) mesa; };
+    package = inputs.hyprland.packages.x86_64-linux.hyprland.override { inherit (pkgs) mesa wayland wayland-scanner wayland-protocols; };
 
     xwayland.enable = true;
     enableNvidiaPatches = true;
