@@ -150,8 +150,8 @@ in {
       "kernel.nmi_watchdog" = 0;
     };
 
-    # Use CachyOS kernel from Chaotic's Nyx flake
-    kernelPackages = pkgs.linux_cachyos;
+    # Use Zen kernel from nixpkgs
+    kernelPackages = pkgs.linux_zen;
   };
 
   services.udev = {
