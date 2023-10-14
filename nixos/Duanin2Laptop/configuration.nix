@@ -305,6 +305,13 @@ function launchbg() {
           "swrast"
         ];
       };
+      mesaOverrideAttrs = old: {
+        mesonFlags = (old.mesonFlags or []) ++ [
+          "-Dgallium-vdpau=false"
+          "-Dgallium-va=false"
+          "-Dgallium-xa=false"
+        ];
+      };
 
       mesaPackage = (pkgs.new.mesa.override mesaOverride);
       mesaPackage32 = (pkgs.new.pkgsi686Linux.mesa.override mesaOverride);
