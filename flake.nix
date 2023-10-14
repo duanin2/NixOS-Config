@@ -156,7 +156,7 @@
           "https://hyprland.cachix.org"
           
           # nix-community
-          "nix-community.cachix.org"
+          "https://nix-community.cachix.org"
           
           # Chaotic's Nyx
           "https://nyx.chaotic.cx"

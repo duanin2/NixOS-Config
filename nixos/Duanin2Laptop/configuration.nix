@@ -30,9 +30,6 @@ in {
       # Replace several packages with git versions
       (final: prev: rec {
         new = {
-          mesa = final.mesa_git;
-          pkgsi686Linux.mesa = final.mesa32_git;
-
           wayland = final.wayland_git;
           wayland-protocols = final.wayland-protocols_git;
           wayland-scanner = final.wayland-scanner_git;
@@ -294,40 +291,16 @@ function launchbg() {
   ];
 
   hardware = {
-    opengl = let
-      mesaOverride = {
-        galliumDrivers = [
-          "swrast"
-          "iris"
-        ];
-        vulkanDrivers = [
-          "intel"
-          "swrast"
-        ];
-      };
-      mesaOverrideAttrs = old: {
-        mesonFlags = (old.mesonFlags or []) ++ [
-          "-Dgallium-vdpau=false"
-          "-Dgallium-va=false"
-          "-Dgallium-xa=false"
-        ];
-      };
-
-      mesaPackage = (pkgs.new.mesa.override mesaOverride);
-      mesaPackage32 = (pkgs.new.pkgsi686Linux.mesa.override mesaOverride);
-    in {
+    opengl = {
       enable = true;
 
       driSupport = true;
       driSupport32Bit = true;
-
-      package = mesaPackage.drivers;
-      package32 = mesaPackage32.drivers;
       
       extraPackages = (with pkgs; [ ])
-      ++ (with mesaPackage; [ ]);
+      ++ (with pkgs.mesa; [ ]);
       extraPackages32 = (with pkgs.pkgsi686Linux; [ ])
-      ++ (with mesaPackage32; [ ]);
+      ++ (with pkgs.pkgsi686Linux.mesa; [ ]);
     };
     nvidia = {
       # Needed for most wayland compositors
@@ -451,7 +424,7 @@ esac
   # Enable Hyprland Wayland compositor
   programs.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages.x86_64-linux.hyprland.override { inherit (pkgs.new) mesa wayland wayland-scanner wayland-protocols; };
+    package = inputs.hyprland.packages.x86_64-linux.hyprland.override { inherit (pkgs.new) wayland wayland-scanner wayland-protocols; };
 
     xwayland.enable = true;
     enableNvidiaPatches = true;

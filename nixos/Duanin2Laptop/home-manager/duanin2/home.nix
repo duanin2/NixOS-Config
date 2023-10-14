@@ -92,7 +92,7 @@ in {
     inherit extraConfig;
 
     enable = true;
-    package = inputs.hyprland.packages.x86_64-linux.hyprland.override { inherit (pkgs.new) mesa wayland wayland-scanner wayland-protocols; };
+    package = inputs.hyprland.packages.x86_64-linux.hyprland.override { inherit (pkgs.new) wayland wayland-scanner wayland-protocols; };
     
     xwayland.enable = true;
     enableNvidiaPatches = true;
