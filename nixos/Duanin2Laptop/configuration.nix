@@ -305,29 +305,22 @@ function launchbg() {
           "swrast"
         ];
       };
+
+      mesaPackage = (pkgs.new.mesa.override mesaOverride);
+      mesaPackage32 = (pkgs.new.pkgsi686Linux.mesa.override mesaOverride);
     in {
       enable = true;
 
       driSupport = true;
       driSupport32Bit = true;
 
-      package = (pkgs.new.mesa.override mesaOverride).drivers;
-      package32 = (pkgs.new.pkgsi686Linux.mesa.override mesaOverride).drivers;
+      package = mesaPackage.drivers;
+      package32 = mesaPackage32.drivers;
       
-      extraPackages = lib.mkForce (with pkgs; [
-        (intel-vaapi-driver.override { inherit (new) mesa; })
-        (libvdpau-va-gl.override { inherit (new) mesa; })
-        (intel-media-driver.override { inherit (new) mesa; })
-        (vaapiVdpau.override { inherit (new) mesa; })
-      ])
-      ++ (with pkgs.new.mesa; []);
-      extraPackages32 = lib.mkForce (with pkgs.pkgsi686Linux; [
-        (intel-vaapi-driver.override { inherit (new.pkgsi686Linux) mesa; })
-        (libvdpau-va-gl.override { inherit (new.pkgsi686Linux) mesa; })
-        (intel-media-driver.override { inherit (new.pkgsi686Linux) mesa; })
-        (vaapiVdpau.override { inherit (new) mesa; })
-      ])
-      ++ (with pkgs.new.pkgsi686Linux.mesa; []);
+      extraPackages = (with pkgs; [ ])
+      ++ (with mesaPackage; [ ]);
+      extraPackages32 = (with pkgs.pkgsi686Linux; [ ])
+      ++ (with mesaPackage32; [ ]);
     };
     nvidia = {
       # Needed for most wayland compositors
