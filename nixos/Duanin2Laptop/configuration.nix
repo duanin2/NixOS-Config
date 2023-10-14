@@ -39,9 +39,6 @@ in {
 
           alacritty = final.alacritty_git;
         };
-
-        inherit (new) mesa;
-        pkgsi686Linux = { inherit (new.pkgsi686Linux) mesa; };
       })
     ];
     # nixpkgs configuration
@@ -297,16 +294,40 @@ function launchbg() {
   ];
 
   hardware = {
-    opengl = {
+    opengl = let
+      mesaOverride = {
+        galliumDrivers = [
+          "swrast"
+          "iris"
+        ];
+        vulkanDrivers = [
+          "intel"
+          "swrast"
+        ];
+      };
+    in {
       enable = true;
 
       driSupport = true;
       driSupport32Bit = true;
 
-      extraPackages = (with pkgs; [])
-                      ++ (with pkgs.mesa; []);
-      extraPackages32 = (with pkgs.pkgsi686Linux; [])
-                        ++ (with pkgs.pkgsi686Linux.mesa; []);
+      package = (pkgs.new.mesa.override mesaOverride).drivers;
+      package32 = (pkgs.new.pkgsi686Linux.mesa.override mesaOverride).drivers;
+      
+      extraPackages = lib.mkForce (with pkgs; [
+        (intel-vaapi-driver.override { inherit (new) mesa; })
+        (libvdpau-va-gl.override { inherit (new) mesa; })
+        (intel-media-driver.override { inherit (new) mesa; })
+        (vaapiVdpau.override { inherit (new) mesa; })
+      ])
+      ++ (with pkgs.new.mesa; []);
+      extraPackages32 = lib.mkForce (with pkgs.pkgsi686Linux; [
+        (intel-vaapi-driver.override { inherit (new.pkgsi686Linux) mesa; })
+        (libvdpau-va-gl.override { inherit (new.pkgsi686Linux) mesa; })
+        (intel-media-driver.override { inherit (new.pkgsi686Linux) mesa; })
+        (vaapiVdpau.override { inherit (new) mesa; })
+      ])
+      ++ (with pkgs.new.pkgsi686Linux.mesa; []);
     };
     nvidia = {
       # Needed for most wayland compositors
