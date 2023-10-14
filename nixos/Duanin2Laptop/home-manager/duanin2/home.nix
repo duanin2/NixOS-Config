@@ -34,6 +34,8 @@ in {
       replay-sorcery
       gamemode
       goverlay
+      mangohud_git
+      mangohud32_git
 
       (pkgs.bottles.override {
         extraPkgs = pkgs: with pkgs; [

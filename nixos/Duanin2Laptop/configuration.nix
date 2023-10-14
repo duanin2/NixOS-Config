@@ -497,7 +497,6 @@ esac
   environment.systemPackages = with pkgs; [
     wget
     git
-    home-manager
     inputs.agenix.packages.${pkgs.system}.default
     (pkgs.uutils-coreutils.override {prefix = "";})
     seatd
