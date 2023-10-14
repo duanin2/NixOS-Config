@@ -19,7 +19,6 @@ in {
       # Overlays from this flake
       outputs.overlays.additions
       outputs.overlays.modifications
-      #outputs.overlays.mesa
 
       # Emacs
       inputs.emacs.overlays.default
@@ -29,13 +28,15 @@ in {
       inputs.eww.overlays.default
 
       # Replace several packages with git versions
-      (final: prev: {
-        mesa = final.mesa_git;
-        pkgsi686Linux.mesa = final.mesa_32;
+      (final: prev: rec {
+        new = {
+          mesa = final.mesa_git;
+          pkgsi686Linux.mesa = final.mesa32_git;
 
-        wayland = final.wayland_git;
-        wayland_protocols = final.wayland_protocols_git;
-        wayland_scanner = final.wayland_scanner_git;
+          wayland = final.wayland_git;
+          wayland-protocols = final.wayland-protocols_git;
+          wayland-scanner = final.wayland-scanner_git;
+        };
       })
     ];
     # nixpkgs configuration
@@ -424,7 +425,7 @@ esac
   # Enable Hyprland Wayland compositor
   programs.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages.x86_64-linux.hyprland.override { inherit (pkgs) mesa wayland wayland-scanner wayland-protocols; };
+    package = inputs.hyprland.packages.x86_64-linux.hyprland.override { inherit (pkgs.new) mesa wayland wayland-scanner wayland-protocols; };
 
     xwayland.enable = true;
     enableNvidiaPatches = true;
