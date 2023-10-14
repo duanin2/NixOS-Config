@@ -116,6 +116,18 @@ in {
     syncthing = {
       enable = true;
     };
+    xsettingsd = {
+      enable = true;
+
+      settings = {
+        "Net/ThemeName" = config.gtk.theme.name;
+        "Gtk/CursorThemeName" = config.gtk.cursorTheme.name;
+        "Gtk/CursorThemeSize" = config.gtk.cursorTheme.size;
+        "Gtk/FontName" = "${config.gtk.font.name} ${toString config.gtk.font.size}";
+        "Net/IconThemeName" = config.gtk.iconTheme.name;
+        "Gtk/DecorationLayout" = ":";
+      };
+    };
   };
 
   # Nicely reload system units when changing configs

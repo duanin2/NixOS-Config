@@ -7,7 +7,7 @@ monitor = eDP-1,1920x1080@60,0x0,1
 
 
 # Environment
-env = GTK_THEME,${config.gtk.theme.name}
+#env = GTK_THEME,${config.gtk.theme.name}
 env = XCURSOR_THEME,${config.gtk.cursorTheme.name}
 env = XCURSOR_SIZE,${toString config.gtk.cursorTheme.size}
 
@@ -28,6 +28,8 @@ env QT_WAYLAND_DISABLE_WINDOWDECORATION,1
 
 
 # Autostart
+exec-once = hyprctl setcursor ${config.gtk.cursorTheme.name} ${toString config.gtk.cursorTheme.size}
+
 exec-once = ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 # polkit agent
 
 exec-once = eww open bar
