@@ -36,7 +36,12 @@ in {
           wayland = final.wayland_git;
           wayland-protocols = final.wayland-protocols_git;
           wayland-scanner = final.wayland-scanner_git;
+
+          alacritty = final.alacritty_git;
         };
+
+        inherit (new) mesa;
+        pkgsi686Linux = { inherit (new.pkgsi686Linux) mesa; };
       })
     ];
     # nixpkgs configuration
