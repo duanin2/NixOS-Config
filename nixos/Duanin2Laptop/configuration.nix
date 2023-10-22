@@ -26,17 +26,6 @@ in {
       # Eww systray
       inputs.rust-overlay.overlays.default
       inputs.eww.overlays.default
-
-      # Replace several packages with git versions
-      (final: prev: rec {
-        new = {
-          wayland = final.wayland_git;
-          wayland-protocols = final.wayland-protocols_git;
-          wayland-scanner = final.wayland-scanner_git;
-
-          alacritty = final.alacritty_git;
-        };
-      })
     ];
     # nixpkgs configuration
     config = {
@@ -424,7 +413,7 @@ esac
   # Enable Hyprland Wayland compositor
   programs.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages.x86_64-linux.hyprland.override { inherit (pkgs.new) wayland wayland-scanner wayland-protocols; };
+    package = inputs.hyprland.packages.x86_64-linux.hyprland;
 
     xwayland.enable = true;
     enableNvidiaPatches = true;

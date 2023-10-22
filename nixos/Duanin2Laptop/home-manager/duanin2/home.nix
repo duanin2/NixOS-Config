@@ -15,7 +15,7 @@ in {
 
   home = {
     username = "duanin2";
-    homeDirectory = "/home/duanin2";
+    homeDirectory = "/home/${config.home.username}";
     stateVersion = "23.05";
 
     persistence."/persist/user/${config.home.username}" = {
@@ -92,7 +92,7 @@ in {
     inherit extraConfig;
 
     enable = true;
-    package = inputs.hyprland.packages.x86_64-linux.hyprland.override { inherit (pkgs.new) wayland wayland-scanner wayland-protocols; };
+    package = inputs.hyprland.packages.x86_64-linux.hyprland;
     
     xwayland.enable = true;
     enableNvidiaPatches = true;
@@ -118,18 +118,10 @@ in {
     };
     xsettingsd = {
       enable = true;
-
-      settings = {
-        "Net/ThemeName" = config.gtk.theme.name;
-        "Gtk/CursorThemeName" = config.gtk.cursorTheme.name;
-        "Gtk/CursorThemeSize" = config.gtk.cursorTheme.size;
-        "Gtk/FontName" = "${config.gtk.font.name} ${toString config.gtk.font.size}";
-        "Net/IconThemeName" = config.gtk.iconTheme.name;
-        "Gtk/DecorationLayout" = ":";
-      };
+      package = pkgs.xsettingsd;
     };
   };
-
+x
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 }

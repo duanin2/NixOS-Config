@@ -212,5 +212,13 @@ in {
       toGtkIni { Settings = gtk4Ini; };
 
     dconf.settings."org/gnome/desktop/interface" = dconfIni;
+
+    xsettingsd.settings = mkIf config.xsettingsd.enable {
+      "Gtk/FontName" = "${cfg.font},  ${toString cfg.font.size}";
+      "Gtk/CursorThemeName" = cfg.cursorTheme.name;
+      "Gtk/CursorThemeSize" = cfg.cursorTheme.size;
+      "Net/IconThemeName" = (cfg.iconTheme.name or "");
+      "Net/ThemeName" = cfg.theme.name;
+    }
   });
 }
