@@ -17,22 +17,4 @@
       ];
     });
   };
-
-  # mesa git
-  mesa = final: prev: let
-    newAttrs = {
-      galliumDrivers = [
-        "swrast"
-        "zink"
-        "iris"
-      ];
-      vulkanDrivers = [
-        "swrast"
-        "intel"
-      ];
-    };
-  in rec {
-    mesa = inputs.chaotic.packages.x86_64-linux.mesa_git.override newAttrs;
-    pkgsi686Linux.mesa = inputs.chaotic.packages.x86_64-linux.final.mesa32_git.override newAttrs;
-  };
 }
