@@ -49,6 +49,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Prism Launcher
+    prismlauncher = {
+      url = "github:PrismLauncher/PrismLauncher";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Eww systray
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
@@ -117,6 +123,10 @@
         "eww" = {
           flake = inputs.eww;
           exact = true;
+        };
+        "prismlauncher" = {
+          flake = inputs.prismlauncher;
+          exact = false;
         };
       };
 
