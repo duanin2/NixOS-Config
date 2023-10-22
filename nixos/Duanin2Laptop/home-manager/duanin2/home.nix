@@ -11,6 +11,7 @@ in {
     ./emacs.nix
     ./gtk.nix
     ./eww
+    ./firefox.nix
   ];
 
   home = {
@@ -71,9 +72,6 @@ in {
 
       # Inkscape
       inkscape-with-extensions
-
-      # Web Browser
-      nyxt
     ];
   };
 
