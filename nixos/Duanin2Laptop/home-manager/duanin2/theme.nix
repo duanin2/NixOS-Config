@@ -25,13 +25,11 @@
     gtk.enable = true;
   };
 
-  home.packages = with pkgs; [
-    (catppuccin-kvantum.override {
-      accent = "Green";
-      variant = "Frappe";
-    })
-    libsForQt5.qtstyleplugin-kvantum
-  ];
+  qt = {
+    enable = true;
 
-  home.sessionVariables.QT_STYLE_OVERRIDE = "kvantum";
+    platformTheme = "qtct";
+  };
+
+  home.packages = with pkgs; [ lightly-qt ];
 }
