@@ -24,4 +24,13 @@
     size = 28;
     gtk.enable = true;
   };
+
+  home.packages = with pkgs; [
+    catppuccin-kvantum
+  ];
+
+  qt = {
+    enable = true;
+    style.name = "kvantum";
+  };
 }

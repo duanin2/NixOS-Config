@@ -9,7 +9,7 @@
 in {
   imports = [
     ./emacs.nix
-    ./gtk.nix
+    ./theme.nix
     ./eww
     ./firefox.nix
   ];
