@@ -7,10 +7,6 @@ monitor = eDP-1,1920x1080@60,0x0,1
 
 
 # Environment
-#env = GTK_THEME,${config.gtk.theme.name}
-env = XCURSOR_THEME,${config.gtk.cursorTheme.name}
-env = XCURSOR_SIZE,${toString config.gtk.cursorTheme.size}
-
 # Toolkit backend
 env GDK_BACKEND,wayland,x11
 env QT_QPA_PLATFORM,wayland;xcb
