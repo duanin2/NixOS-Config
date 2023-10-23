@@ -31,6 +31,11 @@
 
   qt = {
     enable = true;
-    style.name = "kvantum";
+
+    platformTheme = "qtct";
+    style = {
+      package = pkgs.libsForQt5.kvantum;
+      name = "kvantum";
+    };
   };
 }
