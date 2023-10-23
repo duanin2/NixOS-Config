@@ -26,7 +26,7 @@
   };
 
   home.packages = with pkgs; [
-    (catppuccin-kvantum.overrride {
+    (catppuccin-kvantum.override {
       accent = "Green";
       variant = "Frappe";
     })
