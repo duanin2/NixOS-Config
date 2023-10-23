@@ -72,6 +72,10 @@ in {
 
       # Inkscape
       inkscape-with-extensions
+
+      # Discord
+      discord-development
+      betterdiscordctl
     ];
   };
 
