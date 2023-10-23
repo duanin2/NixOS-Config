@@ -33,9 +33,5 @@
     libsForQt5.qtstyleplugin-kvantum
   ];
 
-  qt = {
-    enable = true;
-
-    platformTheme = "qtct";
-  };
+  home.QT_STYLE_OVERRIDE = "kvantum";
 }
