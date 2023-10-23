@@ -33,5 +33,5 @@
     libsForQt5.qtstyleplugin-kvantum
   ];
 
-  home.QT_STYLE_OVERRIDE = "kvantum";
+  home.sessionVariables.QT_STYLE_OVERRIDE = "kvantum";
 }
