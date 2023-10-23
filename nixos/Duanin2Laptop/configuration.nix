@@ -502,7 +502,6 @@ esac
     file
     neofetch
     htop
-    nvtop
     acpi
 
     win-virtio
