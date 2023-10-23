@@ -30,10 +30,11 @@ exec-once = ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 # p
 
 exec-once = eww open bar
 
-exec-once = sleep 1; ${pkgs.networkmanagerapplet}/bin/nm-applet # network manager
-exec-once = sleep 1; blueman-applet # bluetooth
-exec-once = sleep 1; keepassxc
-exec-once = sleep 1; steam -console -nofriendsui -silent -no-browser
+exec-once = sleep 1; discordcanary --start-minimized --ignore-gpu-blocklist --enable-features=VaapiVideoDecoder,UseOzonePlatform --use-gl=desktop --enable-gpu-rasterization --enable-zero-copy --ozone-platform=wayland # Discord
+exec-once = sleep 1; ${pkgs.networkmanagerapplet}/bin/nm-applet # Network Manager
+exec-once = sleep 1; blueman-applet # Bluetooth
+exec-once = sleep 1; keepassxc # KeepassXC
+exec-once = sleep 1; steam -console -nofriendsui -silent -no-browser # Steam
 
 
 windowrulev2 = fullscreen,class:^((stormworks64)\.exe|())$
