@@ -191,6 +191,13 @@ in {
     };
 
     optionalPackage = opt: optional (opt != null && opt.package != null) opt.package;
+
+    envVars = {
+      GTK2_RC_FILES = "${config.xdg.configHome}/gtk-2.0/gtkrc";
+      GTK_THEME = cfg.theme.name;
+      XCURSOR_THEME = cfg.cursorTheme.name;
+      XCURSOR_SIZE = (toString cfg.cursorTheme.size);
+    };
   in {
     home.packages = concatMap optionalPackage [
       cfg.font
@@ -199,13 +206,8 @@ in {
       cfg.cursorTheme
     ];
 
-    home.sessionVariables.GTK2_RC_FILES = "${config.xdg.configHome}/gtk-2.0/gtkrc";
-
-    home.sessionVariables = {
-      GTK_THEME = cfg.theme.name;
-      XCURSOR_THEME = cfg.cursorTheme.name;
-      XCURSOR_SIZE = (toString cfg.cursorTheme.size);
-    };
+    home.sessionVariables = envVars;
+    systemd.user.sessionVariables = envVars;
 
     xdg.configFile."gtk-2.0/gtkrc".text =
       concatMapStrings (l: l + "\n") (mapAttrsToList formatGtk2Option gtk2Ini)
