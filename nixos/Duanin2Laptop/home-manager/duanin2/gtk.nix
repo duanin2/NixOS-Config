@@ -3,8 +3,8 @@
     enable = true;
 
     font = {
-      package = (pkgs.nerdfonts.override { fonts = [ "Fira Code" ]; });
-      name = "Noto Sans";
+      package = (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; });
+      name = "FiraCode Nerd Font Mono";
       size = 10;
     };
     theme = {
