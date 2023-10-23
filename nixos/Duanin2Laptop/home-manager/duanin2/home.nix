@@ -74,7 +74,7 @@ in {
       inkscape-with-extensions
 
       # Discord
-      discord-development
+      discord-canary
       betterdiscordctl
     ];
   };
