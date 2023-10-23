@@ -26,7 +26,10 @@
   };
 
   home.packages = with pkgs; [
-    catppuccin-kvantum
+    (catppuccin-kvantum.overrride {
+      accent = "Green";
+      variant = "Frappe";
+    })
   ];
 
   qt = {
