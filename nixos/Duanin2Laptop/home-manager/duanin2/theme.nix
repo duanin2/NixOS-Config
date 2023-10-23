@@ -34,7 +34,7 @@
 
     platformTheme = "qtct";
     style = {
-      package = pkgs.libsForQt5.kvantum;
+      package = pkgs.libsForQt5.qtstyleplugin-kvantum;
       name = "kvantum";
     };
   };
