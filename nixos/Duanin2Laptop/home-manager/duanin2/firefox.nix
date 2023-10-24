@@ -68,7 +68,6 @@
         };
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
           auto-tab-discard
-          
           keepassxc-browser
           libredirect
           localcdn
@@ -76,11 +75,18 @@
           tampermonkey
           terms-of-service-didnt-read
           ublock-origin
+          aria2-integration
+          canvasblocker
+          firefox-color
+          istilldontcareaboutcookies
+          privacy-badger
+          protondb-for-steam
+          skip-redirect
+          steam-database
         ];
         bookmarks = [
           {
             name = "Nix";
-            toolbar = true;
             bookmarks = [
               {
                 name = "NixOS";

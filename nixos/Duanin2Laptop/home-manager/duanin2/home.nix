@@ -69,6 +69,8 @@ in {
       zip
       unzip
       lxqt.pcmanfm-qt
+      qt5.qtsvg
+      qt6.qtsvg
 
       # Inkscape
       inkscape-with-extensions
