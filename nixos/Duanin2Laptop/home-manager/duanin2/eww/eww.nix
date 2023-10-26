@@ -1,3 +1,4 @@
+{ config, pkgs, tasks, menu, ... }: ''
 (defwindow bar
            :monitor 0
            :geometry (geometry :x "0%"
@@ -37,7 +38,7 @@
                    :style "padding: 2px 6px;"
                    (box :space-evenly false
                         :spacing 6
-                        (image :path "../../.local/share/eww/images/start-logo.png"
+                        (image :path "${config.home.homeDirectory}/.local/share/eww/images/start-logo.png"
                                :image-width 24
                                :image-height 24)
                         (label :text "Start"
@@ -45,7 +46,7 @@
                                :show-truncated true))))
 
 (deflisten taskbar-content :initial "(box :space-evenly false)"
-                         "../../.local/share/eww/scripts/tasks.js")
+                         "${tasks}")
 (defwidget taskbar []
            (box (for entry in taskbar-content
                      (taskbar-task :focused {entry.isFocused}
@@ -96,3 +97,4 @@
                    :onrightclick {onrightclick || "true"}
                    :tooltip tooltip
                    (label :text text)))
+''
