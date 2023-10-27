@@ -1,5 +1,5 @@
-{ pkgs, ... }: let
-  args = { inherit pkgs tasks menu; };
+{ config, pkgs, ... }: let
+  args = { inherit config pkgs tasks menu; };
   
   tasks = pkgs.writeScript "tasks.js" (import ./tasks.nix args);
   menu = pkgs.writeScript "menu.js" (import ./menu.nix args);

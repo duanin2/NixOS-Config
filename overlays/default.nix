@@ -8,7 +8,7 @@
   # You can change versions, add patches, set compilation flags, anything really.
   # https://nixos.wiki/wiki/Overlays
   modifications = final: prev: {
-    prismlauncher = inputs.prismlauncher.packages.${prev.system}.prismlauncher.overrideAttrs (old: {
+    prismlauncher = inputs.prismlauncher.packages.${final.system}.prismlauncher.overrideAttrs (old: {
       patches = (old.patches or []) ++ [
         (prev.fetchpatch {
           url = "https://github.com/cs32767/PrismLauncher-Offline/commit/17de713e47379dbbc46236eb489f4e4a824a4fee.patch";
@@ -16,5 +16,6 @@
         })
       ];
     });
+    python311Packages.keyutils = inputs.nixpkgs-master.legacyPackages.${final.system}.python311Packages.keyutils;
   };
 }
