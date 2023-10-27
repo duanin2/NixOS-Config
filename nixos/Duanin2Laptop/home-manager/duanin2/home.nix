@@ -78,6 +78,8 @@ in {
       # Discord
       discord-canary
       betterdiscordctl
+
+      aria2
     ];
   };
 
