@@ -272,6 +272,7 @@ function launchbg() {
       userAllowOther = true;
       mountMax = 32767;
     };
+    nix-ld.enable = true;
   };
 
   chaotic.steam.extraCompatPackages = with pkgs; [
