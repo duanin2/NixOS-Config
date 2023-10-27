@@ -116,6 +116,11 @@ in {
   in {
     inherit alacritty gpg git ssh zsh;
     home-manager.enable = true;
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+    };
   };
 
   services = {

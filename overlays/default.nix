@@ -16,6 +16,13 @@
         })
       ];
     });
-    python311Packages.keyutils = inputs.nixpkgs-master.legacyPackages.${final.system}.python311Packages.keyutils;
+    python311 = prev.python311.override {
+      packageOverrides = pyfinal: pyprev: {
+        keyutils = inputs.nixpkgs-master.legacyPackages.${final.system}.python311Packages.keyutils.override {
+          inherit (final) lib fetchFromGitHub keyutils;
+          inherit (pyfinal) buildPythonPackage cython pytestCheckHook;
+        };
+      };
+    };
   };
 }
