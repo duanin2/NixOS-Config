@@ -241,12 +241,8 @@ function launchbg() {
         ];
         extraEnv = {
           MANGOHUD = "1";
-          __NV_PRIME_RENDER_OFFLOAD = "1";
-          __NV_PRIME_RENDER_OFFLOAD_PROVIDER = "NVIDIA-G0";
-          __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-          __VK_LAYER_NV_optimus = "NVIDIA_only";
         };
-        #withJava = true;
+        withJava = true;
       });
 
       # Steam gamescope session
@@ -261,12 +257,6 @@ function launchbg() {
       enable = true;
       package = pkgs.gamescope_git;
       capSysNice = true;
-      env = {
-        __NV_PRIME_RENDER_OFFLOAD = "1";
-        __NV_PRIME_RENDER_OFFLOAD_PROVIDER = "NVIDIA-G0";
-        __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-        __VK_LAYER_NV_optimus = "NVIDIA_only";
-      };
     };
     fuse = {
       userAllowOther = true;
@@ -500,6 +490,7 @@ esac
     vulkan-tools
     glxinfo
     bc
+    fd
     file
     neofetch
     htop
