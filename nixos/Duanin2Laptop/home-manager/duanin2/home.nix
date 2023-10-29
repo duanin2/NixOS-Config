@@ -76,7 +76,7 @@ in {
       inkscape-with-extensions
 
       # Discord
-      webcord-vencord
+      webcord
 
       aria2
     ];
