@@ -242,7 +242,7 @@ function launchbg() {
         extraEnv = {
           MANGOHUD = "1";
         };
-        withJava = true;
+        #withJava = true;
       });
 
       # Steam gamescope session
