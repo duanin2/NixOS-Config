@@ -30,7 +30,7 @@ exec-once = ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 # p
 
 exec-once = eww open bar
 
-exec-once = sleep 1; discordcanary --start-minimized --ignore-gpu-blocklist --enable-features=VaapiVideoDecoder,UseOzonePlatform --use-gl=desktop --enable-gpu-rasterization --enable-zero-copy --ozone-platform=wayland # Discord
+exec-once = sleep 1; webcord --start-minimized --enable-features=UseOzonePlatform --ozone-platform=wayland
 exec-once = sleep 1; ${pkgs.networkmanagerapplet}/bin/nm-applet # Network Manager
 exec-once = sleep 1; blueman-applet # Bluetooth
 exec-once = sleep 1; keepassxc # KeepassXC
