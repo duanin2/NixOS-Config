@@ -76,8 +76,7 @@ in {
       inkscape-with-extensions
 
       # Discord
-      discord-canary
-      betterdiscordctl
+      webcord-vencord
 
       aria2
     ];
