@@ -46,12 +46,7 @@
           multi-account-containers
           behave
         ];
-        extraConfig = (builtins.readFile "${pkgs.fetchFromGitHub {
-          owner = "arkenfox";
-          repo = "user.js";
-          rev = "master";
-          hash = "";
-        }}/user.js");
+        extraConfig = (builtins.readFile "${pkgs.fetchFromGitHub { owner = "arkenfox"; repo = "user.js"; rev = "master"; hash = ""; }}/user.js");
         bookmarks = [
           {
             name = "Nix";
