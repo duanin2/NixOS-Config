@@ -45,6 +45,8 @@
           header-editor
           multi-account-containers
           behave
+          keepassxc-browser
+          redirector
         ];
         extraConfig = (builtins.readFile "${pkgs.fetchFromGitHub { owner = "arkenfox"; repo = "user.js"; rev = "master"; hash = "sha256-IfQNepLwoG9qygeDGj5egnLQUR47LOjBV1PFJtt0Z64="; }}/user.js");
         bookmarks = [
