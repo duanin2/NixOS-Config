@@ -77,6 +77,12 @@ in {
     ];
   };
 
+  catppuccin = {
+    # enable = true; # Global enable isn't yet implemented
+    
+    flavour = "frappe";
+  };
+
   # Use the grub EFI boot loader.
   boot = {
     loader = {
@@ -102,13 +108,7 @@ in {
         copyKernels = false;
         storePath = "/@persist/nix/store";
 
-        # Theme
-        theme = "${(pkgs.fetchFromGitHub {
-          owner = "catppuccin";
-          repo = "grub";
-          rev = "main";
-          hash = "sha256-/bSolCta8GCZ4lP0u5NVqYQ9Y3ZooYCNdTwORNvR7M0=";
-        })}/src/catppuccin-frappe-grub-theme";
+        catppuccin.enable = true;
       };
       efi = {
         efiSysMountPoint = "/boot/efi";

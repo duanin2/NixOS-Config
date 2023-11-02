@@ -1,11 +1,8 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 
-{ inputs, lib, config, nix-colors, chaotic, pkgs, ... }: let
+{ inputs, lib, config, chaotic, pkgs, ... }: let
   extraArgs = { inherit config pkgs; };
-  
-  nix-colors = inputs.nix-colors;
-  nix-colors-lib = nix-colors.lib.contrib { inherit pkgs; };
 in {
   imports = [
     ./emacs.nix
@@ -87,9 +84,6 @@ in {
     automount = true;
   };
 
-  # Color scheme
-  colorScheme = nix-colors.colorSchemes.catppuccin-frappe;
-
   # Enable Hyprland Wayland compositor
   wayland.windowManager.hyprland = let
     extraConfig = (import ./hyprland.nix) extraArgs;
@@ -102,7 +96,7 @@ in {
     xwayland.enable = true;
     enableNvidiaPatches = true;
 
-    systemdIntegration = true;
+    systemd.enable = true;
   };
 
   # Enable home-manager and git

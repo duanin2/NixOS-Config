@@ -7,15 +7,11 @@
       name = "FiraCode Nerd Font Mono";
       size = 10;
     };
-    theme = {
-      package = (pkgs.catppuccin-gtk.override {
-        accents = [ "green" ];
-        size = "compact";
-        variant = "frappe";
-      });
-      name = "Catppuccin-Frappe-Compact-Green-Dark";
+    catppuccin = {
+      enable = true;
+      size = "compact";
+      tweaks = [ "rimless" ];
     };
-    preferDarkTheme = true;
   };
 
   home.pointerCursor = {
@@ -29,6 +25,11 @@
     enable = true;
 
     platformTheme = "qtct";
+  };
+
+  catppuccin = {
+    flavour = "frappe";
+    accent = "green";
   };
 
   home.packages = with pkgs; [ lightly-qt ];

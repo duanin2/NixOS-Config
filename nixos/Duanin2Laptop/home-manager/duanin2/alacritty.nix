@@ -1,6 +1,7 @@
 { config, pkgs, ... }: {
   enable = true;
-  
+
+  catppuccin.enable = true;
   settings = {
     window = {
       padding = {
@@ -10,7 +11,7 @@
       opacity = 0.8;
     };
     font = {
-      family = "monospace";
+      family = "FiraCode Nerd Font Mono";
       size = 10;
     };
     cursor = {
@@ -19,12 +20,5 @@
         blinking = "Always";
       };
     };
-
-    import = [
-      (pkgs.fetchurl {
-        url = "https://github.com/catppuccin/alacritty/raw/main/catppuccin-frappe.yml";
-        hash = "sha256-TywgT/Gf0TjcuHGNzgAMNvueCo23BEL2b9cGJaT2vkw=";
-      })
-    ];
   };
 }

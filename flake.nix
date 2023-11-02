@@ -69,14 +69,13 @@
       };
     };
 
-    # Nix colors
-    base16-schemes = {
-      url = "github:tinted-theming/base16-schemes";
-      flake = false;
-    };
-    nix-colors = {
-      url = "github:misterio77/nix-colors";
-      inputs.base16-schemes.follows = "base16-schemes";
+    # Catppuccin
+    catppuccin = {
+      url = "github:Stonks3141/ctp-nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
     };
   };
 
@@ -270,6 +269,9 @@
           
           # Home Manager
           home-manager.nixosModules.default
+
+          # Catppuccin
+          catppuccin.nixosModules.catppuccin
         ])
         ++ (with inputs.hardware.nixosModules; [
           common-cpu-intel
@@ -317,14 +319,11 @@
                         # Chaotic's Nyx
                         chaotic.homeManagerModules.default
 
-                        # Nix Colors
-                        nix-colors.homeManagerModules.default
-
-                        # GTK
-                        outputs.homeManagerModules.gtk
-
                         # Impermanence
                         impermanence.nixosModules.home-manager.impermanence
+
+                        # Catppuccin
+                        catppuccin.homeManagerModules.catppuccin
                       ]);
                     };
                   };
