@@ -9,6 +9,7 @@ in {
     ./theme.nix
     ./eww
     ./firefox.nix
+    ./thunderbird.nix
   ];
 
   home = {

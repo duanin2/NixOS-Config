@@ -1,4 +1,6 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }: let
+  cfg = config.programs.firefox;
+in {
   programs.firefox = {
     enable = true;
     package = pkgs.firefox_nightly;
@@ -47,11 +49,22 @@
           behave
           keepassxc-browser
           redirector
+          stylus
         ];
-        extraConfig = (builtins.readFile "${pkgs.fetchFromGitHub { owner = "arkenfox"; repo = "user.js"; rev = "master"; hash = "sha256-IfQNepLwoG9qygeDGj5egnLQUR47LOjBV1PFJtt0Z64="; }}/user.js");
+        extraConfig = let
+          baseConfig = pkgs.fetchzip {
+            url = "https://github.com/arkenfox/user.js/archive/refs/heads/master.zip";
+            hash = "";
+          }
+        in builtins.readFile "${baseConfig}/user.js";
         bookmarks = [
           {
+            name = "kernel.org";
+            url = "https://www.kernel.org";
+          }
+          {
             name = "Nix";
+            toolbar = true;
             bookmarks = [
               {
                 name = "NixOS";
