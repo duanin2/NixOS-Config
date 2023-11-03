@@ -1,4 +1,4 @@
-{ pkgs, ... }: let
+{ config, pkgs, ... }: let
   cfg = config.programs.thunderbird;
 in {
   programs.thunderbird = {
@@ -15,8 +15,8 @@ in {
         extraConfig = let
           baseConfig = pkgs.fetchzip {
             url = "https://github.com/HorlogeSkynet/thunderbird-user.js/archive/refs/heads/master.zip";
-            hash = "";
-          }
+            hash = "sha256-IfQNepLwoG9qygeDGj5egnLQUR47LOjBV1PFJtt0Z64=";
+          };
         in builtins.readFile "${baseConfig}/user.js";
       };
     };
