@@ -276,7 +276,7 @@
         ++ (with inputs.hardware.nixosModules; [
           common-cpu-intel
           common-gpu-intel
-          common-gpu-nvidia
+          # common-gpu-nvidia
           common-pc-laptop-acpi_call
           common-pc-laptop-ssd
           common-pc

@@ -77,6 +77,8 @@ in {
       webcord
 
       aria2
+
+      (import inputs.nur { inherit pkgs; }).repos.mikaelfangel-nur.spacedrive
     ];
   };
 

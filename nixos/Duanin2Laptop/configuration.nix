@@ -133,14 +133,25 @@ in {
         };
       };
       secrets."/crypto_keyfile.bin" = null;
+
+      kernelModules = [ "nouveau" ];
     };
 
     kernel.sysctl = {
       "kernel.nmi_watchdog" = 0;
     };
 
-    # Use Zen kernel from nixpkgs
-    kernelPackages = (pkgs.linuxPackagesFor pkgs.linux_cachyos);
+    # Use kernel
+    kernelPackages = let
+      kernel = let
+        baseKernel = pkgs.linux_cachyos;
+      in pkgs.linuxManualConfig {
+        inherit (baseKernel) src modDirVersion;
+        version = "${baseKernel.version}-duanin2";
+        configfile = ./kernel.config;
+        allowImportFromDerivation = true;
+      };
+    in pkgs.recurseIntoAttrs (pkgs.linuxPackagesFor kernel);
   };
 
   services.udev = {
@@ -270,6 +281,17 @@ function launchbg() {
     proton-ge-custom
   ];
 
+  chaotic.mesa-git = {
+    enable = true;
+
+    extraPackages = with pkgs; [
+      intel-vaapi-driver
+      libvdpau-va-gl
+      intel-media-driver
+    ];
+    extraPackages32 = [ ];
+  };
+
   hardware = {
     opengl = {
       enable = true;
@@ -282,30 +304,30 @@ function launchbg() {
       extraPackages32 = (with pkgs.pkgsi686Linux; [ ])
       ++ (with pkgs.pkgsi686Linux.mesa; [ ]);
     };
-    nvidia = {
-      # Needed for most wayland compositors
-      modesetting.enable = true;
+    # nvidia = {
+    #   # Needed for most wayland compositors
+    #   modesetting.enable = true;
 
-      # My laptop's discrete GPU isn't supported by nvidia-open
-      open = false;
+    #   # My laptop's discrete GPU isn't supported by nvidia-open
+    #   open = false;
 
-      # Disable nvidia settings, since they rely on an Xorg extension and I use wayland
-      nvidiaSettings = false;
+    #   # Disable nvidia settings, since they rely on an Xorg extension and I use wayland
+    #   nvidiaSettings = false;
 
-      # Use the nvidia drivers for the current kernel
-      package = config.boot.kernelPackages.nvidiaPackages.beta;
+    #   # Use the nvidia drivers for the current kernel
+    #   package = config.boot.kernelPackages.nvidiaPackages.beta;
 
-      # Setup PRIME offloading
-      prime = {
-        offload = {
-          enable = true;
-          enableOffloadCmd = true;
-        };
+    #   # Setup PRIME offloading
+    #   prime = {
+    #     offload = {
+    #       enable = true;
+    #       enableOffloadCmd = true;
+    #     };
 
-        intelBusId = "PCI:0:2:0";
-        nvidiaBusId = "PCI:1:0:0";
-      };
-    };
+    #     intelBusId = "PCI:0:2:0";
+    #     nvidiaBusId = "PCI:1:0:0";
+    #   };
+    # };
   };
 
   # Use nvidia drivers
