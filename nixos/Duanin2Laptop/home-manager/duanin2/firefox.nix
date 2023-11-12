@@ -3,7 +3,18 @@
 in {
   programs.firefox = {
     enable = true;
-    package = pkgs.firefox-esr;
+    package = let
+      baseConfig = pkgs.fetchzip {
+        url = "https://github.com/arkenfox/user.js/archive/refs/tags/115.1.zip";
+        hash = "sha256-M523JiwiZR0mwjyjNaojSERFt77Dp75cg0Ifd6wTOdU=";
+      };
+      prefsFile = pkgs.writeText "arkenfox.user.js" (builtins.replaceStrings "user_pref" "defaultPref" (builtins.readFile "${baseConfig}/user.js"));
+    in pkgs.firefox-esr.override (old: {
+      postInstall = (old.postInstall or "") ++ ''
+        # Install arkenfox's user.js
+        install -Dvm644 ${prefsFile} $out/lib/${binaryName}/browser/defaults/preferences/arkenfox.user.js
+      '';
+    });
 
     profiles = {
       "default" = {
@@ -51,12 +62,6 @@ in {
           redirector
           stylus
         ];
-        extraConfig = let
-          baseConfig = pkgs.fetchzip {
-            url = "https://github.com/arkenfox/user.js/archive/refs/tags/115.1.zip";
-            hash = "sha256-M523JiwiZR0mwjyjNaojSERFt77Dp75cg0Ifd6wTOdU=";
-          };
-        in builtins.readFile "${baseConfig}/user.js";
         bookmarks = [
           {
             name = "kernel.org";
