@@ -142,16 +142,7 @@ in {
     };
 
     # Use kernel
-    kernelPackages = let
-      kernel = let
-        baseKernel = pkgs.linux_cachyos;
-      in pkgs.linuxManualConfig {
-        inherit (baseKernel) src modDirVersion;
-        version = "${baseKernel.version}-duanin2";
-        configfile = ./kernel.config;
-        allowImportFromDerivation = true;
-      };
-    in pkgs.recurseIntoAttrs (pkgs.linuxPackagesFor kernel);
+    kernelPackages = pkgs.linuxPackages_cachyos;
   };
 
   services.udev = {
@@ -242,7 +233,8 @@ function launchbg() {
       package = (pkgs.steam.override {
         extraPkgs = pkgs: with pkgs; [
           glxinfo
-          mesa
+          config.hardware.opengl.package
+          config.hardware.opengl.package32
           
           config.programs.gamescope.package
           vkbasalt
@@ -252,6 +244,7 @@ function launchbg() {
         ];
         extraEnv = {
           MANGOHUD = "1";
+          DRI_PRIME = "1";
         };
         #withJava = true;
       });
@@ -274,6 +267,7 @@ function launchbg() {
       mountMax = 32767;
     };
     nix-ld.enable = true;
+    adb.enable = true;
   };
 
   chaotic.steam.extraCompatPackages = with pkgs; [
@@ -291,47 +285,6 @@ function launchbg() {
     ];
     extraPackages32 = [ ];
   };
-
-  hardware = {
-    opengl = {
-      enable = true;
-
-      driSupport = true;
-      driSupport32Bit = true;
-      
-      extraPackages = (with pkgs; [ ])
-      ++ (with pkgs.mesa; [ ]);
-      extraPackages32 = (with pkgs.pkgsi686Linux; [ ])
-      ++ (with pkgs.pkgsi686Linux.mesa; [ ]);
-    };
-    # nvidia = {
-    #   # Needed for most wayland compositors
-    #   modesetting.enable = true;
-
-    #   # My laptop's discrete GPU isn't supported by nvidia-open
-    #   open = false;
-
-    #   # Disable nvidia settings, since they rely on an Xorg extension and I use wayland
-    #   nvidiaSettings = false;
-
-    #   # Use the nvidia drivers for the current kernel
-    #   package = config.boot.kernelPackages.nvidiaPackages.beta;
-
-    #   # Setup PRIME offloading
-    #   prime = {
-    #     offload = {
-    #       enable = true;
-    #       enableOffloadCmd = true;
-    #     };
-
-    #     intelBusId = "PCI:0:2:0";
-    #     nvidiaBusId = "PCI:1:0:0";
-    #   };
-    # };
-  };
-
-  # Use nvidia drivers
-  services.xserver.videoDrivers = [ "nvidia" ];
 
   services.udisks2.enable = true;
 
@@ -426,7 +379,12 @@ esac
   # Enable Hyprland Wayland compositor
   programs.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages.x86_64-linux.hyprland;
+    package = (inputs.hyprland.packages.x86_64-linux.hyprland.override (old: let
+      mesa = config.hardware.opengl.package;
+    in {
+      inherit mesa;
+      wlroots = old.wlroots.override { inherit mesa; };
+    }));
 
     xwayland.enable = true;
     enableNvidiaPatches = true;
@@ -494,7 +452,7 @@ esac
   users = {
     users.duanin2 = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "network" ];
+      extraGroups = [ "wheel" "network" "adbusers" ];
       hashedPassword = (builtins.readFile config.age.secrets.duanin2Password.path);
     };
     defaultUserShell = pkgs.zsh;

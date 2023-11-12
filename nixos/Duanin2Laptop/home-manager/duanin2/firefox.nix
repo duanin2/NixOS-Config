@@ -3,7 +3,7 @@
 in {
   programs.firefox = {
     enable = true;
-    package = pkgs.firefox_nightly;
+    package = pkgs.firefox-esr;
 
     profiles = {
       "default" = {
@@ -53,8 +53,8 @@ in {
         ];
         extraConfig = let
           baseConfig = pkgs.fetchzip {
-            url = "https://github.com/arkenfox/user.js/archive/refs/heads/master.zip";
-            hash = "sha256-IfQNepLwoG9qygeDGj5egnLQUR47LOjBV1PFJtt0Z64=";
+            url = "https://github.com/arkenfox/user.js/archive/refs/tags/115.1.zip";
+            hash = "sha256-M523JiwiZR0mwjyjNaojSERFt77Dp75cg0Ifd6wTOdU=";
           };
         in builtins.readFile "${baseConfig}/user.js";
         bookmarks = [
@@ -65,6 +65,7 @@ in {
           {
             name = "Nix";
             toolbar = true;
+            
             bookmarks = [
               {
                 name = "NixOS";
