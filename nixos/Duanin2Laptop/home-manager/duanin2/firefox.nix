@@ -8,8 +8,9 @@ in {
         url = "https://github.com/arkenfox/user.js/archive/refs/tags/115.1.zip";
         hash = "sha256-M523JiwiZR0mwjyjNaojSERFt77Dp75cg0Ifd6wTOdU=";
       };
-      prefsFile = pkgs.writeText "arkenfox.user.js" (builtins.replaceStrings "user_pref" "defaultPref" (builtins.readFile "${baseConfig}/user.js"));
-    in pkgs.firefox-esr.override (old: {
+      prefsFile = pkgs.writeText "arkenfox.user.js" (builtins.replaceStrings [ "user_pref" ] [ "defaultPref" ] (builtins.readFile "${baseConfig}/user.js"));
+      binaryName = "firefox";
+    in pkgs.firefox-esr.overrideAttrs (old: {
       postInstall = (old.postInstall or "") ++ ''
         # Install arkenfox's user.js
         install -Dvm644 ${prefsFile} $out/lib/${binaryName}/browser/defaults/preferences/arkenfox.user.js
