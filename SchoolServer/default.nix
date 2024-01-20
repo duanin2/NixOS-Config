@@ -1,5 +1,5 @@
 { config, ... }: {
-  import = [
+  imports = [
     ./modules/nix
   ];
 
