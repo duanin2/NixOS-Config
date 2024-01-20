@@ -6,6 +6,4 @@
   home = {};
 
   programs.home-manager.enable = true; # install Home Manager
-
-  home.stateVersion = "24.01";
 }
