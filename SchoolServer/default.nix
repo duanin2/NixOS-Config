@@ -3,10 +3,7 @@
     ./modules/nix
   ];
 
-  home = {
-    username = "tilldu22";
-    homeDirectory = "/home/${config.home.username}";
-  };
+  home = {};
 
   programs.home-manager.enable = true; # install Home Manager
 
