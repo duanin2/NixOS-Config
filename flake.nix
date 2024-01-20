@@ -79,7 +79,7 @@
 				system = "x86_64-linux";
 				pkgs = inputs.nixpkgs.legacyPackages.${system};
 			in inputs.home-manager.lib.homeManagerConfiguration {
-				inherit system pkgs;
+				inherit pkgs;
 				extraSpecialArgs = { inherit pkgs inputs lib; };
 
 				modules = [
