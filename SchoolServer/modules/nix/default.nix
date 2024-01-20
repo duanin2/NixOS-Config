@@ -1,9 +1,11 @@
-{ inputs, lib, ... }: {
+{ inputs, lib, pkgs, ... }: {
 	imports = [
 		./nixpkgs
 	];
 
 	nix = {
+		package = pkgs.nix;
+
 		settings = {
 			experimental-features = "flakes nix-command";
 
