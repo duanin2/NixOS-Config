@@ -31,12 +31,12 @@
 	};
 
 	outputs = inputs: let
-		system = "x86_64-linux";
-
 		lib = inputs.nixpkgs.lib.extend (final: prev: (import ./lib final prev) // inputs.home-manager.lib);
 	in {
 		nixosConfigurations = {
-			"Duanin2Laptop" = inputs.nixpkgs.lib.nixosSystem {
+			"Duanin2Laptop" = let
+				system = "x86_64-linux";
+			in inputs.nixpkgs.lib.nixosSystem {
 				inherit system;
 				specialArgs = { inherit inputs lib; };
 
@@ -71,6 +71,30 @@
 					})
 
 					inputs.chaotic.nixosModules.default
+				];
+			};
+		};
+		homeConfigurations = {
+			"SchoolServer" = let
+				system = "x86_64-linux";
+				pkgs = inputs.nixpkgs.legacyPackages.${system};
+			in inputs.home-manager.lib.homeManagerConfiguration {
+				inherit system pkgs;
+				extraSpecialArgs = { inherit pkgs inputs lib; };
+
+				modules = [
+					./SchoolServer
+
+					{ nixpkgs.overlays = [ inputs.nur.overlay ]; }
+					({ pkgs, ... }: let
+						nur-no-pkgs = import inputs.nur {
+							nurpkgs = import inputs.nixpkgs { inherit system; };
+						};
+					in {
+						imports = [];
+					})
+
+					inputs.chaotic.homeManagerModules.default
 				];
 			};
 		};
