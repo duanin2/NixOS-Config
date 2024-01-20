@@ -61,12 +61,5 @@
 				flake = kde2nix;
 			};
 		};
-
-		gc = {
-			automatic = true;
-
-			dates = "weekly";
-			persistent = true;
-		};
 	};
 }
