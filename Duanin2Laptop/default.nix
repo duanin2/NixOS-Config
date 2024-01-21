@@ -16,13 +16,16 @@
 		./modules/software/appimage
 		./modules/software/plymouth
 		./modules/software/ssh
-		./modules/software/waydroid
+		./modules/software/protonmail
 
 		# software/network
 		./modules/software/network/networkmanager
 		./modules/software/network/firewall
 		./modules/software/network/resolvd
 		./modules/software/network/avahi
+
+		# software/network/vpn
+		./modules/software/network/vpn/protonvpn.nix
 
 		# software/kernel
 		./modules/software/kernel/cachyos-schedext.nix
@@ -39,6 +42,10 @@
 
 		# software/bootloader
 		./modules/software/bootloader/systemd-boot
+
+		# software/virtualization
+		./modules/software/virtualization/waydroid
+		./modules/software/virtualization/darling
 
 		./duanin2
 	];
