@@ -17,6 +17,7 @@
 		./modules/software/plymouth
 		./modules/software/ssh
 		./modules/software/protonmail
+		./modules/software/git
 
 		# software/network
 		./modules/software/network/networkmanager
