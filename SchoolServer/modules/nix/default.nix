@@ -69,7 +69,11 @@ in {
 		};
 	};
 
-	home.sessionVariables = [
-
-	];
+	home.sessionVariables = {
+		"NIX_STORE_DIR" = "${store}/nix/store";
+		"NIX_DATA_DIR" = "${store}/nix/share";
+		"NIX_LOG_DIR" = "${store}/nix/var/log/nix";
+		"NIX_STATE_DIR" = "${store}/nix/var/nix";
+		"NIX_CONF_DIR" = "${store}/nix/etc/nix";
+	};
 }
