@@ -1,4 +1,6 @@
-{ inputs, lib, pkgs, ... }: {
+{ inputs, lib, config, pkgs, ... }: let
+	store = "${config.home.homeDirectory}/my-nix";
+in {
 	imports = [
 		./nixpkgs
 	];
@@ -7,7 +9,9 @@
 		package = pkgs.nix;
 
 		settings = {
+			inherit store;
 			experimental-features = "flakes nix-command";
+			ssl-cert-file = "/etc/ssl/ca-bundle.pem";
 
 			auto-optimise-store = true;
 
@@ -64,4 +68,8 @@
 			};
 		};
 	};
+
+	home.sessionVariables = [
+
+	];
 }
