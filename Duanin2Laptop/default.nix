@@ -29,7 +29,7 @@
 		./modules/software/network/vpn/protonvpn.nix
 
 		# software/kernel
-		./modules/software/kernel/cachyos-schedext.nix
+		./modules/software/kernel/cachyos.nix
 
 		# software/shell
 		./modules/software/shell/nushell.nix
