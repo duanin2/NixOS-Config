@@ -29,6 +29,10 @@
 								name = "tio.run";
 								url = "https://tio.run";
 							}
+							{
+								name = "r/Piracy Megathread";
+								url = "https://rentry.org/megathread";
+							}
 						];
 					}
 				];
