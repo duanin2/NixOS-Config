@@ -14,7 +14,7 @@
 		./modules/git
 
 		./modules/games/prismlauncher
-		./modules/games/vinegar
+		# ./modules/games/vinegar
 		./modules/games/lutris
 		./modules/games/godot
 
