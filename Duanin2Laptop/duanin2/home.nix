@@ -23,7 +23,7 @@
 		./modules/Mozilla/thunderbird.nix
 
 		./modules/mpv
-		./modules/mpv/ani-cli
+		./modules/mpv/ani-cli.nix
 	];
 
 	home.packages = with pkgs; [
