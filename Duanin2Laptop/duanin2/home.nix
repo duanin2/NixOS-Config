@@ -4,8 +4,6 @@
 		./modules/syncthing
 		./modules/keepassxc
 		./modules/libreoffice
-		./modules/Mozilla/firefox.nix
-		./modules/Mozilla/thunderbird.nix
 		./modules/discord
 		./modules/direnv
 		./modules/xdg
@@ -20,6 +18,12 @@
 
 		./modules/shell/nushell.nix
 		./modules/shell/starship
+
+		./modules/Mozilla/firefox.nix
+		./modules/Mozilla/thunderbird.nix
+
+		./modules/mpv
+		./modules/mpv/ani-cli
 	];
 
 	home.packages = with pkgs; [
