@@ -30,4 +30,9 @@
 		bluez-qt
 		ktorrent
 	]);
+
+	security.pam.services.kwallet = {
+		name = "kwallet";
+		enableKwallet = true;
+	};
 }
