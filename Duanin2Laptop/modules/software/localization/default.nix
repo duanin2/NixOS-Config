@@ -17,9 +17,9 @@ in {
 		LC_TIME = locale;
 	};
 
-	services.xserver = {
+	services.xserver.xkb = {
 		layout = "cz";
-		xkbVariant = "";
+		variant = "";
 	};
 	console.keyMap = "cz";
 }
