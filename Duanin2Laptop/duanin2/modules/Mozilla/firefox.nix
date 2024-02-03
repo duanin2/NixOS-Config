@@ -48,6 +48,10 @@
 					libredirect
 					indie-wiki-buddy
 					auto-tab-discard
+					steam-database
+					terms-of-service-didnt-read
+					unpaywall
+					wayback-machine
 				];
 				settings = {
 					"widget.use-xdg-desktop-portal.file-picker" = 1;
