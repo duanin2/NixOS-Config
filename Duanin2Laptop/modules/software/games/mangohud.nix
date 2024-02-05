@@ -9,7 +9,7 @@
       owner = "root";
       group = "root";
       source = "${pkgs.intel-gpu-tools}/bin/intel_gpu_top";
-      capabilities = "cap_perfmon";
+      capabilities = "cap_perfmon+p";
     };
   };
 }
