@@ -1,5 +1,2 @@
 { ... }: {
-  imports = [
-    ./mangohud.nix
-  ];
 }
