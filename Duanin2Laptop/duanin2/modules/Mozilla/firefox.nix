@@ -10,7 +10,7 @@
 			};
 			src = pkgs.fetchurl {
 				url = "https://raw.githubusercontent.com/arkenfox/user.js/master/user.js";
-				hash = "sha256-q11lngXIypp3EEF2Cgz8t8pMhVYDMvdVSKs1aa7i52s=";
+				hash = "sha256-H3Nk5sDxSElGRgK+cyQpVyjtlMF2Okxbstu9A+eJtGk=";
 			};
 		};
 
