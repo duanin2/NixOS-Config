@@ -17,7 +17,6 @@
 		plasmatube
 		bluedevil
 		bluez-qt
-		ktorrent
 	]);
 
 	services.xserver.displayManager.sddm = {

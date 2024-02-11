@@ -28,7 +28,6 @@
 		kjournald
 		bluedevil
 		bluez-qt
-		ktorrent
 	]);
 
 	security.pam.services.kwallet = {
