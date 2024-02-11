@@ -26,7 +26,7 @@
 		./modules/software/network/avahi
 
 		# software/network/vpn
-		./modules/software/network/vpn/protonvpn.nix
+		# ./modules/software/network/vpn/protonvpn.nix
 
 		# software/kernel
 		./modules/software/kernel/cachyos.nix
