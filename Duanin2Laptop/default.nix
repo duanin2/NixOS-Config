@@ -3,7 +3,7 @@
 		# hardware
 		./modules/hardware/autoconfig
 		./modules/hardware/efi
-		./modules/hardware/nvidia
+		# ./modules/hardware/nvidia
 		./modules/hardware/bluetooth
 		./modules/hardware/zram
 		./modules/hardware/adb
