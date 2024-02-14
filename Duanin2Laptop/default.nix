@@ -18,6 +18,7 @@
 		./modules/software/ssh
 		./modules/software/protonmail
 		./modules/software/git
+		./modules/software/mesa
 
 		# software/network
 		./modules/software/network/networkmanager
