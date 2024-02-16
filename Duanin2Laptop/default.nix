@@ -7,6 +7,7 @@
 		./modules/hardware/bluetooth
 		./modules/hardware/zram
 		./modules/hardware/adb
+		./modules/hardware/intel
 
 		# software
 		./modules/software/nix
