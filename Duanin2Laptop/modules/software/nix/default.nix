@@ -11,8 +11,12 @@
 
 			auto-optimise-store = true;
 
-			max-jobs = 4;
-			cores = 1;
+			max-jobs = 1;
+			cores = 4;
+
+			keep-derivations = false;
+			keep-going = true;
+			min-free = 1073741824;
 
 			substituters = [
 				"https://0uptime.cachix.org/"
@@ -22,6 +26,7 @@
 				"0uptime.cachix.org-1:ctw8yknBLg9cZBdqss+5krAem0sHYdISkw/IFdRbYdE="
 				"nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
 			];
+			download-speed = 1573;
 		};
 
 		registry = with inputs; {
@@ -67,7 +72,7 @@
 		gc = {
 			automatic = true;
 
-			dates = "weekly";
+			dates = "daily";
 			persistent = true;
 		};
 	};
