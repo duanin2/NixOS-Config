@@ -3,7 +3,7 @@
 		enable = true;
 		package = (pkgs.callPackage ./common.nix { }) {
 			package = (inputs.mercury-nixpkgs.legacyPackages.${pkgs.system}.mercury-browser-bin.override (old: {
-				inherit (pkgs) stdenv dpkg wrapGAppsHook alsa-lib browserpass bakubrow cairo cups dbus dbus-glib ffmpeg fontconfig freetype fx-cast-bridge glib glibc gnome-browser-connector gtk3 harfbuzz libcanberra libdbusmenu libdbusmenu-gtk3 libglvnd libjack2 libkrb5 libnotify libpulseaudio libva lyx mesa nspr nss opensc pango pciutils pipewire sndio speechd tridactyl-native udev uget-integrator vulkan-loader xdg-utils xorg;
+				inherit (pkgs) stdenv dpkg wrapGAppsHook alsa-lib browserpass bukubrow cairo cups dbus dbus-glib ffmpeg fontconfig freetype fx-cast-bridge glib glibc gnome-browser-connector gtk3 harfbuzz libcanberra libdbusmenu libdbusmenu-gtk3 libglvnd libjack2 libkrb5 libnotify libpulseaudio libva lyx mesa nspr nss opensc pango pciutils pipewire sndio speechd tridactyl-native udev uget-integrator vulkan-loader xdg-utils xorg;
 				plasma5Packages = inputs.kde2nix.legacyPackages.${pkgs.system};
 				simd = "AVX2";
 			})).overrideAttrs (old: {
