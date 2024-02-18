@@ -3,7 +3,8 @@
 
 	inputs = {
 		nixpkgs = {
-			url = "github:NixOS/nixpkgs/nixos-unstable";
+			# url = "github:NixOS/nixpkgs/nixos-unstable";
+			url = "github:K900/nixpkgs/plasma-6";
 		};
 		home-manager = {
 			url = "github:nix-community/home-manager";
@@ -19,10 +20,6 @@
 				nixpkgs.follows = "nixpkgs";
 				home-manager.follows = "home-manager";
 			};
-		};
-
-		kde2nix = {
-			url = "github:nix-community/kde2nix";
 		};
 
 		godot-nixpkgs = {
@@ -46,8 +43,6 @@
 
 				modules = [
 					./Duanin2Laptop
-
-					inputs.kde2nix.nixosModules.plasma6
 
 					inputs.home-manager.nixosModules.home-manager
 					{
