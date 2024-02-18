@@ -4,7 +4,7 @@
 		package = (pkgs.callPackage ./common.nix { }) {
 			package = pkgs.wrapFirefox ((inputs.mercury-nixpkgs.legacyPackages.${pkgs.system}.mercury-browser-bin.override (old: {
 				inherit (pkgs) stdenv autoPatchelfHook dpkg wrapGAppsHook alsa-lib browserpass bukubrow cairo cups dbus dbus-glib ffmpeg fontconfig freetype fx-cast-bridge glib glibc gnome-browser-connector gtk3 harfbuzz libcanberra libdbusmenu libdbusmenu-gtk3 libglvnd libjack2 libkrb5 libnotify libpulseaudio libva lyx mesa nspr nss opensc pango pciutils pipewire sndio speechd tridactyl-native udev uget-integrator vulkan-loader xdg-utils xorg;
-				plasma5Packages = pkgs.qt6Packages;
+				plasma5Packages = pkgs.kdePackages;
 				simd = "AVX2";
 			})).overrideAttrs (old: {
 				nativeBuildInputs = (old.nativeBuildInputs or []) ++ (with pkgs.qt6; [

@@ -54,14 +54,6 @@
 				};
 				flake = chaotic;
 			};
-
-			"kde2nix" = {
-				from = {
-					id = "kde2nix";
-					type = "indirect";
-				};
-				flake = kde2nix;
-			};
 		};
 
 		gc = {
