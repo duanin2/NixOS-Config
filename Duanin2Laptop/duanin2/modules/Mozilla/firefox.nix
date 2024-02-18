@@ -2,14 +2,32 @@
 	programs.firefox = {
 		enable = true;
 		package = (pkgs.callPackage ./common.nix { }) {
-			package = pkgs.wrapFirefox ((inputs.mercury-nixpkgs.legacyPackages.${pkgs.system}.mercury-browser-bin.override (old: {
-				inherit (pkgs) stdenv dpkg wrapGAppsHook alsa-lib browserpass bukubrow cairo cups dbus dbus-glib ffmpeg fontconfig freetype fx-cast-bridge glib glibc gnome-browser-connector gtk3 harfbuzz libcanberra libdbusmenu libdbusmenu-gtk3 libglvnd libjack2 libkrb5 libnotify libpulseaudio libva lyx mesa nspr nss opensc pango pciutils pipewire sndio speechd tridactyl-native udev uget-integrator vulkan-loader xdg-utils xorg;
+			package = let
 				plasma5Packages = inputs.kde2nix.legacyPackages.${pkgs.system};
+			in pkgs.wrapFirefox ((inputs.mercury-nixpkgs.legacyPackages.${pkgs.system}.mercury-browser-bin.override (old: {
+				inherit (pkgs) stdenv autoPatchelfHook dpkg wrapGAppsHook alsa-lib browserpass bukubrow cairo cups dbus dbus-glib ffmpeg fontconfig freetype fx-cast-bridge glib glibc gnome-browser-connector gtk3 harfbuzz libcanberra libdbusmenu libdbusmenu-gtk3 libglvnd libjack2 libkrb5 libnotify libpulseaudio libva lyx mesa nspr nss opensc pango pciutils pipewire sndio speechd tridactyl-native udev uget-integrator vulkan-loader xdg-utils xorg;
+				inherit plasma5Packages;
 				simd = "AVX2";
 			})).overrideAttrs (old: {
+				nativeBuildInputs = (old.nativeBuildInputs or []) ++ (with plasma5Packages; [
+					wrapQtAppsHook
+				]);
 				buildInputs = (old.buildInputs or []) ++ (with pkgs; [
 					keepassxc
 				]);
+				passthru = {
+					inherit (old) version;
+					inherit (pkgs) gtk3 nspr;
+
+					alsaSupport = true;
+					jackSupport = true;
+					pipewireSupport = true;
+					sndioSupport = true;
+					ffmpegSupport = true;
+					gssSupport = false;
+
+					binaryName = old.meta.mainProgram;
+				};
 			})) {};
 			src = pkgs.fetchurl {
 				url = "https://raw.githubusercontent.com/arkenfox/user.js/master/user.js";
