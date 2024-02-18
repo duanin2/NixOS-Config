@@ -22,7 +22,7 @@
 				homepage = "https://github.com/moodyhunter/applet-window-title6";
 			};
 		}))
-	] ++ (with inputs.kde2nix.packages.${pkgs.system}; [
+	] ++ (with pkgs.kdePackages; [
 		tokodon
 		plasmatube
 		kjournald
