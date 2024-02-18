@@ -28,7 +28,7 @@
 
 	home.packages = with pkgs; [
 		telegram-desktop
-		tremotesf
+		transmission-qt
 	];
 
 	home.stateVersion = "24.05";
