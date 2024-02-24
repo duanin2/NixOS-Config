@@ -23,7 +23,7 @@
 		};
 
 		rpi5 = {
-			url = "github:vriska/nix-rpi5";
+			url = "gitlab:vriska/nix-rpi5";
 			inputs = {
 				nixpkgs.follows = "nixpkgs";
 			};
