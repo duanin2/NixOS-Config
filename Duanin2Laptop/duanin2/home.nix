@@ -16,8 +16,8 @@
 		./modules/games/lutris
 		./modules/games/godot
 
-		./modules/shell/nushell.nix
-		./modules/shell/starship
+		../common/duanin2/modules/shell/nushell.nix
+		../common/duanin2/modules/shell/starship
 
 		./modules/Mozilla/firefox.nix
 		./modules/Mozilla/thunderbird.nix

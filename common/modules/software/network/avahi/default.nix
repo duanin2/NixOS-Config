@@ -6,6 +6,5 @@
     ipv6 = true;
     nssmdns4 = true;
     nssmdns6 = true;
-    
   };
 }
