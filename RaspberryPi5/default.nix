@@ -1,6 +1,7 @@
 { ... }: {
   imports = [
     # hardware
+    ./modules/hardware/autoconfig
     ../common/modules/hardware/zram
 
     # software
@@ -24,6 +25,6 @@
 
   boot.loader.efi.canTouchEfiVariables = false;
 
-  networking.hostName = "Duanin2Aspire";
+  networking.hostName = "RaspberryPi5";
 	system.stateVersion = "24.05";
 }
