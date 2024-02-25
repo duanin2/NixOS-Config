@@ -8,8 +8,5 @@
       PasswordAuthentication = false;
     };
     openFirewall = true;
-    authorizedKeysFile = [
-      "/etc/sshd/authorizedKeys"
-    ];
   };
 }
