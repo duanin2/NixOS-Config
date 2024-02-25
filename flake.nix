@@ -97,23 +97,6 @@
 							useUserPackages = true;
 						};
 					}
-
-					{ nixpkgs.overlays = [ inputs.nur.overlay ]; }
-					({ pkgs, ... }: let
-						nur-no-pkgs = import inputs.nur {
-							nurpkgs = import inputs.nixpkgs { inherit system; };
-						};
-					in {
-						imports = [ ];
-
-						home-manager.users = {
-							"duanin2".imports = [
-								inputs.chaotic.homeManagerModules.default
-							];
-						};
-					})
-
-					inputs.chaotic.nixosModules.default
 				];
 			};
 		};
