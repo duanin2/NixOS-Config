@@ -21,6 +21,8 @@
 
     # software/bootloader
     ./modules/software/bootloader/grub
+
+    ./duanin2
   ];
 
   boot.loader.efi.canTouchEfiVariables = false;
