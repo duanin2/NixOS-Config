@@ -13,7 +13,7 @@
 			};
 		};
 
-		nur.url = "flake:nur";
+		nur.url = "github:nix-community/nur";
 		chaotic = {
 			url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 			inputs = {
@@ -97,6 +97,23 @@
 							useUserPackages = true;
 						};
 					}
+
+					{ nixpkgs.overlays = [ inputs.nur.overlay ]; }
+					({ pkgs, ... }: let
+						nur-no-pkgs = import inputs.nur {
+							nurpkgs = import inputs.nixpkgs { inherit system; };
+						};
+					in {
+						imports = [ ];
+
+						home-manager.users = {
+							"duanin2".imports = [
+								inputs.chaotic.homeManagerModules.default
+							];
+						};
+					})
+
+					inputs.chaotic.nixosModules.default
 				];
 			};
 		};
