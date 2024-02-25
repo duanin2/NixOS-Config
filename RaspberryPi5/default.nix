@@ -7,6 +7,7 @@
     # software
     ../common/modules/software/nix
     ../common/modules/software/localization
+    ./modules/ssh
 
     # software/network
 		../common/modules/software/network/networkmanager
