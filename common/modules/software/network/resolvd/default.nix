@@ -7,7 +7,8 @@
     domains = [ "~." ];
     fallbackDns = [ "192.168.1.1" ];
     extraConfig = ''
-      DNSOverTLS=opportunistic
+      DNSSEC=no
+      DNSOverTLS=yes
     '';
   };
 
