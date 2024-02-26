@@ -5,7 +5,7 @@
 
   services.nginx = {
     enable = true;
-    
+
     virtualHosts = {
       "acmechallenge.duanin2.top" = {
         # Catchall vhost, will redirect users to HTTPS for all vhosts
@@ -16,6 +16,11 @@
         locations."/" = {
           return = "301 https://$host$request_uri";
         };
+      };
+      "bohousek10d1979.asuscomm.com" = {
+        listen = [
+          # Nevím
+        ];
       };
     };
   };

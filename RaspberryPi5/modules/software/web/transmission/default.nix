@@ -15,7 +15,7 @@
     listen = [
       {
         addr = "127.0.0.1";
-        port = config.services.transmission.port;
+        port = config.services.transmission.rpc-port;
       }
     ];
   };
