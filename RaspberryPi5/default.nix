@@ -15,9 +15,9 @@
 		../common/modules/software/network/avahi
 
     # software/web
-    ./modules/software/network/nginx
-    ./modules/software/network/transmission
-    ./modules/software/network/invidious
+    ./modules/software/web/nginx
+    ./modules/software/web/transmission
+    ./modules/software/web/invidious
 
     # software/kernel
     ./modules/software/kernel/vendor.nix
