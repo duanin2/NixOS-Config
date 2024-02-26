@@ -5,8 +5,7 @@
 
   services.nginx = {
     enable = true;
-
-    enableQuicBPF = true;
+    
     virtualHosts = {
       "acmechallenge.duanin2.top" = {
         # Catchall vhost, will redirect users to HTTPS for all vhosts

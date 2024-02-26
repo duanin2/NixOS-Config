@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, lib, ... }: {
   services.invidious = {
     enable = true;
 
@@ -7,6 +7,7 @@
   };
 
   services.nginx.virtualHosts.${config.services.invidious.domain} = {
+    enableACME = lib.mkForce false;
     useACMEHost = "duanin2.top";
   };
 }
