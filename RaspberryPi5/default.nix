@@ -14,6 +14,11 @@
 		../common/modules/software/network/resolvd
 		../common/modules/software/network/avahi
 
+    # software/web
+    ./modules/software/network/nginx
+    ./modules/software/network/transmission
+    ./modules/software/network/invidious
+
     # software/kernel
     ./modules/software/kernel/vendor.nix
 
