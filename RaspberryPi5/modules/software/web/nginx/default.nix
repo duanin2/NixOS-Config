@@ -20,8 +20,8 @@
       "bohousek10d1979.asuscomm.com" = {
         enableACME = false;
         listen = [
-          { port = 80; }
-          { port = 443; ssl = true; }
+          { addr = "0.0.0.0"; port = 80; }
+          { addr = "0.0.0.0"; port = 443; ssl = true; }
         ];
 
         locations."/".proxyPass = "https://192.168.1.1";

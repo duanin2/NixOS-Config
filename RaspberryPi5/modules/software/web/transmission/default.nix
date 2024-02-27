@@ -15,7 +15,7 @@ in {
     useACMEHost = "duanin2.top";
 
     listen = [
-      { port = 80; }
+      { addr = "0.0.0.0"; port = 80; }
     ];
 
     locations."/".proxyPass = "http://${cfg.settings.rpc-bind-address}:${cfg.settings.rpc-port}";
