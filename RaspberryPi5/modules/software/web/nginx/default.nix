@@ -18,9 +18,13 @@
         };
       };
       "bohousek10d1979.asuscomm.com" = {
+        enableACME = false;
         listen = [
-          # Nevím
+          { port = 80; }
+          { port = 443; ssl = true; }
         ];
+
+        locations."/".proxyPass = "https://192.168.1.1";
       };
     };
   };

@@ -1,4 +1,6 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, ... }: let
+  cfg = config.services.transmission;
+in {
   services.transmission = {
     enable = true;
     package = pkgs.transmission_4;
@@ -13,10 +15,9 @@
     useACMEHost = "duanin2.top";
 
     listen = [
-      {
-        addr = "127.0.0.1";
-        port = config.services.transmission.rpc-port;
-      }
+      { port = 80; }
     ];
+
+    locations."/".proxyPass = "http://${cfg.settings.rpc-bind-address}:${cfg.settings.rpc-port}";
   };
 }
