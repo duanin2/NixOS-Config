@@ -42,7 +42,7 @@
 		lib = inputs.nixpkgs.lib.extend (final: prev: (import ./lib final prev) // inputs.home-manager.lib);
 	in {
 		nixosConfigurations = {
-			"Duanin2Laptop" = let
+			"Duanin2Aspire" = let
 				system = "x86_64-linux";
 			in inputs.nixpkgs.lib.nixosSystem {
 				inherit system;

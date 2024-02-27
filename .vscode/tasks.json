@@ -14,7 +14,7 @@
                 "switch",
                 "--impure",
                 "--flake",
-                ".#Duanin2Laptop"
+                "."
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
@@ -36,7 +36,7 @@
                 "test",
                 "--impure",
                 "--flake",
-                ".#Duanin2Laptop"
+                "."
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
@@ -57,7 +57,7 @@
                 "build",
                 "--impure",
                 "--flake",
-                ".#Duanin2Laptop"
+                "."
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
@@ -79,7 +79,7 @@
                 "boot",
                 "--impure",
                 "--flake",
-                ".#Duanin2Laptop"
+                "."
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
