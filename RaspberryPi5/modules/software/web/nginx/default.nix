@@ -21,7 +21,7 @@
         enableACME = false;
         listen = [
           { addr = "0.0.0.0"; port = 80; }
-          { addr = "0.0.0.0"; port = 443; ssl = true; }
+          { addr = "0.0.0.0"; port = 443; }
         ];
 
         locations."/".proxyPass = "https://192.168.1.1";
