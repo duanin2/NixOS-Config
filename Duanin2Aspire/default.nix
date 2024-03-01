@@ -5,7 +5,7 @@
 		./modules/hardware/efi
 		# ./modules/hardware/nvidia
 		./modules/hardware/bluetooth
-		../common/modules/modules/hardware/zram
+		../common/modules/hardware/zram
 		./modules/hardware/adb
 		./modules/hardware/intel
 
