@@ -13,6 +13,7 @@ in {
 
   services.nginx.virtualHosts."transmission.duanin2.top" = {
     useACMEHost = "duanin2.top";
+    serverAliases = [ "transmission.RaspberryPi5.local" ];
 
     listen = [
       { addr = "0.0.0.0"; port = 80; }
