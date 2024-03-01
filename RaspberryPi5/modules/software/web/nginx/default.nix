@@ -18,8 +18,7 @@
         };
       };
       "bohousek10d1979.asuscomm.com" = {
-        enableACME = false;
-        useACMEHost = "duanin2.top";
+        enableACME = true;
         
         locations."/".proxyPass = "https://192.168.1.1";
         default = true;
