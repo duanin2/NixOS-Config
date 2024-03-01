@@ -17,17 +17,19 @@
           return = "301 https://$host$request_uri";
         };
       };
-      "bohousek10d1979.asuscomm.com" = {
-        enableACME = false;
-        listen = [
-          { addr = "0.0.0.0"; port = 80; }
-          { addr = "0.0.0.0"; port = 443; }
-        ];
-
-        locations."/".proxyPass = "https://192.168.1.1";
-        default = true;
-      };
     };
+
+    streamConfig = ''
+    upstream asus_aicloud {
+      server 192.168.1.1:443;
+    }
+
+    server {
+      listen 443;
+      ssl_preread on;
+      proxy_pass asus_aicloud;
+    }
+    '';
   };
 
   users.users.nginx.extraGroups = [ "acme" ];
