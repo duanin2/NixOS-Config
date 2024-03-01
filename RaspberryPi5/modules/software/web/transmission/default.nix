@@ -13,11 +13,8 @@ in {
 
   services.nginx.virtualHosts."transmission.duanin2.top" = {
     useACMEHost = "duanin2.top";
+    forceSSL = true;
     serverAliases = [ "transmission.RaspberryPi5.local" ];
-
-    listen = [
-      { addr = "0.0.0.0"; port = 80; }
-    ];
 
     locations."/".proxyPass = "http://${cfg.settings.rpc-bind-address}:${builtins.toString cfg.settings.rpc-port}";
   };
