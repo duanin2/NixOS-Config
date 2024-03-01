@@ -9,12 +9,12 @@ in
 	lib.checkListOfEnum "Invalid flavour, valid flavours are ${toString validFlavours}" validFlavours flavour
 stdenvNoCC.mkDerivation rec {
 	pname = "catppuccin-sddm";
-  version = "unstable-2023-12-05";
+  version = "unstable-2024-02-06";
 
   src = fetchFromGitHub {
     owner = "catppuccin";
     repo = "sddm";
-    ref = "main";
+    rev = "f3db13cbe8e99a4ee7379a4e766bc8a4c2c6c3dd";
     hash = "";
   };
 

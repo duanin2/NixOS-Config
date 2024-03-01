@@ -5,16 +5,16 @@
 		./modules/hardware/efi
 		# ./modules/hardware/nvidia
 		./modules/hardware/bluetooth
-		./modules/hardware/zram
+		../common/modules/modules/hardware/zram
 		./modules/hardware/adb
 		./modules/hardware/intel
 
 		# software
-		./modules/software/nix
+		../common/modules/software/nix
 		./modules/software/printing
 		./modules/software/plasma
-		./modules/software/localization
-		./modules/software/appimage
+		../common/modules/software/localization
+		../common/modules/software/appimage
 		./modules/software/plymouth
 		./modules/software/ssh
 		./modules/software/protonmail
@@ -22,10 +22,10 @@
 		./modules/software/mesa
 
 		# software/network
-		./modules/software/network/networkmanager
-		./modules/software/network/firewall
-		./modules/software/network/resolvd
-		./modules/software/network/avahi
+		../common/modules/software/network/networkmanager
+		../common/modules/software/network/firewall
+		../common/modules/software/network/resolvd
+		../common/modules/software/network/avahi
 
 		# software/network/vpn
 		# ./modules/software/network/vpn/protonvpn.nix
@@ -34,7 +34,7 @@
 		./modules/software/kernel/cachyos.nix
 
 		# software/shell
-		./modules/software/shell/nushell.nix
+		../common/modules/software/shell/nushell.nix
 
 		# software/games
 		./modules/software/games/steam
