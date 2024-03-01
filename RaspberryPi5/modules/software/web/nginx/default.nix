@@ -18,18 +18,17 @@
         };
       };
     };
+    "bohousek10d1979.asuscomm.com" = {
+      enableACME = false;
+      useACMEHost = "duanin2.top";
+      listen = [
+        { addr = "0.0.0.0"; port = 80; }
+        { addr = "0.0.0.0"; port = 443; ssl = true; }
+      ];
 
-    streamConfig = ''
-    upstream asus_aicloud {
-      server 192.168.1.1:443;
-    }
-
-    server {
-      listen bohousek10d1979.asuscomm.com:443;
-      ssl_preread on;
-      proxy_pass asus_aicloud;
-    }
-    '';
+      locations."/".proxyPass = "https://192.168.1.1";
+      default = true;
+    };
   };
 
   users.users.nginx.extraGroups = [ "acme" ];
