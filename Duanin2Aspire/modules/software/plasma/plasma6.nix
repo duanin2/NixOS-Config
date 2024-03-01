@@ -22,6 +22,13 @@
 				homepage = "https://github.com/moodyhunter/applet-window-title6";
 			};
 		}))
+
+		(pkgs.callPackage ./sddm-catppuccin.nix { })
+
+		(catppuccin-kde.override {
+			flavour = [ "frappe" ];
+			accents = [ "green" ];
+		})
 	] ++ (with pkgs.kdePackages; [
 		tokodon
 		plasmatube
