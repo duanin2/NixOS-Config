@@ -3,8 +3,7 @@
 
 	inputs = {
 		nixpkgs = {
-			# url = "github:NixOS/nixpkgs/nixos-unstable";
-			url = "github:K900/nixpkgs/plasma-6";
+			url = "github:NixOS/nixpkgs/nixos-unstable";
 		};
 		home-manager = {
 			url = "github:nix-community/home-manager";
@@ -13,7 +12,9 @@
 			};
 		};
 
-		nur.url = "github:nix-community/nur";
+		nur = {
+			url = "github:nix-community/nur";
+		};
 		chaotic = {
 			url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 			inputs = {
@@ -49,7 +50,7 @@
 				specialArgs = { inherit inputs lib; };
 
 				modules = [
-					./Duanin2Laptop
+					./Duanin2Aspire
 
 					inputs.home-manager.nixosModules.home-manager
 					{
