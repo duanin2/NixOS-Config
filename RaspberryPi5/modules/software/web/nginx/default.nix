@@ -25,8 +25,7 @@
     }
 
     server {
-      listen 443;
-      server_name bohousek10d1979.asuscomm.com;
+      listen bohousek10d1979.asuscomm.com:443;
       ssl_preread on;
       proxy_pass asus_aicloud;
     }
