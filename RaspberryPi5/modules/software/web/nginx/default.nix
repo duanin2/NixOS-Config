@@ -18,7 +18,7 @@
         };
       };
       "bohousek10d1979.asuscomm.com" = {
-        useACMEHost = "bohousek10d1979.asuscomm.com";
+        useACMEHost = "asuscomm.com";
         
         locations."/.well-known/acme-challenge" = {
           root = "/var/lib/acme/.challenges";
