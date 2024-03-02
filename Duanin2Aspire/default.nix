@@ -47,8 +47,8 @@
 		./modules/software/bootloader/systemd-boot
 
 		# software/virtualization
-		./modules/software/virtualization/waydroid
-		./modules/software/virtualization/darling
+		# ./modules/software/virtualization/waydroid
+		# ./modules/software/virtualization/darling
 
 		./duanin2
 	];
