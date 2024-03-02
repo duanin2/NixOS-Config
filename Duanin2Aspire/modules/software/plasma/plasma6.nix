@@ -14,7 +14,7 @@
 				owner = "moodyhunter";
 				repo = pname;
 				rev = version;
-				hash = "sha256-UzyDjmcur5D56w1zjWYcBzmERE1NM/yAmVU9C+2JcPw=";
+				hash = "sha256-XiU0WrCRdfI/bJDtW2Phu6FDmVTjb381cN9Ky0+HvGc=";
 			};
 
 			meta = with lib; {
