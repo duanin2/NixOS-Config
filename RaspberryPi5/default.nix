@@ -6,6 +6,7 @@
 
     # software
     ../common/modules/software/nix
+    ./modules/software/nix
     ../common/modules/software/localization
     ./modules/software/ssh
 
