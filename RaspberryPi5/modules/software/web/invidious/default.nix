@@ -9,6 +9,5 @@
   services.nginx.virtualHosts.${config.services.invidious.domain} = {
     enableACME = lib.mkForce false;
     useACMEHost = "duanin2.top";
-    serverAliases = [ "invidious.RaspberryPi5.local" ];
   };
 }
