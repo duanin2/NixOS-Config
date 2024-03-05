@@ -20,6 +20,7 @@
 		./modules/software/protonmail
 		./modules/software/git
 		./modules/software/mesa
+		./modules/software/gnupg
 
 		# software/network
 		../common/modules/software/network/networkmanager
