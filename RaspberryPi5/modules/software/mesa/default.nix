@@ -1,5 +1,5 @@
 { pkgs, ... }: let
-  override = {
+  override = (old: {
     galliumDrivers = [
       "swrast"
       "virgl"
@@ -11,12 +11,19 @@
       "virtio"
       "broadcom"
     ];
-  };
+  });
+  overrideAttrs = (old: {
+    mesonFlags = (old.mesonFlags or []) ++ [
+      "-Dgallium-vdpau=disabled"
+      "-Dgallium-va=disabled"
+      "-Dgallium-xa=disabled"
+    ];
+  });
 in {
   hardware.opengl = {
     enable = true;
     # driSupport32Bit = true;
 
-    package = pkgs.mesa.override override;
+    package = (pkgs.mesa.override override).overrideAttrs overrideAttrs;
   };
 }
