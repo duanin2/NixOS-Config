@@ -1,5 +1,5 @@
 { inputs, pkgs, ... }: {
-  boot.kernelPackages = pkgs.linuxPackagesFor (inputs.rpi5.legacyPackages.${pkgs.system}.linux_rpi5.overrideAttrs (old: let
+  boot.kernelPackages = pkgs.linuxPackagesFor (inputs.rpi5.legacyPackages.${pkgs.system}.linux_rpi5.overrideDerivation (old: let
     modDirVersion = "6.8-rc7";
   in {
     inherit modDirVersion;
