@@ -3,8 +3,8 @@
     agent = {
       enable = true;
 
-      enableSSHSupport = true;
-      pinentryFlavour = "qt";
+      # enableSSHSupport = true;
+      pinentryFlavor = "qt";
     };
   };
 }
