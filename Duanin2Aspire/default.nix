@@ -1,4 +1,4 @@
-{ ... }@specialArgs: {
+{ ... }: {
 	imports = [
 		# hardware
 		./modules/hardware/autoconfig
