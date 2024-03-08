@@ -33,10 +33,6 @@
 		godot-nixpkgs = {
 			url = "github:ilikefrogs101/nixpkgs";
 		};
-
-		mercury-nixpkgs = {
-			url = "github:redxtech/nixpkgs/add-mercury-browser";
-		};
 	};
 
 	outputs = inputs: let
