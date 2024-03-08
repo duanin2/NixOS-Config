@@ -19,8 +19,8 @@
 		../../common/duanin2/modules/shell/nushell.nix
 		../../common/duanin2/modules/shell/starship
 
-		./modules/Mozilla/firefox.nix
-		./modules/Mozilla/thunderbird.nix
+		../../common/duanin2/modules/Mozilla/firefox.nix
+		../../common/duanin2/modules/Mozilla/thunderbird.nix
 
 		./modules/mpv
 		./modules/mpv/ani-cli.nix
