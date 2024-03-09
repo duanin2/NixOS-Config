@@ -21,6 +21,7 @@
 		./modules/software/git
 		./modules/software/mesa
 		./modules/software/gnupg
+		./modules/software/samba
 
 		# software/network
 		../common/modules/software/network/networkmanager
