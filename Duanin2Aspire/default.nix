@@ -39,7 +39,7 @@
 		../common/modules/software/shell/nushell.nix
 
 		# software/games
-		./modules/software/games/steam
+		# ./modules/software/games/steam
 
 		# software/sound
 		./modules/software/sound
