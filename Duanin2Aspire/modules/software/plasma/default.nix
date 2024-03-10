@@ -1,5 +1,5 @@
 { lib, pkgs, ... }: let
-	sddm-numlock = pkgs.writeFile "sddm-numlock-fix" ''
+	sddm-numlock = pkgs.writeText "sddm-numlock-fix" ''
 	[Keyboard]
 	NumLock=0
 	'';
