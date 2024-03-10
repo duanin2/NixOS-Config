@@ -4,6 +4,8 @@
 	services.xserver.displayManager.defaultSession = "plasma";
 
 	environment.systemPackages = with pkgs; [
+		blurredwallpaper
+		
 		(applet-window-title.overrideAttrs (old: let 
 			pname = "applet-window-title6";
 			version = "master";
@@ -22,13 +24,6 @@
 				homepage = "https://github.com/moodyhunter/applet-window-title6";
 			};
 		}))
-
-		(pkgs.callPackage ./sddm-catppuccin.nix { })
-
-		(catppuccin-kde.override {
-			flavour = [ "frappe" ];
-			accents = [ "green" ];
-		})
 	] ++ (with pkgs.kdePackages; [
 		tokodon
 		plasmatube
