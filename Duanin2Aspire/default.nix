@@ -55,6 +55,9 @@
 		# ./modules/software/desktop/plasma
 		./modules/software/desktop/Hyprland
 
+		# software/greeters
+		./modules/software/greeters/GreetD
+
 		./duanin2
 	];
 
