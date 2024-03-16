@@ -1,6 +1,16 @@
-{ inputs, pkgs, ... }: let
+{ config, inputs, pkgs, ... }: let
 	hyprland = inputs.hyprland.packages.${pkgs.system};
 	hyprland-plugins = inputs.hyprland-plugins.packages.${pkgs.system};
+
+	minimize = pkgs.writeScript "minimize-hyprland.sh" ''
+	#!${pkgs.bash}/bin/bash
+
+	if [[ $(${config.wayland.windowManager.hyprland.package}/bin/hyprctl activewindow -j | ${pkgs.jq}/bin/jq ".workspace.id") == "-99" ]]; then
+		${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch movetoworkspacesilent $(${config.wayland.windowManager.hyprland.package}/bin/hyprctl -j activeworkspace | ${pkgs.jq}/bin/jq ".id")
+	else
+		${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch movetoworkspacesilent special
+	fi
+	'';
 
 	mod = "SUPER";
 	term = "${pkgs.alacritty}/bin/alacritty";
@@ -43,12 +53,14 @@ in {
 			];
 
 			# Autostart
-			exec-once = [ ];
+			exec-once = [
+				"${pkgs.kdePackages.polkit-kde-agent-1}/lib/polkit-kde-authentication-agent-1"
+			];
 
 			bind = [
 				"${mod}, T, exec, ${term}"
 				"${mod}, C, killactive,"
-				"${mod}, H, movetoworkspacesilent, special"
+				"${mod}, H, exec, ${minimize}"
 				"${mod}, S, togglespecialworkspace"
 				"${mod}, M, exit,"
 				"${mod}, V, togglefloating,"
@@ -98,6 +110,8 @@ in {
 			input = {
 				kb_layout = "cz";
 				kb_model = "acer_laptop";
+
+				numlock_by_default = true;
 
 				follow_mouse = 0;
 
@@ -160,6 +174,23 @@ in {
 
 			gestures = {
 				workspace_swipe = false;
+			};
+
+			plugin = {
+				hyprbars = {
+					bar_height = 20;
+
+					bar_precedence_over_border = true;
+					bar_part_of_window = true;
+
+					bar_text_font = "FiraCode Nerd Font Mono";
+
+					hyprbars-button = [
+						"rgb(e78284), 15, 󰖭, hyprctl dispatch killactive"
+						"rgb(e5c890), 15, , hyprctl dispatch fullscreen 1"
+						"rgb(8caaee), 15, -, ${minimize}"
+					];
+				};
 			};
 		};
 	};

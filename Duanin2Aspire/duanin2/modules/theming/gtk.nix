@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  environment.systemPackages = with pkgs; [
+  home.packages = with pkgs; [
     fira-code-nerdfont
   ];
 
@@ -23,8 +23,10 @@
     };
 
     font = {
-      name = "Fira Code Nerd Font Mono";
+      name = "FiraCode Nerd Font Mono";
       size = 11;
     };
   };
+
+  fonts.fontconfig.enable = true;
 }
