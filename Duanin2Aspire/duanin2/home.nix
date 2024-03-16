@@ -11,6 +11,7 @@
 		./modules/bottles
 		./modules/git
 		./modules/Hyprland
+		./modules/theming
 
 		./modules/games/prismlauncher
 		# ./modules/games/vinegar
