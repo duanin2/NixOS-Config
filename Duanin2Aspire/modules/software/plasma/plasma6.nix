@@ -1,5 +1,5 @@
 { inputs, pkgs, lib, ... }: {
-	services.xserver.desktopManager.plasma6.enable = true;
+	services.desktopManager.plasma6.enable = true;
 
 	services.xserver.displayManager.defaultSession = "plasma";
 
@@ -16,7 +16,7 @@
 				owner = "moodyhunter";
 				repo = pname;
 				rev = version;
-				hash = "sha256-XiU0WrCRdfI/bJDtW2Phu6FDmVTjb381cN9Ky0+HvGc=";
+				hash = "sha256-5V1FMTG7pITI+4IZE1vzOGL27nrWTWQltVIQpXD3uj4=";
 			};
 
 			meta = with lib; {
