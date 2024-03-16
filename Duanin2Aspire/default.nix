@@ -12,7 +12,6 @@
 		# software
 		../common/modules/software/nix
 		./modules/software/printing
-		./modules/software/plasma
 		../common/modules/software/localization
 		../common/modules/software/appimage
 		./modules/software/plymouth
@@ -51,6 +50,9 @@
 		# software/virtualization
 		# ./modules/software/virtualization/waydroid
 		# ./modules/software/virtualization/darling
+
+		# software/desktops
+		./modules/software/desktops/plasma
 
 		./duanin2
 	];
