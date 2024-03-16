@@ -1,4 +1,7 @@
-{ pkgs, ... }: let
+{ inputs, pkgs, ... }: let
+	hyprland = inputs.hyprland.packages.${pkgs.system};
+	hyprland-plugins = inputs.hyprland-plugins.packages.${pkgs.system};
+
 	mod = "SUPER";
 	term = "${pkgs.alacritty}/bin/alacritty";
 
@@ -12,7 +15,12 @@ in {
 		systemd = {
 			enable = true;
 		};
-		xwayland.enable = true;
+		xwayland = {
+			enable = true;
+		};
+		plugins = with hyprland-plugins; [
+			hyprbars
+		];
 		settings = {
 			monitor = [
 				"eDP-1, 1920x1080@60, 0x0, 1"

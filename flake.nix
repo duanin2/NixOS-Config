@@ -29,6 +29,18 @@
 				nixpkgs.follows = "nixpkgs";
 			};
 		};
+		hyprland = {
+			url = "github:hyprwm/hyprland";
+			inputs = {
+				nixpkgs.follows = "nixpkgs";
+			};
+		};
+		hyprland-plugins = {
+			url = "github:hyprwm/hyprland-plugins";
+			inputs = {
+				hyprland.follows = "hyprland";
+			};
+		};
 
 		godot-nixpkgs = {
 			url = "github:ilikefrogs101/nixpkgs";
