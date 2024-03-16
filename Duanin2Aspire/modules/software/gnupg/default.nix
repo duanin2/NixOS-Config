@@ -4,7 +4,6 @@
       enable = true;
 
       # enableSSHSupport = true;
-      pinentryFlavor = "qt";
     };
   };
 }

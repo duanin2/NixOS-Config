@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: let
+{ lib, config, pkgs, ... }: let
 	sddm-numlock = pkgs.writeText "sddm-numlock-fix" ''
 	[Keyboard]
 	NumLock=0
@@ -66,4 +66,6 @@ in {
 	programs.dconf.enable = true;
 	services.fwupd.enable = true;
 	chaotic.appmenu-gtk3-module.enable = true;
+
+	programs.gnupg.agent.pinentryPackage = if config.programs.gnupg.enable then pkgs.pinetry-qt else config.programs.gnupg.agent.pinentryPackage;
 }
