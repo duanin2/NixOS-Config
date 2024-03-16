@@ -10,6 +10,7 @@
 		./modules/bash
 		./modules/bottles
 		./modules/git
+		./modules/Hyprland
 
 		./modules/games/prismlauncher
 		# ./modules/games/vinegar

@@ -10,8 +10,8 @@
 in {
 	wayland.windowManager.hyprland = {
 		enable = true;
+		package = hyprland.hyprland;
 
-		enableNvidiaPatches = true;
 		systemd = {
 			enable = true;
 		};
@@ -56,10 +56,10 @@ in {
 				"${mod}, J, togglesplit," # dwindle
 
 				 # Movement
-				 moveFocus "left" "l"
-				 moveFocus "right" "r"
-				 moveFocus "up" "u"
-				 moveFocus "down" "d"
+				 (moveFocus "left" "l")
+				 (moveFocus "right" "r")
+				 (moveFocus "up" "u")
+				 (moveFocus "down" "d")
 
 				 "${mod}, mouse_down, workspace, e+1"
 				 "${mod}, mouse_up, workspace, e-1"

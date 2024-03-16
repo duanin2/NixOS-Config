@@ -52,7 +52,8 @@
 		# ./modules/software/virtualization/darling
 
 		# software/desktops
-		./modules/software/desktops/plasma
+		# ./modules/software/desktop/plasma
+		./modules/software/desktop/Hyprland
 
 		./duanin2
 	];
