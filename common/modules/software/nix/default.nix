@@ -29,6 +29,12 @@
 				"hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
 			];
 			download-speed = 1573;
+
+			trusted-users = [
+				"@wheel"
+				"root"
+				"duanin2"
+			];
 		};
 
 		registry = with inputs; {
