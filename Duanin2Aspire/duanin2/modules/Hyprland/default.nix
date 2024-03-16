@@ -64,8 +64,8 @@ in {
 				 "${mod}, mouse_down, workspace, e+1"
 				 "${mod}, mouse_up, workspace, e-1"
 
-				 "${mod} SHIFT, mouse_down, movetoworkspace, e+1"
-				 "${mod} SHIFT, mouse_up, movetoworkspace, e-1"
+				 "${mod}_SHIFT, mouse_down, movetoworkspace, e+1"
+				 "${mod}_SHIFT, mouse_up, movetoworkspace, e-1"
 			] ++ listToBinds "workspace" mod [
 				{ keys = "plus"; params = "1"; }
 				{ keys = "ecaron"; params = "2"; }
@@ -77,7 +77,7 @@ in {
 				{ keys = "aacute"; params = "8"; }
 				{ keys = "iacute"; params = "9"; }
 				{ keys = "eacute"; params = "10"; }
-			] ++ listToBinds "movetoworkspace" mod [
+			] ++ listToBinds "movetoworkspace" "${mod}_SHIFT" [
 				{ keys = "1"; params = "1"; }
 				{ keys = "2"; params = "2"; }
 				{ keys = "3"; params = "3"; }
@@ -132,7 +132,7 @@ in {
 				drop_shadow = true;
 				shadow_range = 4;
 				shadow_render_power = 3;
-				col.shadow = "rgba(1a1a1aee)";
+				"col.shadow" = "rgba(1a1a1aee)";
 			};
 
 			animations = {
