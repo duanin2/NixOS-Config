@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: let
+{ inputs, config, lib, pkgs, ... }: let
   hyprlandConfig = pkgs.writeText "greetd-hyprland.conf" ''
   general {
     border_size = 0
@@ -28,11 +28,20 @@
     disable_autoreload = true
   }
 
+  env = HYPRCURSOR_THEME, Catppuccin-Frappe-Green-Hyprcursors
+  env = HYPRCURSOR_SIZE, 24
+
   exec-once = ${pkgs.dbus}/bin/dbus-run-session ${lib.getExe config.programs.regreet.package}
   '';
 in {
   imports = [
     ./greeter/regreet.nix
+  ];
+
+  environment.systemPackages = with pkgs; [
+    (pkgs.callPackage ../../../../../packages/hyprcursor-catppuccin.nix {
+      hyprcursor = inputs.hyprland.inputs.hyprcursor.packages.${pkgs.system}.hyprcursor;
+    }).frappeGreen
   ];
 
   services.greetd = {

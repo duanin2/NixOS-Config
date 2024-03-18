@@ -67,6 +67,64 @@
 				};
 				flake = chaotic;
 			};
+
+			"rpi5" = {
+				from = {
+					id = "rpi5";
+					type = "indirect";
+				};
+				flake = rpi5;
+			};
+
+			"hyprland" = {
+				from = {
+					id = "hyprland";
+					type = "indirect";
+				};
+				flake = hyprland;
+			};
+			"hyprland-plugins" = {
+				from = {
+					id = "hyprland-plugins";
+					type = "indirect";
+				};
+				flake = hyprland-plugins;
+			};
+			"hyprpaper" = {
+				from = {
+					id = "hyprpaper";
+					type = "indirect";
+				};
+				flake = hyprpaper;
+			};
+			"hyprpicker" = {
+				from = {
+					id = "hyprpicker";
+					type = "indirect";
+				};
+				flake = hyprpicker;
+			};
+			"hypridle" = {
+				from = {
+					id = "hypridle";
+					type = "indirect";
+				};
+				flake = hypridle;
+			};
+			"hyprlock" = {
+				from = {
+					id = "hyprlock";
+					type = "indirect";
+				};
+				flake = hyprlock;
+			};
+			"hyprlang" = {
+				from = {
+					id = "hyprlang";
+					type = "indirect";
+				};
+				flake = hyprlang;
+			};
 		};
 
 		gc = {

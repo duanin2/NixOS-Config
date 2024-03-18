@@ -1,23 +1,100 @@
-{ config, inputs, pkgs, ... }: let
+{ config, lib, inputs, pkgs, ... }: let
 	hyprland = inputs.hyprland.packages.${pkgs.system};
 	hyprland-plugins = inputs.hyprland-plugins.packages.${pkgs.system};
+	hyprpaper = inputs.hyprpaper.packages.${pkgs.system};
+	hyprpicker = inputs.hyprpicker.packages.${pkgs.system};
+	hypridle = inputs.hypridle.packages.${pkgs.system};
+	hyprlock = inputs.hyprlock.packages.${pkgs.system};
 
-	minimize = pkgs.writeScript "minimize-hyprland.sh" ''
+	minimize = let
+		hyprlandPackage = config.wayland.windowManager.hyprland.package;
+	in pkgs.writeScript "minimize-hyprland.sh" ''
 	#!${pkgs.bash}/bin/bash
 
-	if [[ $(${config.wayland.windowManager.hyprland.package}/bin/hyprctl activewindow -j | ${pkgs.jq}/bin/jq ".workspace.id") == "-99" ]]; then
-		${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch movetoworkspacesilent $(${config.wayland.windowManager.hyprland.package}/bin/hyprctl -j activeworkspace | ${pkgs.jq}/bin/jq ".id")
+	if [[ $(${hyprlandPackage}/bin/hyprctl activewindow -j | ${lib.getExe pkgs.jq} ".workspace.id") == "-99" ]]; then
+		${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch movetoworkspacesilent $(${hyprlandPackage}/bin/hyprctl -j activeworkspace | ${pkgs.jq} ".id")
 	else
-		${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch movetoworkspacesilent special
+		${hyprlandPackage}/bin/hyprctl dispatch movetoworkspacesilent special
 	fi
 	'';
 
 	mod = "SUPER";
-	term = "${pkgs.alacritty}/bin/alacritty";
+	term = "${lib.getExe pkgs.alacritty}";
 
 	moveFocus = key: dir: "${mod}, ${key}, movefocus, ${dir}";
 	listToBinds = dispatcher: modKeys: list: map (x: "${modKeys}, ${x.keys}, ${dispatcher}, ${x.params}") list;
+
+	brightnessControl = { mods, key, direction, percent }:
+		"${builtins.concatStringsSep "_" mods}, ${key}, exec, ${lib.getExe pkgs.brightnessctl} -s set ${
+			if
+				(direction == "+")
+			then
+				"+"
+			else
+				""
+		}${
+			if
+				(lib.isNumber percent)
+			then
+				toString percent
+			else
+				toString 5
+		}%${
+			if
+				(direction == "-")
+			then
+				"-"
+			else
+				""
+		}";
+
+	volumeControl = { mods, key, type, number, direction, percent }:
+		"${builtins.concatStringsSep "_" mods}, ${key}, exec, ${pkgs.pulseaudio}/bin/pactl set-${
+			if
+				(lib.contains type [ "sink" "source" ])
+			then
+				type
+			else
+				"sink"
+		}-volume ${number} ${
+			if
+				(lib.contains direction [ "+" "-" "" ])
+			then
+				direction
+			else
+				"+"
+		}${
+			if
+				(lib.isNumber percent)
+			then
+				toString percent
+			else
+				toString 5
+		}%";
+	volumeMute = { mods, key, type, number, switch }:
+		"${builtins.concatStringsSep "_" mods}, ${key}, exec, ${pkgs.pulseaudio}/bin/pactl set-${
+			if
+				(lib.contains type [ "sink" "source" ])
+			then
+				type
+			else
+				"sink"
+		}-mute ${number} ${
+			if
+				(lib.contains switch [ "0" "1" "toggle" ])
+			then
+				switch
+			else
+				"toggle"
+		}";
 in {
+	imports = let
+		configAttrs = { inherit hyprland hyprland-plugins hyprpaper hyprpicker hypridle hyprlock; };
+	in [
+		(import ./hypridle.nix configAttrs)
+		(import ./hyprlock.nix configAttrs)
+	];
+
 	wayland.windowManager.hyprland = {
 		enable = true;
 		package = hyprland.hyprland;
@@ -50,11 +127,16 @@ in {
 				"XDG_CURRENT_DESKTOP, Hyprland"
 				"XDG_SESSION_DESKTOP, Hyprland"
 				"XDG_SESSION_TYPE, wayland"
+
+				# Hyprcursors
+				"HYPRCURSOR_THEME, Catppuccin-Frappe-Green-Hyprcursors"
+				"HYPRCURSOR_SIZE, ${toString config.home.pointerCursor.size}"
 			];
 
 			# Autostart
 			exec-once = [
-				"${pkgs.kdePackages.polkit-kde-agent-1}/lib/polkit-kde-authentication-agent-1"
+				"${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1"
+				"${lib.getExe hypridle.hypridle}"
 			];
 
 			bind = [
@@ -67,17 +149,56 @@ in {
 				"${mod}, P, pseudo," # dwindle
 				"${mod}, J, togglesplit," # dwindle
 
-				 # Movement
-				 (moveFocus "left" "l")
-				 (moveFocus "right" "r")
-				 (moveFocus "up" "u")
-				 (moveFocus "down" "d")
+				# Brightness control
+				(brightnessControl {
+					mods = [ "" ];
+					key= "XF86MonBrightnessUp";
+					direction = "+";
+					percent = 5;
+				})
+				(brightnessControl {
+					mods = [ "" ];
+					key= "XF86MonBrightnessDown";
+					direction = "-";
+					percent = 5;
+				})
 
-				 "${mod}, mouse_down, workspace, e+1"
-				 "${mod}, mouse_up, workspace, e-1"
+				# Volume control
+				(volumeControl {
+					mods = [ ];
+					key = "XF86AudioRaiseVolume";
+					type = "sink";
+					number = "@DEFAULT_SINK@";
+					direction = "+";
+					percent = 5;
+				})
+				(volumeControl {
+					mods = [ ];
+					key = "XF86AudioLowerVolume";
+					type = "sink";
+					number = "@DEFAULT_SINK@";
+					direction = "-";
+					percent = 5;
+				})
+				(volumeMute {
+					mods = [ ];
+					key = "XF86AudioMute";
+					type = "sink";
+					number = "@DEFAULT_SINK@";
+					switch = "toggle";
+				})
 
-				 "${mod}_SHIFT, mouse_down, movetoworkspace, e+1"
-				 "${mod}_SHIFT, mouse_up, movetoworkspace, e-1"
+				# Movement
+				(moveFocus "left" "l")
+				(moveFocus "right" "r")
+				(moveFocus "up" "u")
+				(moveFocus "down" "d")
+
+				"${mod}, mouse_down, workspace, e+1"
+				"${mod}, mouse_up, workspace, e-1"
+
+				"${mod}_SHIFT, mouse_down, movetoworkspace, e+1"
+				"${mod}_SHIFT, mouse_up, movetoworkspace, e-1"
 			] ++ listToBinds "workspace" mod [
 				{ keys = "plus"; params = "1"; }
 				{ keys = "ecaron"; params = "2"; }
@@ -89,7 +210,7 @@ in {
 				{ keys = "aacute"; params = "8"; }
 				{ keys = "iacute"; params = "9"; }
 				{ keys = "eacute"; params = "10"; }
-			] ++ listToBinds "movetoworkspace" "${mod}_SHIFT" [
+			] ++ listToBinds "movetoworkspace" "${mod}" [
 				{ keys = "1"; params = "1"; }
 				{ keys = "2"; params = "2"; }
 				{ keys = "3"; params = "3"; }
@@ -104,7 +225,7 @@ in {
 
 			bindm = [
 				"${mod}, mouse:272, movewindow"
-				"${mod}, mouse:273, resizewindow"
+				"${mod}, mouse:273, resizewindow"2
 			];
 
 			input = {
@@ -174,6 +295,11 @@ in {
 
 			gestures = {
 				workspace_swipe = false;
+			};
+
+			misc = {
+				enable_swallow = true;
+				swallow_regex = "^(Alacritty)$";
 			};
 
 			plugin = {

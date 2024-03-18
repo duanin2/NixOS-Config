@@ -14,4 +14,6 @@ final: prev: {
   ];
 
   contains = query: list: builtins.any (element: query == element) list;
+
+  isNumber = value: builtins.isInt value || builtins.isFloat value;
 }

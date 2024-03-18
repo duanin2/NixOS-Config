@@ -6,7 +6,7 @@
 	boot.loader.systemd-boot = {
 		enable = true;
 
-		configurationLimit = 100;
+		configurationLimit = 5;
 		editor = true;
 	};
 }

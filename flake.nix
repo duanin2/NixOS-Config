@@ -29,18 +29,63 @@
 				nixpkgs.follows = "nixpkgs";
 			};
 		};
+
 		hyprland = {
 			url = "github:hyprwm/hyprland";
 			inputs = {
 				nixpkgs.follows = "nixpkgs";
+				systems.follows = "systems";
+
+				hyprlang.follows = "hyprlang";
 			};
 		};
 		hyprland-plugins = {
 			url = "github:hyprwm/hyprland-plugins";
 			inputs = {
 				hyprland.follows = "hyprland";
+				systems.follows = "systems";
 			};
 		};
+		hyprpaper = {
+			url = "github:hyprwm/hyprpaper";
+			inputs = {
+				nixpkgs.follows = "nixpkgs";
+
+				hyprlang.follows = "hyprlang";
+			};
+		};
+		hyprpicker = {
+			url = "github:hyprwm/hyprpicker";
+			inputs = {
+				nixpkgs.follows = "nixpkgs";
+			};
+		};
+		hypridle = {
+			url = "github:hyprwm/hypridle";
+			inputs = {
+				nixpkgs.follows = "nixpkgs";
+				systems.follows = "systems";
+
+				hyprlang.follows = "hyprlang";
+			};
+		};
+		hyprlock = {
+			url = "github:hyprwm/hyprlock";
+			inputs = {
+				nixpkgs.follows = "nixpkgs";
+				systems.follows = "systems";
+
+				hyprlang.follows = "hyprlang";
+			};
+		};
+		hyprlang = {
+			url = "github:hyprwm/hyprlang";
+			inputs = {
+				nixpkgs.follows = "nixpkgs";
+				systems.follows = "systems";
+			};
+		};
+		systems.url = "github:nix-systems/default-linux";
 
 		godot-nixpkgs = {
 			url = "github:ilikefrogs101/nixpkgs";
