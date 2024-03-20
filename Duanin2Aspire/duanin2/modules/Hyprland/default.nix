@@ -9,7 +9,7 @@
 	minimize = let
 		hyprlandPackage = config.wayland.windowManager.hyprland.package;
 	in pkgs.writeScript "minimize-hyprland.sh" ''
-	#!${pkgs.bash}/bin/bash
+	#!${lib.getExe pkgs.bash}
 
 	if [[ $(${hyprlandPackage}/bin/hyprctl activewindow -j | ${lib.getExe pkgs.jq} ".workspace.id") == "-99" ]]; then
 		${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch movetoworkspacesilent $(${hyprlandPackage}/bin/hyprctl -j activeworkspace | ${pkgs.jq} ".id")
@@ -225,7 +225,7 @@ in {
 
 			bindm = [
 				"${mod}, mouse:272, movewindow"
-				"${mod}, mouse:273, resizewindow"2
+				"${mod}, mouse:273, resizewindow"
 			];
 
 			input = {
