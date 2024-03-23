@@ -1,5 +1,5 @@
-{ inputs, config, pkgs, ... }: let
-  useHyprcursor = config.wayland.windowManager.hyprland.enable;
+{ inputs, config, pkgs, customPkgs, ... }: let
+  hyprlandCfg = config.wayland.windowManager.hyprland;
 in {
   home.pointerCursor = {
     gtk = {
@@ -10,9 +10,7 @@ in {
     size = 24;
   };
 
-  home.packages = if useHyprcursor then [
-    (pkgs.callPackage ../../../../packages/hyprcursor-catppuccin.nix {
-      hyprcursor = inputs.hyprland.inputs.hyprcursor.packages.${pkgs.system}.hyprcursor;
-    }).frappeGreen
+  home.packages = if hyprlandCfg.enable then [
+    (customPkgs.catppuccin-hyprcursor.override { inherit (inputs.hyprland.inputs.hyprcursor.${pkgs.system}) hyprcursor; }).frappeGreen
   ] else [];
 }
