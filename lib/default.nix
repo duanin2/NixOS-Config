@@ -4,14 +4,18 @@ final: prev: {
     (final.mkIf (!p) no)
   ];
 
-  maintainers = (prev.maintainers or []) ++ [
-    {
+  maintainers = (prev.maintainers or {}) // {
+    duanin2 = {
       email = "tilldusan30@gmail.com";
       github = "duanin2";
       githubId = 1778670;
       name = "Dušan Till";
-    }
-  ];
+    };
+  };
+
+  platforms = (prev.platforms or {}) // {
+    bsd = with prev; freebsd ++ netbsd ++ openbsd;
+  };
 
   contains = query: list: builtins.any (element: query == element) list;
 
