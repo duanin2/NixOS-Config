@@ -2,6 +2,8 @@
 	description = "My NixOS configuration.";
 
 	inputs = {
+		flake-utils.url = "github:numtide/flake-utils";
+
 		nixpkgs = {
 			url = "github:NixOS/nixpkgs/nixos-unstable";
 		};
@@ -96,13 +98,16 @@
 
 	outputs = inputs: let
 		lib = inputs.nixpkgs.lib.extend (final: prev: (import ./lib final prev) // inputs.home-manager.lib);
-	in {
+	in rec {
 		nixosConfigurations = {
 			"Duanin2Aspire" = let
 				system = "x86_64-linux";
 			in inputs.nixpkgs.lib.nixosSystem {
 				inherit system;
-				specialArgs = { inherit inputs lib; };
+				specialArgs = {
+					inherit inputs lib;
+					customPkgs = packages.${system};
+				};
 
 				modules = [
 					./Duanin2Aspire
@@ -110,7 +115,10 @@
 					inputs.home-manager.nixosModules.home-manager
 					{
 						home-manager = {
-							extraSpecialArgs = { inherit inputs lib; };
+							extraSpecialArgs = {
+								inherit inputs lib;
+								customPkgs = packages.${system};
+							};
 
 							useGlobalPkgs = true;
 							useUserPackages = true;
@@ -140,7 +148,10 @@
 				system = "aarch64-linux";
 			in inputs.nixpkgs.lib.nixosSystem {
 				inherit system;
-				specialArgs = { inherit inputs lib; };
+				specialArgs = {
+					inherit inputs lib;
+					customPkgs = packages.${system};
+				};
 
 				modules = [
 					./RaspberryPi5
@@ -148,7 +159,10 @@
 					inputs.home-manager.nixosModules.home-manager
 					{
 						home-manager = {
-							extraSpecialArgs = { inherit inputs lib; };
+							extraSpecialArgs = {
+								inherit inputs lib;
+								customPkgs = packages.${system};
+							};
 
 							useGlobalPkgs = true;
 							useUserPackages = true;
@@ -156,7 +170,7 @@
 					}
 
 					{ nixpkgs.overlays = [ inputs.nur.overlay ]; }
-					({ pkgs, ... }: let
+					({ config, pkgs, ... }: let
 						nur-no-pkgs = import inputs.nur {
 							nurpkgs = import inputs.nixpkgs { inherit system; };
 						};
@@ -168,6 +182,8 @@
 								inputs.chaotic.homeManagerModules.default
 							];
 						};
+
+						home-manager.extraSpecialArgs = (config.home-manager.extraSpecialArgs or {}) // { inherit nur-no-pkgs; };
 					})
 
 					inputs.chaotic.nixosModules.default
@@ -180,7 +196,10 @@
 				pkgs = inputs.nixpkgs.legacyPackages.${system};
 			in inputs.home-manager.lib.homeManagerConfiguration {
 				inherit pkgs;
-				extraSpecialArgs = { inherit pkgs inputs lib; };
+				extraSpecialArgs = {
+					inherit pkgs inputs lib;
+					customPkgs = packages.${system};
+				};
 
 				modules = [
 					./SchoolServer
@@ -198,5 +217,11 @@
 				];
 			};
 		};
+
+		packages = let
+			inherit (inputs.flake-utils.lib) eachSystem filterPackages allSystems;
+		in eachSystem allSystems (system: let
+			pkgs = import inputs.nixpkgs { inherit system; };
+		in import ./packages { inherit pkgs; });
 	};
 }
