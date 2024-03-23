@@ -32,6 +32,8 @@
   env = HYPRCURSOR_SIZE, 24
 
   exec-once = ${pkgs.dbus}/bin/dbus-run-session ${lib.getExe config.programs.regreet.package}
+
+  monitor = eDP-1, 1920x1080@60, 0x0, 1
   '';
 in {
   imports = [
