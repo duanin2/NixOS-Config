@@ -1,4 +1,4 @@
-{ hyprland, hyprland-plugins, hyprpaper, hyprpicker, hypridle, hyprlock}: { pkgs, lib, ... }: {
+{ hyprland, hyprland-plugins, hyprpaper, hyprpicker, hypridle, hyprlock }: { pkgs, lib, ... }: {
   xdg.configFile."hypr/hypridle.conf" = {
     enable = true;
 
@@ -10,24 +10,24 @@
     }
 
     listener {
-      timeout = 60
-      on-timeout = ${lib.getExe pkgs.brightnessctl} -s set 5%
+      timeout = 10
+      on-timeout = ${lib.getExe pkgs.brightnessctl} -s set 1%
       on-resume = ${lib.getExe pkgs.brightnessctl} -r
     }
 
     listener {
-      timeout = 120
-      on-timeout = loginctl lock-session
-    }
-    
-    listener {
-      timeout = 150
+      timeout = 30
       on-timeout = hyprctl dispatch dpms off
       on-resume = hyprctl dispatch dpms on
     }
 
     listener {
-      timeout = 300
+      timeout = 60
+      on-timeout = loginctl lock-session
+    }
+
+    listener {
+      timeout = 90
       on-timeout = systemctl suspend
     }
     '';
