@@ -87,6 +87,8 @@
 		};
 		systems.url = "github:nix-systems/default-linux";
 
+		nix-colors.url = "github:misterio77/nix-colors";
+
 		godot-nixpkgs = {
 			url = "github:ilikefrogs101/nixpkgs";
 		};
@@ -126,6 +128,7 @@
 						home-manager.users = {
 							"duanin2".imports = [
 								inputs.chaotic.homeManagerModules.default
+								inputs.nix-colors.homeManagerModule
 							];
 						};
 					})
