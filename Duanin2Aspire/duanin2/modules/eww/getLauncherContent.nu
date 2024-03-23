@@ -2,12 +2,22 @@
 
 let desktopFileRegex = { |line| $line | parse --regex '(?P<Key>[A-Za-z]+)(?:\[(?P<Language>\w+)\])?=(?P<Value>\S+)' }
 
+let dataDirs = $env.XDG_DATA_DIRS | split row : | prepend $env.XDG_DATA_HOME;
+
+mut language = $env.LANG;
+$language = {
+	"language": if [ "_" "@" "." ] | all { |delim| !(str ) }
+};
+
+
+let desktopFileNames = $dataDirs | each { |dir| glob $"($dir)/applications/*.desktop" } | flatten | uniq
+
 def getContentsRange [
 	input: list
-	includeOnly?: any
-	from?: any
+	includeOnly?: closure
+	from?: closure
 	startSkip?: int
-	to?: any
+	to?: closure
 	endSkip?: int
 ] {
 	mut value = $input
@@ -32,16 +42,12 @@ def getContentsRange [
 		}
 	}
 
-	debug info
-
 	$value
 }
 
-let dataDirs = $env.XDG_DATA_DIRS | split row : | prepend $env.XDG_DATA_HOME;
+# def 
 
-let desktopFiles = $dataDirs | each { |dir| glob $"($dir)/applications/*.desktop" } | flatten | uniq
-
-let fileContents = $desktopFiles | par-each {
+let fileContents = $desktopFileNames | par-each {
 	|file|
 	let file = $file;
 	mut content = "";
@@ -54,10 +60,14 @@ let fileContents = $desktopFiles | par-each {
 	$lines
 }
 
-mut desktopFiles = [];
+mut desktopFiles: list<record> = [];
 
 for file in $fileContents {
-	let mainContents = (getContentsRange $file { |line| $line != "" } { |line| $line == "[Desktop Entry]" } 1 { |line| ($line | str starts-with "[") and ($line | str ends-with "]") }) | each $desktopFileRegex | flatten;
+	let mainContents = (getContentsRange $file { |line| $line != "" } { |line| $line == "[Desktop Entry]" } 1 { |line| ($line | str starts-with "[") and ($line | str ends-with "]") }) | par-each $desktopFileRegex | flatten;
+
+	if $mainContents == [] {
+		continue;
+	}
 
 	mut actionsContents = { 'Desktop Entry': $mainContents }
 
@@ -69,7 +79,7 @@ for file in $fileContents {
 	let actions = $actions
 
 	for action in $actions {
-		let actionContents = (getContentsRange $file { |line| $line != "" } { |line| $line == $"[Desktop Action ($action)]" } 1 { |line| ($line | str starts-with "[") and ($line | str ends-with "]") }) | each $desktopFileRegex | flatten;
+		let actionContents = (getContentsRange $file { |line| $line != "" } { |line| $line == $"[Desktop Action ($action)]" } 1 { |line| ($line | str starts-with "[") and ($line | str ends-with "]") }) | par-each $desktopFileRegex | flatten;
 		
 		$actionsContents = { ...$actionsContents, $action: $actionContents }
 	}
@@ -81,4 +91,6 @@ for file in $fileContents {
 	}
 }
 
-$desktopFiles | to json
+let desktopFiles = $desktopFiles
+
+def main [] {}
