@@ -1,4 +1,6 @@
-{ hyprland, hyprland-plugins, hyprpaper, hyprpicker, hypridle, hyprlock }: { ... }: {
+{ hyprland, hyprland-plugins, hyprpaper, hyprpicker, hypridle, hyprlock }: { config, ... }: let
+  colorPalette = config.colorScheme.palette;
+in {
   xdg.configFile."hypr/hyprlock.conf" = {
     enable = true;
 
@@ -10,36 +12,36 @@
 
     background {
       monitor =
-      color = rgb(48, 52, 70)
+      color = rgb(${colorPalette.base00})
     }
 
     input-field {
       monitor = eDP-1
       size = 200, 60
-      inner_color = rgb(65, 69, 89)
-      outer_color = rgb(115, 121, 148)
-      font_color = rgb(198, 208, 245)
-      numlock_color = rgb(231, 130, 132)
-      capslock_color = rgb(166, 209, 137)
-      bothlock_color = rgb(229, 200, 144)
+      inner_color = rgb(${colorPalette.base02})
+      outer_color = rgb(${colorPalette.base01})
+      font_color = rgb(${colorPalette.base05})
+      numlock_color = rgb(${colorPalette.base0B})
+      capslock_color = rgb(${colorPalette.base08})
+      bothlock_color = rgb(${colorPalette.base0A})
       invert_numlock = true
       placeholder_text = <i>Password...</i>
       fail_text = <i>$FAIL <b>($ATTEMPTS)</b></i>
       hide_input = true
 
-      position = 0, 20
+      position = 0, -20
       halign = center
       valign = center
     }
 
     label {
       monitor = eDP-1
-      test = $USER
-      color = rgb(198, 208, 245)
+      text = $USER
+      color = rgb(${colorPalette.base05})
       font_size = 20
       font_family = FiraCode Nerd Font Mono
 
-      position = 0, -20
+      position = 0, 20
       halign = center
       valign = center
     }

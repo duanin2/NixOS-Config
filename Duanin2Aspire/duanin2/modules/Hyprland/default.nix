@@ -6,87 +6,41 @@
 	hypridle = inputs.hypridle.packages.${pkgs.system};
 	hyprlock = inputs.hyprlock.packages.${pkgs.system};
 
+	colorPalette = config.colorScheme.palette;
+
 	minimize = let
 		hyprlandPackage = config.wayland.windowManager.hyprland.package;
-	in pkgs.writeScript "minimize-hyprland.sh" ''
-	#!${lib.getExe pkgs.bash}
+	in pkgs.writeShellApplication {
+		name = "minimize-hyprland.nu";
 
-	if [[ $(${hyprlandPackage}/bin/hyprctl activewindow -j | ${lib.getExe pkgs.jq} ".workspace.id") == "-99" ]]; then
-		${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch movetoworkspacesilent $(${hyprlandPackage}/bin/hyprctl -j activeworkspace | ${pkgs.jq} ".id")
-	else
-		${hyprlandPackage}/bin/hyprctl dispatch movetoworkspacesilent special
-	fi
-	'';
+		runtimeInputs = with pkgs; [
+			nushell
+			hyprlandPackage
+		];
+		
+		text = ''
+		#!/usr/bin/env nu
+
+		if (hyprctl activewindow -j | from json).workspace.id == -99 {
+			hyprctl dispatch movetoworkspacesilent (hyprctl -j activeworkspace | from json).id
+		} else{
+			hyprctl dispatch movetoworkspacesilent special
+		}
+		'';
+	};
 
 	mod = "SUPER";
 	term = "${lib.getExe pkgs.alacritty}";
 
-	moveFocus = key: dir: "${mod}, ${key}, movefocus, ${dir}";
-	listToBinds = dispatcher: modKeys: list: map (x: "${modKeys}, ${x.keys}, ${dispatcher}, ${x.params}") list;
+	concatedString = seperator: list: ((lib.convertor {
+		default = (seperator: list: "");
+		isList = (seperator: list: builtins.concatStringsSep seperator list);
+		isString = (seperator: list: list);
+	} list) seperator list);
+	getMods = mods: (concatedString "_" mods);
+	getParams = params: (concatedString ", " params);
 
-	brightnessControl = { mods, key, direction, percent }:
-		"${builtins.concatStringsSep "_" mods}, ${key}, exec, ${lib.getExe pkgs.brightnessctl} -s set ${
-			if
-				(direction == "+")
-			then
-				"+"
-			else
-				""
-		}${
-			if
-				(lib.isNumber percent)
-			then
-				toString percent
-			else
-				toString 5
-		}%${
-			if
-				(direction == "-")
-			then
-				"-"
-			else
-				""
-		}";
-
-	volumeControl = { mods, key, type, number, direction, percent }:
-		"${builtins.concatStringsSep "_" mods}, ${key}, exec, ${pkgs.pulseaudio}/bin/pactl set-${
-			if
-				(lib.contains type [ "sink" "source" ])
-			then
-				type
-			else
-				"sink"
-		}-volume ${number} ${
-			if
-				(lib.contains direction [ "+" "-" "" ])
-			then
-				direction
-			else
-				"+"
-		}${
-			if
-				(lib.isNumber percent)
-			then
-				toString percent
-			else
-				toString 5
-		}%";
-	volumeMute = { mods, key, type, number, switch }:
-		"${builtins.concatStringsSep "_" mods}, ${key}, exec, ${pkgs.pulseaudio}/bin/pactl set-${
-			if
-				(lib.contains type [ "sink" "source" ])
-			then
-				type
-			else
-				"sink"
-		}-mute ${number} ${
-			if
-				(lib.contains switch [ "0" "1" "toggle" ])
-			then
-				switch
-			else
-				"toggle"
-		}";
+	listToBinds = dispatcher: modKeys: list: map (x: "${getMods modKeys}, ${x.keys}, ${dispatcher}, ${getParams x.params}") list;
 in {
 	imports = let
 		configAttrs = { inherit hyprland hyprland-plugins hyprpaper hyprpicker hypridle hyprlock; };
@@ -140,66 +94,14 @@ in {
 			];
 
 			bind = [
-				"${mod}, T, exec, ${term}"
 				"${mod}, C, killactive,"
-				"${mod}, H, exec, ${minimize}"
 				"${mod}, S, togglespecialworkspace"
 				"${mod}, M, exit,"
 				"${mod}, V, togglefloating,"
 				"${mod}, P, pseudo," # dwindle
 				"${mod}, J, togglesplit," # dwindle
 
-				# Brightness control
-				(brightnessControl {
-					mods = [ "" ];
-					key= "XF86MonBrightnessUp";
-					direction = "+";
-					percent = 5;
-				})
-				(brightnessControl {
-					mods = [ "" ];
-					key= "XF86MonBrightnessDown";
-					direction = "-";
-					percent = 5;
-				})
-
-				# Volume control
-				(volumeControl {
-					mods = [ ];
-					key = "XF86AudioRaiseVolume";
-					type = "sink";
-					number = "@DEFAULT_SINK@";
-					direction = "+";
-					percent = 5;
-				})
-				(volumeControl {
-					mods = [ ];
-					key = "XF86AudioLowerVolume";
-					type = "sink";
-					number = "@DEFAULT_SINK@";
-					direction = "-";
-					percent = 5;
-				})
-				(volumeMute {
-					mods = [ ];
-					key = "XF86AudioMute";
-					type = "sink";
-					number = "@DEFAULT_SINK@";
-					switch = "toggle";
-				})
-
-				# Movement
-				(moveFocus "left" "l")
-				(moveFocus "right" "r")
-				(moveFocus "up" "u")
-				(moveFocus "down" "d")
-
-				"${mod}, mouse_down, workspace, e+1"
-				"${mod}, mouse_up, workspace, e-1"
-
-				"${mod}_SHIFT, mouse_down, movetoworkspace, e+1"
-				"${mod}_SHIFT, mouse_up, movetoworkspace, e-1"
-			] ++ listToBinds "workspace" mod [
+			] ++ listToBinds "workspace" mod [ # Workspace Control
 				{ keys = "plus"; params = "1"; }
 				{ keys = "ecaron"; params = "2"; }
 				{ keys = "scaron"; params = "3"; }
@@ -210,6 +112,9 @@ in {
 				{ keys = "aacute"; params = "8"; }
 				{ keys = "iacute"; params = "9"; }
 				{ keys = "eacute"; params = "10"; }
+			] ++ listToBinds "workspace" mod [
+				{ keys = "mouse_up"; params = "e+1"; }
+				{ keys = "mouse_down"; params = "e-1"; }
 			] ++ listToBinds "movetoworkspace" "${mod}" [
 				{ keys = "1"; params = "1"; }
 				{ keys = "2"; params = "2"; }
@@ -221,6 +126,42 @@ in {
 				{ keys = "8"; params = "8"; }
 				{ keys = "9"; params = "9"; }
 				{ keys = "0"; params = "10"; }
+			] ++ listToBinds "movetoworkspace" mod [
+				{ keys = "mouse_up"; params = "e+1"; }
+				{ keys = "mouse_down"; params = "e-1"; }
+			] ++ listToBinds "exec" null (let # Brightness Control
+				setBrightness = "${lib.getExe pkgs.brightnessctl} -s set";
+			in [
+				{ keys = "XF86BrightnessUp"; params = "${setBrightness} +5%"; }
+				{ keys = "XF86BrightnessDown"; params = "${setBrightness} 5%-"; }
+			]) ++ listToBinds "exec" null (let # Volume Control
+				setVolume = type: action: "${pkgs.pulseaudio}/bin/pactl set-${
+					if
+						(lib.contains type [ "sink" "source" ])
+					then
+						type
+					else
+						"sink"
+				}-${
+					if
+						(lib.contains type [ "volume" "mute" ])
+					then
+						type
+					else
+						"volume"
+				}";
+			in [
+				{ keys = "XF86AudioRaiseVolume"; params = "${setVolume "sink" "volume"} +5%"; }
+				{ keys = "XF86AudioLowerVolume"; params = "${setVolume "sink" "volume"} -5%"; }
+				{ keys = "XF86AudioMute"; params = "${setVolume "sink" "mute"}"; }
+			]) ++ listToBinds "exec" mod [ # Execute on bind
+				{ keys = "T"; params = term; }
+				{ keys = "H"; params = minimize; }
+			] ++ listToBinds "moveFocus" mod [ # Focus movement
+				{ keys = "left"; params = "l"; }
+				{ keys = "right"; params = "r"; }
+				{ keys = "up"; params = "u"; }
+				{ keys = "down"; params = "d"; }
 			];
 
 			bindm = [
@@ -247,8 +188,12 @@ in {
 				gaps_in = 4;
 				gaps_out = 8;
 				border_size = 2;
-				"col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-				"col.inactive_border" = "rgba(595959aa)";
+				"col.active_border" = "rgb(${colorPalette.base08}) rgb(${colorPalette.base0B}) 45deg";
+				"col.inactive_border" = "rgba(${colorPalette.base01}aa)";
+
+				resize_on_border = true;
+
+				allow_tearing = true;
 
 				layout = "dwindle";
 			};
@@ -267,7 +212,7 @@ in {
 				drop_shadow = true;
 				shadow_range = 4;
 				shadow_render_power = 3;
-				"col.shadow" = "rgba(1a1a1aee)";
+				"col.shadow" = "rgba(${colorPalette.base01}ee)";
 			};
 
 			animations = {
@@ -300,6 +245,9 @@ in {
 			misc = {
 				enable_swallow = true;
 				swallow_regex = "^(Alacritty)$";
+
+				mouse_move_enables_dpms = true;
+    		key_press_enables_dpms = true;
 			};
 
 			plugin = {
@@ -312,9 +260,9 @@ in {
 					bar_text_font = "FiraCode Nerd Font Mono";
 
 					hyprbars-button = [
-						"rgb(e78284), 15, 󰖭, hyprctl dispatch killactive"
-						"rgb(e5c890), 15, , hyprctl dispatch fullscreen 1"
-						"rgb(8caaee), 15, -, ${minimize}"
+						"rgb(${colorPalette.base08}), 15, 󰖭, hyprctl dispatch killactive"
+						"rgb(${colorPalette.base0A}), 15, , hyprctl dispatch fullscreen 1"
+						"rgb(${colorPalette.base0D}), 15, -, ${minimize}"
 					];
 				};
 			};
