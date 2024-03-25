@@ -2,8 +2,6 @@
 	description = "My NixOS configuration.";
 
 	inputs = {
-		flake-utils.url = "github:numtide/flake-utils";
-
 		nixpkgs = {
 			url = "github:NixOS/nixpkgs/nixos-unstable";
 		};
@@ -98,6 +96,8 @@
 
 	outputs = inputs: let
 		lib = inputs.nixpkgs.lib.extend (final: prev: (import ./lib final prev) // inputs.home-manager.lib);
+
+		eachSystem = lib.genAttrs (import inputs.systems);
 	in rec {
 		nixosConfigurations = {
 			"Duanin2Aspire" = let
@@ -106,7 +106,7 @@
 				inherit system;
 				specialArgs = {
 					inherit inputs lib;
-					customPkgs = packages.${system};
+					customPkgs = legacyPackages.${system};
 				};
 
 				modules = [
@@ -117,7 +117,7 @@
 						home-manager = {
 							extraSpecialArgs = {
 								inherit inputs lib;
-								customPkgs = packages.${system};
+								customPkgs = legacyPackages.${system};
 							};
 
 							useGlobalPkgs = true;
@@ -150,7 +150,7 @@
 				inherit system;
 				specialArgs = {
 					inherit inputs lib;
-					customPkgs = packages.${system};
+					customPkgs = legacyPackages.${system};
 				};
 
 				modules = [
@@ -161,7 +161,7 @@
 						home-manager = {
 							extraSpecialArgs = {
 								inherit inputs lib;
-								customPkgs = packages.${system};
+								customPkgs = legacyPackages.${system};
 							};
 
 							useGlobalPkgs = true;
@@ -198,7 +198,7 @@
 				inherit pkgs;
 				extraSpecialArgs = {
 					inherit pkgs inputs lib;
-					customPkgs = packages.${system};
+					customPkgs = legacyPackages.${system};
 				};
 
 				modules = [
@@ -218,9 +218,7 @@
 			};
 		};
 
-		packages = let
-			inherit (inputs.flake-utils.lib) eachSystem filterPackages allSystems;
-		in eachSystem allSystems (system: let
+		legacyPackages = eachSystem (system: let
 			pkgs = import inputs.nixpkgs { inherit system; };
 		in import ./packages { inherit pkgs; });
 	};
