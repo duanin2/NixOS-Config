@@ -5,11 +5,9 @@ in {
     enable = true;
 
     settings = {
-      general = {
-        import = [
-          "${customPkgs.catppuccin-alacritty.frappe}/alacritty.toml"
-        ];
-      };
+      import = [
+        "${customPkgs.catppuccin-alacritty.frappe}/alacritty.toml"
+      ];
 
       window = {
         opacity = 0.2;
@@ -18,8 +16,8 @@ in {
       font = {
         normal = {
           family = fontCfg.name;
-          inherit (fontCfg) size;
         };
+        inherit (fontCfg) size;
       };
 
       cursor = {
@@ -27,6 +25,10 @@ in {
           shape = "Beam";
           blinking = "On";
         };
+      };
+
+      debug = {
+        prefer_egl = true;
       };
     };
   };

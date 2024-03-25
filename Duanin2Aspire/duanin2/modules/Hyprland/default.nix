@@ -10,22 +10,19 @@
 
 	minimize = let
 		hyprlandPackage = config.wayland.windowManager.hyprland.package;
-	in pkgs.writeShellApplication {
+	in pkgs.writeTextFile {
 		name = "minimize-hyprland.nu";
-
-		runtimeInputs = with pkgs; [
-			nushell
-			hyprlandPackage
-		];
-		
+		executable = true;
 		text = ''
-		#!/usr/bin/env nu
+#!${lib.getExe pkgs.nushell}
 
-		if (hyprctl activewindow -j | from json).workspace.id == -99 {
-			hyprctl dispatch movetoworkspacesilent (hyprctl -j activeworkspace | from json).id
-		} else{
-			hyprctl dispatch movetoworkspacesilent special
-		}
+$env.PATH = $env.PATH | append "${hyprlandPackage}/bin"
+
+if (hyprctl activewindow -j | from json).workspace.id == -99 {
+	hyprctl dispatch movetoworkspacesilent (hyprctl -j activeworkspace | from json).id
+} else {
+	hyprctl dispatch movetoworkspacesilent special
+}
 		'';
 	};
 
@@ -89,7 +86,7 @@ in {
 
 			# Autostart
 			exec-once = [
-				"${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1"
+				"${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
 				"${lib.getExe hypridle.hypridle}"
 			];
 
@@ -132,8 +129,8 @@ in {
 			] ++ listToBinds "exec" null (let # Brightness Control
 				setBrightness = "${lib.getExe pkgs.brightnessctl} -s set";
 			in [
-				{ keys = "XF86BrightnessUp"; params = "${setBrightness} +5%"; }
-				{ keys = "XF86BrightnessDown"; params = "${setBrightness} 5%-"; }
+				{ keys = "XF86MonBrightnessUp"; params = "${setBrightness} +5%"; }
+				{ keys = "XF86MonBrightnessDown"; params = "${setBrightness} 5%-"; }
 			]) ++ listToBinds "exec" null (let # Volume Control
 				setVolume = type: action: "${pkgs.pulseaudio}/bin/pactl set-${
 					if
@@ -151,12 +148,12 @@ in {
 						"volume"
 				}";
 			in [
-				{ keys = "XF86AudioRaiseVolume"; params = "${setVolume "sink" "volume"} +5%"; }
-				{ keys = "XF86AudioLowerVolume"; params = "${setVolume "sink" "volume"} -5%"; }
-				{ keys = "XF86AudioMute"; params = "${setVolume "sink" "mute"}"; }
+				{ keys = "XF86AudioRaiseVolume"; params = "${setVolume "sink" "volume"} @DEFAULT_SINK@ +5%"; }
+				{ keys = "XF86AudioLowerVolume"; params = "${setVolume "sink" "volume"} @DEFAULT_SINK@ -5%"; }
+				{ keys = "XF86AudioMute"; params = "${setVolume "sink" "mute"} @DEFAULT_SINK@"; }
 			]) ++ listToBinds "exec" mod [ # Execute on bind
 				{ keys = "T"; params = term; }
-				{ keys = "H"; params = minimize; }
+				{ keys = "H"; params = "${minimize}"; }
 			] ++ listToBinds "moveFocus" mod [ # Focus movement
 				{ keys = "left"; params = "l"; }
 				{ keys = "right"; params = "r"; }
@@ -252,17 +249,18 @@ in {
 
 			plugin = {
 				hyprbars = {
-					bar_height = 20;
-
 					bar_precedence_over_border = true;
 					bar_part_of_window = true;
 
 					bar_text_font = "FiraCode Nerd Font Mono";
 
+					bar_color = "rgb(${colorPalette.base00})";
+					"col.text" = "rgb(${colorPalette.base05})";
+
 					hyprbars-button = [
-						"rgb(${colorPalette.base08}), 15, 󰖭, hyprctl dispatch killactive"
-						"rgb(${colorPalette.base0A}), 15, , hyprctl dispatch fullscreen 1"
-						"rgb(${colorPalette.base0D}), 15, -, ${minimize}"
+						"rgb(${colorPalette.base08}), 15,󰅖, hyprctl dispatch killactive"
+						"rgb(${colorPalette.base0A}), 15,󰖯, hyprctl dispatch fullscreen 1"
+						"rgb(${colorPalette.base0D}), 15,󰖰, ${minimize}"
 					];
 				};
 			};
