@@ -1,7 +1,7 @@
 { pkgs, ... }: let
   lib = pkgs.lib;
   
-  callPackage = lib.callPackageWith packages;
+  callPackage = lib.callPackageWith (pkgs // packages);
   
   packages = {
     catppuccin-alacritty = callPackage ./theming/catppuccin/alacritty { };
