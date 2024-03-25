@@ -1,4 +1,4 @@
-{ inputs, config, lib, pkgs, ... }: let
+{ inputs, config, lib, pkgs, customPkgs, ... }: let
   hyprlandConfig = pkgs.writeText "greetd-hyprland.conf" ''
   general {
     border_size = 0
@@ -41,9 +41,7 @@ in {
   ];
 
   environment.systemPackages = with pkgs; [
-    (pkgs.callPackage ../../../../../packages/hyprcursor-catppuccin.nix {
-      hyprcursor = inputs.hyprland.inputs.hyprcursor.packages.${pkgs.system}.hyprcursor;
-    }).frappeGreen
+    (customPkgs.catppuccin-hyprcursor.override { inherit (inputs.hyprland.inputs.hyprcursor.packages.${pkgs.system}) hyprcursor; }).frappeGreen
   ];
 
   services.greetd = {

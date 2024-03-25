@@ -11,6 +11,6 @@ in {
   };
 
   home.packages = if hyprlandCfg.enable then [
-    (customPkgs.catppuccin-hyprcursor.override { inherit (inputs.hyprland.inputs.hyprcursor.${pkgs.system}) hyprcursor; }).frappeGreen
+    (customPkgs.catppuccin-hyprcursor.override { inherit (inputs.hyprland.inputs.hyprcursor.packages.${pkgs.system}) hyprcursor; }).frappeGreen
   ] else [];
 }
