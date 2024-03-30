@@ -1,10 +1,9 @@
-{ pkgs, inputs, ... }: {
+{ customPkgs, pkgs, inputs, ... }: {
 	programs.firefox = {
 		enable = true;
 		package = (pkgs.callPackage ./common.nix { }) {
-			package = pkgs.firefox_nightly.override {
+			package = pkgs.firefox.override {
 				nativeMessagingHosts = with pkgs; [
-					libsForQt5.plasma-browser-integration
 					keepassxc
 				];
 			};
@@ -39,7 +38,6 @@
 				extensions = with pkgs.nur.repos.rycee.firefox-addons; [
 					ublock-origin
 					skip-redirect
-					plasma-integration
 					stylus
 					firefox-color
 					keepassxc-browser
@@ -52,7 +50,9 @@
 					terms-of-service-didnt-read
 					unpaywall
 					wayback-machine
-				];
+				] ++ (with customPkgs.firefox-addons; [
+					librejs
+				]);
 				settings = {
 					"widget.use-xdg-desktop-portal.file-picker" = 1;
 

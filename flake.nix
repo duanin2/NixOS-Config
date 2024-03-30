@@ -223,6 +223,9 @@
 
 		legacyPackages = eachSystem (system: let
 			pkgs = import inputs.nixpkgs { inherit system; };
-		in import ./packages { inherit pkgs; });
+			nur = import inputs.nur {
+				nurpkgs = pkgs;
+			};
+		in import ./packages { inherit pkgs nur; });
 	};
 }
