@@ -16,7 +16,7 @@
 		text = ''
 #!${lib.getExe pkgs.nushell}
 
-$env.PATH = $env.PATH | append "${hyprlandPackage}/bin"
+$env.PATH = $env.PATH | prepend "${hyprlandPackage}/bin"
 
 if (hyprctl activewindow -j | from json).workspace.id == -99 {
 	hyprctl dispatch movetoworkspacesilent (hyprctl -j activeworkspace | from json).id
