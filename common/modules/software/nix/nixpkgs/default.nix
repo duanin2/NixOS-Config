@@ -4,7 +4,7 @@
 			allowUnfree = true;
 		};
 		overlays = [
-			(prev: final: {
+			(final: prev: {
 				xz = prev.xz.override { inherit (final) lib stdenv fetchurl writeScript testers; };
 			})
 		];
