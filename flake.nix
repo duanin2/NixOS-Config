@@ -36,7 +36,17 @@
 				nixpkgs.follows = "nixpkgs";
 				systems.follows = "systems";
 
+				hyprcursor.follows = "hyprcursor";
+				hyprland-protocols.follows = "hyprland-protocols";
 				hyprlang.follows = "hyprlang";
+				xdph.follows = "xdph";
+			};
+		};
+		hyprland-protocols = {
+			url = "github:hyprwm/hyprland-protocols";
+			inputs = {
+				nixpkgs.follows = "nixpkgs";
+				systems.follows = "systems";
 			};
 		};
 		hyprland-plugins = {
@@ -44,6 +54,25 @@
 			inputs = {
 				hyprland.follows = "hyprland";
 				systems.follows = "systems";
+			};
+		};
+		hyprcursor = {
+			url = "github:hyprwm/hyprcursor";
+			inputs = {
+				nixpkgs.follows = "nixpkgs";
+				systems.follows = "systems";
+
+				hyprlang.follows = "hyprlang";
+			};
+		};
+		xdph = {
+			url = "github:hyprwm/xdg-desktop-portal-hyprland";
+			inputs = {
+				nixpkgs.follows = "nixpkgs";
+				systems.follows = "systems";
+
+				hyprlang.follows = "hyprlang";
+				hyprland-protocols.follows = "hyprland-protocols";
 			};
 		};
 		hyprpaper = {
@@ -223,9 +252,7 @@
 
 		legacyPackages = eachSystem (system: let
 			pkgs = import inputs.nixpkgs { inherit system; };
-			nur = import inputs.nur {
-				nurpkgs = pkgs;
-			};
+			nur = import inputs.nur { inherit pkgs; };
 		in import ./packages { inherit pkgs nur; });
 	};
 }
