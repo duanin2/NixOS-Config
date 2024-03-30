@@ -4,9 +4,9 @@
 			allowUnfree = true;
 		};
 		overlays = [
-			/*(final: prev: {
+			(final: prev: {
 				xz = prev.xz.override { inherit (final) lib stdenv fetchurl writeScript testers; };
-			})*/
+			})
 		];
 	};
 }
