@@ -170,6 +170,8 @@
 								inputs.nix-colors.homeManagerModule
 							];
 						};
+
+						home-manager.extraSpecialArgs = { inherit nur-no-pkgs; };
 					})
 
 					inputs.chaotic.nixosModules.default
@@ -213,7 +215,7 @@
 							];
 						};
 
-						home-manager.extraSpecialArgs = (config.home-manager.extraSpecialArgs or {}) // { inherit nur-no-pkgs; };
+						home-manager.extraSpecialArgs = { inherit nur-no-pkgs; };
 					})
 
 					inputs.chaotic.nixosModules.default
