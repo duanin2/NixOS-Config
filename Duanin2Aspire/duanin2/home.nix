@@ -13,6 +13,7 @@
 		./modules/Hyprland
 		./modules/theming
 		./modules/alacritty
+		./modules/ssh
 
 		./modules/games/prismlauncher
 		# ./modules/games/vinegar
