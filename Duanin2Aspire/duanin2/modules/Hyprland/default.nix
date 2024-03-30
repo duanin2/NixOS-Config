@@ -247,8 +247,20 @@ in {
     		key_press_enables_dpms = true;
 			};
 
+			windowrulev2 = [
+				"float, class:polkit-gnome-authentication-agent-1"
+				"center, class:polkit-gnome-authentication-agent-1"
+				"size 872 436, class:polkit-gnome-authentication-agent-1"
+				"stayfocused, class:polkit-gnome-authentication-agent-1"
+				"idleinhibit always, class:polkit-gnome-authentication-agent-1"
+				"dimaround, class:polkit-gnome-authentication-agent-1"
+				"xray on, class:polkit-gnome-authentication-agent-1"
+			];
+
 			plugin = {
 				hyprbars = {
+					bar_height = 20;
+
 					bar_precedence_over_border = true;
 					bar_part_of_window = true;
 
