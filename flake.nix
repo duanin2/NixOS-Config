@@ -134,11 +134,11 @@
 		nixosConfigurations = {
 			"Duanin2Aspire" = let
 				system = "x86_64-linux";
+				customPkgs = legacyPackages.${system};
 			in inputs.nixpkgs.lib.nixosSystem {
 				inherit system;
 				specialArgs = {
-					inherit inputs lib;
-					customPkgs = legacyPackages.${system};
+					inherit inputs lib customPkgs;
 				};
 
 				modules = [
@@ -148,8 +148,7 @@
 					{
 						home-manager = {
 							extraSpecialArgs = {
-								inherit inputs lib;
-								customPkgs = legacyPackages.${system};
+								inherit inputs lib customPkgs;
 							};
 
 							useGlobalPkgs = true;
@@ -178,11 +177,11 @@
 			};
 			"RaspberryPi5" = let
 				system = "aarch64-linux";
+				customPkgs = legacyPackages.${system};
 			in inputs.nixpkgs.lib.nixosSystem {
 				inherit system;
 				specialArgs = {
-					inherit inputs lib;
-					customPkgs = legacyPackages.${system};
+					inherit inputs lib customPkgs;
 				};
 
 				modules = [
@@ -192,8 +191,7 @@
 					{
 						home-manager = {
 							extraSpecialArgs = {
-								inherit inputs lib;
-								customPkgs = legacyPackages.${system};
+								inherit inputs lib customPkgs;
 							};
 
 							useGlobalPkgs = true;
