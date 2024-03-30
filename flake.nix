@@ -92,6 +92,9 @@
 		godot-nixpkgs = {
 			url = "github:ilikefrogs101/nixpkgs";
 		};
+		nixpkgs-staging = {
+			url = "github:NixOS/nixpkgs/staging";
+		};
 	};
 
 	outputs = inputs: let
