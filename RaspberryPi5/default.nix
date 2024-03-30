@@ -22,7 +22,7 @@
     ./modules/software/web/invidious
 
     # software/kernel
-    ./modules/software/kernel/vendor-nixpkgs.nix
+    ./modules/software/kernel/vendor.nix
 
     # software/shell
     ../common/modules/software/shell/nushell.nix
