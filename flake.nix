@@ -11,6 +11,9 @@
 				nixpkgs.follows = "nixpkgs";
 			};
 		};
+		impermanence = {
+			url = "github:nix-community/impermanence";
+		};
 
 		nur = {
 			url = "github:nix-community/nur";
@@ -152,6 +155,7 @@
 				modules = [
 					./Duanin2Aspire
 
+					inputs.impermanence.nixosModules.impermanence
 					inputs.home-manager.nixosModules.home-manager
 					{
 						imports = [ ];
@@ -163,6 +167,7 @@
 							useUserPackages = true;
 
 							users."duanin2".imports = [
+								inputs.impermanence.nixosModules.home-manager.impermanence
 								inputs.chaotic.homeManagerModules.default
 								inputs.nix-colors.homeManagerModule
 							];
@@ -229,10 +234,12 @@
 				specialArgs = { inherit inputs lib customPkgs stagingPkgs nur; };
 
 				modules = [
-					"${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal-new-kernel-no-zfs.nix"
+					"${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5-new-kernel.nix"
 					({ lib, pkgs, ... }: {
-            boot.supportedFilesystems = [ "bcachefs" ];
-            boot.kernelPackages = lib.mkOverride 0 pkgs.linuxPackages_latest;
+						boot.supportedFilesystems = {
+							bcachefs = true;
+							zfs = lib.mkForce false;
+						};
           })
 				];
 			};

@@ -21,6 +21,7 @@
 		./modules/software/mesa
 		./modules/software/gnupg
 		./modules/software/samba
+		./modules/software/impermanence
 
 		# software/network
 		../common/modules/software/network/networkmanager
@@ -63,4 +64,6 @@
 
 	networking.hostName = "Duanin2Aspire";
 	system.stateVersion = "24.05";
+
+	users.mutableUsers = false;
 }

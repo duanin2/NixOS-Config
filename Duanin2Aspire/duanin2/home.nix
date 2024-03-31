@@ -14,6 +14,7 @@
 		./modules/theming
 		./modules/alacritty
 		./modules/ssh
+		./modules/impermanence
 
 		./modules/games/prismlauncher
 		# ./modules/games/vinegar

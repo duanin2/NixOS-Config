@@ -14,22 +14,36 @@
 	boot.extraModulePackages = [ ];
 
 	fileSystems."/" =
-		{ device = "/dev/disk/by-uuid/0291b5c1-6fee-4f2e-a07e-4bd4c1b84b95";
-			fsType = "ext4";
+		{ device = "none";
+			fsType = "tmpfs";
+			options = [ "size=3G" "mode=755" ];
 		};
 	
-	fileSystems."/tmp" = {
-    device = "none";
-    fsType = "tmpfs";
-    options = [
-      "size=80%"
-    ];
-  };
+	fileSystems."/home/duanin2" =
+		{ device = "none";
+			fsType = "tmpfs";
+			options = [ "size=4G" "mode=777" ];
+		};
+	
+	fileSystems."/persist" =
+		{ device = "";
+			neededForBoot = true;
+			fsType = "bcachefs";
+		};
 
-	boot.initrd.luks.devices."luks-abc04aaa-0d62-471d-9a76-982ab58c5bc0".device = "/dev/disk/by-uuid/abc04aaa-0d62-471d-9a76-982ab58c5bc0";
+	fileSystems."/nix" = 
+		{ depends = [
+				"/persist"
+			];
+			device = "/persist/nix";
+			fsType = "none";
+			options = [
+				"bind"
+			];
+		};
 
 	fileSystems."/boot" =
-		{ device = "/dev/disk/by-uuid/74A5-5B02";
+		{ device = "/dev/disk/by-uuid/XXXX-XXXX";
 			fsType = "vfat";
 		};
 
