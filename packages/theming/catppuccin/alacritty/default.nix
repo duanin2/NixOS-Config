@@ -1,10 +1,10 @@
 { lib, stdenvNoCC, fetchFromGitHub, format ? "toml" }: let
   variants = [ "latte" "frappe" "macchiato" "mocha" ];
-  genFiles = variants: fileExtension: map (variant: "catppuccin-${variant}.${fileExtension}") variants; 
+  genFiles = fileExtension: map (variant: "catppuccin-${variant}.${fileExtension}") variants; 
   
   srcRef =
-    if format == "toml" then { rev = "071d73effddac392d5b9b8cd5b4b527a6cf289f9"; sparseCheckout = genFiles variants "toml"; hash = "sha256-7zqU9R15eFqFyebjTFu8mFzEqjfHxjCNO738sBCTnHA="; } 
-    else if format == "yaml" then { rev = "yaml"; sparseCheckout = genFiles variants "yml"; hash = ""; }
+    if format == "toml" then { rev = "071d73effddac392d5b9b8cd5b4b527a6cf289f9"; sparseCheckout = genFiles "toml"; hash = "sha256-7zqU9R15eFqFyebjTFu8mFzEqjfHxjCNO738sBCTnHA="; } 
+    else if format == "yaml" then { rev = "yaml"; sparseCheckout = genFiles "yml"; hash = ""; }
     else throw "format must be either toml or yaml.";
 in stdenvNoCC.mkDerivation {
   pname = "catppuccin-alacritty";
