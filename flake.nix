@@ -211,6 +211,31 @@
 					inputs.chaotic.nixosModules.default
 				];
 			};
+			"bcachefsIso" = let
+				system = "x86_64-linux";
+				customPkgs = legacyPackages.${system};
+				stagingPkgs = import inputs.nixpkgs-staging {
+					inherit system;
+					config = {
+						allowUnfree = true;
+					};
+				};
+				nur = import inputs.nur rec {
+					pkgs = import inputs.nixpkgs { inherit system; };
+					nurpkgs = pkgs;
+				};
+			in lib.nixosSystem {
+				inherit system;
+				specialArgs = { inherit inputs lib customPkgs stagingPkgs nur; };
+
+				modules = [
+					"${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal-new-kernel-no-zfs.nix"
+					({ lib, pkgs, ... }: {
+            boot.supportedFilesystems = [ "bcachefs" ];
+            boot.kernelPackages = lib.mkOverride 0 pkgs.linuxPackages_latest;
+          })
+				];
+			};
 		};
 		homeConfigurations = {
 			"SchoolServer" = let
