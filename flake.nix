@@ -135,44 +135,39 @@
 			"Duanin2Aspire" = let
 				system = "x86_64-linux";
 				customPkgs = legacyPackages.${system};
-			in inputs.nixpkgs.lib.nixosSystem {
-				inherit system;
-				specialArgs = {
-					inherit inputs lib customPkgs;
+				stagingPkgs = import inputs.nixpkgs-staging {
+					inherit system;
+					config = {
+						allowUnfree = true;
+					};
 				};
+				nur = import inputs.nur rec {
+					pkgs = import inputs.nixpkgs { inherit system; };
+					nurpkgs = pkgs;
+				};
+			in lib.nixosSystem {
+				inherit system;
+				specialArgs = { inherit inputs lib customPkgs stagingPkgs nur; };
 
 				modules = [
 					./Duanin2Aspire
 
 					inputs.home-manager.nixosModules.home-manager
 					{
+						imports = [ ];
+
 						home-manager = {
-							extraSpecialArgs = {
-								inherit inputs lib customPkgs;
-							};
+							extraSpecialArgs = { inherit inputs lib customPkgs stagingPkgs nur; };
 
 							useGlobalPkgs = true;
 							useUserPackages = true;
-						};
-					}
 
-					{ nixpkgs.overlays = [ inputs.nur.overlay ]; }
-					({ pkgs, ... }: let
-						nur-no-pkgs = import inputs.nur {
-							nurpkgs = import inputs.nixpkgs { inherit system; };
-						};
-					in {
-						imports = [ ];
-
-						home-manager.users = {
-							"duanin2".imports = [
+							users."duanin2".imports = [
 								inputs.chaotic.homeManagerModules.default
 								inputs.nix-colors.homeManagerModule
 							];
 						};
-
-						home-manager.extraSpecialArgs = { inherit nur-no-pkgs; };
-					})
+					}
 
 					inputs.chaotic.nixosModules.default
 				];
@@ -180,43 +175,38 @@
 			"RaspberryPi5" = let
 				system = "aarch64-linux";
 				customPkgs = legacyPackages.${system};
-			in inputs.nixpkgs.lib.nixosSystem {
-				inherit system;
-				specialArgs = {
-					inherit inputs lib customPkgs;
+				stagingPkgs = import inputs.nixpkgs-staging {
+					inherit system;
+					config = {
+						allowUnfree = true;
+					};
 				};
+				nur = import inputs.nur rec {
+					pkgs = import inputs.nixpkgs { inherit system; };
+					nurpkgs = pkgs;
+				};
+			in lib.nixosSystem {
+				inherit system;
+				specialArgs = { inherit inputs lib customPkgs stagingPkgs nur; };
 
 				modules = [
 					./RaspberryPi5
 
 					inputs.home-manager.nixosModules.home-manager
 					{
+						imports = [ ];
+
 						home-manager = {
-							extraSpecialArgs = {
-								inherit inputs lib customPkgs;
-							};
+							extraSpecialArgs = { inherit inputs lib customPkgs stagingPkgs nur; };
 
 							useGlobalPkgs = true;
 							useUserPackages = true;
-						};
-					}
 
-					{ nixpkgs.overlays = [ inputs.nur.overlay ]; }
-					({ config, pkgs, ... }: let
-						nur-no-pkgs = import inputs.nur {
-							nurpkgs = import inputs.nixpkgs { inherit system; };
-						};
-					in {
-						imports = [ ];
-
-						home-manager.users = {
-							"duanin2".imports = [
+							users."duanin2".imports = [
 								inputs.chaotic.homeManagerModules.default
 							];
 						};
-
-						home-manager.extraSpecialArgs = { inherit nur-no-pkgs; };
-					})
+					}
 
 					inputs.chaotic.nixosModules.default
 				];
@@ -225,25 +215,28 @@
 		homeConfigurations = {
 			"SchoolServer" = let
 				system = "x86_64-linux";
-				pkgs = inputs.nixpkgs.legacyPackages.${system};
-			in inputs.home-manager.lib.homeManagerConfiguration {
-				inherit pkgs;
-				extraSpecialArgs = {
-					inherit pkgs inputs lib;
-					customPkgs = legacyPackages.${system};
+				pkgs = import inputs.nixpkgs { inherit system; };
+				customPkgs = legacyPackages.${system};
+				stagingPkgs = import inputs.nixpkgs-staging {
+					inherit system;
+					config = {
+						allowUnfree = true;
+					};
 				};
+				nur = import inputs.nur rec {
+					inherit pkgs;
+					nurpkgs = pkgs;
+				};
+			in lib.homeManagerConfiguration {
+				inherit pkgs;
+				extraSpecialArgs = { inherit pkgs inputs lib customPkgs stagingPkgs nur; };
 
 				modules = [
 					./SchoolServer
 
-					{ nixpkgs.overlays = [ inputs.nur.overlay ]; }
-					({ pkgs, ... }: let
-						nur-no-pkgs = import inputs.nur {
-							nurpkgs = import inputs.nixpkgs { inherit system; };
-						};
-					in {
+					{
 						imports = [];
-					})
+					}
 
 					inputs.chaotic.homeManagerModules.default
 				];
