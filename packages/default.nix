@@ -7,6 +7,6 @@
     catppuccin-alacritty = callPackage ./theming/catppuccin/alacritty { };
     catppuccin-hyprcursor = callPackage ./theming/catppuccin/hyprcursor { };
 
-    firefox-addons = callPackage ./firefox-addons { };
+    mozilla = callPackage ./mozilla { };
   } // { inherit callPackage; };
 in packages

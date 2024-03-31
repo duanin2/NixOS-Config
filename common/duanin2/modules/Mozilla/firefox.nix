@@ -1,7 +1,7 @@
 { nur, customPkgs, pkgs, inputs, ... }: {
 	programs.firefox = {
 		enable = true;
-		package = (pkgs.callPackage ./common.nix { }) {
+		package = customPkgs.mozilla.addUserJsPrefs {
 			package = pkgs.firefox.override {
 				nativeMessagingHosts = with pkgs; [
 					keepassxc
@@ -50,7 +50,7 @@
 					terms-of-service-didnt-read
 					unpaywall
 					wayback-machine
-				] ++ (with customPkgs.firefox-addons; [
+				] ++ (with customPkgs.mozilla.firefoxAddons; [
 					librejs
 				]);
 				settings = {

@@ -1,9 +1,9 @@
 {
-  writeText,
-  ...
-}: {
   src,
   package
+}: {
+  writeText,
+  ...
 }: package.override (old: let
   prefsFile = (builtins.replaceStrings
                 [ "user_pref" ]

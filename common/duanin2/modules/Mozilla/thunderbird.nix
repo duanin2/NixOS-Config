@@ -1,7 +1,7 @@
-{ pkgs, ... }: {
+{ customPkgs, pkgs, ... }: {
 	programs.thunderbird = {
 		enable = true;
-		package = (pkgs.callPackage ./common.nix { }) {
+		package = customPkgs.mozilla.addUserJsPrefs {
 			package = pkgs.thunderbird;
 			src = pkgs.fetchurl {
 				url = "https://raw.githubusercontent.com/HorlogeSkynet/thunderbird-user.js/master/user.js";
@@ -9,6 +9,6 @@
 			};
 		};
 
-		profiles = {};
+		profiles = { };
 	};
 }
