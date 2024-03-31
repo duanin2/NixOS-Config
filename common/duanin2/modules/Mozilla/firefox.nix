@@ -1,4 +1,4 @@
-{ customPkgs, pkgs, inputs, ... }: {
+{ nur, customPkgs, pkgs, inputs, ... }: {
 	programs.firefox = {
 		enable = true;
 		package = (pkgs.callPackage ./common.nix { }) {
@@ -35,7 +35,7 @@
 						];
 					}
 				];
-				extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+				extensions = with nur.repos.rycee.firefox-addons; [
 					ublock-origin
 					skip-redirect
 					stylus
