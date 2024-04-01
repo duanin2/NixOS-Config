@@ -1,7 +1,7 @@
-{ pkgs, nur, ... }: let
+{ pkgs, nur, hyprcursor, ... }: let
   lib = pkgs.lib;
   
-  callPackage = lib.callPackageWith (pkgs // { inherit (nur.repos.rycee.firefox-addons) buildFirefoxXpiAddon; } // packages);
+  callPackage = lib.callPackageWith (pkgs // { inherit (nur.repos.rycee.firefox-addons) buildFirefoxXpiAddon; inherit hyprcursor; } // packages);
   
   packages = {
     catppuccin-alacritty = callPackage ./theming/catppuccin/alacritty { };
