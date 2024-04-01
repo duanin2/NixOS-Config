@@ -3,7 +3,7 @@
 
   services.resolved = {
     enable = true;
-    dnssec = "no";
+    dnssec = "false";
     dnsovertls = "true";
     domains = [ "~." ];
     fallbackDns = [ "192.168.1.1" ];
