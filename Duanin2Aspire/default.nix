@@ -64,7 +64,7 @@
 	];
 
 	networking.hostName = "Duanin2Aspire";
-	system.stateVersion = "24.05";
+	system.stateVersion = "23.11";
 
 	users.mutableUsers = false;
 	boot.supportedFilesystems = [ "bcachefs" ];
