@@ -22,6 +22,7 @@
 		./modules/software/gnupg
 		./modules/software/samba
 		./modules/software/impermanence
+		./modules/software/nix
 
 		# software/network
 		../common/modules/software/network/networkmanager
