@@ -3,13 +3,10 @@
 
   services.resolved = {
     enable = true;
-    dnssec = "true";
+    dnssec = "no";
+    dnsovertls = "true";
     domains = [ "~." ];
     fallbackDns = [ "192.168.1.1" ];
-    extraConfig = ''
-      DNSSEC=no
-      DNSOverTLS=yes
-    '';
   };
 
   networking.resolvconf.enable = false;
