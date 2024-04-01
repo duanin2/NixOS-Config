@@ -1,6 +1,6 @@
 { ... }: {
 	nixpkgs = {
-		overlays = {
+		overlays = [
 			(final: prev: let
 				getCustomMesa = (mesa: mesa.override (old: {
 					galliumDrivers = [
@@ -15,6 +15,6 @@
 					];
 				}));
 			in builtins.mapAttrs (name: value: getCustomMesa value) { inherit (prev) mesa_git mesa32_git; })
-		};
+		];
 	};
 }
