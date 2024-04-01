@@ -33,7 +33,7 @@
 		# ./modules/software/network/vpn/protonvpn.nix
 
 		# software/kernel
-		./modules/software/kernel/cachyos.nix
+		./modules/software/kernel/latest.nix
 
 		# software/shell
 		../common/modules/software/shell/nushell.nix
