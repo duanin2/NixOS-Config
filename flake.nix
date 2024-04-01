@@ -75,7 +75,7 @@
 		hyprland-plugins = {
 			url = "github:hyprwm/hyprland-plugins";
 			inputs = {
-				hyprland.follows = "hyprland-unstable";
+				hyprland.follows = "hyprland";
 				systems.follows = "systems";
 			};
 		};
