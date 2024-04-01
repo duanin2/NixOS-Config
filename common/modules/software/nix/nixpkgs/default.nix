@@ -4,9 +4,9 @@
 			allowUnfree = true;
 		};
 		overlays = [
-			/*(final: prev: {
+			(final: prev: {
 				xz = stagingPkgs.xz.override { inherit (final) lib stdenv fetchurl writeScript testers; };
-			})*/
+			})
 			(final: prev: {
 				invidious = prev.invidious.overrideAttrs (_oldAttrs: {
 					src = prev.fetchFromGitHub {
