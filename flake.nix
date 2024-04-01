@@ -295,7 +295,7 @@
 		legacyPackages = eachSystem (system: let
 			pkgs = import inputs.nixpkgs { inherit system; };
 			nur = import inputs.nur { inherit pkgs; };
-			hyprcursor = inputs.hyprcursor.packages.${system}
+			hyprcursor = inputs.hyprcursor.packages.${system};
 		in import ./packages { inherit pkgs nur hyprcursor; });
 	};
 }
