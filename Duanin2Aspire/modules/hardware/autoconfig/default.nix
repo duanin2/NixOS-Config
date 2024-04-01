@@ -25,13 +25,14 @@
     };
 
   fileSystems."/persist" =
-    { device = "UUID=cce33f80-5296-4b05-9b79-5a524d7bf61b";
+    { device = "UUID=31f7b817-661e-4b2d-9e42-47e69dfcfd25";
       fsType = "bcachefs";
       neededForBoot = true;
     };
 
   fileSystems."/nix" =
     { device = "/persist/nix";
+			depends = [ "/persist" ];
       fsType = "none";
       neededForBoot = true;
       options = [ "bind" ];
