@@ -14,38 +14,34 @@
 	boot.extraModulePackages = [ ];
 
 	fileSystems."/" =
-		{ device = "none";
-			fsType = "tmpfs";
-			options = [ "size=3G" "mode=755" ];
-		};
-	
-	fileSystems."/home/duanin2" =
-		{ device = "none";
-			fsType = "tmpfs";
-			options = [ "size=4G" "mode=777" ];
-		};
-	
-	fileSystems."/persist" =
-		{ device = "";
-			neededForBoot = true;
-			fsType = "bcachefs";
-		};
+    { device = "none";
+      fsType = "tmpfs";
+      options = [ "size=3G" "mode=755" ];
+    };
 
-	fileSystems."/nix" = 
-		{ depends = [
-				"/persist"
-			];
-			device = "/persist/nix";
-			fsType = "none";
-			options = [
-				"bind"
-			];
-		};
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/C22B-6D35";
+      fsType = "vfat";
+    };
 
-	fileSystems."/boot" =
-		{ device = "/dev/disk/by-uuid/XXXX-XXXX";
-			fsType = "vfat";
-		};
+  fileSystems."/persist" =
+    { device = "UUID=cce33f80-5296-4b05-9b79-5a524d7bf61b";
+      fsType = "bcachefs";
+      neededForBoot = true;
+    };
+
+  fileSystems."/nix" =
+    { device = "/persist/nix";
+      fsType = "none";
+      neededForBoot = true;
+      options = [ "bind" ];
+    };
+
+  fileSystems."/home/duanin2" =
+    { device = "none";
+      fsType = "tmpfs";
+      options = [ "size=4G" "mode=777" ];
+    };
 
 	swapDevices = [ ];
 

@@ -1,5 +1,5 @@
 { callPackage, ... }: {
-  addUserJsPrefs = opts: callPackage (import ./addUserJs.nix opts) { };
+  addUserJsPrefs = opts: callPackage (import ./addUserJsPrefs.nix opts) { };
 
   firefoxAddons = callPackage ./firefox-addons { };
 }
