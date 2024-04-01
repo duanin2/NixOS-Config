@@ -4,7 +4,6 @@
   };
 
   programs.atuin.enableNushellIntegration = true;
-  programs.broot.enableNushellIntegration = true;
   programs.carapace.enableNushellIntegration = true;
   programs.direnv.enableNushellIntegration = true;
   programs.keychain.enableNushellIntegration = true;

@@ -4,5 +4,5 @@
 		../../common/duanin2/modules/shell/starship
   ];
 
-  home.stateVersion = "24.05";
+  home.stateVersion = "23.11";
 }

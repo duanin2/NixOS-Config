@@ -36,5 +36,5 @@
   boot.loader.efi.canTouchEfiVariables = false;
 
   networking.hostName = "RaspberryPi5";
-	system.stateVersion = "24.05";
+	system.stateVersion = "23.11";
 }
