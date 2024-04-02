@@ -2,18 +2,18 @@
 	description = "My NixOS configuration.";
 
 	nixConfig = {
-		substituters = [
+		extra-substituters = [
 			"https://0uptime.cachix.org/"
 			"https://nix-community.cachix.org/"
 			"https://hyprland.cachix.org"
 			"https://nyx.chaotic.cx/"
 		];
-		trusted-public-keys = [
+		extra-trusted-public-keys = [
 			"0uptime.cachix.org-1:ctw8yknBLg9cZBdqss+5krAem0sHYdISkw/IFdRbYdE="
 			"nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
 			"hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
 			"nyx.chaotic.cx-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
-      "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
+			"chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
 		];
 	};
 
@@ -23,9 +23,6 @@
 		};
 		nixpkgs-unstable = {
 			url = "github:NixOS/nixpkgs/nixos-unstable";
-		};
-		nixpkgs-staging = {
-			url = "github:NixOS/nixpkgs/staging";
 		};
 
 		home-manager = {
@@ -158,19 +155,13 @@
 			"Duanin2Aspire" = let
 				system = "x86_64-linux";
 				customPkgs = legacyPackages.${system};
-				stagingPkgs = import inputs.nixpkgs-staging {
-					inherit system;
-					config = {
-						allowUnfree = true;
-					};
-				};
 				nur = import inputs.nur rec {
 					pkgs = import inputs.nixpkgs { inherit system; };
 					nurpkgs = pkgs;
 				};
 			in lib.nixosSystem {
 				inherit system;
-				specialArgs = { inherit inputs lib customPkgs stagingPkgs nur; };
+				specialArgs = { inherit inputs lib customPkgs nur; };
 
 				modules = [
 					./Duanin2Aspire
@@ -181,7 +172,7 @@
 						imports = [ ];
 
 						home-manager = {
-							extraSpecialArgs = { inherit inputs lib customPkgs stagingPkgs nur; };
+							extraSpecialArgs = { inherit inputs lib customPkgs nur; };
 
 							useGlobalPkgs = true;
 							useUserPackages = true;
@@ -200,19 +191,13 @@
 			"RaspberryPi5" = let
 				system = "aarch64-linux";
 				customPkgs = legacyPackages.${system};
-				stagingPkgs = import inputs.nixpkgs-staging {
-					inherit system;
-					config = {
-						allowUnfree = true;
-					};
-				};
 				nur = import inputs.nur rec {
 					pkgs = import inputs.nixpkgs { inherit system; };
 					nurpkgs = pkgs;
 				};
 			in lib.nixosSystem {
 				inherit system;
-				specialArgs = { inherit inputs lib customPkgs stagingPkgs nur; };
+				specialArgs = { inherit inputs lib customPkgs nur; };
 
 				modules = [
 					./RaspberryPi5
@@ -222,7 +207,7 @@
 						imports = [ ];
 
 						home-manager = {
-							extraSpecialArgs = { inherit inputs lib customPkgs stagingPkgs nur; };
+							extraSpecialArgs = { inherit inputs lib customPkgs nur; };
 
 							useGlobalPkgs = true;
 							useUserPackages = true;
@@ -239,19 +224,13 @@
 			"bcachefsIso" = let
 				system = "x86_64-linux";
 				customPkgs = legacyPackages.${system};
-				stagingPkgs = import inputs.nixpkgs-staging {
-					inherit system;
-					config = {
-						allowUnfree = true;
-					};
-				};
 				nur = import inputs.nur rec {
 					pkgs = import inputs.nixpkgs { inherit system; };
 					nurpkgs = pkgs;
 				};
 			in lib.nixosSystem {
 				inherit system;
-				specialArgs = { inherit inputs lib customPkgs stagingPkgs nur; };
+				specialArgs = { inherit inputs lib customPkgs nur; };
 
 				modules = [
 					"${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5-new-kernel.nix"
@@ -269,19 +248,13 @@
 				system = "x86_64-linux";
 				pkgs = import inputs.nixpkgs { inherit system; };
 				customPkgs = legacyPackages.${system};
-				stagingPkgs = import inputs.nixpkgs-staging {
-					inherit system;
-					config = {
-						allowUnfree = true;
-					};
-				};
 				nur = import inputs.nur rec {
 					inherit pkgs;
 					nurpkgs = pkgs;
 				};
 			in lib.homeManagerConfiguration {
 				inherit pkgs;
-				extraSpecialArgs = { inherit pkgs inputs lib customPkgs stagingPkgs nur; };
+				extraSpecialArgs = { inherit pkgs inputs lib customPkgs nur; };
 
 				modules = [
 					./SchoolServer
