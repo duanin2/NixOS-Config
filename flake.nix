@@ -2,13 +2,13 @@
 	description = "My NixOS configuration.";
 
 	nixConfig = {
-		substituters = [
+		extra-substituters = [
 			"https://0uptime.cachix.org/"
 			"https://nix-community.cachix.org/"
 			"https://hyprland.cachix.org"
 			"https://nyx.chaotic.cx/"
 		];
-		trusted-public-keys = [
+		extra-trusted-public-keys = [
 			"0uptime.cachix.org-1:ctw8yknBLg9cZBdqss+5krAem0sHYdISkw/IFdRbYdE="
 			"nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
 			"hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
