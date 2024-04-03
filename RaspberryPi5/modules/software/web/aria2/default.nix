@@ -7,8 +7,8 @@ in {
 
 	networking.firewall.allowedTCPPortRanges = [ cfg.listenPortRange ];
 	services.nginx.virtualHosts."aria2.duanin2.top" = {
+		useACMEHost = "duanin2.top";
 		locations."/" = {
-			useACMEHost = "duanin2.top";
 			proxyPass = "localhost:${cfg.rpcListenPort}";
 			proxyWebsockets = true;
 		};
