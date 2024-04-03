@@ -19,7 +19,10 @@
       };
       "bohousek10d1979.asuscomm.com" = {
         useACMEHost = "asuscomm.com";
-        
+
+        locations."/.well-known/acme-challenge" = {
+          root = "/var/lib/acme/.challenges";
+        };
         locations."/".proxyPass = "https://192.168.1.1";
         default = true;
         forceSSL = true;
