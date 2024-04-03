@@ -3,7 +3,7 @@
     enable = true;
   };
 
-  /*nixpkgs.overlays = [
+  nixpkgs.overlays = [
     (final: prev: builtins.mapAttrs (name: value: customPkgs.overrideAll
       value
       (old: {
@@ -23,8 +23,9 @@
           "-Dgallium-va=disabled"
           "-Dgallium-xa=disabled"
           "-Dintel-rt=disabled"
+          "-Dgallium-nine=disabled"
         ];
       })
     ) { inherit (prev) mesa_git; })
-  ];*/
+  ];
 }

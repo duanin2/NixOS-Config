@@ -7,7 +7,7 @@
   };
 
   nixpkgs.overlays = [
-    /*(final: prev: builtins.mapAttrs (name: value: customPkgs.overrideAll
+    (final: prev: builtins.mapAttrs (name: value: customPkgs.overrideAll
       value
       (old: {
         galliumDrivers = [
@@ -22,7 +22,6 @@
         ];
       })
       (old: { })
-    ) { inherit (prev) mesa_git mesa32_git; })*/
-    (final: prev: inherit (prev.pkgsx86_64_v3) mesa_git mesa32_git;)
+    ) { inherit (prev.pkgsx86_64_v3) mesa_git mesa32_git; })
   ];
 }
