@@ -9,7 +9,7 @@
     ./modules/software/nix
     ../common/modules/software/localization
     ./modules/software/ssh
-    ./modules/software/mesa
+    # ./modules/software/mesa
 
     # software/network
 		../common/modules/software/network/networkmanager
