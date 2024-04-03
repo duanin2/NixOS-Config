@@ -68,4 +68,6 @@
 
 	users.mutableUsers = false;
 	boot.supportedFilesystems = [ "bcachefs" ];
+
+	programs.fuse.userAllowOther = true;
 }
