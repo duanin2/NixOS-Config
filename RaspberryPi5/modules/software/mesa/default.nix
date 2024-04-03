@@ -3,7 +3,7 @@
     enable = true;
   };
 
-  nixpkgs.overlays = [
+  /*nixpkgs.overlays = [
     (final: prev: builtins.mapAttrs (name: value: customPkgs.overrideAll
       value
       (old: {
@@ -26,5 +26,5 @@
         ];
       })
     ) { inherit (prev) mesa_git; })
-  ];
+  ];*/
 }
