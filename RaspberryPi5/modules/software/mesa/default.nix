@@ -22,6 +22,7 @@
           "-Dgallium-vdpau=disabled"
           "-Dgallium-va=disabled"
           "-Dgallium-xa=disabled"
+          "-Dintel-rt=disabled"
         ];
       })
     ) { inherit (prev) mesa_git; })
