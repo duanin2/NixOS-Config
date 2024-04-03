@@ -8,5 +8,7 @@
     catppuccin-hyprcursor = callPackage ./theming/catppuccin/hyprcursor { };
 
     mozilla = callPackage ./mozilla { };
+
+    overrideAll = package: args: attrs: callPackage (import ./overrideAll.nix { inherit package args attrs; }) { };
   } // { inherit callPackage; };
 in packages
