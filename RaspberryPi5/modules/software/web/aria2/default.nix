@@ -3,9 +3,9 @@
 in {
 	services.aria2 = {
 		enable = true;
-	};
 
-	networking.firewall.allowedTCPPortRanges = [ cfg.listenPortRange ];
+		openPorts = true;
+	};
 	services.nginx.virtualHosts."aria2.duanin2.top" = {
 		useACMEHost = "duanin2.top";
 		locations."/" = {
