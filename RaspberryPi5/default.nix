@@ -35,6 +35,8 @@
     ./duanin2
   ];
 
+  boot.supportedFilesystems = [ "btrfs" ];
+
   boot.loader.efi.canTouchEfiVariables = false;
 
   networking.hostName = "RaspberryPi5";

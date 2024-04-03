@@ -19,6 +19,7 @@
     options =  [
       "compress-force=zstd:1"
     ];
+    neededForBoot = true;
   };
   
   fileSystems."/tmp" = {
