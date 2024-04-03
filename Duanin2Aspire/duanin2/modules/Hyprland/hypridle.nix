@@ -10,24 +10,24 @@
     }
 
     listener {
-      timeout = 10
+      timeout = 30
       on-timeout = ${lib.getExe pkgs.brightnessctl} -s set 1%
       on-resume = ${lib.getExe pkgs.brightnessctl} -r
     }
 
     listener {
-      timeout = 30
+      timeout = 60
       on-timeout = hyprctl dispatch dpms off
       on-resume = hyprctl dispatch dpms on
     }
 
     listener {
-      timeout = 60
+      timeout = 90
       on-timeout = loginctl lock-session
     }
 
     listener {
-      timeout = 90
+      timeout = 120
       on-timeout = systemctl suspend
     }
     '';
