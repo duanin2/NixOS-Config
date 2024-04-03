@@ -21,6 +21,7 @@
     # ./modules/software/web/transmission
     ./modules/software/web/invidious
     ./modules/software/web/aria2
+    ./modules/software/web/openvscode-server
 
     # software/kernel
     ./modules/software/kernel/vendor-nixpkgs.nix
