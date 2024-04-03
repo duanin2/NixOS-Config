@@ -18,8 +18,9 @@
 
     # software/web
     ./modules/software/web/nginx
-    ./modules/software/web/transmission
+    # ./modules/software/web/transmission
     ./modules/software/web/invidious
+    ./modules/software/web/aria2
 
     # software/kernel
     ./modules/software/kernel/vendor-nixpkgs.nix
