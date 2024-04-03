@@ -6,7 +6,7 @@ in {
 
     settings = {
       import = [
-        "${customPkgs.catppuccin-alacritty.frappe}/alacritty.toml"
+        "${(customPkgs.catppuccin-alacritty.override { format = "yaml"; }).frappe}/alacritty.toml"
       ];
 
       window = {
