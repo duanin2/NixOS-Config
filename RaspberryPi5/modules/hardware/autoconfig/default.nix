@@ -14,7 +14,7 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/28f9ac50-01be-4604-8a37-17cb72f61274";
+    device = "/dev/disk/by-label/RootFS";
     fsType = "btrfs";
     options =  [
       "compress-force=zstd:1"
@@ -31,7 +31,7 @@
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/71F0-4A55";
+    device = "/dev/disk/by-label/EFI";
     fsType = "vfat";
   };
 
