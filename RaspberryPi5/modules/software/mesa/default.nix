@@ -2,13 +2,11 @@
   override = (old: {
     galliumDrivers = [
       "swrast"
-      "virgl"
-      "zink"
       "v3d"
+      "vc4"
     ];
     vulkanDrivers = [
       "swrast"
-      "virtio"
       "broadcom"
     ];
   });
