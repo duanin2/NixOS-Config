@@ -1,27 +1,29 @@
-{ pkgs, ... }: let
-  override = (old: {
-    galliumDrivers = [
-      "swrast"
-      "v3d"
-      "vc4"
-    ];
-    vulkanDrivers = [
-      "swrast"
-      "broadcom"
-    ];
-  });
-  overrideAttrs = (old: {
-    mesonFlags = (old.mesonFlags or []) ++ [
-      "-Dgallium-vdpau=disabled"
-      "-Dgallium-va=disabled"
-      "-Dgallium-xa=disabled"
-    ];
-  });
-in {
-  hardware.opengl = {
+{ customPkgs, pkgs, ... }: {
+  chaotic.mesa-git = {
     enable = true;
-    # driSupport32Bit = true;
-
-    package = (pkgs.mesa.override override).overrideAttrs overrideAttrs;
   };
+
+  nixpkgs.overlays = [
+    (final: prev: builtins.mapAttrs (name: value: customPkgs.overrideAll
+      value
+      (old: {
+        galliumDrivers = [
+          "swrast"
+          "v3d"
+          "vc4"
+        ];
+        vulkanDrivers = [
+          "swrast"
+          "broadcom"
+        ];
+      })
+      (old: {
+        mesonFlags = (old.mesonFlags or []) ++ [
+          "-Dgallium-vdpau=disabled"
+          "-Dgallium-va=disabled"
+          "-Dgallium-xa=disabled"
+        ];
+      })
+    ) { inherit (prev) mesa_git; })
+  ];
 }
