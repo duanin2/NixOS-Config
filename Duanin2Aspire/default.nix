@@ -63,6 +63,9 @@
 		./duanin2
 	];
 
+	boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
+
 	networking.hostName = "Duanin2Aspire";
 	system.stateVersion = "23.11";
 
