@@ -22,6 +22,6 @@
         ];
       })
       (old: { })
-    ) { inherit (prev.pkgsx86_64_v3) mesa_git mesa32_git; })
+    ) { inherit (prev) mesa_git mesa32_git; })
   ];
 }
