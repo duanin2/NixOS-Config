@@ -41,7 +41,7 @@
   fileSystems."/home/duanin2" =
     { device = "none";
       fsType = "tmpfs";
-      options = [ "size=4G" "mode=777" ];
+      options = [ "size=4G" "mode=755" ];
     };
 
 	swapDevices = [ ];

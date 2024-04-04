@@ -29,7 +29,7 @@ in {
       fail_text = <i>$FAIL <b>($ATTEMPTS)</b></i>
       hide_input = true
 
-      position = 0, -20
+      position = 0, -30
       halign = center
       valign = center
     }
@@ -41,7 +41,7 @@ in {
       font_size = 20
       font_family = FiraCode Nerd Font Mono
 
-      position = 0, 20
+      position = 0, 25
       halign = center
       valign = center
     }
