@@ -16,7 +16,7 @@
           "iris"
         ];
         vulkanDrivers = [
-          "nouveau-experimental"
+          "nouveau"
           "swrast"
           "intel"
         ];
