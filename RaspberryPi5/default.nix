@@ -10,6 +10,7 @@
     ../common/modules/software/localization
     ./modules/software/ssh
     # ./modules/software/mesa
+    ./modules/software/impermanence
 
     # software/network
 		../common/modules/software/network/networkmanager

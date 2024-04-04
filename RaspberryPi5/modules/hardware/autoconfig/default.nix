@@ -13,13 +13,39 @@
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" = {
+  fileSystems."/persist" = {
     device = "/dev/disk/by-label/RootFS";
     fsType = "btrfs";
     options =  [
-      "compress-force=zstd:1"
+      "compress-force=zstd:4"
     ];
     neededForBoot = true;
+  };
+
+  fileSystems."/nix" =
+    { device = "/persist/nix";
+			depends = [ "/persist" ];
+      fsType = "none";
+      neededForBoot = true;
+      options = [ "bind" ];
+    };
+
+  fileSystems."/" = {
+    device = "none";
+    fsType = "tmpfs";
+    options = [
+      "size=3G"
+      "mode=755"
+    ];
+  };
+
+  fileSystems."/home/duanin2" = {
+    device = "none";
+    fsType = "tmpfs";
+    options = [
+      "size=3G"
+      "mode=755"
+    ];
   };
   
   fileSystems."/tmp" = {

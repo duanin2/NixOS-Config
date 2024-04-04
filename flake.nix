@@ -202,6 +202,7 @@
 				modules = [
 					./RaspberryPi5
 
+					inputs.impermanence.nixosModules.impermanence
 					inputs.home-manager.nixosModules.home-manager
 					{
 						imports = [ ];
@@ -213,6 +214,7 @@
 							useUserPackages = true;
 
 							users."duanin2".imports = [
+								inputs.impermanence.nixosModules.home-manager.impermanence
 								inputs.chaotic.homeManagerModules.default
 							];
 						};
