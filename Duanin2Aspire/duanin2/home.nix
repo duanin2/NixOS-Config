@@ -2,13 +2,13 @@
 	imports = [
 		./modules/vscode
 		./modules/syncthing
-		./modules/keepassxc
+		# ./modules/keepassxc
 		./modules/libreoffice
 		./modules/discord
 		./modules/direnv
 		./modules/xdg
 		./modules/bash
-		./modules/bottles
+		# ./modules/bottles
 		./modules/git
 		./modules/Hyprland
 		./modules/theming
@@ -16,10 +16,10 @@
 		./modules/ssh
 		./modules/impermanence
 
-		./modules/games/prismlauncher
+		# ./modules/games/prismlauncher
 		# ./modules/games/vinegar
-		./modules/games/lutris
-		./modules/games/godot
+		# ./modules/games/lutris
+		# ./modules/games/godot
 
 		../../common/duanin2/modules/shell/nushell.nix
 		../../common/duanin2/modules/shell/starship
@@ -32,8 +32,8 @@
 	];
 
 	home.packages = with pkgs; [
-		telegram-desktop
-		transmission-qt
+		# telegram-desktop
+		# transmission-qt
 	];
 
 	home.stateVersion = "23.11";

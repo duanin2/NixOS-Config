@@ -1,11 +1,11 @@
-{ nur, customPkgs, pkgs, inputs, ... }: {
+{ config, nur, customPkgs, pkgs, inputs, ... }: {
 	programs.firefox = {
 		enable = true;
 		package = customPkgs.mozilla.addUserJsPrefs {
 			package = pkgs.firefox.override {
-				nativeMessagingHosts = with pkgs; [
+				nativeMessagingHosts = with pkgs; if builtins.any (pkg: pkg.pname == pkgs.keepassxc.pname) home.packages then [
 					keepassxc
-				];
+				] else [];
 			};
 			src = pkgs.fetchurl {
 				url = "https://raw.githubusercontent.com/arkenfox/user.js/master/user.js";
@@ -40,7 +40,6 @@
 					skip-redirect
 					stylus
 					firefox-color
-					keepassxc-browser
 					canvasblocker
 					firemonkey
 					libredirect
@@ -52,7 +51,9 @@
 					wayback-machine
 				] ++ (with customPkgs.mozilla.firefoxAddons; [
 					librejs
-				]);
+				]) ++ (if builtins.any (pkg: pkg.pname == pkgs.keepassxc.pname) home.packages then [
+					keepassxc-browser
+				] else []);
 				settings = {
 					"widget.use-xdg-desktop-portal.file-picker" = 1;
 

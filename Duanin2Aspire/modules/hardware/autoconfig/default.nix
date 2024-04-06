@@ -18,6 +18,12 @@
       fsType = "tmpfs";
       options = [ "size=3G" "mode=755" ];
     };
+  
+  fileSystems."/tmp" =
+    { device = "none";
+      fsType = "tmpfs";
+      options = [ "size=15G" "mode=777" ];
+    };
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/C22B-6D35";
