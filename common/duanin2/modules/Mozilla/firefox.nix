@@ -3,7 +3,7 @@
 		enable = true;
 		package = customPkgs.mozilla.addUserJsPrefs {
 			package = pkgs.firefox.override {
-				nativeMessagingHosts = with pkgs; if builtins.any (pkg: pkg.pname == pkgs.keepassxc.pname) config.home.packages then [
+				nativeMessagingHosts = with pkgs; if builtins.any (pkg: pkg.name == pkgs.keepassxc.name) config.home.packages then [
 					keepassxc
 				] else [];
 			};
@@ -51,7 +51,7 @@
 					wayback-machine
 				] ++ (with customPkgs.mozilla.firefoxAddons; [
 					librejs
-				]) ++ (if builtins.any (pkg: pkg.pname == pkgs.keepassxc.pname) config.home.packages then [
+				]) ++ (if builtins.any (pkg: pkg.name == pkgs.keepassxc.name) config.home.packages then [
 					keepassxc-browser
 				] else []);
 				settings = {
