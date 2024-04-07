@@ -241,7 +241,32 @@
 							bcachefs = true;
 							zfs = lib.mkForce false;
 						};
-          })
+          			})
+				];
+			};
+			"rpiIso" = let
+				system = "aarch64-linux";
+				customPkgs = legacyPackages.${system};
+				nur = import inputs.nur rec {
+					pkgs = import inputs.nixpkgs { inherit system; };
+					nurpkgs = pkgs;
+				};
+			in lib.nixosSystem {
+				inherit system;
+				specialArgs = { inherit inputs lib customPkgs nur; };
+
+				modules = [
+					"${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5-new-kernel.nix"
+					({ inputs, lib, pkgs, ... }: {
+						boot.kernelPackages = inputs.rpi5.legacyPackages.${pkgs.system}.linuxPackages_rpi5;
+
+						boot.supportedFilesystems = {
+							bcachefs = true;
+							zfs = lib.mkForce false;
+						};
+
+						isoImage.squashfsCompression = "zstd";
+          			})
 				];
 			};
 		};
