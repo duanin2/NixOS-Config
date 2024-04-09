@@ -1,4 +1,4 @@
-{ ... }: {
+{ persistDirectory, ... }: {
   programs.direnv = {
     enable = true;
 
@@ -7,5 +7,9 @@
     nix-direnv = {
       enable = true;
     };
+  };
+
+  home.persistence.${persistDirectory} = {
+    directories = [ ".local/share/direnv" ];
   };
 }

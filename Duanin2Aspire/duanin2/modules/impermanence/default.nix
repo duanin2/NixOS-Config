@@ -1,8 +1,9 @@
-{ ... }: {
-  home.persistence."/persist/home/duanin2" = {
+{ lib, config, inputs, pkgs, persistDirectory, ... }: let
+  godot_4-mono = pkgs.callPackage (inputs.godot-nixpkgs + "/pkgs/development/tools/godot/4/mono/default.nix") { };
+in {
+  home.persistence.${persistDirectory} = {
     directories = [
       "Dokumenty"
-      "Hry"
       "Hudba"
       "KeePass"
       "Obrázky"
@@ -10,18 +11,11 @@
       "Stažené"
       "Veřejné"
       "Videa"
-      "dev"
       "Šablony"
+      "Hry"
+      "dev"
       ".android"
       ".gnupg"
-      ".mozilla"
-      ".ssh"
-      ".thunderbird"
-      ".local/share/PrismLauncher"
-      ".local/share/bottles"
-      ".local/share/direnv"
-      ".local/share/godot"
-      ".local/share/lutris"
       {
         directory = ".local/share/Steam";
         method = "symlink";

@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }: {
+{ inputs, pkgs, persistDirectory, ... }: {
   imports = [
     ../.
   ];
@@ -17,4 +17,8 @@
     })
     kdialog
   ];
+
+  home.persistence.${persistDirectory} = {
+    directories = [ ".local/share/PrismLauncher" ];
+  };
 }

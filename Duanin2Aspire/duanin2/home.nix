@@ -1,4 +1,7 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }: let
+	homeDirectory = config.home.homeDirectory or ("/home/${username or "duanin2"}");
+	persistDirectory = "/persist" + homeDirectory;
+in {
 	imports = [
 		./modules/vscode
 		./modules/syncthing
@@ -31,10 +34,7 @@
 		./modules/mpv/ani-cli.nix
 	];
 
-	home.packages = with pkgs; [
-		# telegram-desktop
-		# transmission-qt
-	];
-
 	home.stateVersion = "23.11";
+
+	_modules.args = { inherit homeDirectory persistDirectory; };
 }

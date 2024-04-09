@@ -7,6 +7,7 @@
       "/var/lib/nixos"
       "/var/lib/systemd/coredump"
       "/etc/NetworkManager/system-connections"
+      "/tmp/hyprland"
     ];
     files = [
       "/etc/machine-id"

@@ -1,4 +1,4 @@
-{ config, lib, inputs, pkgs, ... }: let
+{ config, lib, inputs, pkgs, persistDirectory, ... }: let
 	hyprland = inputs.hyprland.packages.${pkgs.system};
 	hyprland-plugins = inputs.hyprland-plugins.packages.${pkgs.system};
 	hyprpaper = inputs.hyprpaper.packages.${pkgs.system};
@@ -278,4 +278,8 @@ in {
 		};
 		'';
 	};
+
+	home.persistence.${persistDirectory} = {
+    directories = [ ".cache/hyprland" ];
+  };
 }

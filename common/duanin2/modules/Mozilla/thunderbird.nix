@@ -1,4 +1,4 @@
-{ customPkgs, pkgs, ... }: {
+{ customPkgs, pkgs, persistDirectory, ... }: {
 	programs.thunderbird = {
 		enable = true;
 		package = customPkgs.mozilla.addUserJsPrefs {
@@ -11,4 +11,8 @@
 
 		profiles = { };
 	};
+
+	home.persistence.${persistDirectory} = {
+    directories = [ ".thunderbird" ];
+  };
 }
