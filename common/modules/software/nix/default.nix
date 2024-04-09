@@ -35,6 +35,8 @@
 				"root"
 				"duanin2"
 			];
+
+			accept-flake-config = true;
 		};
 
 		registry = with inputs; {
