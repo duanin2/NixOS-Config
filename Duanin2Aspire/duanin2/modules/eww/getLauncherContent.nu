@@ -4,10 +4,10 @@ let desktopFileRegex = { |line| $line | parse --regex '(?P<Key>[A-Za-z]+)(?:\[(?
 
 let dataDirs = $env.XDG_DATA_DIRS | split row : | prepend $env.XDG_DATA_HOME;
 
-mut language = $env.LANG;
-$language = {
-	"language": if [ "_" "@" "." ] | all { |delim| !(str ) }
-};
+# mut language = $env.LANG;
+# $language = {
+# 	"language": if [ "_" "@" "." ] | all { |delim| !(str ) }
+# };
 
 
 let desktopFileNames = $dataDirs | each { |dir| glob $"($dir)/applications/*.desktop" } | flatten | uniq
@@ -81,7 +81,7 @@ for file in $fileContents {
 	for action in $actions {
 		let actionContents = (getContentsRange $file { |line| $line != "" } { |line| $line == $"[Desktop Action ($action)]" } 1 { |line| ($line | str starts-with "[") and ($line | str ends-with "]") }) | par-each $desktopFileRegex | flatten;
 		
-		$actionsContents = { ...$actionsContents, $action: $actionContents }
+		$actionsContents = ($actionsContents | insert $action $actionContents)
 	}
 
 	$desktopFiles = if $desktopFiles == [] {
