@@ -4,9 +4,9 @@
   };
 
   nixpkgs.overlays = [
-    (final: prev: builtins.mapAttrs (name: value: customPkgs.overrideAll
-      value
-      (old: {
+    (final: prev: builtins.mapAttrs (name: value: lib.overrideAll {
+      package = value;
+      args = (old: {
         galliumDrivers = [
           "swrast"
           "v3d"
@@ -16,8 +16,8 @@
           "swrast"
           "broadcom"
         ];
-      })
-      (old: {
+      });
+      attrs = (old: {
         mesonFlags = (old.mesonFlags or []) ++ [
           "-Dgallium-vdpau=disabled"
           "-Dgallium-va=disabled"
@@ -25,7 +25,7 @@
           "-Dintel-rt=disabled"
           "-Dgallium-nine=disabled"
         ];
-      })
-    ) { inherit (prev) mesa_git; })
+      });
+    }) { inherit (prev) mesa_git; })
   ];
 }

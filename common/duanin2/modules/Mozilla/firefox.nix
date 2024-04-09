@@ -1,11 +1,9 @@
-{ config, nur, customPkgs, pkgs, inputs, ... }: {
+{ lib, config, nur, customPkgs, pkgs, inputs, persistDirectory, ... }: {
 	programs.firefox = {
 		enable = true;
 		package = customPkgs.mozilla.addUserJsPrefs {
 			package = pkgs.firefox.override {
-				nativeMessagingHosts = with pkgs; if builtins.any (pkg: pkg.name == pkgs.keepassxc.name) config.home.packages then [
-					keepassxc
-				] else [];
+				nativeMessagingHosts = lib.mkIf (lib.containsPackage pkgs.keepassxc config.home.packages) (with pkgs; [ keepassxc ]);
 			};
 			src = pkgs.fetchurl {
 				url = "https://raw.githubusercontent.com/arkenfox/user.js/master/user.js";
@@ -49,11 +47,11 @@
 					terms-of-service-didnt-read
 					unpaywall
 					wayback-machine
-				] ++ (with customPkgs.mozilla.firefoxAddons; [
+				]
+				++ (with customPkgs.mozilla.firefoxAddons; [
 					librejs
-				]) ++ (if builtins.any (pkg: pkg.name == pkgs.keepassxc.name) config.home.packages then [
-					keepassxc-browser
-				] else []);
+				])
+				++ (with lib; mkIf (containsPackage pkgs.keepassxc config.home.packages) (with nur.repos.rycee.firefox-addons; [ keepassxc-browser ]));
 				settings = {
 					"widget.use-xdg-desktop-portal.file-picker" = 1;
 
@@ -65,4 +63,8 @@
 		  };
 		};
 	};
+
+	home.persistence.${persistDirectory} = {
+    directories = [ ".mozilla" ];
+  };
 }

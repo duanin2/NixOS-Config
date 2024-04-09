@@ -42,4 +42,30 @@ final: prev: {
 	else if builtins.isPath value then isPath
 	else if builtins.isString value then isString
 	else default;
+
+	overrideAll = {
+    package,
+    args ? (old: {}),
+    attrs ? (old: {})
+	}: (package.override args).overrideAttrs attrs;
+
+	isSamePackage = (origPkg: modPkg: if
+		((builtins.hasAttr "pname" origPkg) and (builtins.hasAttr "pname" modPkg))
+	then
+		(origPkg.pname == modPkg.pname)
+	else
+		(origPkg.name == modPkg.name));
+	
+	containsPackage = modPkg: origPkgs: builtins.any (origPkg: isSamePackage origPkg modPkg) origPkgs;
+
+	setAttr = attrName: attrValue: origAttrs: (builtins.mapAttrs (name: value: if 
+    builtins.hasAttr attrName value
+  then
+    value // {
+      ${attrName} = true;
+    }
+  else
+    value
+  ) origAttrs);
+	setAttrs = modAttrs: origAttrs: (builtins.mapAttrs (name: value: (builtins.mapAttrs (setAttr value) modAttrs) origAttrs));
 }
