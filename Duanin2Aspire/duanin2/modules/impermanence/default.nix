@@ -21,7 +21,6 @@ in {
         method = "symlink";
       }
     ];
-    files = [ ];
     allowOther = true;
   };
 }
