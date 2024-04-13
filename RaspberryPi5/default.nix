@@ -1,4 +1,4 @@
-{ ... }: {
+{ inputs, lib, ... }: {
   imports = [
     # hardware
     ./modules/hardware/autoconfig
@@ -25,7 +25,7 @@
     ./modules/software/web/openvscode-server
 
     # software/kernel
-    ./modules/software/kernel/vendor.nix
+    ./modules/software/kernel/vendor-latest.nix
 
     # software/shell
     ../common/modules/software/shell/nushell.nix
