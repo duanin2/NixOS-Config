@@ -2,9 +2,14 @@
 	programs.firefox = {
 		enable = true;
 		package = customPkgs.mozilla.addUserJsPrefs {
-			package = pkgs.firefox.override {
-				nativeMessagingHosts = lib.mkIf (lib.containsPackage pkgs.keepassxc config.home.packages) (with pkgs; [ keepassxc ]);
-			};
+			package = pkgs.firefox.override (old: {
+				nativeMessagingHosts = (old.nativeMessagingHosts or []) ++ (if
+					(lib.containsPackage pkgs.keepassxc config.home.packages)
+				then
+					(with pkgs; [ keepassxc ])
+				else
+					[]);
+			});
 			src = pkgs.fetchurl {
 				url = "https://raw.githubusercontent.com/arkenfox/user.js/master/user.js";
 				hash = "sha256-H3Nk5sDxSElGRgK+cyQpVyjtlMF2Okxbstu9A+eJtGk=";
@@ -50,8 +55,7 @@
 				]
 				++ (with customPkgs.mozilla.firefoxAddons; [
 					librejs
-				])
-				++ (with lib; mkIf (containsPackage pkgs.keepassxc config.home.packages) (with nur.repos.rycee.firefox-addons; [ keepassxc-browser ]));
+				]);
 				settings = {
 					"widget.use-xdg-desktop-portal.file-picker" = 1;
 
