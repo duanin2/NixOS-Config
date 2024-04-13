@@ -1,17 +1,17 @@
 { config, pkgs, ... }: let
-	homeDirectory = config.home.homeDirectory or ("/home/${username or "duanin2"}");
+	homeDirectory = config.home.homeDirectory or ("/home/${config.home.username or "duanin2"}");
 	persistDirectory = "/persist" + homeDirectory;
 in {
 	imports = [
 		./modules/vscode
 		./modules/syncthing
-		# ./modules/keepassxc
+		./modules/keepassxc
 		./modules/libreoffice
 		./modules/discord
 		./modules/direnv
 		./modules/xdg
 		./modules/bash
-		# ./modules/bottles
+		./modules/bottles
 		./modules/git
 		./modules/Hyprland
 		./modules/theming
@@ -19,10 +19,10 @@ in {
 		./modules/ssh
 		./modules/impermanence
 
-		# ./modules/games/prismlauncher
+		./modules/games/prismlauncher
 		# ./modules/games/vinegar
-		# ./modules/games/lutris
-		# ./modules/games/godot
+		./modules/games/lutris
+		./modules/games/godot
 
 		../../common/duanin2/modules/shell/nushell.nix
 		../../common/duanin2/modules/shell/starship
@@ -36,5 +36,5 @@ in {
 
 	home.stateVersion = "23.11";
 
-	_modules.args = { inherit homeDirectory persistDirectory; };
+	_module.args = { inherit homeDirectory persistDirectory; };
 }
