@@ -151,7 +151,10 @@
 
 		eachSystem = lib.genAttrs (import inputs.systems);
 	in rec {
-		nixosConfigurations = {
+		inherit lib;
+		nixosConfigurations = let
+			nixosCdDvd = inputs.nixpkgs + "/nixos/modules/installer/cd-dvd";
+		in {
 			"Duanin2Aspire" = let
 				system = "x86_64-linux";
 				customPkgs = legacyPackages.${system};
@@ -235,13 +238,8 @@
 				specialArgs = { inherit inputs lib customPkgs nur; };
 
 				modules = [
-					"${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5-new-kernel.nix"
-					({ lib, pkgs, ... }: {
-						boot.supportedFilesystems = {
-							bcachefs = true;
-							zfs = lib.mkForce false;
-						};
-          			})
+					(nixosCdDvd + "/installation-cd-graphical-plasma5-new-kernel.nix")
+					./common/iso/default.nix
 				];
 			};
 			"rpiIso" = let
@@ -256,17 +254,10 @@
 				specialArgs = { inherit inputs lib customPkgs nur; };
 
 				modules = [
-					"${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5-new-kernel.nix"
-					({ inputs, lib, pkgs, ... }: {
-						boot.kernelPackages = inputs.rpi5.legacyPackages.${pkgs.system}.linuxPackages_rpi5;
-
-						boot.supportedFilesystems = {
-							bcachefs = true;
-							zfs = lib.mkForce false;
-						};
-
-						isoImage.squashfsCompression = "zstd";
-          			})
+					(nixosCdDvd + "/installation-cd-minimal.nix")
+					./RaspberryPi5/modules/software/kernel/vendor-latest.nix
+					./common/iso/no-zfs.nix
+					./common/iso/default.nix
 				];
 			};
 		};
