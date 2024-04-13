@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ lib, config, pkgs, ... }: {
 	programs.vscode = {
 		enable = true;
 		package = pkgs.vscodium;
@@ -37,25 +37,17 @@
 						"ignored" = [ "unused_binding" "unused_with" ];
 					};
 					"formatting" = {
-						"command" = [ pkgs.nixpkgs-fmt ];
+						"command" = [ (lib.getExe pkgs.nixpkgs-fmt) ];
 					};
 					"nix" = {
 						"flake" = {
 							"autoArchive" = true;
-							"autoEvalInputs" = true;
 						};
 					};
 				};
 			};
-			"nix.serverPath" = pkgs.nil;
-			"nushellLanguageServer.nushellExecutablePath" = config.programs.nushell.package;
+			"nix.serverPath" = (lib.getExe pkgs.nil);
+			"nushellLanguageServer.nushellExecutablePath" = lib.getExe config.programs.nushell.package;
 		};
 	};
-
-	/*
-	home.packages = with pkgs; [
-		nil
-		nixpkgs-fmt
-	];
-	*/
 }

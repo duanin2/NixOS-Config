@@ -1,3 +1,3 @@
-{ pkgs, ... }: {
-  boot.kernelPackages = pkgs.linuxPackages_rpi4;
+{ lib, pkgs, ... }: {
+  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_rpi4;
 }

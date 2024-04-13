@@ -1,13 +1,24 @@
-{ customPkgs, pkgs, ... }: {
-  chaotic.mesa-git = {
+{ lib, pkgs, ... }: {
+  chaotic.mesa-git = let
+    baseExtraPackages = pkgs': extraPackages: with pkgs'; [
+      intel-media-driver
+      vaapiIntel
+      vaapiVdpau
+      libvdpau-va-gl
+    ] ++ extraPackages;
+  in {
     enable = true;
 
-    extraPackages = with pkgs; [ mesa_git.opencl intel-media-driver vaapiIntel vaapiVdpau libvdpau-va-gl intel-ocl intel-compute-runtime ];
-    extraPackages32 = with pkgs.pkgsi686Linux; [ intel-media-driver vaapiIntel vaapiVdpau libvdpau-va-gl ];
+    extraPackages = baseExtraPackages pkgs (with pkgs; [
+      intel-ocl
+      intel-compute-runtime
+      mesa_git.opencl
+    ]);
+    extraPackages32 = baseExtraPackages pkgs.pkgsi686Linux [];
   };
 
   nixpkgs.overlays = [
-    /* (final: prev: builtins.mapAttrs (name: value: lib.overrideAll {
+    (final: prev: builtins.mapAttrs (name: value: lib.overrideAll {
       package = value;
       args = (old: {
         galliumDrivers = [
@@ -21,6 +32,6 @@
           "intel"
         ];
       });
-    }) { inherit (prev) mesa_git mesa32_git; })*/
+    }) { inherit (prev) mesa_git mesa32_git; })
   ];
 }

@@ -50,22 +50,14 @@ final: prev: {
 	}: (package.override args).overrideAttrs attrs;
 
 	isSamePackage = (origPkg: modPkg: if
-		((builtins.hasAttr "pname" origPkg) and (builtins.hasAttr "pname" modPkg))
+		((builtins.hasAttr "pname" origPkg) && (builtins.hasAttr "pname" modPkg))
 	then
 		(origPkg.pname == modPkg.pname)
 	else
 		(origPkg.name == modPkg.name));
 	
-	containsPackage = modPkg: origPkgs: builtins.any (origPkg: isSamePackage origPkg modPkg) origPkgs;
+	containsPackage = modPkg: origPkgs: builtins.any (origPkg: final.isSamePackage origPkg modPkg) origPkgs;
 
-	setAttr = attrName: attrValue: origAttrs: (builtins.mapAttrs (name: value: if 
-    builtins.hasAttr attrName value
-  then
-    value // {
-      ${attrName} = true;
-    }
-  else
-    value
-  ) origAttrs);
-	setAttrs = modAttrs: origAttrs: (builtins.mapAttrs (name: value: (builtins.mapAttrs (setAttr value) modAttrs) origAttrs));
+	setAttr = attrName: attrValue: origAttr: with builtins; origAttr // (final.mkIf (hasAttr attrName origAttr) { ${attrName} = attrValue; });
+	setAttrs = modAttrs: origAttrs: with builtins; mapAttrs (name: value: mapAttrs (name': value': final.setAttr name' value' value) modAttrs) origAttrs;
 }

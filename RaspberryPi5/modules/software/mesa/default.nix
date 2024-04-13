@@ -1,4 +1,4 @@
-{ customPkgs, pkgs, ... }: {
+{ lib, pkgs, ... }: {
   chaotic.mesa-git = {
     enable = true;
   };
