@@ -38,6 +38,7 @@ if (hyprctl activewindow -j | from json).workspace.id == -99 {
 	getParams = params: (concatedString ", " params);
 
 	listToBinds = dispatcher: modKeys: list: map (x: "${getMods modKeys}, ${x.keys}, ${dispatcher}, ${getParams x.params}") list;
+	listToWindowrules = window: list: map (rule: "${rule}, ${window}") list;
 in {
 	imports = let
 		configAttrs = { inherit hyprland hyprland-plugins hyprpaper hyprpicker hypridle hyprlock; };
@@ -57,7 +58,7 @@ in {
 			enable = true;
 		};
 		plugins = with hyprland-plugins; [
-			hyprbars
+			# hyprbars
 		];
 		settings = {
 			monitor = [
@@ -244,38 +245,38 @@ in {
 				swallow_regex = "^(Alacritty)$";
 
 				mouse_move_enables_dpms = true;
-    			key_press_enables_dpms = true;
+    		key_press_enables_dpms = true;
 			};
 
-			windowrulev2 = [
-				"float, class:polkit-gnome-authentication-agent-1"
-				"center, class:polkit-gnome-authentication-agent-1"
-				"size 872 436, class:polkit-gnome-authentication-agent-1"
-				"stayfocused, class:polkit-gnome-authentication-agent-1"
-				"idleinhibit always, class:polkit-gnome-authentication-agent-1"
-				"dimaround, class:polkit-gnome-authentication-agent-1"
-				"xray on, class:polkit-gnome-authentication-agent-1"
+			windowrulev2 = listToWindowrules "class:polkit-gnome-authentication-agent-1" [
+				"float"
+				"center"
+				"size 654 436"
+				"stayfocused"
+				"idleinhibit"
+				"dimaround"
+				"xray on"
 			];
 		};
 
 		extraConfig = ''
-		plugin {
-			hyprbars {
-				bar_height = 20
+plugin {
+	hyprbars {
+		bar_height = 20
 
-				bar_precedence_over_border = true
-				bar_part_of_window = true
+		bar_precedence_over_border = true
+		bar_part_of_window = true
 
-				bar_text_font = FiraCode Nerd Font Mono
+		bar_text_font = FiraCode Nerd Font Mono
 
-				bar_color = rgb(${colorPalette.base00})
-				col.text = rgb(${colorPalette.base05})
+		bar_color = rgb(${colorPalette.base00})
+		col.text = rgb(${colorPalette.base05})
 
-				hyprbars_button = rgb(${colorPalette.base08}), 15, 󰅖, hyprctl dispatch killactive
-				hyprbars_button = rgb(${colorPalette.base0A}), 15, 󰖯, hyprctl dispatch fullscreen 1
-				hyprbars_button = rgb(${colorPalette.base0D}), 15, 󰖰, ${minimize}
-			};
-		};
+		hyprbars-button = rgb(${colorPalette.base08}), 15, 󰅖, hyprctl dispatch killactive
+		hyprbars-button = rgb(${colorPalette.base0A}), 15, 󰖯, hyprctl dispatch fullscreen 1
+		hyprbars-button = rgb(${colorPalette.base0D}), 15, 󰖰, ${minimize}
+	}
+}
 		'';
 	};
 
