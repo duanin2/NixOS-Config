@@ -7,7 +7,7 @@
     username = "tilldu22";
     homeDirectory = "/home/${config.home.username}";
 
-    stateVersion = "24.05";
+    stateVersion = "23.11";
   };
 
   programs.home-manager.enable = true; # install Home Manager
