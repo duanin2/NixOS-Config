@@ -153,7 +153,7 @@
 	in rec {
 		inherit lib;
 		nixosConfigurations = let
-			nixosCdDvd = inputs.nixpkgs + "/nixos/modules/installer/cd-dvd";
+			nixosCdDvd = path: inputs.nixpkgs + "/nixos/modules/installer/cd-dvd" + path;
 		in {
 			"Duanin2Aspire" = let
 				system = "x86_64-linux";
@@ -238,8 +238,13 @@
 				specialArgs = { inherit inputs lib customPkgs nur; };
 
 				modules = [
-					(nixosCdDvd + "/installation-cd-graphical-plasma5-new-kernel.nix")
+					(nixosCdDvd "/installation-cd-graphical-plasma5.nix")
+
+					./Duanin2Aspire/modules/software/kernel/cachyos.nix
+					./common/iso/no-zfs.nix
 					./common/iso/default.nix
+
+					inputs.chaotic.nixosModules.default
 				];
 			};
 			"rpiIso" = let
@@ -254,10 +259,13 @@
 				specialArgs = { inherit inputs lib customPkgs nur; };
 
 				modules = [
-					(nixosCdDvd + "/installation-cd-minimal.nix")
+					(nixosCdDvd "/installation-cd-minimal.nix")
+
 					./RaspberryPi5/modules/software/kernel/vendor-latest.nix
 					./common/iso/no-zfs.nix
 					./common/iso/default.nix
+
+					inputs.chaotic.nixosModules.default
 				];
 			};
 		};
