@@ -1,5 +1,5 @@
 { inputs, lib, pkgs, ... }: {
-  boot.kernelPackages = lib.mkForce pkgs.linuxPackagesFor (pkgs.callPackage "${inputs.rpi5}/linux-rpi.nix" (let
+  boot.kernelPackages = lib.mkForce (pkgs.linuxPackagesFor (pkgs.callPackage "${inputs.rpi5}/linux-rpi.nix" (let
     modDirVersion = "6.8.5";
   in {
     inherit modDirVersion;
@@ -17,5 +17,5 @@
       request_key_helper
     ];
     rpiVersion = 5;
-  }));
+  })));
 }
