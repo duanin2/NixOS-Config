@@ -1,4 +1,4 @@
-{ ... }: {
+{ utils, ... }: {
   environment.persistence."/persist" = {
     hideMounts = true;
     directories = [
@@ -7,7 +7,7 @@
       "/var/lib/nixos"
       "/var/lib/systemd/coredump"
       "/etc/NetworkManager/system-connections"
-      # "/tmp/hyprland"
+      "/tmp/hyprland"
     ];
     files = [
       "/etc/machine-id"
@@ -31,4 +31,8 @@
   #     fi
   #   '';
   # };
+  systemd.services."home-manager-duanin2".serviceConfig.ExecStartPre = ''
+  mkdir -p /home/duanin2
+  chown -R duanin2:users /home/duanin2
+  '';
 }
