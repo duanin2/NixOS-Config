@@ -1,4 +1,8 @@
 { inputs, lib, pkgs, ... }: {
+  imports = [
+    ../../../../common/iso/no-zfs.nix
+  ];
+  
   boot.kernelPackages = lib.mkForce (pkgs.linuxPackagesFor (pkgs.callPackage "${inputs.rpi5}/linux-rpi.nix" (let
     modDirVersion = "6.8.5";
   in {
