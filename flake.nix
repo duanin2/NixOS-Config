@@ -19,14 +19,11 @@
 
 	inputs = {
 		nixpkgs = {
-			url = "github:NixOS/nixpkgs/nixos-23.11";
-		};
-		nixpkgs-unstable = {
 			url = "github:NixOS/nixpkgs/nixos-unstable";
 		};
 
 		home-manager = {
-			url = "github:nix-community/home-manager/release-23.11";
+			url = "github:nix-community/home-manager";
 			inputs = {
 				nixpkgs.follows = "nixpkgs";
 			};
@@ -41,7 +38,7 @@
 		chaotic = {
 			url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 			inputs = {
-				nixpkgs.follows = "nixpkgs-unstable";
+				nixpkgs.follows = "nixpkgs";
 				home-manager.follows = "home-manager";
 			};
 		};
@@ -56,7 +53,7 @@
 		hyprland = {
 			url = "github:hyprwm/hyprland";
 			inputs = {
-				nixpkgs.follows = "nixpkgs-unstable";
+				nixpkgs.follows = "nixpkgs";
 				systems.follows = "systems";
 
 				hyprcursor.follows = "hyprcursor";
@@ -68,7 +65,7 @@
 		hyprland-protocols = {
 			url = "github:hyprwm/hyprland-protocols";
 			inputs = {
-				nixpkgs.follows = "nixpkgs-unstable";
+				nixpkgs.follows = "nixpkgs";
 				systems.follows = "systems";
 			};
 		};
@@ -82,7 +79,7 @@
 		hyprcursor = {
 			url = "github:hyprwm/hyprcursor";
 			inputs = {
-				nixpkgs.follows = "nixpkgs-unstable";
+				nixpkgs.follows = "nixpkgs";
 				systems.follows = "systems";
 
 				hyprlang.follows = "hyprlang";
@@ -91,7 +88,7 @@
 		xdph = {
 			url = "github:hyprwm/xdg-desktop-portal-hyprland";
 			inputs = {
-				nixpkgs.follows = "nixpkgs-unstable";
+				nixpkgs.follows = "nixpkgs";
 				systems.follows = "systems";
 
 				hyprlang.follows = "hyprlang";
@@ -101,7 +98,7 @@
 		hyprpaper = {
 			url = "github:hyprwm/hyprpaper";
 			inputs = {
-				nixpkgs.follows = "nixpkgs-unstable";
+				nixpkgs.follows = "nixpkgs";
 
 				hyprlang.follows = "hyprlang";
 			};
@@ -109,13 +106,13 @@
 		hyprpicker = {
 			url = "github:hyprwm/hyprpicker";
 			inputs = {
-				nixpkgs.follows = "nixpkgs-unstable";
+				nixpkgs.follows = "nixpkgs";
 			};
 		};
 		hypridle = {
 			url = "github:hyprwm/hypridle";
 			inputs = {
-				nixpkgs.follows = "nixpkgs-unstable";
+				nixpkgs.follows = "nixpkgs";
 				systems.follows = "systems";
 
 				hyprlang.follows = "hyprlang";
@@ -124,7 +121,7 @@
 		hyprlock = {
 			url = "github:hyprwm/hyprlock";
 			inputs = {
-				nixpkgs.follows = "nixpkgs-unstable";
+				nixpkgs.follows = "nixpkgs";
 				systems.follows = "systems";
 
 				hyprlang.follows = "hyprlang";
@@ -133,7 +130,7 @@
 		hyprlang = {
 			url = "github:hyprwm/hyprlang";
 			inputs = {
-				nixpkgs.follows = "nixpkgs-unstable";
+				nixpkgs.follows = "nixpkgs";
 				systems.follows = "systems";
 			};
 		};
@@ -169,8 +166,6 @@
 				modules = [
 					./Duanin2Aspire
 
-					inputs.impermanence.nixosModules.impermanence
-					inputs.home-manager.nixosModules.home-manager
 					{
 						imports = [ ];
 
@@ -180,16 +175,18 @@
 							useGlobalPkgs = true;
 							useUserPackages = true;
 
-							users."duanin2".imports = [
-								inputs.impermanence.nixosModules.home-manager.impermanence
-								inputs.chaotic.homeManagerModules.default
-								inputs.nix-colors.homeManagerModule
+							users."duanin2".imports = with inputs; [
+								impermanence.nixosModules.home-manager.impermanence
+								chaotic.homeManagerModules.default
+								nix-colors.homeManagerModule
 							];
 						};
 					}
-
-					inputs.chaotic.nixosModules.default
-				];
+				] ++ (with inputs; [
+					impermanence.nixosModules.impermanence
+					home-manager.nixosModules.home-manager
+					chaotic.nixosModules.default
+				]);
 			};
 			"RaspberryPi5" = let
 				system = "aarch64-linux";
@@ -205,8 +202,6 @@
 				modules = [
 					./RaspberryPi5
 
-					inputs.impermanence.nixosModules.impermanence
-					inputs.home-manager.nixosModules.home-manager
 					{
 						imports = [ ];
 
@@ -216,15 +211,17 @@
 							useGlobalPkgs = true;
 							useUserPackages = true;
 
-							users."duanin2".imports = [
-								inputs.impermanence.nixosModules.home-manager.impermanence
-								inputs.chaotic.homeManagerModules.default
+							users."duanin2".imports = with inputs; [
+								impermanence.nixosModules.home-manager.impermanence
+								chaotic.homeManagerModules.default
 							];
 						};
 					}
-
-					inputs.chaotic.nixosModules.default
-				];
+				] ++ (with inputs; [
+					impermanence.nixosModules.impermanence
+					home-manager.nixosModules.home-manager
+					chaotic.nixosModules.default
+				]);
 			};
 			"bcachefsIso" = let
 				system = "x86_64-linux";
@@ -241,11 +238,10 @@
 					(nixosCdDvd "/installation-cd-graphical-plasma5.nix")
 
 					./Duanin2Aspire/modules/software/kernel/cachyos.nix
-					./common/iso/no-zfs.nix
 					./common/iso/default.nix
-
-					inputs.chaotic.nixosModules.default
-				];
+				] ++ (with inputs; [
+					chaotic.nixosModules.default
+				]);
 			};
 			"rpiIso" = let
 				system = "aarch64-linux";
@@ -262,11 +258,10 @@
 					(nixosCdDvd "/installation-cd-minimal.nix")
 
 					./RaspberryPi5/modules/software/kernel/vendor-latest.nix
-					./common/iso/no-zfs.nix
 					./common/iso/default.nix
-
-					inputs.chaotic.nixosModules.default
-				];
+				] ++ (with inputs; [
+					chaotic.nixosModules.default
+				]);
 			};
 		};
 		homeConfigurations = {
