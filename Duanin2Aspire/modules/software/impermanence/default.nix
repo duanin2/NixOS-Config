@@ -20,19 +20,11 @@
     };
   };
 
-  # system.activationScripts."fix-home-perms" = {
-  #   deps = [ "users" ];
-  #   text = ''
-  #     if ! [[ -e /home/duanin2 ]]; then
-  #       mkdir -p /home/duanin2
-  #     fi
-  #     if [[ $(stat -c "%U" /home/duanin2/) != duanin2 ]]; then
-  #       chown -R duanin2:users /home/duanin2
-  #     fi
-  #   '';
-  # };
-  systemd.services."home-manager-duanin2".serviceConfig.ExecStartPre = ''
-  mkdir -p /home/duanin2
-  chown -R duanin2:users /home/duanin2
-  '';
+  systemd.services."home-manager-duanin2-fix-home" = {
+    wantedBy = [ "home-manager-duanin2.service" ];
+    script = ''
+      mkdir -p /home/duanin2
+      chown -R duanin2:users /home/duanin2
+    '';
+  };
 }
