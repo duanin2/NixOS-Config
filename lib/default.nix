@@ -58,6 +58,5 @@ final: prev: {
 	
 	containsPackage = modPkg: origPkgs: builtins.any (origPkg: final.isSamePackage origPkg modPkg) origPkgs;
 
-	setAttr = attrName: attrValue: origAttr: with builtins; origAttr // (final.mkIf (hasAttr attrName origAttr) { ${attrName} = attrValue; });
-	setAttrs = modAttrs: origAttrs: with builtins; mapAttrs (name: value: mapAttrs (name': value': final.setAttr name' value' value) modAttrs) origAttrs;
+	appendConfig = origConfig: modConfig: with builtins; origConfig // (intersectAttrs origConfig modConfig);
 }
