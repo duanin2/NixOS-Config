@@ -5,6 +5,7 @@ in {
 		enable = true;
 
 		openPorts = true;
+		rpcSecretFile = "/run/secrets/aria2RpcToken";
 	};
 	services.nginx.virtualHosts."aria2.duanin2.top" = {
 		useACMEHost = "duanin2.top";
