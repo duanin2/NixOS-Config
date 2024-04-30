@@ -63,7 +63,7 @@
 		./duanin2
 	];
 
-	boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+	boot.binfmt.emulatedSystems = [ "aarch64-linux" "armv7-linux" ];
 
 
 	networking.hostName = "Duanin2Aspire";
