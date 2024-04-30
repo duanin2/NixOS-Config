@@ -18,6 +18,7 @@ in {
 		./modules/alacritty
 		./modules/ssh
 		./modules/impermanence
+		../../common/duanin2/modules/Emacs
 
 		./modules/games/prismlauncher
 		# ./modules/games/vinegar

@@ -3,7 +3,6 @@
     directories = [
       "Dokumenty"
       "Hudba"
-      "KeePass"
       "Obrázky"
       "Plocha"
       "Stažené"
