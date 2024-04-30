@@ -86,11 +86,9 @@ for file in $fileContents {
 
 	$desktopFiles = if $desktopFiles == [] {
 		[ $actionsContents ]
-	} else {
+	} else 
 		$desktopFiles | append [ $actionsContents ]
 	}
 }
 
 let desktopFiles = $desktopFiles
-
-def main [] {}
