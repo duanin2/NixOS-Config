@@ -1,7 +1,3 @@
-{ ... }: {
-  nixpkgs.overlays = [(final: super: {
-    zfs = super.zfs.overrideAttrs(_: {
-      meta.platforms = [];
-    });
-  })];
+{ lib, ... }: {
+  boot.supportedFilesystems.zfs = lib.mkForce false;
 }

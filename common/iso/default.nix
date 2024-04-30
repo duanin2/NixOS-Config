@@ -13,10 +13,16 @@
     ./nixos
   ];
 
+  /*
   boot.supportedFilesystems = [
     "btrfs"
     "bcachefs"
   ];
+  */
+  boot.supportedFilesystems = {
+    btrfs = true;
+    bchachefs = true;
+  };
 
   boot.loader.efi.canTouchEfiVariables = false;
 
