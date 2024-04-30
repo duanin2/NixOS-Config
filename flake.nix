@@ -50,6 +50,13 @@
 			};
 		};
 
+		emacs = {
+			url = "github:nix-community/emacs-overlay";
+			inputs = {
+				nixpkgs.follows = "nixpkgs";
+			};
+		};
+
 		hyprland = {
 			url = "github:hyprwm/hyprland";
 			inputs = {
@@ -259,6 +266,11 @@
 
 					./RaspberryPi5/modules/software/kernel/vendor-latest.nix
 					./common/iso/default.nix
+
+					({ lib, ... }: {
+						networking.wireless.enable = lib.mkForce false;
+						boot.supportedFilesystems.bcachefs = lib.mkForce false;
+					})
 				] ++ (with inputs; [
 					chaotic.nixosModules.default
 				]);
