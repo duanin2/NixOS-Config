@@ -61,6 +61,9 @@
 		# software/greeters
 		./modules/software/greeters/GreetD
 
+		# software/theming
+		./modules/software/theming
+
 		./duanin2
 	];
 
