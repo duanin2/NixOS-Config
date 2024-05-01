@@ -1,6 +1,4 @@
-{ inputs, config, pkgs, customPkgs, ... }: let
-  hyprlandCfg = config.wayland.windowManager.hyprland;
-in {
+{ pkgs, ... }: {
   home.pointerCursor = {
     gtk = {
       enable = true;
@@ -9,8 +7,4 @@ in {
     name = "Catppuccin-Frappe-Green-Cursors";
     size = 24;
   };
-
-  home.packages = if hyprlandCfg.enable then [
-    (customPkgs.catppuccin-hyprcursor.override { inherit (inputs.hyprland.inputs.hyprcursor.packages.${pkgs.system}) hyprcursor; }).frappeGreen
-  ] else [];
 }
