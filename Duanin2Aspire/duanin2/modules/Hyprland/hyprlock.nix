@@ -1,4 +1,4 @@
-{ hyprland, hyprland-plugins, hyprpaper, hyprpicker, hypridle, hyprlock }: { config, ... }: let
+{ ... }: { config, ... }: let
   colorPalette = config.colorScheme.palette;
 in {
   xdg.configFile."hypr/hyprlock.conf" = {
@@ -11,7 +11,7 @@ in {
     }
 
     background {
-      monitor =
+      monitor = 
       color = rgb(${colorPalette.base00})
     }
 

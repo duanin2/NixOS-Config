@@ -1,4 +1,4 @@
-{ hyprland, hyprland-plugins, hyprpaper, hyprpicker, hypridle, hyprlock }: { pkgs, lib, ... }: {
+{ hyprlock, ... }: { pkgs, lib, ... }: {
   xdg.configFile."hypr/hypridle.conf" = {
     enable = true;
 

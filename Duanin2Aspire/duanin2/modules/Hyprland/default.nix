@@ -1,10 +1,14 @@
 { config, lib, inputs, pkgs, persistDirectory, ... }: let
 	hyprland = inputs.hyprland.packages.${pkgs.system};
+	hyprland-protocols = inputs.hyprland-protocols.packages.${pkgs.system};
 	hyprland-plugins = inputs.hyprland-plugins.packages.${pkgs.system};
+	hyprcursor = inputs.hyprcursor.packages.${pkgs.system};
+	xdph = inputs.xdph.packages.${pkgs.system};
 	hyprpaper = inputs.hyprpaper.packages.${pkgs.system};
 	hyprpicker = inputs.hyprpicker.packages.${pkgs.system};
 	hypridle = inputs.hypridle.packages.${pkgs.system};
 	hyprlock = inputs.hyprlock.packages.${pkgs.system};
+	hyprlang = inputs.hyprlang.packages.${pkgs.system};
 
 	colorPalette = config.colorScheme.palette;
 
@@ -41,10 +45,11 @@ if (hyprctl activewindow -j | from json).workspace.id == -99 {
 	listToWindowrules = window: list: map (rule: "${rule}, ${window}") list;
 in {
 	imports = let
-		configAttrs = { inherit hyprland hyprland-plugins hyprpaper hyprpicker hypridle hyprlock; };
+		configAttrs = { inherit hyprland hyprland-protocols hyprland-plugins hyprcursor hyprpaper hyprpicker hypridle hyprlock hyprlang; };
 	in [
 		(import ./hypridle.nix configAttrs)
 		(import ./hyprlock.nix configAttrs)
+		(import ./hyprcursor.nix configAttrs)
 	];
 
 	wayland.windowManager.hyprland = {
@@ -79,10 +84,6 @@ in {
 				"XDG_CURRENT_DESKTOP, Hyprland"
 				"XDG_SESSION_DESKTOP, Hyprland"
 				"XDG_SESSION_TYPE, wayland"
-
-				# Hyprcursors
-				"HYPRCURSOR_THEME, Catppuccin-Frappe-Green-Hyprcursors"
-				"HYPRCURSOR_SIZE, ${toString config.home.pointerCursor.size}"
 			];
 
 			# Autostart
