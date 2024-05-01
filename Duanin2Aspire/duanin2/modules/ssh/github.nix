@@ -5,6 +5,6 @@
     port = 22;
     user = "git";
     forwardX11 = false;
-    identityFile = "${homeDirectory}";
+    identityFile = "${homeDirectory}/.ssh/github";
   };
 }
