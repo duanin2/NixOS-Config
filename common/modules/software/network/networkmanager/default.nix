@@ -20,4 +20,6 @@ Options = UnsafeLegacyRenegotiation
 [system_default_sect]
 CipherString = Default:@SECLEVEL=0
 	'';
+
+	users.users."duanin2".extraGroups = [ "networkmanager" ];
 }
