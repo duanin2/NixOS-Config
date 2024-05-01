@@ -47,12 +47,20 @@
 				};
 				flake = nixpkgs;
 			};
+
 			"home-manager" = {
 				from = {
 					id = "home-manager";
 					type = "indirect";
 				};
 				flake = home-manager;
+			};
+			"impermanence" = {
+				from = {
+					id = "impermanence";
+					type = "indirect";
+				};
+				flake = impermanence;
 			};
 
 			"nur" = {
@@ -78,6 +86,14 @@
 				flake = rpi5;
 			};
 
+			"emacs" = {
+				from = {
+					id = "emacs";
+					type = "indirect";
+				};
+				flake = emacs;
+			};
+
 			"hyprland" = {
 				from = {
 					id = "hyprland";
@@ -85,12 +101,33 @@
 				};
 				flake = hyprland;
 			};
+			"hyprland-protocols" = {
+				from = {
+					id = "hyprland-protocols";
+					type = "indirect";
+				};
+				flake = hyprland-protocols;
+			};
 			"hyprland-plugins" = {
 				from = {
 					id = "hyprland-plugins";
 					type = "indirect";
 				};
 				flake = hyprland-plugins;
+			};
+			"hyprcursor" = {
+				from = {
+					id = "hyprcursor";
+					type = "indirect";
+				};
+				flake = hyprcursor;
+			};
+			"xdph" = {
+				from = {
+					id = "xdph";
+					type = "indirect";
+				};
+				flake = xdph;
 			};
 			"hyprpaper" = {
 				from = {
@@ -126,6 +163,29 @@
 					type = "indirect";
 				};
 				flake = hyprlang;
+			};
+			"systems" = {
+				from = {
+					id = "systems";
+					type = "indirect";
+				};
+				flake = systems;
+			};
+
+			"nix-colors" = {
+				from = {
+					id = "nix-colors";
+					type = "indirect";
+				};
+				flake = nix-colors;
+			};
+
+			"godot-nixpkgs" = {
+				from = {
+					id = "godot-nixpkgs";
+					type = "indirect";
+				};
+				flake = godot-nixpkgs;
 			};
 		};
 
