@@ -3,7 +3,7 @@
 	persistDirectory = "/persist" + homeDirectory;
 in {
 	imports = [
-		./modules/vscode
+		# ./modules/vscode
 		./modules/syncthing
 		./modules/keepassxc
 		./modules/libreoffice
@@ -20,13 +20,13 @@ in {
 		./modules/impermanence
 		../../common/duanin2/modules/Emacs
 
-		./modules/games/prismlauncher
+		# ./modules/games/prismlauncher
 		# ./modules/games/vinegar
 		./modules/games/lutris
-		./modules/games/godot
+		# ./modules/games/godot
 
-		../../common/duanin2/modules/shell/nushell.nix
-		../../common/duanin2/modules/shell/starship
+		../../common/duanin2/modules/shell/nushell
+		../../common/duanin2/modules/shell/prompts/starship
 
 		../../common/duanin2/modules/Mozilla/firefox.nix
 		../../common/duanin2/modules/Mozilla/thunderbird.nix

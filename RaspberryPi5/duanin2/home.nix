@@ -3,8 +3,8 @@
 	persistDirectory = "/persist" + homeDirectory;
 in {
   imports = [
-    ../../common/duanin2/modules/shell/nushell.nix
-		../../common/duanin2/modules/shell/starship
+    ../../common/duanin2/modules/shell/nushell
+		../../common/duanin2/modules/shell/prompts/starship
     ./modules/impermanence
   ];
 
