@@ -1,5 +1,5 @@
 { pkgs, inputs, nur, ... }: let
-  emacsPackage = pkgs.emacs-pgtk;
+  emacsPackage = pkgs.emacs29-pgtk;
 in {
   imports = [
     nur.repos.rycee.hmModules.emacs-init
