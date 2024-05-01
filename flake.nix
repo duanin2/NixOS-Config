@@ -144,6 +144,7 @@
 		systems.url = "github:nix-systems/default-linux";
 
 		nix-colors.url = "github:misterio77/nix-colors";
+		catppuccin.url = "github:catppuccin/nix";
 
 		godot-nixpkgs = {
 			url = "github:ilikefrogs101/nixpkgs";
@@ -172,26 +173,7 @@
 
 				modules = [
 					./Duanin2Aspire
-
-					{
-						imports = [ ];
-
-						home-manager = {
-							extraSpecialArgs = { inherit inputs lib customPkgs nur; };
-
-							useGlobalPkgs = true;
-							useUserPackages = true;
-
-							users."duanin2".imports = with inputs; [
-								impermanence.nixosModules.home-manager.impermanence
-								chaotic.homeManagerModules.default
-								nix-colors.homeManagerModule
-							];
-						};
-					}
 				] ++ (with inputs; [
-					impermanence.nixosModules.impermanence
-					home-manager.nixosModules.home-manager
 					chaotic.nixosModules.default
 				]);
 			};
@@ -208,25 +190,7 @@
 
 				modules = [
 					./RaspberryPi5
-
-					{
-						imports = [ ];
-
-						home-manager = {
-							extraSpecialArgs = { inherit inputs lib customPkgs nur; };
-
-							useGlobalPkgs = true;
-							useUserPackages = true;
-
-							users."duanin2".imports = with inputs; [
-								impermanence.nixosModules.home-manager.impermanence
-								chaotic.homeManagerModules.default
-							];
-						};
-					}
 				] ++ (with inputs; [
-					impermanence.nixosModules.impermanence
-					home-manager.nixosModules.home-manager
 					chaotic.nixosModules.default
 				]);
 			};

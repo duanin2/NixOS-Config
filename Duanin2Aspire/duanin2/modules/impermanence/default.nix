@@ -1,4 +1,6 @@
 { lib, config, inputs, pkgs, persistDirectory, ... }: {
+  imports = [ inputs.impermanence.nixosModules.home-manager.impermanence ];
+
   home.persistence.${persistDirectory} = {
     directories = [
       "Dokumenty"

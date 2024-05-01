@@ -23,6 +23,7 @@
 		./modules/software/samba
 		./modules/software/impermanence
 		./modules/software/nix
+		../common/modules/software/home-manager
 
 		# software/network
 		../common/modules/software/network/networkmanager
@@ -63,7 +64,7 @@
 		./duanin2
 	];
 
-	boot.binfmt.emulatedSystems = [ "aarch64-linux" "armv7-linux" ];
+	boot.binfmt.emulatedSystems = [ "aarch64-linux" "armv7l-linux" ];
 
 
 	networking.hostName = "Duanin2Aspire";

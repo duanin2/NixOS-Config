@@ -1,9 +1,8 @@
 { pkgs, ... }: {
-	users.users.duanin2 = {
+	users.users."duanin2" = {
 		isNormalUser = true;
 		description = "Dušan Till";
 		extraGroups = [
-			"networkmanager"
 			"wheel"
 		];
 		shell = pkgs.nushellFull;

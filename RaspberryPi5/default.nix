@@ -11,6 +11,7 @@
     ./modules/software/ssh
     # ./modules/software/mesa
     ./modules/software/impermanence
+    ../common/modules/software/home-manager
 
     # software/network
 		../common/modules/software/network/networkmanager

@@ -1,5 +1,6 @@
 { inputs, ... }: let
-  nix-colors = inputs.nix-colors;
+  inherit (inputs) nix-colors;
 in {
+  imports = [ nix-colors.homeManagerModule ];
   colorScheme = nix-colors.colorSchemes.catppuccin-frappe;
 }
