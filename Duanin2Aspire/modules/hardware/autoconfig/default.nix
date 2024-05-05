@@ -22,7 +22,7 @@
   fileSystems."/tmp" =
     { device = "none";
       fsType = "tmpfs";
-      options = [ "size=15G" "mode=777" ];
+      options = [ "size=15G" "mode=1777" ];
     };
 
   fileSystems."/boot" =
