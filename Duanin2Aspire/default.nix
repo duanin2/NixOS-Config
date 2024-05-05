@@ -53,6 +53,7 @@
 		# software/virtualization
 		# ./modules/software/virtualization/waydroid
 		# ./modules/software/virtualization/darling
+    ./modules/software/virtualization/libvirt/default.nix
 
 		# software/desktops
 		# ./modules/software/desktop/plasma
