@@ -33,13 +33,8 @@ if (hyprctl activewindow -j | from json).workspace.id == -99 {
 	mod = "SUPER";
 	term = "${lib.getExe pkgs.alacritty}";
 
-	concatedString = seperator: list: ((lib.convertor {
-		default = (seperator: list: "");
-		isList = (seperator: list: builtins.concatStringsSep seperator list);
-		isString = (seperator: list: list);
-	} list) seperator list);
-	getMods = mods: (concatedString "_" mods);
-	getParams = params: (concatedString ", " params);
+  getMods = with lib; mods: (concatedString "_" mods);
+	getParams = with lib; params: (concatedString ", " params);
 
 	listToBinds = dispatcher: modKeys: list: map (x: "${getMods modKeys}, ${x.keys}, ${dispatcher}, ${getParams x.params}") list;
 	listToWindowrules = window: list: map (rule: "${rule}, ${window}") list;
@@ -50,6 +45,7 @@ in {
 		(import ./hypridle.nix configAttrs)
 		(import ./hyprlock.nix configAttrs)
 		(import ./hyprcursor.nix configAttrs)
+    (import ./hyprpaper.nix configAttrs)
 	];
 
 	wayland.windowManager.hyprland = {
@@ -63,7 +59,7 @@ in {
 			enable = true;
 		};
 		plugins = with hyprland-plugins; [
-			# hyprbars
+			hyprbars
 		];
 		settings = {
 			monitor = [
@@ -90,6 +86,7 @@ in {
 			exec-once = [
 				"${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
 				"${lib.getExe hypridle.hypridle}"
+        "${lib.getExe hyprpaper.hyprpaper}"
 			];
 
 			bind = [
@@ -114,7 +111,7 @@ in {
 			] ++ listToBinds "workspace" mod [
 				{ keys = "mouse_up"; params = "e+1"; }
 				{ keys = "mouse_down"; params = "e-1"; }
-			] ++ listToBinds "movetoworkspace" "${mod}" [
+			] ++ listToBinds "movetoworkspace" mod [
 				{ keys = "1"; params = "1"; }
 				{ keys = "2"; params = "2"; }
 				{ keys = "3"; params = "3"; }
@@ -134,25 +131,21 @@ in {
 				{ keys = "XF86MonBrightnessUp"; params = "${setBrightness} +5%"; }
 				{ keys = "XF86MonBrightnessDown"; params = "${setBrightness} 5%-"; }
 			]) ++ listToBinds "exec" null (let # Volume Control
-				setVolume = type: action: "${pkgs.pulseaudio}/bin/pactl set-${
-					if
-						(lib.contains type [ "sink" "source" ])
-					then
-						type
-					else
-						"sink"
-				}-${
-					if
-						(lib.contains type [ "volume" "mute" ])
-					then
-						type
-					else
-						"volume"
-				}";
+				setVolume = with lib; type: action: "${pkgs.pulseaudio}/bin/pactl set-${
+          oneOfOrDefault
+            type
+            "sink"
+            [ "sink" "source" ]
+        }-${
+          oneOfOrDefault
+            action
+            "volume"
+            [ "volume" "mute" ]
+        }";
 			in [
 				{ keys = "XF86AudioRaiseVolume"; params = "${setVolume "sink" "volume"} @DEFAULT_SINK@ +5%"; }
 				{ keys = "XF86AudioLowerVolume"; params = "${setVolume "sink" "volume"} @DEFAULT_SINK@ -5%"; }
-				{ keys = "XF86AudioMute"; params = "${setVolume "sink" "mute"} @DEFAULT_SINK@"; }
+				{ keys = "XF86AudioMute"; params = "${setVolume "sink" "mute"} @DEFAULT_SINK@ toggle"; }
 			]) ++ listToBinds "exec" mod [ # Execute on bind
 				{ keys = "T"; params = term; }
 				{ keys = "H"; params = "${minimize}"; }
