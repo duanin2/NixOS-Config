@@ -1,7 +1,7 @@
-final: prev: {
-  mkIfElse = p: yes: no: final.mkMerge [
-    (final.mkIf p yes)
-    (final.mkIf (!p) no)
+final: prev: with final; with builtins; {
+  mkIfElse = p: yes: no: mkMerge [
+    (mkIf p yes)
+    (mkIf (!p) no)
   ];
 
   maintainers = (prev.maintainers or {}) // {
@@ -17,46 +17,46 @@ final: prev: {
     bsd = with prev; freebsd ++ netbsd ++ openbsd;
   };
 
-  contains = query: list: builtins.any (element: query == element) list;
+  contains = query: list: any (element: query == element) list;
 
-  isNumber = value: builtins.isInt value || builtins.isFloat value;
+  isNumber = value: isInt value || isFloat value;
 
   convertor = {
 		default,
-		isAttrs ? default,
-		isBool ? default,
-		isFloat ? default,
-		isFunction ? default,
-		isInt ? default,
-		isList ? default,
-		isNull ? default,
-		isPath ? default,
-		isString ? default
-	}: value: if builtins.isAttrs value then isAttrs
-	else if builtins.isBool value then isBool
-	else if builtins.isFloat value then isFloat
-	else if builtins.isFunction value then isFunction
-	else if builtins.isInt value then isInt
-	else if builtins.isList value then isList
-	else if builtins.isNull value then isNull
-	else if builtins.isPath value then isPath
-	else if builtins.isString value then isString
-	else default;
+    ...
+	}@types: value: types.${typeOf value} or types.default;
 
+  concatedString = seperator: list: (convertor {
+		default = (seperator: list: "");
+		list = (seperator: list: concatStringsSep seperator list);
+		string = (seperator: list: list);
+	} list) seperator list;
+  
 	overrideAll = {
     package,
-    args ? (old: {}),
-    attrs ? (old: {})
+    args ? {},
+    attrs ? {}
 	}: (package.override args).overrideAttrs attrs;
 
-	isSamePackage = (origPkg: modPkg: if
-		((builtins.hasAttr "pname" origPkg) && (builtins.hasAttr "pname" modPkg))
+	isSamePackage = origPkg: modPkg: if
+		((hasAttr "pname" origPkg) && (hasAttr "pname" modPkg))
 	then
 		(origPkg.pname == modPkg.pname)
 	else
-		(origPkg.name == modPkg.name));
+		(origPkg.name == modPkg.name);
 	
-	containsPackage = modPkg: origPkgs: builtins.any (origPkg: final.isSamePackage origPkg modPkg) origPkgs;
+	containsPackage = modPkg: origPkgs: any (origPkg: final.isSamePackage origPkg modPkg) origPkgs;
 
-	appendConfig = origConfig: modConfig: with builtins; origConfig // (intersectAttrs origConfig modConfig);
+	appendConfig = origConfig: modConfig: origConfig // (intersectAttrs origConfig modConfig);
+
+  oneOfOrDefault =
+    value:
+    defaultValue:
+    possibleValues:
+    if
+      contains value possibleValues
+    then
+      value
+    else
+      defaultValue;
 }
