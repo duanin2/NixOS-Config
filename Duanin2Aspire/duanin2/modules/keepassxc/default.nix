@@ -15,7 +15,12 @@
     })
   ];
 
-  home.persistence.${persistDirectory}.directories = [
-    "KeePass"
-  ];
+  home.persistence.${persistDirectory} = {
+    directories = [
+      "KeePass"
+    ];
+    files = [
+      ".config/keepassxc/keepassxc.ini"
+    ];
+  };
 }
