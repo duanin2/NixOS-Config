@@ -185,7 +185,7 @@
 					pkgs = import inputs.nixpkgs { inherit system; };
 					nurpkgs = pkgs;
 				};
-			in lib.nixosSystem {
+ 			in lib.nixosSystem {
 				inherit system;
 				specialArgs = { inherit inputs lib customPkgs nur; };
 
