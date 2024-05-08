@@ -28,6 +28,10 @@
       name = "FiraCode Nerd Font Mono";
       size = 11;
     };
+
+    gtk3.extraConfig = {
+      gtk-decoration-layout = "";
+    };
   };
 
   fonts.fontconfig.enable = true;
