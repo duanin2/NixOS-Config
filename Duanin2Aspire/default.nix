@@ -24,6 +24,7 @@
 		./modules/software/impermanence
 		./modules/software/nix
 		../common/modules/software/home-manager
+    ./modules/software/firejail
 
 		# software/network
 		../common/modules/software/network/networkmanager
@@ -58,6 +59,7 @@
 		# software/desktops
 		# ./modules/software/desktop/plasma
 		./modules/software/desktop/Hyprland
+    ./modules/software/desktop/QTile
 
 		# software/greeters
 		./modules/software/greeters/GreetD
