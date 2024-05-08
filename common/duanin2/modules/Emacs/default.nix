@@ -35,6 +35,9 @@
 			                      nil
 			                      :height 100
 			                      :family "FiraCode Nerd Font Mono")
+
+        ;; https://git.sr.ht/~rycee/configurations/tree/master/item/user/emacs.nix#L32
+        (push '(tool-bar-lines . nil) default-frame-alist)
       '';
 
       postlude = ''
@@ -141,9 +144,9 @@
             "mc/vertical-align"
             "mc/vertical-align-with-space"
           ];
-          bindKeyMap = {
-            "<mouse-8>" = "mc/add-cursor-on-click";
-          };
+          config = ''
+          (global-set-key (kbd "<mouse-1>") 'mc/add-cursor-on-click)
+          '';
         };
       };
     };
