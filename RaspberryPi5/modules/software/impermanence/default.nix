@@ -21,4 +21,12 @@
       "/etc/machine-id"
     ];
   };
+
+  systemd.services."home-manager-duanin2-fix-home" = {
+    wantedBy = [ "home-manager-duanin2.service" ];
+    script = ''
+      mkdir -p /home/duanin2
+      chown -R duanin2:users /home/duanin2
+    '';
+  };
 }
