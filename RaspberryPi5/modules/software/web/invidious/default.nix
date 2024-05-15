@@ -4,6 +4,8 @@
 
     domain = "invidious.duanin2.top";
     nginx.enable = true;
+
+    settings.db.user = "invidious";
   };
 
   services.nginx.virtualHosts.${config.services.invidious.domain} = {
