@@ -7,6 +7,8 @@
     useGlobalPkgs = true;
     useUserPackages = true;
 
+    backupFileExtension = "bak";
+
     users."duanin2".imports = with inputs; [
       chaotic.homeManagerModules.default
     ];
