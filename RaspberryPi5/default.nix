@@ -12,6 +12,7 @@
     # ./modules/software/mesa
     ./modules/software/impermanence
     ../common/modules/software/home-manager
+    ./modules/software/fuse
 
     # software/network
 		../common/modules/software/network/networkmanager
