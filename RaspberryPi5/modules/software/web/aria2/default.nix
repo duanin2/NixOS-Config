@@ -9,13 +9,6 @@ in {
 	};
 	services.nginx.virtualHosts."aria2.duanin2.top" = {
 		useACMEHost = "duanin2.top";
-		locations."/" = {
-			proxyPass = "http://localhost:${toString cfg.rpcListenPort}";
-			proxyWebsockets = true;
-		};
-	};
-  services.nginx.virtualHosts."aria2.duanin2.top" = {
-		useACMEHost = "duanin2.top";
     addSSL = true;
 		locations."/" = {
 			proxyPass = "http://localhost:${toString cfg.rpcListenPort}";
