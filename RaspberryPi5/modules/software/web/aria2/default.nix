@@ -5,12 +5,12 @@ in {
 		enable = true;
 
 		openPorts = true;
-		rpcSecretFile = "/run/secrets/aria2RpcToken";
+		rpcSecretFile = "/var/lib/secrets/aria2RpcToken";
 	};
 	services.nginx.virtualHosts."aria2.duanin2.top" = {
 		useACMEHost = "duanin2.top";
 		locations."/" = {
-			proxyPass = "localhost:${toString cfg.rpcListenPort}";
+			proxyPass = "http://localhost:${toString cfg.rpcListenPort}";
 			proxyWebsockets = true;
 		};
 	};
