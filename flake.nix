@@ -58,56 +58,29 @@
 		};
 
 		hyprland = {
-			url = "github:hyprwm/hyprland";
+			url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
 			inputs = {
 				nixpkgs.follows = "nixpkgs";
-				systems.follows = "systems";
 
 				hyprcursor.follows = "hyprcursor";
-				hyprland-protocols.follows = "hyprland-protocols";
-				hyprlang.follows = "hyprlang";
-				xdph.follows = "xdph";
-			};
-		};
-		hyprland-protocols = {
-			url = "github:hyprwm/hyprland-protocols";
-			inputs = {
-				nixpkgs.follows = "nixpkgs";
-				systems.follows = "systems";
 			};
 		};
 		hyprland-plugins = {
 			url = "github:hyprwm/hyprland-plugins";
 			inputs = {
 				hyprland.follows = "hyprland";
-				systems.follows = "systems";
 			};
 		};
 		hyprcursor = {
 			url = "github:hyprwm/hyprcursor";
 			inputs = {
 				nixpkgs.follows = "nixpkgs";
-				systems.follows = "systems";
-
-				hyprlang.follows = "hyprlang";
-			};
-		};
-		xdph = {
-			url = "github:hyprwm/xdg-desktop-portal-hyprland";
-			inputs = {
-				nixpkgs.follows = "nixpkgs";
-				systems.follows = "systems";
-
-				hyprlang.follows = "hyprlang";
-				hyprland-protocols.follows = "hyprland-protocols";
 			};
 		};
 		hyprpaper = {
 			url = "github:hyprwm/hyprpaper";
 			inputs = {
 				nixpkgs.follows = "nixpkgs";
-
-				hyprlang.follows = "hyprlang";
 			};
 		};
 		hyprpicker = {
@@ -120,25 +93,12 @@
 			url = "github:hyprwm/hypridle";
 			inputs = {
 				nixpkgs.follows = "nixpkgs";
-				systems.follows = "systems";
-
-				hyprlang.follows = "hyprlang";
 			};
 		};
 		hyprlock = {
 			url = "github:hyprwm/hyprlock";
 			inputs = {
 				nixpkgs.follows = "nixpkgs";
-				systems.follows = "systems";
-
-				hyprlang.follows = "hyprlang";
-			};
-		};
-		hyprlang = {
-			url = "github:hyprwm/hyprlang";
-			inputs = {
-				nixpkgs.follows = "nixpkgs";
-				systems.follows = "systems";
 			};
 		};
 		systems.url = "github:nix-systems/default-linux";

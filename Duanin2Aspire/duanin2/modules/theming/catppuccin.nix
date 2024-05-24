@@ -5,7 +5,7 @@
   catppuccin = {
     enable = true;
 
-    flavour = "frappe";
+    flavor = "frappe";
     accent = "green";
   };
 }

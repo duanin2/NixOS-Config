@@ -1,5 +1,7 @@
 { inputs, lib, customPkgs, nur, ... }: {
-  imports = [ inputs.home-manager.nixosModules.home-manager ];
+  imports = with inputs; [
+    home-manager.nixosModules.home-manager
+  ];
 
   home-manager = {
     extraSpecialArgs = { inherit inputs lib customPkgs nur; };

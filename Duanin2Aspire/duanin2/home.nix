@@ -22,7 +22,7 @@ in {
 
 		# ./modules/games/prismlauncher
 		# ./modules/games/vinegar
-		./modules/games/lutris
+		# ./modules/games/lutris
 		# ./modules/games/godot
 
 		../../common/duanin2/modules/shell/nushell

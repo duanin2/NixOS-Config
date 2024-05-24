@@ -98,7 +98,7 @@
 	        earlyInit = ''
 	          ;; Set color theme in early init to avoid flashing during start.
             (require 'catppuccin-theme)
-            (setq catppuccin-flavor '${config.catppuccin.flavour})
+            (setq catppuccin-flavor '${config.catppuccin.flavor})
             (load-theme 'catppuccin :no-confirm)
 	        '';
 	      };

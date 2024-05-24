@@ -101,13 +101,6 @@
 				};
 				flake = hyprland;
 			};
-			"hyprland-protocols" = {
-				from = {
-					id = "hyprland-protocols";
-					type = "indirect";
-				};
-				flake = hyprland-protocols;
-			};
 			"hyprland-plugins" = {
 				from = {
 					id = "hyprland-plugins";
@@ -121,13 +114,6 @@
 					type = "indirect";
 				};
 				flake = hyprcursor;
-			};
-			"xdph" = {
-				from = {
-					id = "xdph";
-					type = "indirect";
-				};
-				flake = xdph;
 			};
 			"hyprpaper" = {
 				from = {
@@ -156,13 +142,6 @@
 					type = "indirect";
 				};
 				flake = hyprlock;
-			};
-			"hyprlang" = {
-				from = {
-					id = "hyprlang";
-					type = "indirect";
-				};
-				flake = hyprlang;
 			};
 			"systems" = {
 				from = {
