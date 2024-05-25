@@ -68,7 +68,7 @@
     
     locations."/" = {
       extraConfig = ''
-uwsgi_pass ${config.services.searx.uwsgiConfig.socket};
+uwsgi_pass unix:///run/searx/searx.sock;
 
 uwsgi_param QUERY_STRING $query_string;
 uwsgi_param REQUEST_METHOD $request_method;
