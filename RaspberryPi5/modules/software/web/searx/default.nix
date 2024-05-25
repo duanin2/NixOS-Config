@@ -25,11 +25,6 @@
         };
       };
     };
-    runInUwsgi = true;
-    uwsgiConfig = {
-      socket = "/run/searx/searx.sock";
-      chmod-socket = "660";
-    };
     settings = {
       general = {
         donation_url = false;
@@ -43,7 +38,8 @@
       };
       server = {
         base_url = "https://searx.duanin2.top/";
-        port = 443;
+        port = 9393;
+        bind_address = "127.0.0.1";
         image_proxy = true;
       };
       ui = {
@@ -67,34 +63,7 @@
     useACMEHost = "duanin2.top";
     
     locations."/" = {
-      extraConfig = ''
-uwsgi_pass unix:///run/searx/searx.sock;
-
-uwsgi_param QUERY_STRING $query_string;
-uwsgi_param REQUEST_METHOD $request_method;
-uwsgi_param CONTENT_TYPE $content_type;
-uwsgi_param CONTENT_LENGTH $content_length;
-uwsgi_param REQUEST_URI $request_uri;
-uwsgi_param PATH_INFO $document_uri;
-uwsgi_param DOCUMENT_ROOT $document_root;
-uwsgi_param SERVER_PROTOCOL $server_protocol;
-uwsgi_param REMOTE_ADDR $remote_addr;
-uwsgi_param REMOTE_PORT $remote_port;
-uwsgi_param SERVER_ADDR $server_addr;
-uwsgi_param SERVER_PORT $server_port;
-uwsgi_param SERVER_NAME $server_name;
-
-uwsgi_param    HTTP_HOST             $host;
-uwsgi_param    HTTP_CONNECTION       $http_connection;
-
-# flaskfix
-uwsgi_param    HTTP_X_SCHEME         $scheme;
-uwsgi_param    HTTP_X_SCRIPT_NAME    /searxng;
-
-# limiter
-uwsgi_param    HTTP_X_REAL_IP        $remote_addr;
-uwsgi_param    HTTP_X_FORWARDED_FOR  $proxy_add_x_forwarded_for;
-      '';
+      proxyPass = "${config.services.searx.settings.server.bind_address}:${builtins.toString config.services.searx.settings.server.port}";
     };
 
     onlySSL = true;
