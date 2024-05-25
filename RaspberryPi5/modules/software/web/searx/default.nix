@@ -60,6 +60,7 @@
         max_redirects = 10;
       };
     };
+    environmentFile = "/var/lib/secrets/searx.env";
   };
 
   services.nginx.virtualHosts."searx.duanin2.top" = {
