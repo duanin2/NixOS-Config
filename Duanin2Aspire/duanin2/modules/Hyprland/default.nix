@@ -220,7 +220,7 @@ in {
 					"windows, 1, 7, overshot"
 					"windowsOut, 1, 7, overshot, popin 80%"
 					"border, 1, 10, overshot"
-					"borderangle, 1, 8, linear, loop"
+					"borderangle, 1, 50, linear, loop"
 					"fade, 1, 7, overshot"
 					"workspaces, 1, 6, overshot"
 				];
@@ -241,7 +241,7 @@ in {
 
 			misc = {
 				enable_swallow = true;
-				swallow_regex = "^(Alacritty)$";
+				swallow_regex = "^Alacritty$";
 
 				mouse_move_enables_dpms = true;
     		key_press_enables_dpms = true;
@@ -250,9 +250,6 @@ in {
         disable_hyprland_logo = true;
 
         font_family = config.gtk.font.name;
-
-        animate_manual_resizes = true;
-        animate_mouse_windowdragging = true;
 			};
 
 			windowrulev2 = listToWindowrules "class:polkit-gnome-authentication-agent-1" [
@@ -268,6 +265,7 @@ in {
         "forceinput"
         "stayfocused"
         "pin"
+        "plugin:hyprbars:nobar"
 			] ++ (listToWindowrules "class:firefox,title:About Mozilla Firefox" [
 				"float"
 				"center"
@@ -281,12 +279,13 @@ in {
 		extraConfig = ''
 plugin {
 	hyprbars {
-		bar_height = 20
+		bar_height = 25
 
 		bar_precedence_over_border = true
 		bar_part_of_window = true
 
 		bar_text_font = ${config.gtk.font.name}
+    bar_text_size = ${toString config.gtk.font.size}
 
 		bar_color = $surface0
 		col.text = $text
