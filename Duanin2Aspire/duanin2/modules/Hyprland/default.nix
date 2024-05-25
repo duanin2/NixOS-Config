@@ -1,16 +1,18 @@
 { config, lib, inputs, pkgs, persistDirectory, ... }: let
 	hyprland = inputs.hyprland.packages.${pkgs.system};
-	hyprland-protocols = inputs.hyprland-protocols.packages.${pkgs.system};
 	hyprland-plugins = inputs.hyprland-plugins.packages.${pkgs.system};
 	hyprcursor = inputs.hyprcursor.packages.${pkgs.system};
-	xdph = inputs.xdph.packages.${pkgs.system};
 	hyprpaper = inputs.hyprpaper.packages.${pkgs.system};
 	hyprpicker = inputs.hyprpicker.packages.${pkgs.system};
 	hypridle = inputs.hypridle.packages.${pkgs.system};
 	hyprlock = inputs.hyprlock.packages.${pkgs.system};
-	hyprlang = inputs.hyprlang.packages.${pkgs.system};
 
-	colorPalette = config.colorScheme.palette;
+  wallpaper = "${inputs.nix-wallpaper.packages.${pkgs.system}.default.override {
+    width = 1920;
+    height = 1080;
+    logoSize = 80;
+    preset = "catppuccin-frappe-rainbow";
+  }}/share/wallpapers/nixos-wallpaper.png";
 
 	minimize = let
 		hyprlandPackage = config.wayland.windowManager.hyprland.package;
@@ -40,7 +42,7 @@ if (hyprctl activewindow -j | from json).workspace.id == -99 {
 	listToWindowrules = window: list: map (rule: "${rule}, ${window}") list;
 in {
 	imports = let
-		configAttrs = { inherit hyprland hyprland-protocols hyprland-plugins hyprcursor hyprpaper hyprpicker hypridle hyprlock hyprlang; };
+		configAttrs = { inherit hyprland hyprland-plugins hyprcursor hyprpaper hyprpicker hypridle hyprlock wallpaper; };
 	in [
 		(import ./hypridle.nix configAttrs)
 		(import ./hyprlock.nix configAttrs)
@@ -96,7 +98,6 @@ in {
 				"${mod}, V, togglefloating,"
 				"${mod}, P, pseudo," # dwindle
 				"${mod}, J, togglesplit," # dwindle
-
 			] ++ listToBinds "workspace" mod [ # Workspace Control
 				{ keys = "plus"; params = "1"; }
 				{ keys = "ecaron"; params = "2"; }
@@ -180,8 +181,8 @@ in {
 				gaps_in = 4;
 				gaps_out = 8;
 				border_size = 2;
-				"col.active_border" = "rgb(${colorPalette.base08}) rgb(${colorPalette.base0B}) 45deg";
-				"col.inactive_border" = "rgba(${colorPalette.base01}aa)";
+				"col.active_border" = "$red $green 45deg";
+				"col.inactive_border" = "rgba($mantleAlphaaa)";
 
 				resize_on_border = true;
 
@@ -204,20 +205,24 @@ in {
 				drop_shadow = true;
 				shadow_range = 4;
 				shadow_render_power = 3;
-				"col.shadow" = "rgba(${colorPalette.base01}ee)";
+				"col.shadow" = "rgba($mantleAlphaee)";
 			};
 
 			animations = {
 				enabled = true;
 
-				bezier = "myBezier, 0.5, .2, .5, 1.2";
+				bezier = [
+          "overshot, .5, -.1, .5, 1.1"
+          "linear, 0, 0, 1, 1"
+        ];
+        
 				animation = [
-					"windows, 1, 7, myBezier"
-					"windowsOut, 1, 7, myBezier, popin 80%"
-					"border, 1, 10, myBezier"
-					"borderangle, 1, 8, myBezier"
-					"fade, 1, 7, myBezier"
-					"workspaces, 1, 6, myBezier"
+					"windows, 1, 7, overshot"
+					"windowsOut, 1, 7, overshot, popin 80%"
+					"border, 1, 10, overshot"
+					"borderangle, 1, 8, linear, loop"
+					"fade, 1, 7, overshot"
+					"workspaces, 1, 6, overshot"
 				];
 			};
 
@@ -240,6 +245,14 @@ in {
 
 				mouse_move_enables_dpms = true;
     		key_press_enables_dpms = true;
+
+        new_window_takes_over_fullscreen = 2;
+        disable_hyprland_logo = true;
+
+        font_family = config.gtk.font.name;
+
+        animate_manual_resizes = true;
+        animate_mouse_windowdragging = true;
 			};
 
 			windowrulev2 = listToWindowrules "class:polkit-gnome-authentication-agent-1" [
@@ -247,10 +260,22 @@ in {
 				"center"
 				"size 654 436"
 				"stayfocused"
-				"idleinhibit"
+				"idleinhibit always"
 				"dimaround"
 				"xray on"
-			];
+        "noshadow"
+        "noborder"
+        "forceinput"
+        "stayfocused"
+        "pin"
+			] ++ (listToWindowrules "class:firefox,title:About Mozilla Firefox" [
+				"float"
+				"center"
+				"size 654 436"
+				"xray on"
+        "noshadow"
+        "noborder"
+			]);
 		};
 
 		extraConfig = ''
@@ -261,14 +286,14 @@ plugin {
 		bar_precedence_over_border = true
 		bar_part_of_window = true
 
-		bar_text_font = FiraCode Nerd Font Mono
+		bar_text_font = ${config.gtk.font.name}
 
-		bar_color = rgb(${colorPalette.base00})
-		col.text = rgb(${colorPalette.base05})
+		bar_color = $surface0
+		col.text = $text
 
-		hyprbars-button = rgb(${colorPalette.base08}), 15, 󰅖, hyprctl dispatch killactive
-		hyprbars-button = rgb(${colorPalette.base0A}), 15, 󰖯, hyprctl dispatch fullscreen 1
-		hyprbars-button = rgb(${colorPalette.base0D}), 15, 󰖰, ${minimize}
+		hyprbars-button = $red, 15, 󰅖, hyprctl dispatch killactive
+		hyprbars-button = $yellow, 15, 󰖯, hyprctl dispatch fullscreen 1
+		hyprbars-button = $blue, 15, 󰖰, ${minimize}
 	}
 }
 		'';
