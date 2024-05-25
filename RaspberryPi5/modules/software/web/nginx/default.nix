@@ -28,7 +28,7 @@
     };
   };
 
-  users.users.nginx.extraGroups = [ "acme" ];
+  users.users.nginx.extraGroups = [ "acme" "searx" ];
 
   networking.firewall.allowedTCPPorts = [
     80
