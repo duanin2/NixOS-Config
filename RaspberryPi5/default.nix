@@ -25,6 +25,7 @@
     ./modules/software/web/invidious
     ./modules/software/web/aria2
     # ./modules/software/web/openvscode-server
+    ./modules/software/web/searx
 
     # software/kernel
     ./modules/software/kernel/vendor-nixpkgs.nix
