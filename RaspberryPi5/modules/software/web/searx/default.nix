@@ -63,7 +63,7 @@
     useACMEHost = "duanin2.top";
     
     locations."/" = {
-      proxyPass = "${config.services.searx.settings.server.bind_address}:${builtins.toString config.services.searx.settings.server.port}";
+      proxyPass = "http://${config.services.searx.settings.server.bind_address}:${builtins.toString config.services.searx.settings.server.port}";
     };
 
     onlySSL = true;
