@@ -31,6 +31,24 @@
 						];
 					}
 				];
+        search = rec {
+          engines = {
+            "SearXNG" = {
+              urls = [
+                {
+                  template = "https://searx.duanin2.top/search";
+                  params = [
+                    { name = "q"; value = "{searchTerms}"; }
+                  ];
+                }
+              ];
+              icon = "${pkgs.searxng}/share/static/themes/simple/img/favicon.svg";
+            };
+          };
+          force = true;
+          default = "SearXNG";
+          privateDefault = default;
+        };
 				extensions = with nur.repos.rycee.firefox-addons; [
 					ublock-origin
 					skip-redirect
@@ -50,8 +68,6 @@
 					librejs
 				]);
 				settings = {
-					"widget.use-xdg-desktop-portal.file-picker" = 1;
-
 					# Arkenfox overrides
 					"browser.startup.page" = 3;
 					"privacy.clearOnShutdown.history" = false;
