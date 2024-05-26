@@ -6,6 +6,7 @@ in {
     ../../common/duanin2/modules/shell/nushell
 		../../common/duanin2/modules/shell/prompts/starship
     ./modules/impermanence
+    ../../common/duanin2/modules/tldr
   ];
 
   home.stateVersion = "23.11";
