@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ persistDirectory, config, pkgs, ... }: {
   home.packages = with pkgs; [
     tealdeer
   ];
