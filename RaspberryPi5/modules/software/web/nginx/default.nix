@@ -19,7 +19,7 @@
         };
       };
       "bohousek10d1979.asuscomm.com" = {
-        useACMEHost = "asuscomm.com";
+        useACMEHost = "duanin2.top";
 
         locations."/".proxyPass = "https://192.168.1.1";
 
