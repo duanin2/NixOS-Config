@@ -7,16 +7,16 @@
       # webroot = "/var/lib/acme/.challenges";
       group = "nginx";
       domain = "duanin2.top";
-      extraDomainNames = [ "*.duanin2.top" "asuscomm.com" ];
+      extraDomainNames = [ "*.duanin2.top" ];
       dnsProvider = "cloudflare";
       environmentFile = "/var/lib/secrets/certs.secret";
     };
-    /*certs."asuscomm.com" = {
+    certs."asuscomm.com" = {
       webroot = "/var/lib/acme/.challenges";
       group = "nginx";
       domain = "bohousek10d1979.asuscomm.com";
       environmentFile = "/var/lib/secrets/certs.secret";
-    };*/
+    };
     acceptTerms = true;
   };
 }
