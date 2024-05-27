@@ -10,7 +10,7 @@
   xdg.configFile."tealdeer/config.toml" = {
     enable = true;
 
-    text = (pkgs.formats.toml {}).generate "tealdeer-conf" {
+    source = (pkgs.formats.toml {}).generate "tealdeer-conf" {
       display = {
         use_pager = true;
         compact = true;
