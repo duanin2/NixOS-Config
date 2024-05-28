@@ -25,6 +25,7 @@
 		./modules/software/nix
 		../common/modules/software/home-manager
     ./modules/software/firejail
+    ./modules/software/tlp
 
 		# software/network
 		../common/modules/software/network/networkmanager

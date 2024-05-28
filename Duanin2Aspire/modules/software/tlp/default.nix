@@ -1,0 +1,64 @@
+{ ... }: {
+  services.tlp = {
+    enable = true;
+
+    settings = {
+      "SOUND_POWER_SAVE_ON_AC" = 0;
+      "SOUND_POWER_SAVE_ON_BAT" = 1;
+      "BAY_POWEROFF_ON_AC" = 0;
+      "BAY_POWEROFF_ON_BAT" = 0;
+      "DISK_DEVICES" = "sda";
+      "DISK_APM_LEVEL_ON_AC" = "254";
+      "DISK_APM_LEVEL_ON_BAT" = "1";
+      "DISK_SPINDOWN_TIMEOUT_ON_AC" = "0";
+      "DISK_SPINDOWN_TIMEOUT_ON_BAT" = "0";
+      "DISK_IOSCHED" = "mq-deadline";
+      "SATA_LINKPWR_ON_AC" = "max_performance";
+      "SATA_LINKPWR_ON_BAT" = "min_power";
+      "AHCI_RUNTIME_PM_ON_AC" = "on";
+      "AHCI_RUNTIME_PM_ON_BAT" = "auto";
+      "AHCI_RUNTIME_PM_TIMEOUT" = 10;
+      "INTEL_GPU_MIN_FREQ_ON_AC" = 300;
+      "INTEL_GPU_MIN_FREQ_ON_BAT" = 300;
+      "INTEL_GPU_MAX_FREQ_ON_AC" = 1050;
+      "INTEL_GPU_MAX_FREQ_ON_BAT" = 500;
+      "INTEL_GPU_BOOST_FREQ_ON_AC" = 1050;
+      "INTEL_GPU_BOOST_FREQ_ON_BAT" = 1050;
+      "NMI_WATCHDOG" = 0;
+      "WIFI_PWR_ON_AC" = off;
+      "WIFI_PWR_ON_BAT" = on;
+      "MEM_SLEEP_ON_AC" = "s2idle";
+      "MEM_SLEEP_ON_BAT" = "deep";
+      "CPU_SCALING_GOVERNOR_ON_AC" = "performance";
+      "CPU_SCALING_GOVERNOR_ON_BAT" = "powersave";
+      "CPU_SCALING_MIN_FREQ_ON_AC" = 400000;
+      "CPU_SCALING_MAX_FREQ_ON_AC" = 3100000;
+      "CPU_SCALING_MIN_FREQ_ON_BAT" = 400000;
+      "CPU_SCALING_MAX_FREQ_ON_BAT" = 2500000;
+      "CPU_ENERGY_PERF_POLICY_ON_AC" = "performance";
+      "CPU_ENERGY_PERF_POLICY_ON_BAT" = "power";
+      "CPU_MIN_PERF_ON_AC" = 12;
+      "CPU_MAX_PERF_ON_AC" = 100;
+      "CPU_MIN_PERF_ON_BAT" = 12;
+      "CPU_MAX_PERF_ON_BAT" = 36;
+      "CPU_BOOST_ON_AC" = 1;
+      "CPU_BOOST_ON_BAT" = 0;
+      "CPU_HWP_DYN_BOOST_ON_AC" = 1;
+      "CPU_HWP_DYN_BOOST_ON_BAT" = 0;
+      "RESTORE_DEVICE_STATE_ON_STARTUP" = 0;
+      "DEVICES_TO_DISABLE_ON_BAT_NOT_IN_USE" = "bluetooth wifi wwan";
+      "DEVICES_TO_DISABLE_ON_LAN_CONNECT" = "wifi wwan";
+      "DEVICES_TO_DISABLE_ON_WIFI_CONNECT" = "wwan";
+      "DEVICES_TO_DISABLE_ON_WWAN_CONNECT" = "wifi";
+      "DEVICES_TO_ENABLE_ON_LAN_DISCONNECT" = "wifi wwan";
+      "DEVICES_TO_ENABLE_ON_WIFI_DISCONNECT" = "";
+      "DEVICES_TO_ENABLE_ON_WWAN_DISCONNECT" = "";
+      "RUNTIME_PM_ON_AC" = "on";
+      "RUNTIME_PM_ON_BAT" = "auto";
+      "PCIE_ASPM_ON_AC" = "performance";
+      "PCIE_ASPM_ON_BAT" = "powersupersave";
+      "USB_AUTOSUSPEND" = 1;
+      "USB_EXCLUDE_PHONE" = 1;
+    };
+  };
+}
