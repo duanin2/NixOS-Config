@@ -25,8 +25,8 @@
       "INTEL_GPU_BOOST_FREQ_ON_AC" = 1050;
       "INTEL_GPU_BOOST_FREQ_ON_BAT" = 1050;
       "NMI_WATCHDOG" = 0;
-      "WIFI_PWR_ON_AC" = off;
-      "WIFI_PWR_ON_BAT" = on;
+      "WIFI_PWR_ON_AC" = "off";
+      "WIFI_PWR_ON_BAT" = "on";
       "MEM_SLEEP_ON_AC" = "s2idle";
       "MEM_SLEEP_ON_BAT" = "deep";
       "CPU_SCALING_GOVERNOR_ON_AC" = "performance";
