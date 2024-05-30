@@ -21,6 +21,7 @@ in {
 		../../common/duanin2/modules/Emacs
     ../../common/duanin2/modules/tldr
     ../../common/duanin2/modules/eww
+    ../../common/duanin2/modules/pidgin
 
 		# ./modules/games/prismlauncher
 		# ./modules/games/vinegar
