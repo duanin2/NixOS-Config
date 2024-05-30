@@ -1,8 +1,9 @@
 { lib, pkgs, customPkgs, ... }: {
-  xdg.configFile."eww/scripts/eww.yuck" = {
+  xdg.configFile."eww/eww.yuck" = {
     enable = true;
 
     executable = false;
+    onChange = "${lib.getExe pkgs.eww} reload";
     text = ''
 (defwindow myBar
     :monitor 0
@@ -125,9 +126,9 @@
 				  :onchange "${lib.getExe pkgs.brightnessctl} -s s {}; ${lib.getExe pkgs.eww} update brightness={}"
 				  :round-digits 0
 				  :value {brightness}
-				  :tooltip "Brightness: " + {round(brightness / 187 * 100)}))
+				  :tooltip {"Brightness: " + round(brightness / 187 * 100)}))
 		 (label :text "󰃠"
-			:tooltip "Brightness: " + {round(brightness / 187 * 100)}))))
+			:tooltip {"Brightness: " + round(brightness / 187 * 100)}))))
 
 
 (defpoll volume :initial 0
@@ -151,7 +152,7 @@
 				  :value {volume}
 				  :tooltip {"Volume: " + volume}))
 		 (label :text "󰃠"
-			:tooltip "Brightness: " + {round(brightness / 187 * 100)}"))))
+			:tooltip {"Brightness: " + round(brightness / 187 * 100)}))))
     '';
   };
 }
