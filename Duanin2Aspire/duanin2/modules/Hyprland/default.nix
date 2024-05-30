@@ -89,6 +89,7 @@ in {
 				"${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
 				"${lib.getExe hypridle.hypridle}"
         "${lib.getExe hyprpaper.hyprpaper}"
+        "${lib.getExe pkgs.eww}"
 			];
 
 			bind = [

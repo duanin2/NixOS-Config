@@ -20,6 +20,7 @@ in {
 		./modules/impermanence
 		../../common/duanin2/modules/Emacs
     ../../common/duanin2/modules/tldr
+    ../../common/duanin2/modules/eww
 
 		# ./modules/games/prismlauncher
 		# ./modules/games/vinegar

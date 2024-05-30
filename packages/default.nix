@@ -8,5 +8,7 @@
     catppuccin-hyprcursor = callPackage ./theming/catppuccin/hyprcursor { };
 
     mozilla = callPackage ./mozilla { };
+
+    scripts = callPackage ./scripts { };
   } // { inherit callPackage; };
 in packages
