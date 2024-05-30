@@ -1,4 +1,4 @@
-{ pkgs, customPkgs, ... }: {
+{ lib, pkgs, customPkgs, ... }: {
   xdg.configFile."eww/scripts/eww.yuck" = {
     enable = true;
 

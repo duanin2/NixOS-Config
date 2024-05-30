@@ -1,7 +1,7 @@
-{ lib, uevent, nushell, writeScript }: writeScript "battery.nu" ''
+{ lib, ueventNu, nushell, writeScript }: writeScript "battery.nu" ''
 #!${lib.getExe nushell}
 
-use ${uevent}
+use ${ueventNu}
 
 def intPadding [
     value: int

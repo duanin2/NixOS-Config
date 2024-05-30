@@ -50,7 +50,7 @@ in {
     vt = 7;
     settings = {
       default_session = {
-        command = "${config.programs.hyprland.finalPackage}/bin/Hyprland --config ${hyprlandConfig}";
+        command = "${config.programs.hyprland.package}/bin/Hyprland --config ${hyprlandConfig}";
       };
     };
   };
