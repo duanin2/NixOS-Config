@@ -26,7 +26,7 @@
 
     font = lib.mkDefault {
       name = "FiraCode Nerd Font Propo";
-      size = 11;
+      size = 10;
     };
 
     gtk3.extraConfig = {

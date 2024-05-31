@@ -23,7 +23,7 @@
         application_prefer_dark_theme = true;
         cursor_theme_name = "Catppuccin-Frappe-Green-Cursors";
         cursor_theme_size = 24;
-        font_name = "FiraCode Nerd Font Propo 11";
+        font_name = "FiraCode Nerd Font Propo 10";
         icon_theme_name = "Papirus-Dark";
         theme_name = "Catppuccin-Frappe-Standard-Green-Dark";
       };
