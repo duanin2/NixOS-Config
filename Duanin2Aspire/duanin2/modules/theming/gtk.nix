@@ -25,7 +25,7 @@
     };
 
     font = lib.mkDefault {
-      name = "FiraCode Nerd Font Mono";
+      name = "FiraCode Nerd Font Propo";
       size = 11;
     };
 
