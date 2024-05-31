@@ -8,6 +8,7 @@
       purple-discord
       purple-facebook
       pidgin-opensteamworks
+      pidgin-indicator
     ];
   };
 
