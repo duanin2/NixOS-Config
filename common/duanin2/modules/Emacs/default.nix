@@ -35,7 +35,8 @@
         ;; Set up fonts early.
 	      (set-face-attribute 'default
 			                      nil
-			                      :family "${font.name}-${builtins.toString font.size}")
+			                      :family "${font.name}"
+                            :height ${builtins.toString font.size}0)
 
         ;; https://git.sr.ht/~rycee/configurations/tree/master/item/user/emacs.nix#L32
         (push '(tool-bar-lines . nil) default-frame-alist)
