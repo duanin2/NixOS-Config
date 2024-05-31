@@ -73,6 +73,7 @@
 
 	boot.binfmt.emulatedSystems = [ "aarch64-linux" "armv7l-linux" ];
 
+  services.blueman.enable = true;
 
 	networking.hostName = "Duanin2Aspire";
 	system.stateVersion = "23.11";

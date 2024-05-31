@@ -50,6 +50,8 @@ in {
     (import ./hyprpaper.nix configAttrs)
 	];
 
+  services.blueman-applet.enable = true;
+
 	wayland.windowManager.hyprland = {
 		enable = true;
 		package = hyprland.hyprland;
@@ -90,6 +92,9 @@ in {
 				"${lib.getExe hypridle.hypridle}"
         "${lib.getExe hyprpaper.hyprpaper}"
         "${lib.getExe pkgs.eww} open myBar"
+        "${pkgs.blueman}/bin/blueman-applet"
+        "${lib.getExe pkgs.networkmanagerapplet}"
+        "${lib.getExe pkgs.keepassxc}"
 			];
 
 			bind = [
