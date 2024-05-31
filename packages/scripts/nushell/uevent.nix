@@ -1,4 +1,4 @@
-{ lib, nushell, writeScript }: writeScript "uevent.nu" ''
+{ lib, nushell, writeScriptBin }: writeScriptBin "uevent.nu" ''
 #!${lib.getExe nushell}
 
 export def "parseData" [] {

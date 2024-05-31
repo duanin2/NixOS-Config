@@ -1,4 +1,4 @@
-{ lib, nushell, writeScript }: writeScript "nmcli.nu" ''
+{ lib, nushell, writeScriptBin }: writeScriptBin "nmcli.nu" ''
 #!${lib.getExe nushell}
 
 # the NetworkManager CLI utility for Nushell

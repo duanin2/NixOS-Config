@@ -126,9 +126,9 @@
 				  :onchange "${lib.getExe pkgs.brightnessctl} -s s {}; ${lib.getExe pkgs.eww} update brightness={}"
 				  :round-digits 0
 				  :value {brightness}
-				  :tooltip {"Brightness: " + round(brightness / 187 * 100)}))
+				  :tooltip {"Brightness: " + round(brightness / 187 * 100, 0)}))
 		 (label :text "󰃠"
-			:tooltip {"Brightness: " + round(brightness / 187 * 100)}))))
+			:tooltip {"Brightness: " + round(brightness / 187 * 100, 0)}))))
 
 
 (defpoll volume :initial 0
@@ -152,7 +152,7 @@
 				  :value {volume}
 				  :tooltip {"Volume: " + volume}))
 		 (label :text "󰃠"
-			:tooltip {"Brightness: " + round(brightness / 187 * 100)}))))
+			:tooltip {"Volume: " + volume}))))
     '';
   };
 }

@@ -1,4 +1,4 @@
-{ lib, ueventNu, nushell, writeScript }: writeScript "battery.nu" ''
+{ lib, ueventNu, nushell, writeScriptBin }: writeScriptBin "battery.nu" ''
 #!${lib.getExe nushell}
 
 use ${ueventNu}
