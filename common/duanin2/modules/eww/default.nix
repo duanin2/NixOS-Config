@@ -90,7 +90,7 @@
 
 (defpoll batteries :initial "[]"
 	 :interval "2s"
-	 `${customPkgs.scripts.battery}`)
+	 `${lib.getExe customPkgs.scripts.battery}`)
 (defwidget batteryIcons []
   (box (for battery in batteries
 	    (batteryIcon :name {battery.name}
