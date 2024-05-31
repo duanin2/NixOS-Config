@@ -29,12 +29,13 @@
       recommendedGcSettings = true;
 
       # Borrowed from https://git.sr.ht/~rycee/configurations/tree/master/item/user/emacs.nix#L35-39
-      earlyInit = ''
+      earlyInit = let
+        font = config.gtk.font;
+      in ''
         ;; Set up fonts early.
 	      (set-face-attribute 'default
 			                      nil
-			                      :height 100
-			                      :family "FiraCode Nerd Font Mono")
+			                      :family "${font.name}-${builtins.toString font.size}")
 
         ;; https://git.sr.ht/~rycee/configurations/tree/master/item/user/emacs.nix#L32
         (push '(tool-bar-lines . nil) default-frame-alist)
