@@ -5,10 +5,6 @@ in {
     enable = true;
 
     settings = {
-      # import = [
-      #   "${(customPkgs.catppuccin-alacritty.override { format = "yaml"; }).frappe}/alacritty.toml"
-      # ];
-
       window = {
         opacity = 0.8;
       };
