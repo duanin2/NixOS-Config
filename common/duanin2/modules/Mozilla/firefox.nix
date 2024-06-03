@@ -63,15 +63,20 @@
 					terms-of-service-didnt-read
 					unpaywall
 					wayback-machine
+          tabcenter-reborn
 				]
 				++ (with customPkgs.mozilla.firefoxAddons; [
 					librejs
 				]);
 				settings = {
+          "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+          
 					# Arkenfox overrides
 					"browser.startup.page" = 3;
 					"privacy.clearOnShutdown.history" = false;
 					"webgl.disabled" = false;
+          "privacy.resistFingerprinting" = false;
+          "privacy.resistFingerprinting.letterboxing" = false;
 				};
 		  };
 		};
