@@ -4,9 +4,11 @@
 
     text = ''
     general {
-      lock_cmd = pidof hyprlock || ${hyprlock.hyprlock}/bin/hyprlock
+      lock_cmd = pidof hyprlock || ${lib.getExe hyprlock.hyprlock}
+      unlock_cmd = ${lib.getExe pkgs.nushell} -c "ps -l | where { $in.user_id == 1000 and ($in.name == ${lib.getExe hyprlock.hyprlock}) } | par-each { kill -s 10 $in.pid }"
       before_sleep_cmd = loginctl lock-session
       after_sleep_cmd = hyprctl dispatch dpms on
+      ignore_dbus_inhibit = false
     }
 
     listener {
@@ -24,11 +26,13 @@
     listener {
       timeout = 30
       on-timeout = loginctl lock-session
+      on-resume = hyprctl dispatch dpms on
     }
 
     listener {
       timeout = 60
       on-timeout = systemctl suspend
+      on-resume = hyprctl dispatch dpms on
     }
     '';
   };
