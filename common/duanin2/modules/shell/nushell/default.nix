@@ -22,6 +22,15 @@
         algorithm: "fuzzy"
       }
     }
+
+    def tagWrapper [
+        tag: string
+        ...command: string
+    ] {
+        hyprctl dispatch tagwindow -- $"+($tag)"
+        nu -c ($command | str join " ")
+        hyprctl dispatch tagwindow -- $"-($tag)"
+    }
     '';
   };
 

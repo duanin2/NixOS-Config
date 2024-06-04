@@ -279,7 +279,9 @@ in {
 				"xray on"
         "noshadow"
         "noborder"
-			]);
+			] ++ (listToWindowrules "tag:noidle" [
+        "idleinhibit always"
+      ]));
 		};
 
 		extraConfig = ''
