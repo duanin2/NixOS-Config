@@ -23,9 +23,9 @@ in {
     ../../common/duanin2/modules/eww
     ../../common/duanin2/modules/pidgin
 
-		# ./modules/games/prismlauncher
+		./modules/games/prismlauncher
 		# ./modules/games/vinegar
-		# ./modules/games/lutris
+		./modules/games/lutris
 		# ./modules/games/godot
 
 		../../common/duanin2/modules/shell/nushell
