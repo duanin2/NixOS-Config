@@ -157,32 +157,32 @@
 		                      (label :text "󰃠"
 			                           :tooltip {"Volume: " + volume}))))
 
-# (defwidget scaleReveal [?min max current onchange revealed tooltip]
-#            (eventbox :onhover "${lib.getExe pkgs.eww} update volReveal=true"
-# 	                   :onhoverlost "${lib.getExe pkgs.eww} update volReveal=false"
-# 	                   (box :orientation "vertical"
-# 		                      (revealer :transition "slideup"
-# 			                              :reveal volReveal
-# 			                              :duration "200ms"
-# 			                              (scale :orientation "vertical"
-# 				                                   :min 0
-# 				                                   :max 101
-# 				                                   :height 100
-# 				                                   :flipped true
-# 				                                   :onchange "${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ {}%; ${lib.getExe pkgs.eww} update volume={}"
-# 				                                   :round-digits 0
-# 				                                   :value {volume}
-# 				                                   :tooltip {"Volume: " + volume}))
-# 		                      (label :text "󰃠"
-# 			                           :tooltip {"Volume: " + volume}))))
-
-# (defpoll volume :initial "{volumeLeft:0,volumeRight:0,mute:true,sinks:[],sources:[]}"
-#                 :interval "1s"
-#                 `echo "{volumeLeft:0,volumeRight:0,mute:true,sinks:[],sources:[]}"`)
-# (defwidget volume [])
-# (defpoll brightness :initial "{brightness:0,maxBrightness:0,minBrightness:0}"
-# 	                  :interval "1s"
-# 	                  `echo "{brightness:0,maxBrightness:0,minBrightness:0}"`)
+;; (defwidget scaleReveal [?min max current onchange revealed tooltip]
+;;            (eventbox :onhover "${lib.getExe pkgs.eww} update volReveal=true"
+;; 	                   :onhoverlost "${lib.getExe pkgs.eww} update volReveal=false"
+;; 	                   (box :orientation "vertical"
+;; 		                      (revealer :transition "slideup"
+;; 			                              :reveal volReveal
+;; 			                              :duration "200ms"
+;; 			                              (scale :orientation "vertical"
+;; 				                                   :min 0
+;; 				                                   :max 101
+;; 				                                   :height 100
+;; 				                                   :flipped true
+;; 				                                   :onchange "${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ {}%; ${lib.getExe pkgs.eww} update volume={}"
+;; 				                                   :round-digits 0
+;; 				                                   :value {volume}
+;; 				                                   :tooltip {"Volume: " + volume}))
+;; 		                      (label :text "󰃠"
+;; 			                           :tooltip {"Volume: " + volume}))))
+;;
+;; (defpoll volume :initial "{volumeLeft:0,volumeRight:0,mute:true,sinks:[],sources:[]}"
+;;                 :interval "1s"
+;;                 `echo "{volumeLeft:0,volumeRight:0,mute:true,sinks:[],sources:[]}"`)
+;; (defwidget volume [])
+;; (defpoll brightness :initial "{brightness:0,maxBrightness:0,minBrightness:0}"
+;; 	                  :interval "1s"
+;; 	                  `echo "{brightness:0,maxBrightness:0,minBrightness:0}"`)
     '';
   };
 }
