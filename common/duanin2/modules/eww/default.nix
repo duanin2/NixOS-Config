@@ -3,7 +3,6 @@
     enable = true;
 
     executable = false;
-    onChange = "${lib.getExe pkgs.eww} reload";
     text = ''
 (defwindow myBar
     :monitor 0
