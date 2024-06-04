@@ -34,72 +34,72 @@ def main [] {
 
       let icon = if ($capacity >= 95) {
       	if ($status == "Charging") {
-	  "󰂅"
-	} else {
-	  "󰁹"
-	}
+	         "󰂅"
+	      } else {
+	         "󰁹"
+	      }
       } else if ($capacity >= 85) {
       	if ($status == "Charging") {
-	  "󰂋"
-	} else {
-	  "󰂂"
-	}
+	         "󰂋"
+	      } else {
+	         "󰂂"
+	      }
       } else if ($capacity >= 75) {
       	if ($status == "Charging") {
-	  "󰂊"
-	} else {
-	  "󰂁"
-	}
+	         "󰂊"
+	      } else {
+	         "󰂁"
+	      }
       } else if ($capacity >= 65) {
       	if ($status == "Charging") {
-	  "󰢞"
-	} else {
-	  "󰂀"
-	}
+	         "󰢞"
+	      } else {
+	         "󰂀"
+	      }
       } else if ($capacity >= 55) {
       	if ($status == "Charging") {
-	  "󰂉"
-	} else {
-	  "󰁿"
-	}
+	         "󰂉"
+	      } else {
+	         "󰁿"
+	      }
       } else if ($capacity >= 45) {
       	if ($status == "Charging") {
-	  "󰢝"
-	} else {
-	  "󰁾"
-	}
+	         "󰢝"
+	      } else {
+	         "󰁾"
+	      }
       } else if ($capacity > 35) {
       	if ($status == "Charging") {
-	  "󰂈"
-	} else {
-	  "󰁽"
-	}
+	         "󰂈"
+	      } else {
+	         "󰁽"
+	      }
       } else if ($capacity >= 25) {
       	if ($status == "Charging") {
-	  "󰂇"
-	} else {
-	  "󰁼"
-	}
+	         "󰂇"
+	      } else {
+	         "󰁼"
+	      }
       } else if ($capacity >= 15) {
       	if ($status == "Charging") {
-	  "󰂆"
-	} else {
-	  "󰁻"
-	}
+	         "󰂆"
+	      } else {
+	         "󰁻"
+	      }
       } else if ($capacity >= 5) {
       	if ($status == "Charging") {
-	  "󰢜"
-	} else {
-	  "󰁺"
-	}
+	         "󰢜"
+	      } else {
+	         "󰁺"
+	      }
       } else if ($capacity >= 0) {
       	if ($status == "Charging") {
-	  "󰢟"
-	} else {
-	  "󰂎"
-	}
+	         "󰢟"
+	      } else {
+	         "󰂎"
+	      }
       } else {
-      	"󱃌"
+      	"󰂑"
       }
       let icon = $icon
       {
