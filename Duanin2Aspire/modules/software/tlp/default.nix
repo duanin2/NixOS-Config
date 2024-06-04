@@ -61,6 +61,7 @@
       "USB_EXCLUDE_BTUSB" = 1;
       "USB_EXCLUDE_PHONE" = 1;
       "USB_DENYLIST" = "04ca:3015 3151:1002";
+      "USB_AUTOSUSPEND_DISABLE_ON_SHUTDOWN" = 1;
     };
   };
 }
