@@ -51,14 +51,16 @@
       "DEVICES_TO_DISABLE_ON_WIFI_CONNECT" = "wwan";
       "DEVICES_TO_DISABLE_ON_WWAN_CONNECT" = "wifi";
       "DEVICES_TO_ENABLE_ON_LAN_DISCONNECT" = "wifi wwan";
-      "DEVICES_TO_ENABLE_ON_WIFI_DISCONNECT" = "";
-      "DEVICES_TO_ENABLE_ON_WWAN_DISCONNECT" = "";
+      "DEVICES_TO_ENABLE_ON_WIFI_DISCONNECT" = "wwan";
+      "DEVICES_TO_ENABLE_ON_WWAN_DISCONNECT" = "wifi";
       "RUNTIME_PM_ON_AC" = "on";
       "RUNTIME_PM_ON_BAT" = "auto";
       "PCIE_ASPM_ON_AC" = "performance";
       "PCIE_ASPM_ON_BAT" = "powersupersave";
       "USB_AUTOSUSPEND" = 1;
+      "USB_EXCLUDE_BTUSB" = 1;
       "USB_EXCLUDE_PHONE" = 1;
+      "USB_DENYLIST" = "04ca:3015 3151:1002";
     };
   };
 }
