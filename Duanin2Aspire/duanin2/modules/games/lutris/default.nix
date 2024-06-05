@@ -7,6 +7,9 @@
   ];
 
   home.persistence.${persistDirectory} = {
-    directories = [ ".local/share/lutris" ];
+    directories = [
+      ".local/share/lutris"
+      ".cache/litris"
+    ];
   };
 }
