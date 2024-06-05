@@ -1,4 +1,4 @@
-{ hyprlock, hypridle, ... }: { pkgs, lib, ... }: {
+{ hyprlock, hypridle, ... }: { pkgs, customPkgs, lib, ... }: {
   xdg.configFile."hypr/hypridle.conf" = {
     enable = true;
 
@@ -45,7 +45,7 @@
       WantedBy = [ "hyprland-session.target" ];
     };
     Service = {
-      ExecStart = lib.systemdScript pkgs "hypridle" "sh -c ${lib.getExe hypridle.hypridle}";
+      ExecStart = customPkgs.systemdScript "hypridle" "sh -c ${lib.getExe hypridle.hypridle}";
     };
   };
 }

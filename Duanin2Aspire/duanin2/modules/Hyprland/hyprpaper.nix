@@ -1,4 +1,4 @@
-{ wallpaper, hyprpaper, ... }: { inputs, pkgs, ... }: {
+{ wallpaper, hyprpaper, ... }: { pkgs, customPkgs, lib, ... }: {
   xdg.configFile."hypr/hyprpaper.conf" = {
     enable = true;
 
@@ -20,7 +20,7 @@
       WantedBy = [ "hyprland-session.target" ];
     };
     Service = {
-      ExecStart = lib.systemdScript pkgs "hyprpaper" "sh -c ${lib.getExe hyprpaper.hyprpaper}";
+      ExecStart = customPkgs.systemdScript "hyprpaper" "sh -c ${lib.getExe hyprpaper.hyprpaper}";
     };
   };
 }

@@ -1,4 +1,4 @@
-{ config, lib, inputs, pkgs, persistDirectory, ... }: let
+{ config, lib, inputs, pkgs, customPkgs, persistDirectory, ... }: let
 	hyprland = inputs.hyprland.packages.${pkgs.system};
 	hyprland-plugins = inputs.hyprland-plugins.packages.${pkgs.system};
 	hyprcursor = inputs.hyprcursor.packages.${pkgs.system};
@@ -315,7 +315,7 @@ plugin {
         WantedBy = [ "hyprland-session.target" ];
       };
       Service = {
-        ExecStart = lib.systemdScript pkgs "polkit-agent" "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        ExecStart = customPkgs.systemdScript "polkit-agent" "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
       };
     };
     "networkmanager-applet" = {
@@ -327,7 +327,7 @@ plugin {
         WantedBy = [ "hyprland-session.target" ];
       };
       Service = {
-        ExecStart = lib.systemdScript pkgs "nm-applet" "${lib.getExe pkgs.networkmanagerapplet}";
+        ExecStart = customPkgs.systemdScript "nm-applet" "${lib.getExe pkgs.networkmanagerapplet}";
       };
     };
   };

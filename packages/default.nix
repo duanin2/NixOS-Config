@@ -1,5 +1,5 @@
 { pkgs, nur, hyprcursor, ... }: let
-  lib = pkgs.lib;
+  inherit (pkgs) lib;
   
   callPackage = lib.callPackageWith (pkgs // { inherit (nur.repos.rycee.firefox-addons) buildFirefoxXpiAddon; inherit hyprcursor; } // packages);
   
@@ -12,5 +12,6 @@
     scripts = callPackage ./scripts { };
     ueventNu = scripts.uevent;
     nmcliNu = scripts.nmcli;
+    systemdScript = scripts.systemd;
   } // { inherit callPackage; };
 in packages

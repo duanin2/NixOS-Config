@@ -186,7 +186,7 @@
 
   systemd.user = {
     services = let
-      generalScript = name: params: lib.systemdScript pkgs name "${getExe eww} ${params}"; 
+      generalScript = name: params: customPkgs.systemdScript name "${lib.getExe pkgs.eww} ${params}"; 
     in {
       "eww-daemon" = {
         Unit = {
