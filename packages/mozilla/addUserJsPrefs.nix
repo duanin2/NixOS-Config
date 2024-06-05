@@ -1,8 +1,7 @@
 {
-  src,
-  package
-}: {
   writeText,
+  src,
+  package,
   ...
 }: package.override (old: let
   prefsFile = (builtins.replaceStrings
