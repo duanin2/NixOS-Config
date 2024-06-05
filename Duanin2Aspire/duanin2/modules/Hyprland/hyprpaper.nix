@@ -12,7 +12,7 @@
     '';
   };
 
-  systemd.user.services."hypridle" = {
+  systemd.user.services."hyprpaper" = {
     Unit = {
       Description = "Hypr wallpaper daemon";
     };
@@ -20,10 +20,7 @@
       WantedBy = [ "hyprland-session.target" ];
     };
     Service = {
-      ExecStart = "${with pkgs; lib.getExe writeScriptBin "hyprpaper" ''
-#!${lib.getExe nushell}
-
-${lib.getExe hyprpaper.hyprpaper}
-      ''}";
+      ExecStart = lib.systemdScript pkgs "hyprpaper" "sh -c ${lib.getExe hyprpaper.hyprpaper}";
     };
+  };
 }

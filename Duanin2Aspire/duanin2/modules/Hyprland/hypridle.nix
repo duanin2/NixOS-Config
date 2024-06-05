@@ -45,11 +45,7 @@
       WantedBy = [ "hyprland-session.target" ];
     };
     Service = {
-      ExecStart = "${with pkgs; lib.getExe writeScriptBin "hypridle" ''
-#!${lib.getExe nushell}
-
-${lib.getExe hypridle.hypridle}
-      ''}";
+      ExecStart = lib.systemdScript pkgs "hypridle" "sh -c ${lib.getExe hypridle.hypridle}";
     };
   };
 }

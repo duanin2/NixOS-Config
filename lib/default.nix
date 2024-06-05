@@ -59,4 +59,10 @@ final: prev: with final; with builtins; {
       value
     else
       defaultValue;
+
+  systemdScript = pkgs: name: text: "${with pkgs; with lib; getExe writeScriptBin ''
+#!${getExe nushell}
+
+${text}
+  ''}";
 }

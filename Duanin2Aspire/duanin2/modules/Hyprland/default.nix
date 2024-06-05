@@ -312,14 +312,10 @@ plugin {
         Description = "A Graphical PolKit Agent";
       };
       Install = {
-        WantedBy = "hyprland-session.target";
+        WantedBy = [ "hyprland-session.target" ];
       };
       Service = {
-        ExecStart = "${with pkgs; lib.getExe writeScriptBin "polkit-agent" ''
-#!${lib.getExe nushell}
-
-${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1
-        ''}";
+        ExecStart = lib.systemdScript pkgs "polkit-agent" "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
       };
     };
     "networkmanager-applet" = {
@@ -328,14 +324,10 @@ ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1
         After = [ "tray.target" ];
       };
       Install = {
-        WantedBy = "hyprland-session.target";
+        WantedBy = [ "hyprland-session.target" ];
       };
       Service = {
-        ExecStart = "${with pkgs; lib.getExe writeScriptBin "polkit-agent" ''
-#!${lib.getExe nushell}
-
-${lib.getExe pkgs.networkmanagerapplet}
-        ''}";
+        ExecStart = lib.systemdScript pkgs "nm-applet" "${lib.getExe pkgs.networkmanagerapplet}";
       };
     };
   };

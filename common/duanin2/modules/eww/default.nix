@@ -87,15 +87,14 @@
 		 :yalign 0.5)))
 
 (deflisten batteries :initial "[]"
-	 :interval "2s"
-	 `${lib.getExe customPkgs.scripts.battery}`)
+	         `${lib.getExe customPkgs.scripts.battery}`)
 (defwidget batteryIcons []
-  (box (for battery in batteries
-	    (batteryIcon :name {battery.name}
-			             :capacity {battery.capacity}
-			             :health {battery.health}
-			             :remainTime {battery.remainTime}
-			             :icon {battery.icon}))))
+           (box (for battery in batteries
+	                   (batteryIcon :name {battery.name}
+			                            :capacity {battery.capacity}
+			                            :health {battery.health}
+			                            :remainTime {battery.remainTime}
+			                            :icon {battery.icon}))))
 (defwidget batteryIcon [name capacity health remainTime icon]
 	         (tooltip
                     (box :orientation "vertical"
@@ -185,22 +184,53 @@
     '';
   };
 
-  systemd.user.services = {
-    "eww" = {
-      Unit = {
-        Description = "Start my EWW bar";
-        Before = [ "xdg-desktop-autostart.target" ];
+  systemd.user = {
+    services = let
+      generalScript = name: params: lib.systemdScript pkgs name "${getExe eww} ${params}"; 
+    in {
+      "eww-daemon" = {
+        Unit = {
+          Description = "The EWW Daemon";
+          After = [ "graphical-session.target" ];
+        };
+        Service = let
+          script = action: params: generalScript "eww-daemon-${action}" "${params} --no-daemonize";
+        in {
+          Type = "exec";
+          ExitType = "main";
+          OOMPolicy = "stop";
+          ExecStart = script "start" "daemon";
+          ExecReload = script "reload" "reload";
+          ExecStop = script "stop" "kill";
+        };
       };
-      Install = {
-        WantedBy = [ "tray.target" ];
+      "eww-bar" = let
+        script = action: params: generalScript "eww-bar-${action}" "${params} myBar";
+      in {
+        Unit = {
+          Description = "My EWW Bar";
+          Wants = [ "eww-daemon.service" ];
+          After = [ "eww-daemon.service" ];
+          Before = [ "tray.target" ];
+        };
+        Install = {
+          WantedBy = [ "tray.target" ];
+        };
+        Service = {
+          Type = "oneshot";
+          RemainAfterExit = "yes";
+          OOMPolicy = "continue";
+          ExecStart = script "start" "open";
+          ExecStop = script "stop" "close";
+        };
       };
-      Service = {
-        ExecStart = "${with pkgs; lib.getExe writeScriptBin "start-eww.nu" ''
-#!${lib.getExe nushell}
-
-${lib.getExe eww} daemon
-${lib.getExe eww} open myBar
-      ''}";
+    };
+    targets = {
+      "tray.target" = {
+        Unit = {
+          WantedBy = [ "xdg-desktop-autostart.target" ];
+          Before = [ "xdg-desktop-autostart.target" ];
+        };
       };
     };
   };
