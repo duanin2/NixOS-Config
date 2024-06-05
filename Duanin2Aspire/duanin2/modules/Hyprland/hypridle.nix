@@ -1,4 +1,4 @@
-{ hyprlock, ... }: { pkgs, lib, ... }: {
+{ hyprlock, hypridle, ... }: { pkgs, lib, ... }: {
   xdg.configFile."hypr/hypridle.conf" = {
     enable = true;
 
@@ -35,5 +35,21 @@
       on-resume = hyprctl dispatch dpms on
     }
     '';
+  };
+
+  systemd.user.services."hypridle" = {
+    Unit = {
+      Description = "Hypr idle daemon";
+    };
+    Install = {
+      WantedBy = [ "hyprland-session.target" ];
+    };
+    Service = {
+      ExecStart = "${with pkgs; lib.getExe writeScriptBin "hypridle" ''
+#!${lib.getExe nushell}
+
+${lib.getExe hypridle.hypridle}
+      ''}";
+    };
   };
 }

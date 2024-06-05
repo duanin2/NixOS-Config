@@ -58,6 +58,7 @@ in {
 
 		systemd = {
 			enable = true;
+      enableXdgAutostart = true;
 		};
 		xwayland = {
 			enable = true;
@@ -87,15 +88,7 @@ in {
 			];
 
 			# Autostart
-			exec-once = [
-				"${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
-				"${lib.getExe hypridle.hypridle}"
-        "${lib.getExe hyprpaper.hyprpaper}"
-        "${lib.getExe pkgs.eww} open myBar"
-        "${pkgs.blueman}/bin/blueman-applet"
-        "${lib.getExe pkgs.networkmanagerapplet}"
-        "${lib.getExe pkgs.keepassxc}"
-			];
+			exec-once = [ ];
 
 			bind = [
 				"${mod}, C, killactive,"
@@ -307,6 +300,43 @@ plugin {
 	};
 
 	home.persistence.${persistDirectory} = {
-    directories = [ ".cache/hyprland" ];
+    directories = [
+      ".cache/hyprland"
+      ".config/autostart"
+    ];
+  };
+
+  systemd.user.services = {
+    "polkit-agent" = {
+      Unit = {
+        Description = "A Graphical PolKit Agent";
+      };
+      Install = {
+        WantedBy = "hyprland-session.target";
+      };
+      Service = {
+        ExecStart = "${with pkgs; lib.getExe writeScriptBin "polkit-agent" ''
+#!${lib.getExe nushell}
+
+${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1
+        ''}";
+      };
+    };
+    "networkmanager-applet" = {
+      Unit = {
+        Description = "An applet for controling NetworkManager";
+        After = [ "tray.target" ];
+      };
+      Install = {
+        WantedBy = "hyprland-session.target";
+      };
+      Service = {
+        ExecStart = "${with pkgs; lib.getExe writeScriptBin "polkit-agent" ''
+#!${lib.getExe nushell}
+
+${lib.getExe pkgs.networkmanagerapplet}
+        ''}";
+      };
+    };
   };
 }

@@ -86,7 +86,7 @@
 		 :xalign 0.5
 		 :yalign 0.5)))
 
-(defpoll batteries :initial "[]"
+(deflisten batteries :initial "[]"
 	 :interval "2s"
 	 `${lib.getExe customPkgs.scripts.battery}`)
 (defwidget batteryIcons []
@@ -100,9 +100,9 @@
 	         (tooltip
                     (box :orientation "vertical"
                          (label :text {name})
-                         (label :text {"Capacity: " + capacity})
+                         (label :text {"Capacity: " + capacity + " %"})
                          (label :text {"Remaining time: " + remainTime})
-                         (label :text {"Health: " + health}))
+                         (label :text {"Health: " + health + " %"}))
            (label :text {icon})))
 
 (defwidget networkIcon []
@@ -183,5 +183,25 @@
 ;; 	                  :interval "1s"
 ;; 	                  `echo "{brightness:0,maxBrightness:0,minBrightness:0}"`)
     '';
+  };
+
+  systemd.user.services = {
+    "eww" = {
+      Unit = {
+        Description = "Start my EWW bar";
+        Before = [ "xdg-desktop-autostart.target" ];
+      };
+      Install = {
+        WantedBy = [ "tray.target" ];
+      };
+      Service = {
+        ExecStart = "${with pkgs; lib.getExe writeScriptBin "start-eww.nu" ''
+#!${lib.getExe nushell}
+
+${lib.getExe eww} daemon
+${lib.getExe eww} open myBar
+      ''}";
+      };
+    };
   };
 }

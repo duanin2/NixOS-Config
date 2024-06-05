@@ -1,0 +1,5 @@
+{ ... }: {
+  systemd.user = {
+    enable = true;
+  };
+}

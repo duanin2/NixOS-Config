@@ -22,7 +22,8 @@ in {
     ../../common/duanin2/modules/tldr
     ../../common/duanin2/modules/eww
     ../../common/duanin2/modules/pidgin
-
+    ../../common/duanin2/modules/systemd
+    
 		./modules/games/prismlauncher
 		# ./modules/games/vinegar
 		./modules/games/lutris
