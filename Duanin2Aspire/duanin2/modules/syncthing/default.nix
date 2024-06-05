@@ -3,5 +3,5 @@
 		enable = true;
 	};
 
-  home.persistence.${persistDirectory}.directories = [ "/home/duanin2/.local/state/syncthing" ];
+  home.persistence.${persistDirectory}.directories = [ ".local/state/syncthing" ];
 }
