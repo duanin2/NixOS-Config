@@ -28,6 +28,8 @@ in {
 		# ./modules/games/vinegar
 		./modules/games/lutris
 		# ./modules/games/godot
+    ./modules/games/mangohud
+    ./modules/games/gamemode.nix
 
 		../../common/duanin2/modules/shell/nushell
 		../../common/duanin2/modules/shell/prompts/starship
