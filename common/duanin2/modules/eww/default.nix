@@ -191,7 +191,11 @@
       "eww-daemon" = {
         Unit = {
           Description = "The EWW Daemon";
-          After = [ "graphical-session.target" ];
+          
+          Wants = [ "graphical-session.target" "graphical-session-pre.target" ];
+          After = [ "graphical-session-pre.target" ];
+          Before = [ "graphical-session.target" ];
+          StopWhenUnneeded = true;
         };
         Service = let
           script = action: params: generalScript "eww-daemon-${action}" "${params} --no-daemonize";
@@ -209,12 +213,14 @@
       in {
         Unit = {
           Description = "My EWW Bar";
-          Wants = [ "eww-daemon.service" ];
+          
+          BindsTo = [ "eww-daemon.service" ];
+          Upholds = [ "tray.target" ];
           After = [ "eww-daemon.service" ];
           Before = [ "tray.target" ];
         };
         Install = {
-          WantedBy = [ "tray.target" ];
+          RequiredBy = [ "tray.target" ];
         };
         Service = {
           Type = "oneshot";
