@@ -27,7 +27,7 @@
       "NMI_WATCHDOG" = 0;
       "WIFI_PWR_ON_AC" = "off";
       "WIFI_PWR_ON_BAT" = "on";
-      "MEM_SLEEP_ON_AC" = "s2idle";
+      "MEM_SLEEP_ON_AC" = "deep";
       "MEM_SLEEP_ON_BAT" = "deep";
       "CPU_SCALING_GOVERNOR_ON_AC" = "performance";
       "CPU_SCALING_GOVERNOR_ON_BAT" = "powersave";
@@ -61,7 +61,6 @@
       "USB_EXCLUDE_BTUSB" = 1;
       "USB_EXCLUDE_PHONE" = 1;
       "USB_DENYLIST" = "04ca:3015 3151:1002";
-      "USB_AUTOSUSPEND_DISABLE_ON_SHUTDOWN" = 1;
     };
   };
 }
