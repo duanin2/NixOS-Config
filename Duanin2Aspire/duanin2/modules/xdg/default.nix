@@ -14,7 +14,7 @@
       pictures = "${homeDirectory}/Obrázky";
       publicShare = "${homeDirectory}/Veřejné";
       templates = "${homeDirectory}/Šablony";
-      videos = "${homDirectory}/Videa";
+      videos = "${homeDirectory}/Videa";
     };
   };
 }
