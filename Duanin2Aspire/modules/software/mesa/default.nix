@@ -1,12 +1,26 @@
-{ lib, pkgs, ... }: {
-  chaotic.mesa-git = let
-    baseExtraPackages = pkgs': extraPackages: with pkgs'; [
-      intel-media-driver
-      vaapiIntel
-      vaapiVdpau
-      libvdpau-va-gl
-    ] ++ extraPackages;
-  in {
+{ lib, pkgs, ... }: let
+  baseExtraPackages = pkgs': extraPackages: with pkgs'; [
+    intel-media-driver
+    vaapiIntel
+    vaapiVdpau
+    libvdpau-va-gl
+  ] ++ extraPackages;
+in {
+  # Stable
+  hardware.opengl = {
+    enable = lib.mkForce true;
+
+    extraPackages = baseExtraPackages pkgs (with pkgs; [
+      intel-ocl
+      intel-compute-runtime
+      mesa.opencl
+    ]);
+    extraPackages32 = baseExtraPackages pkgs.pkgsi686Linux [];
+  };
+
+  
+  # Git
+  chaotic.mesa-git = {
     enable = true;
 
     method = "replaceRuntimeDependencies";

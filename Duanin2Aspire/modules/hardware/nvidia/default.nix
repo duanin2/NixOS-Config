@@ -1,15 +1,17 @@
-{ config, ... }: {
+{ lib, config, ... }: {
   hardware.opengl = {
     enable = true;
     driSupport = true;
     driSupport32Bit = true;
   };
 
+  chaotic.mesa-git.enable = lib.mkForce false;
+
   services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
     modesetting.enable = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
 
     powerManagement = {
       enable = false;
