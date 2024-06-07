@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   programs.mangohud = {
     enable = true;
-    package = mangohud_git;
+    package = pkgs.mangohud_git;
 
     settings = {
       # Performance
