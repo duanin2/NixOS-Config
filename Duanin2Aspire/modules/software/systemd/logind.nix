@@ -2,7 +2,7 @@
   services.logind = {
     suspendKeyLongPress = "ignore";
     powerKeyLongPress = "halt";
-    powerKey = "shutdown";
+    powerKey = "poweroff";
     killUserProcesses = true;
   };
 }
