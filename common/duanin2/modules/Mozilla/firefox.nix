@@ -5,7 +5,7 @@
 			package = pkgs.firefox;
 			src = pkgs.fetchurl {
 				url = "https://raw.githubusercontent.com/arkenfox/user.js/master/user.js";
-				hash = "sha256-H3Nk5sDxSElGRgK+cyQpVyjtlMF2Okxbstu9A+eJtGk=";
+				hash = "sha256-XRtG0iLKh8uqbeX7Rc2H6VJwZYJoNZPBlAfZEfrSCP4=";
 			};
 		};
 
