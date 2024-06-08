@@ -68,6 +68,11 @@
 		# software/theming
 		./modules/software/theming
 
+    # software/systemd
+    ./modules/software/systemd/logind.nix
+    ./modules/software/systemd/oomd.nix
+    ./modules/software/systemd/sleep.nix
+    
 		./duanin2
 	];
 
