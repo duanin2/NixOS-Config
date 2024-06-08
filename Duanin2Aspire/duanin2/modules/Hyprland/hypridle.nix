@@ -18,19 +18,19 @@
     }
 
     listener {
-      timeout = 20
+      timeout = 30
       on-timeout = hyprctl dispatch dpms off
       on-resume = hyprctl dispatch dpms on
     }
 
     listener {
-      timeout = 30
+      timeout = 60
       on-timeout = loginctl lock-session
       on-resume = hyprctl dispatch dpms on
     }
 
     listener {
-      timeout = 60
+      timeout = 90
       on-timeout = systemctl suspend
       on-resume = hyprctl dispatch dpms on
     }
