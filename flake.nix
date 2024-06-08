@@ -58,7 +58,7 @@
 		};
 
 		hyprland = {
-			url = "git+https://github.com/hyprwm/Hyprland?submodules=1&ref=refs/heads/wayland-rewrite";
+			url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
 			inputs = {
 				nixpkgs.follows = "nixpkgs";
 
