@@ -13,6 +13,7 @@
         
         locations."/.well-known/acme-challenge" = {
           root = "/var/lib/acme/.challenges";
+          priority = 0;
         };
         locations."/" = {
           return = "301 https://$host$request_uri";
