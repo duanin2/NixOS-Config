@@ -23,6 +23,7 @@ in {
     ../../common/duanin2/modules/eww
     ../../common/duanin2/modules/pidgin
     ../../common/duanin2/modules/systemd
+    ../../common/duanin2/gnunet
     
 		./modules/games/prismlauncher
 		# ./modules/games/vinegar
