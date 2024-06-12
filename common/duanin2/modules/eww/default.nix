@@ -232,7 +232,7 @@
       };
     };
     targets = {
-      "tray.target" = {
+      "tray" = {
         Unit = {
           WantedBy = [ "xdg-desktop-autostart.target" ];
           Before = [ "xdg-desktop-autostart.target" ];
