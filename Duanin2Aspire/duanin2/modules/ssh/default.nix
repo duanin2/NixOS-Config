@@ -8,6 +8,7 @@
     enable = true;
 
     compression = true;
+    addKeysToAgent = "yes";
   };
 
   home.persistence.${persistDirectory} = {
