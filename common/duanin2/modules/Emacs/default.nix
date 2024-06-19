@@ -21,7 +21,9 @@
 
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs29-pgtk;
+    package = with pkgs; let
+      emacsPackages = emacsPackagesFor emacs29-pgtk;
+    in emacsPackages.emacsWithPackages (epkgs: with epkgs; [ treesit-grammars.with-all-grammars ]);
 
     init = {
       enable = true;
@@ -46,8 +48,8 @@
         ;; https://stackoverflow.com/questions/4191408/making-the-emacs-cursor-into-a-line
         (setq-default cursor-type 'bar)
 
-        ;; https://emacs.stackexchange.com/questions/278/how-do-i-display-line-numbers-in-emacs-not-in-the-mode-line
-        (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+        ;; https://anonymousoverflow.privacyfucking.rocks/exchange/emacs/questions/278/how-do-i-display-line-numbers-in-emacs-not-in-the-mode-line#79455
+        (global-display-line-numbers-mode 1)
 
         ;; Stop the flood of warnings that sometimes happens upon file open
         (custom-set-variables
@@ -151,8 +153,17 @@
             "mc/vertical-align-with-space"
           ];
           config = ''
-          (global-set-key (kbd "<mouse-1>") 'mc/add-cursor-on-click)
+          (global-set-key (kbd "<mouse-8>") 'mc/add-cursor-on-click)
           '';
+        };
+
+        typescript-ts-mode = {
+          enable = true;
+
+          mode = [
+            ''("\\.ts\\'" . typescript-ts-mode)''
+            ''("\\.tsx\\'" . tsx-ts-mode)''
+          ];
         };
       };
     };
