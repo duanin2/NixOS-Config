@@ -14,7 +14,7 @@
     package = config.boot.kernelPackages.nvidiaPackages.beta;
 
     powerManagement = {
-      enable = false;
+      enable = true;
       finegrained = false;
     };
     open = false;
@@ -29,4 +29,6 @@
       nvidiaBusId = "PCI:1:0:0";
     };
   };
+
+  boot.kernelParams = [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
 }
