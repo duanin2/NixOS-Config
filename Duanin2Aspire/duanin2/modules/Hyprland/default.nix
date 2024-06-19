@@ -64,7 +64,7 @@ in {
 			enable = true;
 		};
 		plugins = with hyprland-plugins; [
-			hyprbars
+			# hyprbars
 		];
 		settings = {
 			monitor = [
@@ -80,6 +80,7 @@ in {
 				"QT_QPA_PLATFORM, wayland;xcb" # Qt
 				"QT_AUTO_SCREEN_SCALE_FACTOR, 1"
 				"QT_WAYLAND_DISABLE_WINDOWDECORATION, 1"
+        "NIXOS_OZONE_WL, 1" # Chromium-based (Electron, CEF, etc.)
 
 				# XDG
 				"XDG_CURRENT_DESKTOP, Hyprland"
@@ -187,7 +188,7 @@ in {
 
 				allow_tearing = true;
 
-				layout = "dwindle";
+				layout = "master";
 			};
 
 			decoration = {
@@ -231,7 +232,10 @@ in {
 			};
 
 			master = {
-				new_is_master = true;
+				new_status = "inherit";
+        mfact = "exact 0.6";
+        orientation = "right";
+        no_gaps_when_only = 2;
 			};
 
 			gestures = {
