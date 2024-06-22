@@ -7,7 +7,7 @@
   ] ++ extraPackages;
 in {
   # Stable
-  hardware.opengl = {
+  hardware.graphics = {
     enable = lib.mkForce true;
 
     extraPackages = baseExtraPackages pkgs (with pkgs; [

@@ -1,10 +1,5 @@
 { lib, config, ... }: {
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-  };
-
+  hardware.opengl.enable = lib.mkForce true;
   chaotic.mesa-git.enable = lib.mkForce false;
 
   services.xserver.videoDrivers = [ "nvidia" ];
