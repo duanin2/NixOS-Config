@@ -6,22 +6,16 @@
   gtk = {
     enable = true;
 
-    theme = lib.mkDefault {
-      package = (pkgs.catppuccin-gtk.override {
-        variant = "frappe";
-        accents = [ "green" ];
+    catppuccin.enable = false;
+
+    theme = {
+      package = (pkgs.colloid-gtk-theme.override {
+        tweaks = [ "catppuccin" "rimless" "float" ];
+        colorVariants = [ "dark" ];
+        themeVariants = [ "green" ];
       });
     
-      name = "Catppuccin-Frappe-Standard-Green-Dark";
-    };
-
-    iconTheme = lib.mkDefault {
-      package = (pkgs.catppuccin-papirus-folders.override {
-        flavor = "frappe";
-        accent = "green";
-      });
-      
-      name = "Papirus-Dark";
+      name = "Colloid-Green-Dark-Catppuccin";
     };
 
     font = lib.mkDefault {
