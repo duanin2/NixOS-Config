@@ -98,6 +98,7 @@ in {
 				"${mod}, V, togglefloating,"
 				"${mod}, P, pseudo," # dwindle
 				"${mod}, J, togglesplit," # dwindle
+        "${mod}, P, layoutmsg, swapwithmaster auto" # master
 			] ++ listToBinds "workspace" mod [ # Workspace Control
 				{ keys = "plus"; params = "1"; }
 				{ keys = "ecaron"; params = "2"; }
@@ -178,13 +179,13 @@ in {
 			};
 
 			general = {
-				gaps_in = 4;
-				gaps_out = 8;
-				border_size = 2;
+				gaps_in = 2;
+				gaps_out = 4;
+				border_size = 1;
 				"col.active_border" = "$red $green 45deg";
 				"col.inactive_border" = "rgba($mantleAlphaaa)";
 
-				resize_on_border = true;
+				resize_on_border = false;
 
 				allow_tearing = true;
 
@@ -232,10 +233,10 @@ in {
 			};
 
 			master = {
-				new_status = "inherit";
-        mfact = "exact 0.6";
+				new_status = "slave";
+        mfact = "0.6";
         orientation = "right";
-        no_gaps_when_only = 2;
+        no_gaps_when_only = 0;
 			};
 
 			gestures = {
