@@ -8,6 +8,7 @@
 		../common/modules/hardware/zram
 		./modules/hardware/adb
 		./modules/hardware/intel
+    ../common/modules/hardware/steam-hardware
 
 		# software
 		../common/modules/software/nix
