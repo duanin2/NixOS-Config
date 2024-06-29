@@ -28,6 +28,7 @@
     ./modules/software/firejail
     ./modules/software/tlp
     ../common/modules/software/gnunet
+    ../common/modules/software/kdeConnect
 
 		# software/network
 		../common/modules/software/network/networkmanager

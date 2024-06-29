@@ -24,6 +24,7 @@ in {
     ../../common/duanin2/modules/pidgin
     ../../common/duanin2/modules/systemd
     ../../common/duanin2/modules/gnunet
+    ../../common/duanin2/modules/kdeConnect
     
 		./modules/games/prismlauncher
 		# ./modules/games/vinegar
