@@ -1,5 +1,5 @@
 { lib, config, ... }: {
-  hardware.opengl.enable = lib.mkForce true;
+  hardware.graphics.enable = lib.mkForce true;
   chaotic.mesa-git.enable = lib.mkForce false;
 
   services.xserver.videoDrivers = [ "nvidia" ];
