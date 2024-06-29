@@ -1,3 +1,3 @@
 { pkgs, ... }: {
-  environment.shells = with pkgs; [ nushellFull ];
+  environment.shells = with pkgs; [ nushell ];
 }
