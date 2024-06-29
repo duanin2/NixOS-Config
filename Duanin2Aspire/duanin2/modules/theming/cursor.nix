@@ -1,5 +1,5 @@
-{ pkgs, ... }: {
-  home.pointerCursor = {
+{ lib, pkgs, ... }: {
+  home.pointerCursor = lib.mkDefault {
     package = pkgs.catppuccin-cursors.frappeGreen;
 
     gtk = {
