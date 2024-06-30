@@ -2,9 +2,11 @@
   qt = {
     enable = true;
 
+    platformTheme.name = "kvantum";
     style.name = "kvantum";
   };
 
+  /*
   xdg.configFile = let
     accent = "Green";
     variant = "Frappe";
@@ -21,4 +23,5 @@
       source = "${pkgs.catppuccin-kvantum.override { inherit accent variant; }}/share/Kvantum/Catppuccin-${variant}-${accent}/";
     };
   };
+  */
 }
