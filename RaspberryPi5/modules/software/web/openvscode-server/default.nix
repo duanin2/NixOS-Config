@@ -6,4 +6,8 @@
 		withoutConnectionToken = true;
 		port = 5000; # Remember to forward port 5000 on SSH
 	};
+
+  environment.persistence."/persist" = {
+    directories = [ "/home/openvscode-server" ];
+  };
 }
