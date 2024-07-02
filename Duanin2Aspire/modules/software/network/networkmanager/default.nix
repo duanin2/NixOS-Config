@@ -5,11 +5,14 @@
         id = "tornet";
         type = "bridge";
         interface-name = "tornet";
+        autoconnect = true;
       };
       ethernet = { };
-      bridge = { };
+      bridge = {
+        interface-name = "tornet";
+      };
       ipv4 = {
-        method = "auto";
+        address1 = "10.100.100.1/24";
       };
       ipv6 = {
         addr-gen-mode = "default";

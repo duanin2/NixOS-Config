@@ -1,5 +1,5 @@
 { ... }: {
-  nftables = {
+  networking.nftables = {
     enable = true;
 
     ruleset = ''

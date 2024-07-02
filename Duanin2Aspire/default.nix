@@ -35,12 +35,12 @@
 		../common/modules/software/network/firewall
 		../common/modules/software/network/resolvd
 		../common/modules/software/network/avahi
-    ./modules/network/firewall
-    ./modules/network/sysctl
-    ./modules/network/nftables
-    ./modules/network/resolvd
-    ./modules/network/networkmanager
-    ./modules/network/tor
+    ./modules/software/network/firewall
+    ./modules/software/network/sysctl
+    ./modules/software/network/nftables
+    ./modules/software/network/resolvd
+    ./modules/software/network/networkmanager
+    ./modules/software/network/tor
 
 		# software/network/vpn
 		# ./modules/software/network/vpn/protonvpn.nix
