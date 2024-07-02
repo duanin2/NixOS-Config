@@ -103,6 +103,13 @@
 		};
 		systems.url = "github:nix-systems/default-linux";
 
+    firefox = {
+      url = "github:nix-community/flake-firefox-nightly";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
 		nix-colors.url = "github:misterio77/nix-colors";
 		catppuccin.url = "github:catppuccin/nix";
     nix-wallpaper.url = "github:lunik1/nix-wallpaper";

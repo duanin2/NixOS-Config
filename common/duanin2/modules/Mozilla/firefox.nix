@@ -4,7 +4,7 @@
 	programs.firefox = {
 		enable = true;
     package = customPkgs.mozilla.addUserJsPrefs {
-			package = pkgs.firefox;
+			package = inputs.firefox.firefox-nightly-bin;
 			src = pkgs.fetchurl {
 				url = "https://raw.githubusercontent.com/arkenfox/user.js/master/user.js";
 				hash = "sha256-XRtG0iLKh8uqbeX7Rc2H6VJwZYJoNZPBlAfZEfrSCP4=";
