@@ -6,7 +6,7 @@
     dnssec = "false";
     dnsovertls = "true";
     domains = [ "~." ];
-    fallbackDns = [ "192.168.1.1" ];
+    fallbackDns = [ "" ];
   };
 
   networking.resolvconf.enable = false;
