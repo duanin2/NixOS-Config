@@ -36,7 +36,8 @@ in {
 		../../common/duanin2/modules/shell/nushell
 		../../common/duanin2/modules/shell/prompts/starship
 
-		../../common/duanin2/modules/Mozilla/firefox.nix
+		# ../../common/duanin2/modules/Mozilla/firefox.nix
+    ../../common/duanin2/modules/Mozilla/mullvad.nix
 		../../common/duanin2/modules/Mozilla/thunderbird.nix
 
 		./modules/mpv

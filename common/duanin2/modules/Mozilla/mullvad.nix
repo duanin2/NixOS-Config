@@ -1,15 +1,9 @@
 { lib, config, nur, customPkgs, pkgs, inputs, persistDirectory, ... }: {
-  disabledModules = [ ./mullvad.nix ];
+  disabledModules = [ ./firefox.nix ];
   
 	programs.firefox = {
 		enable = true;
-    package = customPkgs.mozilla.addUserJsPrefs {
-			package = pkgs.firefox;
-			src = pkgs.fetchurl {
-				url = "https://raw.githubusercontent.com/arkenfox/user.js/master/user.js";
-				hash = "sha256-XRtG0iLKh8uqbeX7Rc2H6VJwZYJoNZPBlAfZEfrSCP4=";
-			};
-		};
+    package = pkgs.mullvad-browser;
 
 		profiles = {
 		  "default" = {
@@ -61,11 +55,11 @@
 					libredirect
 					indie-wiki-buddy
 					auto-tab-discard
-					steam-database
+					# steam-database
 					terms-of-service-didnt-read
 					unpaywall
 					wayback-machine
-          tabcenter-reborn
+          # tabcenter-reborn
 				]
 				++ (with customPkgs.mozilla.firefoxAddons; [
 					librejs
@@ -74,17 +68,17 @@
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
           
 					# Arkenfox overrides
-          "browser.startup.page" = 3;
-          "privacy.clearOnShutdown.history" = false;
+          # "browser.startup.page" = 3;
+          # "privacy.clearOnShutdown.history" = false;
 					"webgl.disabled" = false;
-          "privacy.resistFingerprinting" = false;
-          "privacy.resistFingerprinting.letterboxing" = false;
+          # "privacy.resistFingerprinting" = false;
+          # "privacy.resistFingerprinting.letterboxing" = false;
 				};
 		  };
 		};
 	};
 
 	home.persistence.${persistDirectory} = {
-    directories = [ ".mozilla" ];
+    directories = [ ".mullvad" ];
   };
 }
