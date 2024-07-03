@@ -3,13 +3,16 @@
     enable = true;
 
     openFirewall = true;
-    client.dns.enable = true;
+    client = {
+      enable = true;
+      dns.enable = true;
+      transparentProxy.enable = true;
+
+      socksListenAddress = { addr = "127.0.0.1"; port = 9050; };
+    };
     settings = {
-      DNSPort = [
-        { addr = "127.0.0.1"; port = 53; }
-      ];
-      TransPort = [ 9040 ];
       VirtualAddrNetworkIPv4 = "172.30.0.0/16";
+      DNSPort = [ { addr = "127.0.0.1"; port = 53; } ];
     };
   };
 }

@@ -13,10 +13,11 @@
       };
       ipv4 = {
         address1 = "10.100.100.1/24";
+        method = "manual";
       };
       ipv6 = {
         addr-gen-mode = "default";
-        method = "auto";
+        method = "disabled";
       };
     };
   };
