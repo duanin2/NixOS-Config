@@ -20,13 +20,13 @@
           priority = 1000;
         };
       };
-      "bohousek10d1979.asuscomm.com" = {
+      /*"bohousek10d1979.asuscomm.com" = {
         useACMEHost = "asuscomm.com";
 
         locations."/".proxyPass = "https://192.168.1.1";
 
         onlySSL = true;
-      };
+      };*/
     };
   };
 
