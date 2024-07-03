@@ -34,7 +34,7 @@
 		../common/modules/software/network/networkmanager
 		../common/modules/software/network/firewall
 		../common/modules/software/network/resolvd
-		../common/modules/software/network/avahi
+		# ../common/modules/software/network/avahi
     ./modules/software/network/firewall
     ./modules/software/network/sysctl
     ./modules/software/network/nftables
@@ -52,7 +52,10 @@
 		../common/modules/software/shell/nushell.nix
 
 		# software/games
-		# ./modules/software/games/steam
+		./modules/software/games/steam
+    ./modules/software/games/gamemode.nix
+    ./modules/software/games/gamescope.nix
+    ./modules/software/games/mangohud.nix
 
 		# software/sound
 		./modules/software/sound
