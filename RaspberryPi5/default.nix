@@ -17,7 +17,7 @@
     # software/network
 		../common/modules/software/network/networkmanager
 		../common/modules/software/network/resolvd
-		../common/modules/software/network/avahi
+		# ../common/modules/software/network/avahi
 
     # software/web
     ./modules/software/web/nginx

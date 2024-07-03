@@ -17,6 +17,7 @@
         };
         locations."/" = {
           return = "301 https://$host$request_uri";
+          priority = 1000;
         };
       };
       "bohousek10d1979.asuscomm.com" = {
