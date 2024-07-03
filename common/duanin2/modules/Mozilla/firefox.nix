@@ -4,7 +4,7 @@
 	programs.firefox = {
 		enable = true;
     package = customPkgs.mozilla.addUserJsPrefs {
-			package = inputs.firefox.firefox-nightly-bin;
+			package = inputs.firefox.packages.${pkgs.system}.firefox-nightly-bin;
 			src = pkgs.fetchurl {
 				url = "https://raw.githubusercontent.com/arkenfox/user.js/master/user.js";
 				hash = "sha256-XRtG0iLKh8uqbeX7Rc2H6VJwZYJoNZPBlAfZEfrSCP4=";
@@ -13,26 +13,6 @@
 
 		profiles = {
 		  "default" = {
-				bookmarks = [
-					{
-						name = "The toolbar";
-						toolbar = true;
-						bookmarks = [
-							{
-								name = "kernel.org";
-								url = "https://www.kernel.org";
-							}
-							{
-								name = "tio.run";
-								url = "https://tio.run";
-							}
-							{
-								name = "r/Piracy Megathread";
-								url = "https://rentry.org/megathread";
-							}
-						];
-					}
-				];
         search = rec {
           engines = {
             "SearXNG" = {
@@ -60,12 +40,12 @@
 					firemonkey
 					libredirect
 					indie-wiki-buddy
-					auto-tab-discard
 					steam-database
 					terms-of-service-didnt-read
 					unpaywall
 					wayback-machine
-          tabcenter-reborn
+          sidebery
+          aria2-integration
 				]
 				++ (with customPkgs.mozilla.firefoxAddons; [
 					librejs
@@ -80,6 +60,17 @@
           "privacy.resistFingerprinting" = false;
           "privacy.resistFingerprinting.letterboxing" = false;
 				};
+        userChrome = ''
+/* Hide the TabBar */
+#TabsToolbar {
+  visibility: collapse !important;
+}
+
+/* Hide the Sidebar header */
+#sidebar-header, .sidebar-splitter {
+  visibility: collapse !important;
+}
+        '';
 		  };
 		};
 	};
