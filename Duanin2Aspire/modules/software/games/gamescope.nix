@@ -13,7 +13,6 @@
     args = [
       "--mangoapp"
       "--force-windows-fullscreen"
-      "--rt"
       "--expose-wayland"
       "-F fsr"
       "-S auto"
