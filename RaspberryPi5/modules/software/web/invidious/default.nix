@@ -23,7 +23,6 @@
 
   environment.persistence."/persist" = {
     directories = [
-      "/var/lib/invidious"
       "/var/lib/private/invidious"
     ];
   };
