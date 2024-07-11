@@ -6,9 +6,9 @@
         invidious = {
           hash = "";
           version = "v2.2024.05.27-unstable";
-          rev = "1ae14cc22468ce6e0eb794752b113604b1d5582d";
+          rev = "bad92093bff66bfb0281e5276fa0e136a61ba330";
           date = "2024.05.27";
-          commit = "1ae14cc";
+          commit = "bad9209";
         };
         videojs = {
           hash = "sha256-jED3zsDkPN8i6GhBBJwnsHujbuwlHdsVpVqa1/pzSH4=";
