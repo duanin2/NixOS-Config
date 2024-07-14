@@ -51,16 +51,20 @@ in {
       forceSSL = true;
 
       locations = {
-        /*"/" = {
-          return = "404";
-          priority = 1000;
-        };*/
         "/_matrix" = {
           proxyPass = "http://${address}:${toString port}";
+          extraConfig = ''
+proxy_set_header X-Forwarded-For $remote_addr;
+proxy_set_header X-Forwarded-Proto $scheme;
+          '';
           priority = 0;
         };
         "/_synapse/client" = {
           proxyPass = "http://${address}:${toString port}";
+          extraConfig = ''
+proxy_set_header X-Forwarded-For $remote_addr;
+proxy_set_header X-Forwarded-Proto $scheme;
+          '';
           priority = 0;
         };
       };
