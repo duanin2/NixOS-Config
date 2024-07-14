@@ -48,7 +48,6 @@ in {
     };
     "${domain}" = {
       useACMEHost = "duanin2.top";
-      forceSSL = true;
 
       locations = {
         "/_matrix" = {
