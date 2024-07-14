@@ -49,14 +49,14 @@ in {
       useACMEHost = "duanin2.top";
       addSSL = true;
       locations = {
-        "/_matrix" = {
+        "/" = {
           proxyPass = "http://${address}:${toString port}";
           priority = 0;
         };
-        "/_synapse/client" = {
+        /*"/_synapse/client" = {
           proxyPass = "http://${address}:${toString port}";
           priority = 0;
-        };
+        };*/
       };
     };
   };
