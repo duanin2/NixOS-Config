@@ -36,7 +36,7 @@ in {
   };
 
   services.nginx.virtualHosts = {
-    "acmechallenge.duanin2.top".locations = {
+    "duanin2.top".locations = {
       "/.well-known/matrix/server" = {
         extraConfig = mkWellKnown { "m.homeserver".base_url = baseUrl; };
         priority = 0;
