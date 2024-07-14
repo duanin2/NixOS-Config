@@ -22,7 +22,6 @@ in {
           bind_addresses = [ address ];
           type = "http";
           tls = false;
-          x_forwarded = true;
           resources = [
             {
               names = [ "client" "federation" ];
@@ -48,22 +47,14 @@ in {
     };
     "${domain}" = {
       useACMEHost = "duanin2.top";
-
+      addSSL = true;
       locations = {
         "/_matrix" = {
           proxyPass = "http://${address}:${toString port}";
-          extraConfig = ''
-proxy_set_header X-Forwarded-For $remote_addr;
-proxy_set_header X-Forwarded-Proto $scheme;
-          '';
           priority = 0;
         };
         "/_synapse/client" = {
           proxyPass = "http://${address}:${toString port}";
-          extraConfig = ''
-proxy_set_header X-Forwarded-For $remote_addr;
-proxy_set_header X-Forwarded-Proto $scheme;
-          '';
           priority = 0;
         };
       };
