@@ -37,18 +37,39 @@ in {
 
   services.nginx.virtualHosts = {
     "acmechallenge.duanin2.top".locations = {
-      "/.well-known/matrix/server".extraConfig = mkWellKnown { "m.homeserver".base_url = baseUrl; };
-      "/.well-known/matrix/client".extraConfig = mkWellKnown { "m.server".base_url = "${domain}:443"; };
+      "/.well-known/matrix/server" = {
+        extraConfig = mkWellKnown { "m.homeserver".base_url = baseUrl; };
+        priority = 0;
+      };
+       "/.well-known/matrix/client" = {
+        extraConfig = mkWellKnown { "m.server".base_url = "${domain}:443"; };
+        priority = 0;
+      };
     };
     "${domain}" = {
       useACMEHost = "duanin2.top";
       forceSSL = true;
 
       locations = {
-        "/".return = "404";
-        "/_matrix".proxyPass = "http://${address}:${toString port}";
-        "/_synapse/client".proxyPass = "http://${address}:${toString port}";
+        "/" = {
+          return = "404";
+          priority = 1000;
+        };
+        "/_matrix" = {
+          proxyPass = "http://${address}:${toString port}";
+          priority = 0;
+        };
+        "/_synapse/client" = {
+          proxyPass = "http://${address}:${toString port}";
+          priority = 0;
+        };
       };
     };
+  };
+
+  environment.persistence."/persist" = {
+    directories = [
+      "/var/lib/private/matrix-synapse"
+    ];
   };
 }
