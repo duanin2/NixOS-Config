@@ -31,7 +31,8 @@ def main [] {
     sleep 200ms
     let data = batteries | par-each { open $in | uevent parseData }
 
-    if ($data == $lastData) { continue }
+    if ($lastData == $data) { continue }
+    $lastData = $data
 
     $data | par-each { |it|
       let name = $it | uevent getVar "POWER_SUPPLY_NAME" | get 0
