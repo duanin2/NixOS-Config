@@ -20,6 +20,9 @@
           priority = 1000;
         };
       };
+      "duanin2.top" = {
+        forceSSL = true;
+      };
       /*"bohousek10d1979.asuscomm.com" = {
         useACMEHost = "asuscomm.com";
 
