@@ -26,6 +26,7 @@
     ./modules/software/web/aria2
     # ./modules/software/web/openvscode-server
     ./modules/software/web/searx
+    ./modules/software/web/matrix
 
     # software/kernel
     ./modules/software/kernel/vendor-nixpkgs.nix
