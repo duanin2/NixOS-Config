@@ -51,10 +51,10 @@ in {
       forceSSL = true;
 
       locations = {
-        "/" = {
+        /*"/" = {
           return = "404";
           priority = 1000;
-        };
+        };*/
         "/_matrix" = {
           proxyPass = "http://${address}:${toString port}";
           priority = 0;
