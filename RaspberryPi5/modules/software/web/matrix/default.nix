@@ -25,7 +25,7 @@ in {
           x_forwarded = true;
           resources = [
             {
-              names = [ "clients" "federation" ];
+              names = [ "client" "federation" ];
               compress = true;
             }
           ];
@@ -46,8 +46,8 @@ in {
 
       locations = {
         "/".return = "404";
-        "/_matrix".proxyPass = "http://${address}:${port}";
-        "/_synapse/client".proxyPass = "http://${address}:${port}";
+        "/_matrix".proxyPass = "http://${address}:${toString port}";
+        "/_synapse/client".proxyPass = "http://${address}:${toString port}";
       };
     };
   };
