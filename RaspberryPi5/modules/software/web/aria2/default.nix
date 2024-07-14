@@ -15,7 +15,7 @@ in {
   
 	services.nginx.virtualHosts."aria2.duanin2.top" = {
 		useACMEHost = "duanin2.top";
-    addSSL = true;
+    forceSSL = true;
 		locations."/" = {
 			proxyPass = "http://localhost:${toString cfg.settings.rpc-listen-port}";
 			proxyWebsockets = true;

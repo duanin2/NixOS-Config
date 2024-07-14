@@ -21,6 +21,7 @@
         };
       };
       "duanin2.top" = {
+        useACMEHost = "duanin2.top";
         forceSSL = true;
       };
       /*"bohousek10d1979.asuscomm.com" = {
