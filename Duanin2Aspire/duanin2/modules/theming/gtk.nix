@@ -13,6 +13,10 @@
         tweaks = [ "catppuccin" "rimless" "float" ];
         colorVariants = [ "dark" ];
         themeVariants = [ "green" ];
+      }).overrideAttrs (old: {
+        patches = (old.patches or []) ++ [
+          ./colloid.patch
+        ];
       });
     
       name = "Colloid-Green-Dark-Catppuccin";
