@@ -12,6 +12,7 @@
 in {
   services.matrix-synapse = {
     enable = true;
+    enableRegistrationScript = true;
 
     settings = {
       server_name = domain;
@@ -51,7 +52,7 @@ in {
       forceSSL = true;
       locations = {
         "/_matrix" = {
-          proxyPass = "http://${address}:${toString port}";
+          proxyPass = "http://localhost:${toString port}";
           extraConfig = ''
 proxy_http_version 1.1;
 proxy_set_header X-Forwarded-For $remote_addr;
@@ -60,7 +61,7 @@ proxy_set_header X-Forwarded-Proto $scheme;
           priority = 0;
         };
         "/_synapse/client" = {
-          proxyPass = "http://${address}:${toString port}";
+          proxyPass = "http://localhost:${toString port}";
           extraConfig = ''
 proxy_http_version 1.1;
 proxy_set_header X-Forwarded-For $remote_addr;
