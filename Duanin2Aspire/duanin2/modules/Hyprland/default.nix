@@ -64,7 +64,7 @@ in {
 			enable = true;
 		};
 		plugins = with hyprland-plugins; [
-			# hyprbars
+			hyprbars
 		];
 		settings = {
 			monitor = [
@@ -266,7 +266,7 @@ in {
 				"xray on"
         "noshadow"
         "noborder"
-        "forceinput"
+        "allowsinput"
         "stayfocused"
         "pin"
         "plugin:hyprbars:nobar"
