@@ -29,7 +29,7 @@
     ./modules/software/tlp
     ../common/modules/software/gnunet
     ../common/modules/software/kdeConnect
-    ./modules/software/sound/pipewire
+    ./modules/software/pipewire
 
 		# software/network
 		../common/modules/software/network/networkmanager
