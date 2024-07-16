@@ -1,5 +1,9 @@
 { lib, config, nur, customPkgs, pkgs, inputs, persistDirectory, ... }: {
   disabledModules = [ ./mullvad.nix ];
+
+  home.packages = with pkgs; [
+    firefoxpwa
+  ];
   
 	programs.firefox = with pkgs; {
 		enable = true;
