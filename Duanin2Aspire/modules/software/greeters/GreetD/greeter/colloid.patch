@@ -1,0 +1,120 @@
+:100644 100644 5d19f488 00000000 M	src/sass/_color-palette-catppuccin.scss
+
+diff --git a/src/sass/_color-palette-catppuccin.scss b/src/sass/_color-palette-catppuccin.scss
+index 5d19f488..5f847377 100644
+--- a/src/sass/_color-palette-catppuccin.scss
++++ b/src/sass/_color-palette-catppuccin.scss
+@@ -1,72 +1,72 @@
+ // Catppuccin Theme Color Palette
+ 
+ // Red
+-$red-light: #ea999c;
+-$red-dark: #e64553;
++$red-light: #d20f39;
++$red-dark: #e78284;
+ 
+ // Pink
+-$pink-light: #f4b8e4;
+-$pink-dark: #ea76cb;
++$pink-light: #ea76cb;
++$pink-dark: #f4b8e4;
+ 
+ // Purple
+-$purple-light: #ca9ee6;
+-$purple-dark: #8839ef;
++$purple-light: #8839ef;
++$purple-dark: #ca9ee6;
+ 
+ // Blue
+-$blue-light: #8caaee;
+-$blue-dark: #1e66f5;
++$blue-light: #1e66f5;
++$blue-dark: #8caaee;
+ 
+ // Teal
+-$teal-light: #81c8be;
+-$teal-dark: #179299;
++$teal-light: #179299;
++$teal-dark: #81c8be;
+ 
+ // Green
+-$green-light: #a6d189;
+-$green-dark: #40a02b;
++$green-light: #40a02b;
++$green-dark: #a6d189;
+ 
+ // Yellow
+-$yellow-light: #e5c890;
+-$yellow-dark: #df8e1d;
++$yellow-light: #df8e1d;
++$yellow-dark: #e5c890;
+ 
+ // Orange
+-$orange-light: #ef9f76;
+-$orange-dark: #fe640b;
++$orange-light: #fe640b;
++$orange-dark: #ef9f76;
+ 
+ // Grey
+ $grey-050: #eff1f5;
+-$grey-100: #e6e9ef;
+-$grey-150: #dce0e8;
+-$grey-200: #ccd0da;
+-$grey-250: #bcc0cc;
+-$grey-300: #acb0be;
+-$grey-350: #9ca0b0;
+-$grey-400: #8c8fa1;
+-$grey-450: #7c7f93;
+-$grey-500: #6c6f85;
+-$grey-550: #5c5f77;
+-$grey-600: #4c4f69;
+-$grey-650: #303446;
+-$grey-700: #292c3c;
+-$grey-750: #24273a;
+-$grey-800: #232634;
+-$grey-850: #1e1e2e;
+-$grey-900: #181825;
+-$grey-950: #11111b;
++$grey-100: #e4e6ea;
++$grey-150: #d8dae0;
++$grey-200: #cdcfd5;
++$grey-250: #c2c4ca;
++$grey-300: #b6b9bf;
++$grey-350: #abadb5;
++$grey-400: #a0a2aa;
++$grey-450: #94979f;
++$grey-500: #898c95;
++$grey-550: #7e808a;
++$grey-600: #72757f;
++$grey-650: #676a74;
++$grey-700: #5c5e6a;
++$grey-750: #50535f;
++$grey-800: #454854;
++$grey-850: #3a3d49;
++$grey-900: #2e313f;
++$grey-950: #232634;
+ 
+ // White
+ $white: #eff1f5;
+ 
+ // Black
+-$black: #11111b;
++$black: #232634;
+ 
+ // Button
+-$button-close: if($variant == 'light', $red-dark, $red-light);
+-$button-max: if($variant == 'light', $green-dark, $green-light);
+-$button-min: if($variant == 'light', $yellow-dark, $yellow-light);
++$button-close: if($variant == 'light', $red-light, $red-dark);
++$button-max: if($variant == 'light', $green-light, $green-dark);
++$button-min: if($variant == 'light', $yellow-light, $yellow-dark);
+ 
+ // Link
+-$links: if($variant == 'light', #04a5e5, #99d1db);
++$links: if($variant == 'light', $green-light, $green-dark);
+ 
+ // Theme
+-$default-light: $blue-light;
+-$default-dark: $blue-dark;
++$default-light: $green-light;
++$default-dark: $green-dark;

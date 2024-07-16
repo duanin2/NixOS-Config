@@ -4,7 +4,7 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    (pkgs.colloid-gtk-theme.override {
+    ((pkgs.colloid-gtk-theme.override {
       tweaks = [ "catppuccin" "rimless" "float" ];
       colorVariants = [ "dark" ];
       themeVariants = [ "green" ];
@@ -12,7 +12,7 @@
       patches = (old.patches or []) ++ [
         ./colloid.patch
       ];
-    })
+    }))
     (catppuccin-papirus-folders.override {
       flavor = "frappe";
       accent = "green";
