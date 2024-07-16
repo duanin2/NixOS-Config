@@ -151,14 +151,6 @@
 				flake = systems;
 			};
 
-      "firefox" = {
-				from = {
-					id = "firefox";
-					type = "indirect";
-				};
-				flake = firefox;
-			};
-
 			"nix-colors" = {
 				from = {
 					id = "nix-colors";

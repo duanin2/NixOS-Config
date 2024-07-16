@@ -1,11 +1,11 @@
 { lib, config, nur, customPkgs, pkgs, inputs, persistDirectory, ... }: {
   disabledModules = [ ./mullvad.nix ];
   
-	programs.firefox = {
+	programs.firefox = with pkgs; {
 		enable = true;
     package = customPkgs.mozilla.addUserJsPrefs {
-			package = inputs.firefox.packages.${pkgs.system}.firefox-nightly-bin;
-			src = pkgs.fetchurl {
+			package = firefox;
+			src = fetchurl {
 				url = "https://raw.githubusercontent.com/arkenfox/user.js/master/user.js";
 				hash = "sha256-XRtG0iLKh8uqbeX7Rc2H6VJwZYJoNZPBlAfZEfrSCP4=";
 			};
