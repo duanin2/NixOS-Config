@@ -29,6 +29,7 @@
     ./modules/software/tlp
     ../common/modules/software/gnunet
     ../common/modules/software/kdeConnect
+    ./modules/software/sound/pipewire
 
 		# software/network
 		../common/modules/software/network/networkmanager
@@ -56,10 +57,6 @@
     ./modules/software/games/gamemode.nix
     ./modules/software/games/gamescope.nix
     ./modules/software/games/mangohud.nix
-
-		# software/sound
-		./modules/software/sound
-		./modules/software/sound/pipewire
 
 		# software/bootloader
 		./modules/software/bootloader/systemd-boot
