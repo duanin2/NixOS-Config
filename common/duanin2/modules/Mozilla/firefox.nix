@@ -4,7 +4,11 @@
 	programs.firefox = with pkgs; {
 		enable = true;
     package = customPkgs.mozilla.addUserJsPrefs {
-			package = firefox;
+			package = (firefox.override (old: {
+        nativeMessagingHosts = (old.nativeMessagingHosts or []) ++ (with pkgs; [
+          firefoxpwa
+        ]);
+      }));
 			src = fetchurl {
 				url = "https://raw.githubusercontent.com/arkenfox/user.js/master/user.js";
 				hash = "sha256-Blf/dEQFcHYZg6ElwNB6+RSJ0UlnfvqVMTmI69OI50k=";
@@ -49,9 +53,11 @@
 				]
 				++ (with customPkgs.mozilla.firefoxAddons; [
 					librejs
+          firefoxpwa
 				]);
 				settings = {
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+          "javascript.enabled" = true;
           
 					# Arkenfox overrides
           "browser.startup.page" = 3;
@@ -59,6 +65,7 @@
 					"webgl.disabled" = false;
           "privacy.resistFingerprinting" = false;
           "privacy.resistFingerprinting.letterboxing" = false;
+          "javascript.options.wasm" = true;
 				};
         userChrome = ''
 /* Hide the TabBar */
