@@ -8,7 +8,6 @@ in {
 	home.packages = with pkgs; [
 		(prismlauncher.override {
 			prismlauncher-unwrapped = (prismlauncher-unwrapped.overrideAttrs (old: {
-				version = "8.4";
 				patches = (old.patches or []) ++ [
 					./allowOffline.patch
 				];
