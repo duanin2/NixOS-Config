@@ -69,7 +69,7 @@
 		# software/desktops
 		# ./modules/software/desktop/plasma
 		./modules/software/desktop/Hyprland
-    ./modules/software/desktop/QTile
+    # ./modules/software/desktop/QTile
 
 		# software/greeters
 		./modules/software/greeters/GreetD
