@@ -1,5 +1,5 @@
 { callPackage, ... }: {
-  addUserJsPrefs = opts: callPackage ./addUserJsPrefs.nix opts;
+  addUserJsPrefs = src: callPackage ./addUserJsPrefs.nix { inherit src; };
 
   firefoxAddons = callPackage ./firefox-addons { };
 }
