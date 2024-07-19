@@ -38,7 +38,7 @@
     };
 
     appendHttpConfig = ''
-log_format custom '$remote_user@$remote_addr:$remote_port [$time_local] - "$request_method $scheme://$host$request_uri" $status - $body_bytes_sent "$http_referer" "$http_user_agent"';
+log_format custom '$remote_user@$remote_addr:$remote_port [$time_local] - "$request_method $scheme://$host$request_uri" $uri $status - $server_name[$server_protocol $server_addr:$server_port] - $body_bytes_sent "$http_referer" "$http_user_agent"';
 access_log /var/log/nginx/access.log custom;
     '';
   };
