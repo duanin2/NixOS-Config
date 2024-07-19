@@ -52,7 +52,7 @@ in {
       onlySSL = true;
       locations = {
         "/_matrix" = {
-          proxyPass = "http://localhost:${toString port}/_matrix";
+          proxyPass = "http://${address}:${toString port}/_matrix";
           extraConfig = ''
 proxy_http_version 1.1;
 proxy_set_header X-Forwarded-For $remote_addr;
@@ -61,7 +61,7 @@ proxy_set_header X-Forwarded-Proto $scheme;
           priority = 0;
         };
         "/_synapse/client" = {
-          proxyPass = "http://localhost:${toString port}/_synapse/client";
+          proxyPass = "http://${address}:${toString port}/_synapse/client";
           extraConfig = ''
 proxy_http_version 1.1;
 proxy_set_header X-Forwarded-For $remote_addr;
