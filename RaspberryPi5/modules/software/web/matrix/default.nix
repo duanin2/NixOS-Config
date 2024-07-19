@@ -51,11 +51,11 @@ in {
   services.nginx.virtualHosts = {
     "duanin2.top".locations = {
       "/.well-known/matrix/server" = {
-        extraConfig = mkWellKnown clientConfig;
+        extraConfig = mkWellKnown { "m.server".base_url = "${domain}:443"; };
         priority = 0;
       };
        "/.well-known/matrix/client" = {
-        extraConfig = mkWellKnown { "m.server".base_url = "${domain}:443"; };
+        extraConfig = mkWellKnown clientConfig;
         priority = 0;
       };
     };
