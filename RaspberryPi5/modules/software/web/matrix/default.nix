@@ -1,4 +1,4 @@
-{ ... }: let
+{ lib, ... }: let
   domain = "matrix.duanin2.top";
   baseUrl = "https://${domain}";
   mkWellKnown = data: ''
@@ -32,6 +32,16 @@ in {
           ];
         }
       ];
+
+      enable_registration = true;
+      enable_metrics = true;
+      url_preview_ip_range_blacklist = lib.mkForce [
+        "192.168.1.0/24"
+        "127.0.0.0/8"
+        "::1/128"
+        "fe80::/64"
+      ];
+      url_preview_enabled = true;
     };
     extraConfigFiles = [ "/var/lib/secrets/matrix-secrets.yaml" ];
   };
