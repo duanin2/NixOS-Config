@@ -15,6 +15,8 @@
         # Catchall vhost, will redirect users to HTTPS for all vhosts
         serverAliases = [ "*.duanin2.top" "bohousek10d1979.asuscomm.com" ];
         default = true;
+        useACMEHost = "duanin2.top";
+        addSSL = true;
         
         locations."/.well-known/acme-challenge" = {
           root = "/var/lib/acme/.challenges";
