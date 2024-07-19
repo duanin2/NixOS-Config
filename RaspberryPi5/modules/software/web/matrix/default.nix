@@ -1,4 +1,4 @@
-{ lib, ... }: let
+{ pkgs, lib, ... }: let
   domain = "duanin2.top";
   baseUrl = "https://matrix.${domain}";
   clientConfig."m.homeserver".base_url = baseUrl;
