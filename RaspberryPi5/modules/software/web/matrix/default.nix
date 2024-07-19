@@ -1,6 +1,7 @@
 { lib, ... }: let
   domain = "duanin2.top";
   baseUrl = "https://matrix.${domain}";
+  clientConfig."m.homeserver".base_url = baseUrl;
   mkWellKnown = data: ''
     default_type application/json;
     add_header Access-Control-Allow-Origin *;
@@ -50,7 +51,7 @@ in {
   services.nginx.virtualHosts = {
     "duanin2.top".locations = {
       "/.well-known/matrix/server" = {
-        extraConfig = mkWellKnown { "m.homeserver".base_url = baseUrl; };
+        extraConfig = mkWellKnown clientConfig;
         priority = 0;
       };
        "/.well-known/matrix/client" = {
@@ -62,9 +63,7 @@ in {
       useACMEHost = "duanin2.top";
       onlySSL = true;
       locations = {
-        "/".extraConfig = ''
-          return 404;
-        '';
+        "/".return = "301 https://element.duanin2.top";
         "/_matrix" = {
           proxyPass = "http://${address}:${toString port}";
           priority = 0;
@@ -72,6 +71,15 @@ in {
         "/_synapse/client" = {
           proxyPass = "http://${address}:${toString port}";
           priority = 0;
+        };
+      };
+    };
+    "element.duanin2.top" = {
+      useACMEHost = "duanin2.top";
+      onlySSL = true;
+      root = pkgs.element-web.override {
+        conf = {
+          default_server_config = clientConfig; # see `clientConfig` from the snippet above.
         };
       };
     };
