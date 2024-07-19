@@ -22,7 +22,7 @@ in {
 
   services.nginx.virtualHosts."transmission.duanin2.top" = {
     useACMEHost = "duanin2.top";
-    forceSSL = true;
+    onlySSL = true;
 
     locations."/".proxyPass = "http://${cfg.settings.rpc-bind-address}:${builtins.toString cfg.settings.rpc-port}";
   };

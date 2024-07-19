@@ -14,6 +14,7 @@
       "acmechallenge.duanin2.top" = {
         # Catchall vhost, will redirect users to HTTPS for all vhosts
         serverAliases = [ "*.duanin2.top" "bohousek10d1979.asuscomm.com" ];
+        default = true;
         
         locations."/.well-known/acme-challenge" = {
           root = "/var/lib/acme/.challenges";
@@ -26,7 +27,7 @@
       };
       "duanin2.top" = {
         useACMEHost = "duanin2.top";
-        forceSSL = true;
+        onlySSL = true;
       };
       /*"bohousek10d1979.asuscomm.com" = {
         useACMEHost = "asuscomm.com";

@@ -54,6 +54,8 @@
   services.nginx.virtualHosts.${config.services.invidious.domain} = {
     enableACME = lib.mkForce false;
     useACMEHost = "duanin2.top";
+    forceSSL = lib.mkForce false;
+    onlySSL = true;
   };
 
   environment.persistence."/persist" = {

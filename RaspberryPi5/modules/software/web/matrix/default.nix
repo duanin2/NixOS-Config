@@ -49,7 +49,7 @@ in {
     };
     "${domain}" = {
       useACMEHost = "duanin2.top";
-      forceSSL = true;
+      onlySSL = true;
       locations = {
         "/_matrix" = {
           proxyPass = "http://localhost:${toString port}";
