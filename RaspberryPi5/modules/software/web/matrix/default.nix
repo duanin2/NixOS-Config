@@ -51,6 +51,9 @@ in {
       useACMEHost = "duanin2.top";
       onlySSL = true;
       locations = {
+        locations."/".extraConfig = ''
+          return 404;
+        '';
         "/_matrix" = {
           proxyPass = "http://${address}:${toString port}";
           priority = 0;
