@@ -3,10 +3,12 @@
   runCommand,
   lib,
   gnused
-}: package.override (old: let
+}: let
   removeComments = runCommand "firefoxPrefs" {} ''
 echo "{" > $out;
-${lib.getExe gnused} -E -e 's|^//.*$||' -e 's|^\s*user_pref\("|"|' -e 's|\);\s*$|;|' -e 's|",\s*|"=|' -e '/^\s*$/d' ${src} >> $out;
+${lib.getExe gnused} -E -e 's|//|#|' -e 's|/\*.*\*/||' -e 's|\s*user_pref\("|"|' -e 's|\);?|;|' -e 's|",\s*|"=|' -e '/^\s*$/d' ${src} >> $out;
 echo "}" >> $out
+
+${lib.getExe gnused} -E -i 's/"_user.js.parrot"=[^;]*;//' $out
   '';
-in import removeComments;
+in { res = (import removeComments); }

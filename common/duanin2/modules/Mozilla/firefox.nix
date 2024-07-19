@@ -12,7 +12,7 @@
     nativeMessagingHosts = with pkgs; [
       firefoxpwa
     ];
-    policies = [
+    policies = {
       DisableFirefoxAccounts = true;
       DisableFirefoxStudies = true;
       DisablePocket = true;
@@ -22,7 +22,7 @@
       PasswordManagerEnabled = false;
       SearchBar = "unified";
       NewTabPage = false;
-    ];
+    };
 		profiles = {
 		  "default" = {
         search = rec {
@@ -63,10 +63,10 @@
 					librejs
           firefoxpwa
 				]);
-				settings = customPkgs.mozilla.addUserJsPrefs (fetchurl {
+				settings = (customPkgs.mozilla.addUserJsPrefs (pkgs.fetchurl {
 			    url = "https://raw.githubusercontent.com/arkenfox/user.js/master/user.js";
-			    hash = "sha256-Blf/dEQFcHYZg6ElwNB6+RSJ0UlnfvqVMTmI69OI50k=";
-		    }) // {
+			    hash = "sha256-XRtG0iLKh8uqbeX7Rc2H6VJwZYJoNZPBlAfZEfrSCP4=";
+		    })).res // {
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
           "javascript.enabled" = true;
           
@@ -95,6 +95,7 @@
         '';
 		  };
       "firefoxpwa-template" = {
+        id = 1;
         search = rec {
           engines = {
             "SearXNG" = {
@@ -125,10 +126,10 @@
 			  ++ (with customPkgs.mozilla.firefoxAddons; [
 				  librejs
 			  ]);
-			  settings = customPkgs.mozilla.addUserJsPrefs (fetchurl {
+			  settings = (customPkgs.mozilla.addUserJsPrefs (pkgs.fetchurl {
 			    url = "https://raw.githubusercontent.com/arkenfox/user.js/master/user.js";
-			    hash = "sha256-Blf/dEQFcHYZg6ElwNB6+RSJ0UlnfvqVMTmI69OI50k=";
-		    }) // {
+			    hash = "sha256-XRtG0iLKh8uqbeX7Rc2H6VJwZYJoNZPBlAfZEfrSCP4=";
+		    })).res // {
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
           "javascript.enabled" = true;
           
