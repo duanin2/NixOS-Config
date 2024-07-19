@@ -1,5 +1,5 @@
 { ... }: let
-  domain = "matrix.duanin.top";
+  domain = "matrix.duanin2.top";
   baseUrl = "https://${domain}";
   mkWellKnown = data: ''
     default_type application/json;
