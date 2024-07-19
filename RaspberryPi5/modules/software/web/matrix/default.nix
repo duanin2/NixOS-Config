@@ -51,7 +51,7 @@ in {
       useACMEHost = "duanin2.top";
       onlySSL = true;
       locations = {
-        locations."/".extraConfig = ''
+        "/".extraConfig = ''
           return 404;
         '';
         "/_matrix" = {
