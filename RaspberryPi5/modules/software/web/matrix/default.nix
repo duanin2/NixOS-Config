@@ -1,6 +1,6 @@
 { lib, ... }: let
-  domain = "matrix.duanin2.top";
-  baseUrl = "https://${domain}";
+  domain = "duanin2.top";
+  baseUrl = "https://matrix.${domain}";
   mkWellKnown = data: ''
     default_type application/json;
     add_header Access-Control-Allow-Origin *;
@@ -42,6 +42,7 @@ in {
         "fe80::/64"
       ];
       url_preview_enabled = true;
+      enable_registration_captcha = true;
     };
     extraConfigFiles = [ "/var/lib/secrets/matrix-secrets.yaml" ];
   };
@@ -57,7 +58,7 @@ in {
         priority = 0;
       };
     };
-    "${domain}" = {
+    "matrix.${domain}" = {
       useACMEHost = "duanin2.top";
       onlySSL = true;
       locations = {
