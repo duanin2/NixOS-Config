@@ -3,7 +3,7 @@
 		# hardware
 		./modules/hardware/autoconfig
 		./modules/hardware/efi
-		./modules/hardware/nvidia
+		# ./modules/hardware/nvidia
 		./modules/hardware/bluetooth
 		../common/modules/hardware/zram
 		./modules/hardware/adb
@@ -20,7 +20,7 @@
 		./modules/software/protonmail
 		./modules/software/git
 		./modules/software/mesa
-		./modules/software/gnupg
+		../common/modules/software/gnupg
 		./modules/software/samba
 		./modules/software/impermanence
 		./modules/software/nix
@@ -35,7 +35,7 @@
 		../common/modules/software/network/networkmanager
 		../common/modules/software/network/firewall
 		../common/modules/software/network/resolvd
-		# ../common/modules/software/network/avahi
+		../common/modules/software/network/avahi
     ./modules/software/network/firewall
     ./modules/software/network/sysctl
     ./modules/software/network/nftables

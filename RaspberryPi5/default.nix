@@ -9,15 +9,16 @@
     ./modules/software/nix
     ../common/modules/software/localization
     ./modules/software/ssh
-    # ./modules/software/mesa
+    ./modules/software/mesa
     ./modules/software/impermanence
     ../common/modules/software/home-manager
     ./modules/software/fuse
+    ../common/modules/software/samba
 
     # software/network
 		../common/modules/software/network/networkmanager
 		../common/modules/software/network/resolvd
-		# ../common/modules/software/network/avahi
+		../common/modules/software/network/avahi
 
     # software/web
     ./modules/software/web/nginx
@@ -27,6 +28,7 @@
     # ./modules/software/web/openvscode-server
     ./modules/software/web/searx
     ./modules/software/web/matrix
+    ./modules/software/web/jellyfin
 
     # software/kernel
     ./modules/software/kernel/vendor-nixpkgs.nix
