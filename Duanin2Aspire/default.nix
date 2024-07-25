@@ -20,8 +20,8 @@
 		./modules/software/protonmail
 		./modules/software/git
 		./modules/software/mesa
-		../common/modules/software/gnupg
-		./modules/software/samba
+		./modules/software/gnupg
+		../common/modules/software/samba
 		./modules/software/impermanence
 		./modules/software/nix
 		../common/modules/software/home-manager
