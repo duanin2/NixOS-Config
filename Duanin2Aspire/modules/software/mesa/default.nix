@@ -33,13 +33,15 @@ in {
   };
 
   nixpkgs.overlays = [
-    /*(final: prev: builtins.mapAttrs (name: value: lib.overrideAll {
+    /*
+    (final: prev: builtins.mapAttrs (name: value: lib.overrideAll {
       package = value;
       args = (old: {
         galliumDrivers = [
           "nouveau"
           "swrast"
           "iris"
+          "zink"
         ];
         vulkanDrivers = [
           "nouveau"
@@ -47,6 +49,7 @@ in {
           "intel"
         ];
       });
-    }) { inherit (prev) mesa_git mesa32_git; })*/
+    }) { inherit (prev) mesa_git mesa32_git; })
+    */
   ];
 }

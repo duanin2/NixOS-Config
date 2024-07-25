@@ -4,6 +4,7 @@
   };
 
   nixpkgs.overlays = [
+    /*
     (final: prev: builtins.mapAttrs (name: value: lib.overrideAll {
       package = value;
       args = (old: {
@@ -11,6 +12,7 @@
           "swrast"
           "v3d"
           "vc4"
+          "zink"
         ];
         vulkanDrivers = [
           "swrast"
@@ -27,5 +29,6 @@
         ];
       });
     }) { inherit (prev) mesa_git; })
+    */
   ];
 }
