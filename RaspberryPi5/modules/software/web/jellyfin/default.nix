@@ -8,6 +8,14 @@
     7359
   ];
 
+  services.nginx.virtualHosts."jellyfin.duanin2.top" = {
+    useACMEHost = "duanin2.top";
+    onlySSL = true;
+    locations."/" = {
+      proxyPass = "http://localhost:8096";
+    };
+  };
+
   environment.persistence."/persist" = let
     cfg = config.services.jellyfin;
   in {
