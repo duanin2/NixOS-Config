@@ -1,26 +1,25 @@
 { wallpaper, hyprpaper, ... }: { pkgs, customPkgs, lib, ... }: {
-  xdg.configFile."hypr/hyprpaper.conf" = {
+  services.hyprpaper = {
     enable = true;
+    package = hyprpaper.hyprpaper;
 
-    text = ''
-    preload = ${wallpaper}
+    settings = {
+      preload = "${wallpaper}";
 
-    wallpaper = eDP-1,${wallpaper}
+      wallpaper = "eDP-1,${wallpaper}";
 
-    splash = true
-    splash_offset = 3.75
-    '';
+      splash = true;
+      splash_offset = 3.75;
+    };
   };
 
   systemd.user.services."hyprpaper" = {
-    Unit = {
-      Description = "Hypr wallpaper daemon";
-    };
     Install = {
       WantedBy = [ "hyprland-session.target" ];
     };
-    Service = {
-      ExecStart = customPkgs.systemdScript "hyprpaper" "sh -c ${lib.getExe hyprpaper.hyprpaper}";
+    Unit = {
+      PartOf = [ "hyprland-session.target" ];
+      Before = [ "hyprland-session.target" ];
     };
   };
 }

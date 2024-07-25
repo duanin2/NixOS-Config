@@ -234,7 +234,7 @@ in {
 
 			master = {
 				new_status = "slave";
-        mfact = "0.6";
+        mfact = "0.8";
         orientation = "right";
         no_gaps_when_only = 0;
 			};
