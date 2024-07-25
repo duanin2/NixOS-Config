@@ -5,10 +5,10 @@
       versions = {
         invidious = {
           hash = "";
-          version = "v2.2024.07.10-unstable";
-          rev = "bad92093bff66bfb0281e5276fa0e136a61ba330";
-          date = "2024.07.10";
-          commit = "bad9209";
+          version = "v2.2024.07.21-unstable";
+          rev = "325561e7553601e0f81ba72ca33ffe52079f3b2a";
+          date = "2024.07.21";
+          commit = "325561e";
         };
         videojs = {
           hash = "sha256-jED3zsDkPN8i6GhBBJwnsHujbuwlHdsVpVqa1/pzSH4=";
