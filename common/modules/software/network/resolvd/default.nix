@@ -3,10 +3,16 @@
 
   services.resolved = {
     enable = true;
+    
     dnssec = "false";
     dnsovertls = "true";
     domains = [ "~." ];
     fallbackDns = [ "" ];
+
+    llmnr = "false";
+    extraConfig = ''
+MulticastDNS=false
+    '';
   };
 
   networking.resolvconf.enable = false;
