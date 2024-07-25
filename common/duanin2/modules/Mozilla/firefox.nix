@@ -73,6 +73,8 @@
 					# Arkenfox overrides
           "browser.startup.page" = 3;
           "privacy.clearOnShutdown.history" = false;
+          "privacy.clearOnShutdown.sessions" = false;
+          "privacy.clearOnShutdown_v2.historyFormDataAndDownloads" = false;
 					"webgl.disabled" = false;
           "privacy.resistFingerprinting" = false;
           "privacy.resistFingerprinting.letterboxing" = false;
@@ -136,6 +138,9 @@
 					# Arkenfox overrides
           "browser.startup.page" = 3;
           "privacy.clearOnShutdown.history" = false;
+          "privacy.clearOnShutdown.sessions" = false;
+          "privacy.clearOnShutdown_v2.historyFormDataAndDownloads" = false;
+					"webgl.disabled" = false;
 					"webgl.disabled" = false;
           "privacy.resistFingerprinting" = false;
           "privacy.resistFingerprinting.letterboxing" = false;
