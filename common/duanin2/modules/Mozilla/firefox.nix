@@ -50,7 +50,7 @@
 					firefox-color
 					canvasblocker
 					firemonkey
-					libredirect
+          redirector
 					indie-wiki-buddy
 					steam-database
 					terms-of-service-didnt-read
