@@ -7,7 +7,7 @@ in {
 		./modules/syncthing
 		./modules/keepassxc
 		./modules/libreoffice
-		./modules/discord
+		# ./modules/discord
 		./modules/direnv
 		./modules/xdg
 		./modules/bash
