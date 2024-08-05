@@ -257,29 +257,34 @@ in {
 			};
 
 			windowrulev2 = listToWindowrules "class:polkit-gnome-authentication-agent-1" [
+        "tag +dialog"
+        "size 654 436"
+			] ++ (listToWindowrules "class:firefox,title:About Mozilla Firefox" [
 				"float"
-				"center"
 				"size 654 436"
+			]) ++ (listToWindowrules "class:firefox,title:^Extension: \(Aria2 Download Manager Integration\) .* Mozilla Firefox$" [
+        "tag +dialog"
+        "size 360 240"
+      ]) ++ (listToWindowrules "class:org.kde.kdialog" [
+        "tag +dialog"
+      ]) ++ (listToWindowrules "floating:1" [
+				"center 1"
+      ]) ++ (listToWindowrules "tag:dialog" [
+        "float"
 				"stayfocused"
-				"idleinhibit always"
 				"dimaround"
 				"xray on"
         "noshadow"
         "noborder"
-        "allowsinput"
         "stayfocused"
         "pin"
         "plugin:hyprbars:nobar"
-			] ++ (listToWindowrules "class:firefox,title:About Mozilla Firefox" [
-				"float"
-				"center"
-				"size 654 436"
-				"xray on"
-        "noshadow"
-        "noborder"
-			] ++ (listToWindowrules "tag:noidle" [
+        "tag +noidle"
+      ]) ++ (listToWindowrules "tag:dialog,xwayland:1" [
+        "allowsinput"
+      ]) ++ (listToWindowrules "tag:noidle" [
         "idleinhibit always"
-      ]));
+      ]);
 		};
 
 		extraConfig = ''
