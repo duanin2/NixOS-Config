@@ -3,6 +3,12 @@
     nur.repos.rycee.hmModules.emacs-init
   ];
   nixpkgs.overlays = [ inputs.emacs.overlays.default ];
+
+  home.packages = with pkgs; [
+    rust-analyzer
+    nil
+    typescript-language-server
+  ];
   
   services.emacs = {
     enable = true;
@@ -34,26 +40,28 @@
       earlyInit = let
         font = config.gtk.font;
       in ''
-        ;; Set up fonts early.
-	      (set-face-attribute 'default
-			                      nil
-			                      :family "${font.name}"
-                            :height ${builtins.toString font.size}0)
+;; Set up fonts early.
+(set-face-attribute 'default
+			              nil
+			              :family "${font.name}"
+                    :height ${builtins.toString font.size}0)
 
-        ;; https://git.sr.ht/~rycee/configurations/tree/master/item/user/emacs.nix#L32
-        (push '(tool-bar-lines . nil) default-frame-alist)
+;; https://git.sr.ht/~rycee/configurations/tree/master/item/user/emacs.nix#L32
+(push '(tool-bar-lines . nil) default-frame-alist)
       '';
 
       postlude = ''
-        ;; https://stackoverflow.com/questions/4191408/making-the-emacs-cursor-into-a-line
-        (setq-default cursor-type 'bar)
+;; https://stackoverflow.com/questions/4191408/making-the-emacs-cursor-into-a-line
+(setq-default cursor-type 'bar)
 
-        ;; https://anonymousoverflow.privacyfucking.rocks/exchange/emacs/questions/278/how-do-i-display-line-numbers-in-emacs-not-in-the-mode-line#79455
-        (global-display-line-numbers-mode 1)
+;; https://anonymousoverflow.privacyfucking.rocks/exchange/emacs/questions/278/how-do-i-display-line-numbers-in-emacs-not-in-the-mode-line#79455
+(global-display-line-numbers-mode 1)
 
-        ;; Stop the flood of warnings that sometimes happens upon file open
-        (custom-set-variables
-          '(warning-suppress-types '((comp))))
+;; Stop the flood of warnings that sometimes happens upon file open
+(custom-set-variables '(warning-suppress-types '((comp))))
+
+(setenv "LSP_USE_PLISTS" "true")
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
       '';
 
       usePackage = {
@@ -97,64 +105,26 @@
 
           mode = [ ''"\\.php\\'"'' ];
         };
-	
+        
 	      catppuccin-theme = {
 	        enable = true;
          
 	        defer = true;
 	        # I borrowed this from https://git.sr.ht/~rycee/configurations/tree/master/item/user/emacs.nix#L291-296
 	        earlyInit = ''
-	          ;; Set color theme in early init to avoid flashing during start.
-            (require 'catppuccin-theme)
-            (setq catppuccin-flavor '${config.catppuccin.flavor})
-            (load-theme 'catppuccin :no-confirm)
+;; Set color theme in early init to avoid flashing during start.
+(require 'catppuccin-theme)
+(setq catppuccin-flavor '${config.catppuccin.flavor})
+(load-theme 'catppuccin :no-confirm)
 	        '';
 	      };
 
         multiple-cursors = {
           enable = true;
 
-          command = with builtins; [
-            "mc/mark-next-like-this"
-            "mc/mark-next-like-this-word"
-            "mc/mark-next-like-this-symbol"
-            "mc/mark-next-word-like-this"
-            "mc/mark-next-symbol-like-this"
-            "mc/mark-previous-like-this"
-            "mc/mark-previous-like-this-word"
-            "mc/mark-previous-like-this-symbol"
-            "mc/mark-previous-word-like-this"
-            "mc/mark-previous-symbol-like-this"
-            "mc/mark-more-like-this-extended"
-            "mc/add-cursor-on-click"
-            "mc/mark-pop"
-            "mc/unmark-next-like-this"
-            "mc/unmark-previous-like-this"
-            "mc/skip-to-next-like-this"
-            "mc/skip-to-previous-like-this"
-            "mc/edit-lines"
-            "mc/edit-beginnings-of-lines"
-            "mc/edit-ends-of-lines"
-            "mc/mark-all-like-this"
-            "mc/mark-all-words-like-this"
-            "mc/mark-all-symbols-like-this"
-            "mc/mark-all-in-region"
-            "mc/mark-all-like-this-in-defun"
-            "mc/mark-all-words-like-this-in-defun"
-            "mc/mark-all-symbols-like-this-in-defun"
-            "mc/mark-all-dwim"
-            "set-rectangular-region-anchor"
-            "mc/mark-sgml-tag-pair"
-            "mc/insert-numbers"
-            "mc/insert-letters"
-            "mc/sort-regions"
-            "mc/reverse-regions"
-            "mc/vertical-align"
-            "mc/vertical-align-with-space"
-          ];
-          config = ''
-          (global-set-key (kbd "<mouse-8>") 'mc/add-cursor-on-click)
-          '';
+          bind = {
+            "<mouse-8>" = "mc/add-cursor-on-click";
+          };
         };
 
         js-mode = {
@@ -171,6 +141,55 @@
             ''("\\.ts\\'" . typescript-ts-mode)''
             ''("\\.tsx\\'" . tsx-ts-mode)''
             ''("\\.mts\\'" . typescript-ts-mode)''
+          ];
+        };
+
+        rust-mode = {
+          enable = true;
+
+          mode = [
+            ''"\\.rs\\'"''
+          ];
+          config = ''
+(add-hook 'rust-mode-hook
+          (lambda () (setq indent-tabs-mode nil)))
+
+(setq rust-format-on-save t)
+          '';
+          init = ''
+(setq rust-mode-treesitter-derive t)
+          '';
+        };
+
+        lsp-mode = {
+          enable = true;
+
+          hook = [
+            ''(rust-mode . lsp-deferred)''
+            ''(nix-mode . lsp-deferred)''
+            ''(typescript-ts-mode . lsp-deferred)''
+            ''(tsx-ts-mode . lsp-deferred)''
+            ''(js-mode . lsp-deferred)''
+            ''(nushell-mode . lsp-deferred)''
+          ];
+          command = [
+            "lsp-deferred"
+          ];
+          config = ''
+(add-to-list 'load-path (expand-file-name "lib/lsp-mode" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "lib/lsp-mode/clients" user-emacs-directory))
+          '';
+        };
+
+        magit = {
+          enable = true;
+        };
+
+        forge = {
+          enable = true;
+
+          after = [
+            "magit"
           ];
         };
 
@@ -243,6 +262,62 @@
 
 (global-ligature-mode t) ;; Enable ligatures
           '';
+        };
+
+        treemacs = {
+          enable = true;
+
+          defer = true;
+          init = ''
+(with-eval-after-load 'winum
+                      (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+          '';
+          config = ''
+(treemacs-follow-mode t)
+(treemacs-filewatch-mode t)
+(treemacs-fringe-indicator-mode 'always)
+(when treemacs-python-executable
+      (treemacs-git-commit-diff-mode t))
+
+(pcase (cons (not (null (executable-find "git")))
+             (not (null treemacs-python-executable)))
+       (`(t . t)
+            (treemacs-git-mode 'deferred))
+       (`(t . _)
+            (treemacs-git-mode 'simple)))
+          '';
+          bind = {
+            "M-0" = "treemacs-select-window";
+            "C-x t 1" = "treemacs-delete-other-windows";
+            "C-x t t" = "treemacs";
+            "C-x t d" = "treemacs-select-directory";
+            "C-x t B" = "treemacs-bookmark";
+            "C-x t C-t" = "treemacs-find-file";
+            "C-x t M-t" = "treemacs-find-tag";
+          };
+        };
+        treemacs-icons-dired = {
+          enable = true;
+
+          hook = [
+            "(dired-mode . treemacs-icons-dired-enable-once)"
+          ];
+        };
+        treemacs-magit = {
+          enable = true;
+
+          after = [
+            "treemacs"
+            "magit"
+          ];
+        };
+        lsp-treemacs = {
+          enable = true;
+
+          after = [
+            "lsp-mode"
+            "treemacs"
+          ];
         };
       };
     };
