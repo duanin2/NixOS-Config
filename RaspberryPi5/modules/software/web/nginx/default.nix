@@ -29,20 +29,28 @@
       };
       "duanin2.top" = {
         useACMEHost = "duanin2.top";
-        onlySSL = true;
+        addSSL = true;
       };
-      /*"bohousek10d1979.asuscomm.com" = {
+      /*
+      "bohousek10d1979.asuscomm.com" = {
         useACMEHost = "asuscomm.com";
 
         locations."/".proxyPass = "https://192.168.1.1";
 
-        onlySSL = true;
-      };*/
+        addSSL = true;
+      };
+      */
     };
 
-    appendHttpConfig = ''
+    commonHttpConfig = ''
 log_format custom '$remote_user@$remote_addr:$remote_port [$time_local] - "$request_method $scheme://$host$request_uri" $uri $status - $server_name[$server_protocol $server_addr:$server_port] - $body_bytes_sent "$http_referer" "$http_user_agent"';
 access_log /var/log/nginx/access.log custom;
+
+set $do_http_upgrade "$https$http_upgrade_insecure_requests";
+if ($do_http_upgrade = "1") {
+    add_header Vary Upgrade-Insecure-Requests;
+    return 307 https://$host$request_uri;
+}
     '';
   };
 
