@@ -1,27 +1,23 @@
 { persistDirectory, config, pkgs, ... }: {
-  home.packages = with pkgs; [
-    tealdeer
-  ];
-
-  home.persistence.${persistDirectory}.directories = [
-    ".cache/tealdeer/tldr-pages"
-  ];
-
-  xdg.configFile."tealdeer/config.toml" = {
+  programs.tealdeer = {
     enable = true;
 
-    source = (pkgs.formats.toml {}).generate "tealdeer-conf" {
+    settings = {
       display = {
         use_pager = true;
         compact = true;
       };
       updates = {
         auto_update = true;
-        auto_update_interval_hours = 1;
+        auto_update_interval_hours = 24;
       };
       directories = {
         custom_pages_dir = "${config.xdg.dataHome}/tealdeer/pages";
       };
     };
   };
+
+  home.persistence.${persistDirectory}.directories = [
+    ".cache/tealdeer"
+  ];
 }
