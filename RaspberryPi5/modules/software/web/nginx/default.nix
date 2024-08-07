@@ -1,7 +1,17 @@
-{ ... }: {
+{ ... }: let
+  httpsUpgrade = ''
+set $do_http_upgrade "$https$http_upgrade_insecure_requests";
+if ($do_http_upgrade = "1") {
+    add_header Vary Upgrade-Insecure-Requests;
+    return 307 https://$host$request_uri;
+}
+  '';
+in {
   imports = [
     ../acme
   ];
+
+  _module.args = { inherit httpsUpgrade; };
 
   services.nginx = {
     enable = true;
@@ -22,14 +32,12 @@
           root = "/var/lib/acme/.challenges";
           priority = 0;
         };
-        locations."/" = {
-          return = "301 https://$host$request_uri";
-          priority = 1000;
-        };
+        extraConfig = httpsUpgrade;
       };
       "duanin2.top" = {
         useACMEHost = "duanin2.top";
         addSSL = true;
+        extraConfig = httpsUpgrade;
       };
       /*
       "bohousek10d1979.asuscomm.com" = {
@@ -45,12 +53,6 @@
     commonHttpConfig = ''
 log_format custom '$remote_user@$remote_addr:$remote_port [$time_local] - "$request_method $scheme://$host$request_uri" $uri $status - $server_name[$server_protocol $server_addr:$server_port] - $body_bytes_sent "$http_referer" "$http_user_agent"';
 access_log /var/log/nginx/access.log custom;
-
-set $do_http_upgrade "$https$http_upgrade_insecure_requests";
-if ($do_http_upgrade = "1") {
-    add_header Vary Upgrade-Insecure-Requests;
-    return 307 https://$host$request_uri;
-}
     '';
   };
 
