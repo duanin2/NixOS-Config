@@ -6,7 +6,6 @@
 
   home.packages = with pkgs; [
     rust-analyzer
-    nil
     typescript-language-server
   ];
   
@@ -178,6 +177,9 @@
           config = ''
 (add-to-list 'load-path (expand-file-name "lib/lsp-mode" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "lib/lsp-mode/clients" user-emacs-directory))
+
+(setq lsp-nix-nil-server-path "${pkgs.nil}")
+(setq lsp-log-io t)
           '';
         };
 
@@ -285,6 +287,8 @@
             (treemacs-git-mode 'deferred))
        (`(t . _)
             (treemacs-git-mode 'simple)))
+
+(treemacs-start-on-boot)
           '';
           bind = {
             "M-0" = "treemacs-select-window";
@@ -318,6 +322,17 @@
             "lsp-mode"
             "treemacs"
           ];
+        };
+
+        yasnippet = {
+          enable = true;
+
+          earlyInit = ''
+(yas-global-mode 1)
+          '';
+        };
+        yasnippet-snippets = {
+          enable = true;
         };
       };
     };
