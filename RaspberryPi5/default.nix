@@ -19,7 +19,7 @@
 		../common/modules/software/network/networkmanager
 		../common/modules/software/network/resolvd
 		../common/modules/software/network/avahi
-    ./modules/softtware/network/region
+    ./modules/software/network/region
 
     # software/web
     ./modules/software/web/nginx
