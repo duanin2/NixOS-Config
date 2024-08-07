@@ -2,7 +2,6 @@
   httpsUpgrade = ''
 set $do_http_upgrade "$https$http_upgrade_insecure_requests";
 if ($do_http_upgrade = "1") {
-    add_header Vary Upgrade-Insecure-Requests;
     return 307 https://$host$request_uri;
 }
   '';
