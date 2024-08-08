@@ -14,6 +14,7 @@
     ../common/modules/software/home-manager
     ./modules/software/fuse
     ../common/modules/software/samba
+    ./modules/software/mail
 
     # software/network
 		../common/modules/software/network/networkmanager
