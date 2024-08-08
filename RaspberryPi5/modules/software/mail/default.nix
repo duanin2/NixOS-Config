@@ -10,7 +10,7 @@
     # nix-shell -p mkpasswd --run 'mkpasswd -sm bcrypt'
     loginAccounts = {
       "duanin2@duanin2.top" = {
-        hashedPasswordFile = "/a/file/containing/a/hashed/password";
+        hashedPasswordFile = "/var/lib/secrets/mailPass";
         aliases = [ "postmaster@duanin2.top" "admin@duanin2.top" ];
       };
     };

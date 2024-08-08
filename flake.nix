@@ -110,6 +110,8 @@
 		godot-nixpkgs = {
 			url = "github:ilikefrogs101/nixpkgs";
 		};
+
+    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
 	};
 
 	outputs = inputs: let
