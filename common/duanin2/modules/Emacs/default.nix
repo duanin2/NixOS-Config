@@ -1,13 +1,8 @@
-{ pkgs, inputs, config, nur, ... }: {
+{ pkgs, inputs, config, nur, lib, ... }: {
   imports = [
     nur.repos.rycee.hmModules.emacs-init
   ];
   nixpkgs.overlays = [ inputs.emacs.overlays.default ];
-
-  home.packages = with pkgs; [
-    rust-analyzer
-    typescript-language-server
-  ];
   
   services.emacs = {
     enable = true;
@@ -172,13 +167,18 @@
             ''(nushell-mode . lsp-deferred)''
           ];
           command = [
+            "lsp"
             "lsp-deferred"
           ];
           config = ''
 (add-to-list 'load-path (expand-file-name "lib/lsp-mode" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "lib/lsp-mode/clients" user-emacs-directory))
+          '';
+          init = ''
+(setq lsp-rust-analyzer-server-command "${lib.getExe pkgs.rust-analyzer}")
+(setq lsp-nix-nil-server-path "${lib.getExe pkgs.nil}")
+(setq lsp-clients-typescript-tls-path "${lib.getExe pkgs.pptypescript-language-server}")
 
-(setq lsp-nix-nil-server-path "${pkgs.nil}")
 (setq lsp-log-io t)
           '';
         };
@@ -328,6 +328,7 @@
           enable = true;
 
           earlyInit = ''
+(require 'yasnippet)
 (yas-global-mode 1)
           '';
         };
