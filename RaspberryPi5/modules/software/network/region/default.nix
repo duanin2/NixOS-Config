@@ -8,7 +8,7 @@
 options cfg80211 ieee80211_regdom="CZ"
     '';
     kernelParams = [
-      "brcmfmac.feature_disbale=0x8200"
+      "brcmfmac.feature_disable=0x8200"
     ];
   };
 }
