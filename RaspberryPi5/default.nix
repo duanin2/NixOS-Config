@@ -44,7 +44,7 @@
     ./duanin2
   ];
 
-  environment.packages = with pkgs; [ git ];
+  environment.systemPackages = with pkgs; [ git ];
 
   boot.supportedFilesystems = [ "btrfs" ];
 

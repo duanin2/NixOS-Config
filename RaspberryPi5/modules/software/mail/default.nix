@@ -1,4 +1,4 @@
-{ inputs, config, ... }: let
+{ inputs, config, lib, ... }: let
   cfg = config.mailserver;
 in {
   imports = [ inputs.simple-nixos-mailserver.nixosModule ];
@@ -76,16 +76,16 @@ if header :matches "list-id" "<?*>" {
 
   services.nginx.virtualHosts."rspamd.duanin2.top" = {
     onlySSL = true;
+    useACMEHost = "duanin2.top";
     basicAuthFile = "/var/lib/secrets/rspamdBasicAuth";
     locations."/".proxyPass = "http://unix:/run/rspamd/worker-controller.sock:/";
   };
 
   environment.persistence."/persist" = {
     directories = [
-      cfg.indexDir
       cfg.mailDirectory
       cfg.sieveDirectory
       cfg.dkimKeyDirectory
-    ];
+    ] ++ (if (builtins.typeOf cfg.indexDir == "string") then [ cfg.indexDir ] else [ ]);
   };
 }
