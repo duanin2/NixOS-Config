@@ -1,4 +1,4 @@
-{ inputs, lib, ... }: {
+{ pkgs, inputs, lib, ... }: {
   imports = [
     # hardware
     ./modules/hardware/autoconfig
@@ -43,6 +43,8 @@
 
     ./duanin2
   ];
+
+  environment.packages = with pkgs; [ git ];
 
   boot.supportedFilesystems = [ "btrfs" ];
 
