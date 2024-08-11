@@ -22,13 +22,13 @@ in {
         aliases = [
           "postmaster@duanin2.top"
           "admin@duanin2.top"
-          "matrix-admin@duanin2.top"
           "abuse@duanin2.top"
           "dusan.till@duanin2.top"
         ];
         aliasesRegexp = [
           "/^duanin2-.*@duanin2\\.top$/"
           "/^dusan.till-.*@duanin2\\.top$/"
+          "/^.*-admin@duanin2.top$/"
         ];
         sieveScript = ''
 require ["fileinto", "mailbox"];
