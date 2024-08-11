@@ -6,7 +6,7 @@ in {
   mailserver = {
     enable = true;
     fqdn = "mail.duanin2.top";
-    sendingFqdn = "109-80-156-99.rcr.o2.cz"; # Residential ISPs don't allow you to change rDNS.
+    # sendingFqdn = "109-80-156-99.rcr.o2.cz"; # Residential ISPs don't allow you to change rDNS.
     domains = [ "duanin2.top" ];
 
     enableImap = false;
