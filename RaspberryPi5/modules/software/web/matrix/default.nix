@@ -44,7 +44,7 @@ in {
       ];
       url_preview_enabled = true;
       enable_registration_captcha = true;
-      email = {
+      /*email = {
         smtp_host = "duanin2.top";
         smtp_user = "matrix-noreply@duanin2.top";
         force_tls = true;
@@ -52,7 +52,7 @@ in {
         enable_notifs = true;
         notif_for_new_users = false;
         notif_delay_before_mail = "1h";
-      };
+      };*/
 
       admin_contact = "mailto:matrix-admin@duanin2.top";
     };
