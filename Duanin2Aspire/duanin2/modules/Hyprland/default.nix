@@ -64,7 +64,7 @@ in {
 			enable = true;
 		};
 		plugins = with hyprland-plugins; [
-			hyprbars
+			# hyprbars
 		];
 		settings = {
 			monitor = [

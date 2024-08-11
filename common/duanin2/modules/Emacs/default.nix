@@ -56,6 +56,8 @@
 
 (setenv "LSP_USE_PLISTS" "true")
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
+
+(treemacs)
       '';
 
       usePackage = {
@@ -159,16 +161,15 @@
           enable = true;
 
           hook = [
-            ''(rust-mode . lsp-deferred)''
-            ''(nix-mode . lsp-deferred)''
-            ''(typescript-ts-mode . lsp-deferred)''
-            ''(tsx-ts-mode . lsp-deferred)''
-            ''(js-mode . lsp-deferred)''
-            ''(nushell-mode . lsp-deferred)''
+            ''(rust-mode . lsp)''
+            ''(nix-mode . lsp)''
+            ''(typescript-ts-mode . lsp)''
+            ''(tsx-ts-mode . lsp)''
+            ''(js-mode . lsp)''
+            ''(nushell-mode . lsp)''
           ];
           command = [
             "lsp"
-            "lsp-deferred"
           ];
           config = ''
 (add-to-list 'load-path (expand-file-name "lib/lsp-mode" user-emacs-directory))
@@ -177,7 +178,7 @@
           init = ''
 (setq lsp-rust-analyzer-server-command "${lib.getExe pkgs.rust-analyzer}")
 (setq lsp-nix-nil-server-path "${lib.getExe pkgs.nil}")
-(setq lsp-clients-typescript-tls-path "${lib.getExe pkgs.pptypescript-language-server}")
+(setq lsp-clients-typescript-tls-path "${lib.getExe pkgs.typescript-language-server}")
 
 (setq lsp-log-io t)
           '';
@@ -287,8 +288,6 @@
             (treemacs-git-mode 'deferred))
        (`(t . _)
             (treemacs-git-mode 'simple)))
-
-(treemacs-start-on-boot)
           '';
           bind = {
             "M-0" = "treemacs-select-window";
@@ -322,6 +321,9 @@
             "lsp-mode"
             "treemacs"
           ];
+          config = ''
+(lsp-treemacs-sync-mode 1)
+          '';
         };
 
         yasnippet = {

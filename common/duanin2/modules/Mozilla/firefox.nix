@@ -49,7 +49,7 @@
 					stylus
 					firefox-color
 					canvasblocker
-					firemonkey
+				  violentmonkey
           redirector
 					indie-wiki-buddy
 					steam-database
@@ -120,7 +120,7 @@
 				  ublock-origin
 				  stylus
 				  canvasblocker
-				  firemonkey
+				  violentmonkey
 				  terms-of-service-didnt-read
 				  wayback-machine
           aria2-integration
