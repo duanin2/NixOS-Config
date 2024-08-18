@@ -1,4 +1,4 @@
-{ lib, config, nur, customPkgs, pkgs, inputs, persistDirectory, ... }: {
+{ nur, customPkgs, pkgs, persistDirectory, ... }: {
   disabledModules = [ ./mullvad.nix ];
 
   home.packages = with pkgs; [
@@ -9,9 +9,11 @@
 		enable = true;
     package = pkgs.firefox;
 
+    /*
     nativeMessagingHosts = with pkgs; [
-      firefoxpwa
+      # firefoxpwa
     ];
+    */
     policies = {
       DisableFirefoxAccounts = true;
       DisableFirefoxStudies = true;
@@ -45,23 +47,18 @@
         };
 				extensions = with nur.repos.rycee.firefox-addons; [
 					ublock-origin
-					skip-redirect
 					stylus
-					firefox-color
+					# firefox-color
 					canvasblocker
 				  violentmonkey
           redirector
-					indie-wiki-buddy
-					steam-database
 					terms-of-service-didnt-read
-					unpaywall
-					wayback-machine
           sidebery
           aria2-integration
 				]
 				++ (with customPkgs.mozilla.firefoxAddons; [
 					librejs
-          firefoxpwa
+          # firefoxpwa
 				]);
 				settings = (customPkgs.mozilla.addUserJsPrefs (pkgs.fetchurl {
 			    url = "https://raw.githubusercontent.com/arkenfox/user.js/master/user.js";
@@ -96,6 +93,7 @@
 }
         '';
 		  };
+      /*
       "firefoxpwa-template" = {
         id = 1;
         search = rec {
@@ -122,7 +120,6 @@
 				  canvasblocker
 				  violentmonkey
 				  terms-of-service-didnt-read
-				  wayback-machine
           aria2-integration
 			  ]
 			  ++ (with customPkgs.mozilla.firefoxAddons; [
@@ -150,6 +147,7 @@
           "browser.tabs.inTitlebar" = 0;
 				};
 		  };
+      */
 	  };
   };
 
