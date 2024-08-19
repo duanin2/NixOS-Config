@@ -4,7 +4,7 @@
     text = ''
       #!${lib.getExe pkgs.nushell}
 
-      register ${lib.getExe pkgs.nushellPllugins.formats}
+      register ${lib.getExe pkgs.nushellPlugins.formats}
 
       use language.nu
       use desktopEntry.nu

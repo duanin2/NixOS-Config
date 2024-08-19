@@ -1,4 +1,4 @@
-{ config, customPkgs, ... }: let
+{ config, ... }: let
   fontCfg = config.gtk.font;
 in {
   programs.alacritty = {
