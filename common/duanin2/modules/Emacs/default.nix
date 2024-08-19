@@ -1,8 +1,15 @@
-{ pkgs, inputs, config, nur, lib, ... }: {
+{ persistDirectory, pkgs, inputs, config, nur, lib, ... }: {
   imports = [
     nur.repos.rycee.hmModules.emacs-init
   ];
   nixpkgs.overlays = [ inputs.emacs.overlays.default ];
+
+  home.packages = with pkgs; [
+    typescript-language-server
+    typescript
+    vscode-langservers-extracted
+    nodePackages.intelephense
+  ];
   
   services.emacs = {
     enable = true;
@@ -54,8 +61,8 @@
 ;; Stop the flood of warnings that sometimes happens upon file open
 (custom-set-variables '(warning-suppress-types '((comp))))
 
-(setenv "LSP_USE_PLISTS" "true")
-(setq read-process-output-max (* 1024 1024)) ;; 1mb
+;; (setenv "LSP_USE_PLISTS" "true")
+(setq read-process-output-max (* 1024 4096)) ;; 4mb
 
 (treemacs)
       '';
@@ -157,6 +164,14 @@
           '';
         };
 
+        scad-mode = {
+          enable = true;
+
+          mode = [
+            ''("\\.scad\\'" . scad-mode)''
+          ];
+        };
+
         lsp-mode = {
           enable = true;
 
@@ -167,6 +182,11 @@
             ''(tsx-ts-mode . lsp)''
             ''(js-mode . lsp)''
             ''(nushell-mode . lsp)''
+            ''(html-mode . lsp)''
+            ''(sgml-mode . lsp)''
+            ''(php-mode . lsp)''
+            ''(css-mode . lsp)''
+            ''(css-ts-mode . lsp)''
           ];
           command = [
             "lsp"
@@ -176,11 +196,16 @@
 (add-to-list 'load-path (expand-file-name "lib/lsp-mode/clients" user-emacs-directory))
           '';
           init = ''
+;; rust-analyzer
 (setq lsp-rust-analyzer-server-command "${lib.getExe pkgs.rust-analyzer}")
-(setq lsp-nix-nil-server-path "${lib.getExe pkgs.nil}")
-(setq lsp-clients-typescript-tls-path "${lib.getExe pkgs.typescript-language-server}")
 
-(setq lsp-log-io t)
+;; nix-nil
+(setq lsp-nix-nil-server-path "${lib.getExe pkgs.nil}")
+(setq lsp-nix-nil-max-mem ${toString (6 * 1024)})
+;; (setq lsp-nix-nil-formatter "nix fmt")
+
+;; OpenSCAD
+(setq lsp-openscad-server ${lib.getExe pkgs.openscad-lsp})
           '';
         };
 
@@ -194,6 +219,22 @@
           after = [
             "magit"
           ];
+        };
+
+        cobalt = {
+          enable = true;
+
+          config = ''
+(setq cobalt-site-paths '("~/dev/website"))
+          '';
+        };
+
+        direnv = {
+          enable = true;
+
+          config = ''
+(direnv-mode)
+          '';
         };
 
         ligature = {
@@ -339,5 +380,17 @@
         };
       };
     };
+  };
+
+  home.persistence.${persistDirectory} = {
+    directories = [
+      ".cache/nix/eval-cache-v5"
+      ".emacs.d/auto-save-list"
+      ".emacs.d/lsp-cache"
+    ];
+    files = [
+      ".emacs.d/.cache/treemacs-persist"
+      ".emacs.d/.lsp-session-v1"
+    ];
   };
 }
