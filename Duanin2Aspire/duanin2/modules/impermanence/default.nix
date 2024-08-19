@@ -3,14 +3,6 @@
 
   home.persistence.${persistDirectory} = {
     directories = [
-      "Dokumenty"
-      "Hudba"
-      "Obrázky"
-      "Plocha"
-      "Stažené"
-      "Veřejné"
-      "Videa"
-      "Šablony"
       "Hry"
       "dev"
       ".android"

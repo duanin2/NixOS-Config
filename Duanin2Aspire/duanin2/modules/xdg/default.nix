@@ -1,4 +1,4 @@
-{ homeDirectory, ... }: {
+{ homeDirectory, persistDirectory, config, ... }: {
   xdg = {
     enable = true;
 
@@ -16,5 +16,20 @@
       templates = "${homeDirectory}/Šablony";
       videos = "${homeDirectory}/Videa";
     };
+  };
+
+  home.persistence.${persistDirectory} = {
+    directories = let
+      cfg = config.xdg.userDirs;
+    in [
+      cfg.desktop
+      cfg.documents
+      cfg.download
+      cfg.music
+      cfg.pictures
+      cfg.publicShare
+      cfg.templates
+      cfg.videos
+    ];
   };
 }
