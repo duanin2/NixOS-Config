@@ -37,7 +37,7 @@ stdenvNoCC.mkDerivation rec {
     description = "Soothing pastel theme for SDDM.";
     homepage = "https://github.com/catppuccin/sddm";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ { email = "tilldusan30@gmail.com"; github = "duanin2"; githubId = 1778670; name = "Dušan Till"; } ];
+    maintainers = with lib.maintainers; [ duanin2 ];
     platforms = lib.platforms.linux;
   };
 }
