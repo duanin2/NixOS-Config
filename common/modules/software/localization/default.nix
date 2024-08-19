@@ -18,8 +18,8 @@ in {
 	};
 
 	services.xserver.xkb = {
-		layout = "cz";
+		layout = keyboardLayout;
 		variant = "";
 	};
-	console.keyMap = "cz";
+	console.keyMap = keyboardLayout;
 }
