@@ -1,6 +1,6 @@
-{ inputs, lib, pkgs, ... }: {
+{ inputs, lib, pkgs, isoModules, ... }: {
 	imports = [
-	  ../../../../common/iso/no-zfs.nix
+	  (isoModules + /no-zfs.nix)
 	];
 	
 	boot.kernelPackages = lib.mkForce (pkgs.linuxPackagesFor (pkgs.callPackage "${inputs.rpi5}/linux-rpi.nix" (let

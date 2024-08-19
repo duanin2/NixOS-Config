@@ -1,6 +1,6 @@
-{ pkgs, ... }: {
+{ pkgs, modules, ... }: {
   imports = [
-    ../../../../common/iso/no-zfs.nix
+    (modules.iso + /no-zfs.nix)
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos;
