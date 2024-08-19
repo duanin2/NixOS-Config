@@ -1,10 +1,6 @@
 { lib, config, inputs, pkgs, persistDirectory, homeDirectory, ... }: let
   nativeGLFW = true;
 in {
-	imports = [
-		../.
-	];
-
 	home.packages = with pkgs; [
 		(prismlauncher.override {
 			prismlauncher-unwrapped = (prismlauncher-unwrapped.overrideAttrs (old: {
