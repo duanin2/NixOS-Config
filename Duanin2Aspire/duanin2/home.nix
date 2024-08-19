@@ -1,49 +1,56 @@
-{ config, pkgs, ... }: let
+{ config, pkgs, modules, ... }: let
 	homeDirectory = config.home.homeDirectory or ("/home/${config.home.username or "duanin2"}");
 	persistDirectory = "/persist" + homeDirectory;
+
+  finalModules = modules // {
+    local = ./modules;
+  };
 in {
 	imports = [
-		# ./modules/vscode
-		./modules/syncthing
-		./modules/keepassxc
-		./modules/libreoffice
-		# ./modules/discord
-		./modules/direnv
-		./modules/xdg
-		./modules/bash
-		./modules/bottles
-		./modules/git
-		./modules/Hyprland
-		./modules/theming
-		./modules/alacritty
-		./modules/ssh
-		./modules/impermanence
-		../../common/duanin2/modules/Emacs
-    ../../common/duanin2/modules/tldr
-    ../../common/duanin2/modules/eww
-    ../../common/duanin2/modules/pidgin
-    ../../common/duanin2/modules/systemd
-    ../../common/duanin2/modules/gnunet
-    ../../common/duanin2/modules/kdeConnect
+		# (modules.local + /vscode)
+		(modules.local + /syncthing)
+		(modules.local + /keepassxc)
+		(modules.local + /libreoffice)
+		# (modules.local + /discord)
+		(modules.local + /direnv)
+		(modules.local + /xdg)
+		(modules.local + /bash)
+		(modules.local + /bottles)
+		(modules.local + /git)
+		(modules.local + /Hyprland)
+		(modules.local + /theming)
+		(modules.local + /alacritty)
+		(modules.local + /ssh)
+		(modules.local + /impermanence)
+		(modules.common + /Emacs)
+    (modules.common + /tldr)
+    (modules.common + /eww)
+    (modules.common + /pidgin)
+    (modules.common + /systemd)
+    (modules.common + /gnunet)
+    (modules.common + /kdeConnect)
     
-		./modules/games/prismlauncher
-		# ./modules/games/vinegar
-		./modules/games/lutris
-		# ./modules/games/godot
-    ./modules/games/mangohud
+		(modules.local.games + /prismlauncher)
+		# (modules.local.games + /vinegar)
+		(modules.local.games + /lutris)
+		# (modules.local.games + /godot)
+    (modules.local.games + /mangohud)
 
-		../../common/duanin2/modules/shell/nushell
-		../../common/duanin2/modules/shell/prompts/starship
+		(modules.common.shell + /nushell)
+		(modules.common.shell.prompts + /starship)
 
-		../../common/duanin2/modules/Mozilla/firefox.nix
-    # ../../common/duanin2/modules/Mozilla/mullvad.nix
-		../../common/duanin2/modules/Mozilla/thunderbird.nix
+		(modules.common.Mozilla + /firefox.nix)
+    # (modules.common.Mozilla + /mullvad.nix)
+		(modules.common.Mozilla + /thunderbird.nix)
 
-		./modules/mpv
-		./modules/mpv/ani-cli.nix
+		(modules.local + /mpv)
+		(modules.local + /mpv/ani-cli.nix)
 	];
 
 	home.stateVersion = "23.11";
 
-	_module.args = { inherit homeDirectory persistDirectory; };
+	_module.args = {
+    inherit homeDirectory persistDirectory;
+    modules = finalModules;
+  };
 }

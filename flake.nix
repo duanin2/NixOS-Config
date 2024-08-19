@@ -122,6 +122,24 @@
 		inherit lib;
 		nixosConfigurations = let
 			nixosCdDvd = path: inputs.nixpkgs + "/nixos/modules/installer/cd-dvd" + path;
+
+      commonModules = rec {
+        outPath = ./common/modules;
+
+        hardware = outPath + /hardware;
+        software = {
+          outPath = outPath + /software;
+
+          network = outPath + /network;
+          shell = outPath + /shell;
+          kernel = rec {
+            outPath = outPath + /kernel;
+
+            RaspberryPi = outPath + /RaspberryPi;
+          };
+        };
+      };
+      isoModules = ./common/iso;
 		in {
 			"Duanin2Aspire" = let
 				system = "x86_64-linux";
@@ -130,12 +148,36 @@
 					pkgs = import inputs.nixpkgs { inherit system; };
 					nurpkgs = pkgs;
 				};
+
+        path = ./Duanin2Aspire;
 			in lib.nixosSystem {
 				inherit system;
-				specialArgs = { inherit inputs lib customPkgs nur; };
+				specialArgs = {
+          inherit inputs lib customPkgs nur;
+          modules = {
+            local = rec {
+              outPath = path + /modules;
+
+              hardware = outPath + /hardware;
+              software = {
+                outPath = outPath + /software;
+
+                network = outPath + /network;
+                games = outPath + /games;
+                bootloader = outPath + /bootloader;
+                virtualization = outPath + /virtualization;
+                desktops = outPath + /desktop;
+                greeters = outPath + /greeter;
+                theming = outPath + /theming;
+              };
+            };
+            common = commonModules;
+            iso = isoModules;
+          };
+        };
 
 				modules = [
-					./Duanin2Aspire
+					path
 				] ++ (with inputs; [
 					chaotic.nixosModules.default
 				]);
@@ -147,12 +189,32 @@
 					pkgs = import inputs.nixpkgs { inherit system; };
 					nurpkgs = pkgs;
 				};
+
+        path = ./RaspberryPi5;
  			in lib.nixosSystem {
 				inherit system;
-				specialArgs = { inherit inputs lib customPkgs nur; };
+				specialArgs = {
+          inherit inputs lib customPkgs nur;
+          modules = {
+            local = rec {
+              outPath = path + /modules;
+
+              hardware = outPath + /hardware;
+              software = {
+                outPath = outPath + /software;
+
+                network = outPath + /network;
+                bootloader = outPath + /bootloader;
+                web = outPath + /web;
+              };
+            };
+            common = commonModules;
+            iso = isoModules;
+          };
+        };
 
 				modules = [
-					./RaspberryPi5
+					path
 				] ++ (with inputs; [
 					chaotic.nixosModules.default
 				]);
@@ -169,10 +231,10 @@
 				specialArgs = { inherit inputs lib customPkgs nur; };
 
 				modules = [
-					(nixosCdDvd "/installation-cd-graphical-plasma5.nix")
+					(nixosCdDvd + /installation-cd-graphical-plasma5.nix)
 
-					./Duanin2Aspire/modules/software/kernel/cachyos.nix
-					./common/iso/default.nix
+          (commonModules.software.kernel + /cachyos.nix)
+					(isoModules + /default.nix)
 				] ++ (with inputs; [
 					chaotic.nixosModules.default
 				]);
@@ -189,10 +251,10 @@
 				specialArgs = { inherit inputs lib customPkgs nur; };
 
 				modules = [
-					(nixosCdDvd "/installation-cd-minimal.nix")
+					(nixosCdDvd + /installation-cd-minimal.nix)
 
-					./RaspberryPi5/modules/software/kernel/vendor-latest.nix
-					./common/iso/default.nix
+					(commonModules.software.kernel.RaspberryPi + /vendor-latest.nix)
+					(isoModules + /default.nix)
 
 					({ lib, ... }: {
 						networking.wireless.enable = lib.mkForce false;
@@ -212,12 +274,29 @@
 					inherit pkgs;
 					nurpkgs = pkgs;
 				};
+
+        path = ./SchoolServer;
 			in lib.homeManagerConfiguration {
 				inherit pkgs;
-				extraSpecialArgs = { inherit pkgs inputs lib customPkgs nur; };
+				extraSpecialArgs = {
+          inherit pkgs inputs lib customPkgs nur;
+          modules = {
+            local = path + /modules;
+            common = rec {
+              outPath = ./common/duanin2/modules;
+
+              Mozilla = outPath + /Mozilla;
+              shell = {
+                outPath = outPath + /shell;
+
+                prompts = outPath + /prompts;
+              };
+            };
+          };
+        };
 
 				modules = [
-					./SchoolServer
+					path
 
 					{
 						imports = [];

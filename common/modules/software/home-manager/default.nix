@@ -4,7 +4,21 @@
   ];
 
   home-manager = {
-    extraSpecialArgs = { inherit inputs lib customPkgs nur; };
+    extraSpecialArgs = {
+      inherit inputs lib customPkgs nur;
+      modules = {
+        common = rec {
+          outPath = ../../../duanin2/modules;
+
+          Mozilla = outPath + /Mozilla;
+          shell = {
+            outPath = outPath + /shell;
+
+            prompts = outPath + /prompts;
+          };
+        };
+      };
+    };
 
     useGlobalPkgs = true;
     useUserPackages = true;

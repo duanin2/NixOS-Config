@@ -1,86 +1,85 @@
-{ lib, ... }: {
+{ modules, ... }: {
 	imports = [
 		# hardware
-		./modules/hardware/autoconfig
-		./modules/hardware/efi
-		./modules/hardware/nvidia
-		./modules/hardware/bluetooth
-		../common/modules/hardware/zram
-		./modules/hardware/adb
-		./modules/hardware/intel
-    ../common/modules/hardware/steam-hardware
+		(modules.local.hardware + /autoconfig)
+		(modules.local.hardware + /efi)
+		(modules.local.hardware + /nvidia)
+		(modules.local.hardware + /bluetooth)
+		(modules.common.hardware + /zram)
+		(modules.local.hardware + /adb)
+		(modules.local.hardware + /intel)
+    (modules.common.hardware + /steam-hardware)
 
 		# software
-		../common/modules/software/nix
-		./modules/software/printing
-		../common/modules/software/localization
-		../common/modules/software/appimage
-		./modules/software/plymouth
-		./modules/software/ssh
-		./modules/software/protonmail
-		./modules/software/git
-		./modules/software/mesa
-		./modules/software/gnupg
-		../common/modules/software/samba
-		./modules/software/impermanence
-		./modules/software/nix
-		../common/modules/software/home-manager
-    ./modules/software/firejail
-    ./modules/software/tlp
-    ../common/modules/software/gnunet
-    ../common/modules/software/kdeConnect
-    ./modules/software/pipewire
+		(modules.common.software + /nix)
+		(modules.local.software + /printing)
+		(modules.common.software + /localization)
+		(modules.common.software + /appimage)
+		(modules.local.software + /plymouth)
+		(modules.local.software + /ssh)
+		(modules.local.software + /protonmail)
+		(modules.local.software + /git)
+		(modules.local.software + /mesa)
+		(modules.local.software + /gnupg)
+		(modules.common.software + /samba)
+		(modules.local.software + /impermanence)
+		(modules.local.software + /nix)
+		(modules.common.software + /home-manager)
+    (modules.local.software + /firejail)
+    (modules.local.software + /tlp)
+    (modules.common.software + /gnunet)
+    (modules.common.software + /kdeConnect)
+    (modules.local.software + /pipewire)
 
-		# software/network
-		../common/modules/software/network/networkmanager
-		../common/modules/software/network/firewall
-		../common/modules/software/network/resolvd
-		../common/modules/software/network/avahi
-    ./modules/software/network/firewall
-    ./modules/software/network/sysctl
-    ./modules/software/network/nftables
-    ./modules/software/network/resolvd
-    ./modules/software/network/networkmanager
-    ./modules/software/network/tor
+		# software.network
+		(modules.common.software.network + /networkmanager)
+		(modules.common.software.network + /firewall)
+		(modules.common.software.network + /resolvd)
+		(modules.common.software.network + /avahi)
+    (modules.local.software.network + /firewall)
+    (modules.local.software.network + /sysctl)
+    (modules.local.software.network + /nftables)
+    (modules.local.software.network + /resolvd)
+    (modules.local.software.network + /networkmanager)
+    (modules.local.software.network + /tor)
+		# (modules.local.software.network + /vpn/protonvpn.nix)
 
-		# software/network/vpn
-		# ./modules/software/network/vpn/protonvpn.nix
+		# software.kernel
+		(modules.common.software.kernel + /cachyos.nix)
 
-		# software/kernel
-		./modules/software/kernel/cachyos.nix
+		# software.shell
+		(modules.common.software.shell + /nushell.nix)
 
-		# software/shell
-		../common/modules/software/shell/nushell.nix
+		# software.games
+		(modules.local.software.games + /steam)
+    (modules.local.software.games + /gamemode.nix)
+    (modules.local.software.games + /gamescope.nix)
+    (modules.local.software.games + /mangohud.nix)
 
-		# software/games
-		./modules/software/games/steam
-    ./modules/software/games/gamemode.nix
-    ./modules/software/games/gamescope.nix
-    ./modules/software/games/mangohud.nix
+		# software.bootloader
+		(modules.local.software.bootloader + /systemd-boot)
 
-		# software/bootloader
-		./modules/software/bootloader/systemd-boot
+		# software.virtualization
+		# (modules.local.software.virtualization + /waydroid)
+		# (modules.local.software.virtualization + /darling)
+    (modules.local.software.virtualization + /libvirt)
 
-		# software/virtualization
-		# ./modules/software/virtualization/waydroid
-		# ./modules/software/virtualization/darling
-    ./modules/software/virtualization/libvirt/default.nix
+		# software.desktops
+		(modules.local.software.desktop + /plasma)
+		(modules.local.software.desktop + /Hyprland)
+    # (modules.local.software.desktop + /QTile)
 
-		# software/desktops
-		# ./modules/software/desktop/plasma
-		./modules/software/desktop/Hyprland
-    # ./modules/software/desktop/QTile
+		# software.greeters
+		(modules.local.software.greeters + /GreetD)
+    # (modules.local.software.greeters + /SDDM)
 
-		# software/greeters
-		./modules/software/greeters/GreetD
+		# software.theming
+		(modules.local.software.theming)
 
-		# software/theming
-		./modules/software/theming
-
-    # software/systemd
-    ./modules/software/systemd/logind.nix
-    ./modules/software/systemd/oomd.nix
-    ./modules/software/systemd/sleep.nix
+    # software.systemd
+    (modules.local.software + /systemd/logind.nix)
+    (modules.local.software + /systemd/oomd.nix)
+    (modules.local.software + /systemd/sleep.nix)
     
 		./duanin2
 	];

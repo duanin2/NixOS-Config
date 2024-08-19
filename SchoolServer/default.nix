@@ -1,6 +1,6 @@
-{ config, ... }: {
+{ config, modules, ... }: {
   imports = [
-    ./modules/nix
+    (modules.local + /nix)
   ];
 
   home = {

@@ -1,6 +1,6 @@
-{ inputs, lib, config, pkgs, ... }: {
+{ inputs, lib, config, pkgs, modules, ... }: {
 	imports = [
-		../../../common/modules/software/nix/nixpkgs
+		(modules.common + ../../modules/software/nix/nixpkgs)
 		./nixpkgs
 	];
 	

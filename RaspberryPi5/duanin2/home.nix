@@ -1,15 +1,22 @@
-{ config, ... }: let
+{ config, modules, ... }: let
 	homeDirectory = config.home.homeDirectory or ("/home/${config.home.username or "duanin2"}");
 	persistDirectory = "/persist" + homeDirectory;
+
+  finalModules = modules // {
+    local = ./modules;
+  };
 in {
   imports = [
-    ../../common/duanin2/modules/shell/nushell
-		../../common/duanin2/modules/shell/prompts/starship
-    ./modules/impermanence
-    ../../common/duanin2/modules/tldr
+    (modules.common.shell.prompts + /nushell)
+		(modules.common.shell.prompts + /starship)
+    (modules.local + /impermanence)
+    (modules.common + /tldr)
   ];
 
   home.stateVersion = "23.11";
 
-  _module.args = { inherit homeDirectory persistDirectory; };
+  _module.args = {
+    inherit homeDirectory persistDirectory;
+    modules = finalModules;
+  };
 }

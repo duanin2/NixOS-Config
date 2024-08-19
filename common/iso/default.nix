@@ -1,24 +1,18 @@
-{ lib, ... }: {
+{ modules, ... }: {
   imports = [
     # software
-    ../modules/software/localization
+    (modules.common.software + /localization)
 
     # software/network
-    ../modules/software/network/networkmanager
-    ../modules/software/network/resolvd
+    (modules.common.software.network + /networkmanager)
+    (modules.common.software.network + /resolvd)
 
     # software/shell
-    ../modules/software/shell/nushell.nix
+    (modules.common.software.shell + /nushell.nix)
 
     ./nixos
   ];
-
-  /*
-  boot.supportedFilesystems = [
-    "btrfs"
-    "bcachefs"
-  ];
-  */
+  
   boot.supportedFilesystems = {
     btrfs = true;
     bchachefs = true;

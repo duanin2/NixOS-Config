@@ -1,6 +1,6 @@
-{ pkgs, lib, ... }: {
+{ modules, ... }: {
 	imports = [
-		../../../hardware/efi
+		(modules.local.hardware + /efi)
 	];
 
 	boot.loader.systemd-boot = {
