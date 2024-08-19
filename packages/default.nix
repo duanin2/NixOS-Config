@@ -13,5 +13,7 @@
     ueventNu = scripts.uevent;
     nmcliNu = scripts.nmcli;
     systemdScript = scripts.systemd;
+
+    mpvScripts = callPackage ./mpv { };
   } // { inherit callPackage; };
 in packages

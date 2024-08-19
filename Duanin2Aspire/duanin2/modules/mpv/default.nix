@@ -1,9 +1,9 @@
-{ pkgs, ... }: {
+{ customPkgs, ... }: {
+  home.packages = with customPkgs; [ mpvScripts.ani-skip ];
+  
   programs.mpv = {
     enable = true;
 
-    scripts = [
-      (pkgs.callPackage ./ani-skip.nix {})
-    ];
+    scripts = with customPkgs.mpvScripts; [ ani-skip ];
   };
 }
