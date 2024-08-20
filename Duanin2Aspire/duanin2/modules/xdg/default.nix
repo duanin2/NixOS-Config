@@ -1,4 +1,13 @@
-{ homeDirectory, persistDirectory, config, ... }: {
+{ homeDirectory, persistDirectory, config, ... }: let
+  desktop = "Plocha";
+  documents = "Dokumenty";
+  download = "Stažené";
+  music = "Hudba";
+  pictures = "Obrázky";
+  publicShare = "Veřejné";
+  templates = "Šablony";
+  videos = "Videa";
+in {
   xdg = {
     enable = true;
 
@@ -7,29 +16,27 @@
       
       createDirectories = true;
 
-      desktop = "${homeDirectory}/Plocha";
-      documents = "${homeDirectory}/Dokumenty";
-      download = "${homeDirectory}/Stažené";
-      music = "${homeDirectory}/Hudba";
-      pictures = "${homeDirectory}/Obrázky";
-      publicShare = "${homeDirectory}/Veřejné";
-      templates = "${homeDirectory}/Šablony";
-      videos = "${homeDirectory}/Videa";
+      desktop = "${homeDirectory}/${desktop}";
+      documents = "${homeDirectory}/${documents}";
+      download = "${homeDirectory}/${download}";
+      music = "${homeDirectory}/${music}";
+      pictures = "${homeDirectory}/${pictures}";
+      publicShare = "${homeDirectory}/${publicShare}";
+      templates = "${homeDirectory}/${templates}";
+      videos = "${homeDirectory}/${videos}";
     };
   };
 
   home.persistence.${persistDirectory} = {
-    directories = let
-      cfg = config.xdg.userDirs;
-    in [
-      cfg.desktop
-      cfg.documents
-      cfg.download
-      cfg.music
-      cfg.pictures
-      cfg.publicShare
-      cfg.templates
-      cfg.videos
+    directories = [
+      desktop
+      documents
+      download
+      music
+      pictures
+      publicShare
+      templates
+      videos
     ];
   };
 }
