@@ -1,6 +1,6 @@
 { config, pkgs, modules, ... }: {
   imports = [
-    modules.local.games
+    modules.local.software.games
   ];
 
   programs.steam = {
