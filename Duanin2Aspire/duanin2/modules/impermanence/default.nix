@@ -7,6 +7,7 @@
       "dev"
       ".android"
       ".gnupg"
+      ".local/share/Trash"
       {
         directory = ".local/share/Steam";
         method = "symlink";
