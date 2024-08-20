@@ -41,6 +41,7 @@ in {
 		(modules.local.games + /lutris)
 		# (modules.local.games + /godot)
     (modules.local.games + /mangohud)
+    (modules.local.games + "/osu!")
 
 		(modules.common.shell + /nushell)
 		(modules.common.shell.prompts + /starship)
