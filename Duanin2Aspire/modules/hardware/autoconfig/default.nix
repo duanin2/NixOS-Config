@@ -16,13 +16,7 @@
 	fileSystems."/" =
     { device = "none";
       fsType = "tmpfs";
-      options = [ "size=3G" "mode=755" ];
-    };
-  
-  fileSystems."/tmp" =
-    { device = "none";
-      fsType = "tmpfs";
-      options = [ "size=15G" "mode=1777" ];
+      options = [ "size=64M" "mode=755" ];
     };
 
   fileSystems."/boot" =
@@ -47,7 +41,7 @@
   fileSystems."/home/duanin2" =
     { device = "none";
       fsType = "tmpfs";
-      options = [ "size=4G" "mode=755" ];
+      options = [ "size=1G" "mode=755" ];
     };
 
 	swapDevices = [ ];

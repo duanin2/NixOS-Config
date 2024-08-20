@@ -10,6 +10,12 @@
       "/var/lib/systemd/coredump"
       "/etc/NetworkManager/system-connections"
       "/tmp/hyprland"
+      {
+        directory = "/tmp";
+        user = "root";
+        group = "root";
+        mode = "1777";
+      }
     ];
     files = [
       "/etc/machine-id"
