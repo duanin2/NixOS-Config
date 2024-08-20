@@ -1,9 +1,13 @@
-{ config, pkgs, modules, ... }: let
+{ config, pkgs, modules', ... }: let
 	homeDirectory = config.home.homeDirectory or ("/home/${config.home.username or "duanin2"}");
 	persistDirectory = "/persist" + homeDirectory;
 
-  finalModules = modules // {
-    local = ./modules;
+  modules = modules' // rec {
+    local = {
+      outPath = ./modules;
+
+      games = local.outPath + /games;
+    };
   };
 in {
 	imports = [
@@ -17,18 +21,20 @@ in {
 		(modules.local + /bash)
 		(modules.local + /bottles)
 		(modules.local + /git)
-		(modules.local + /Hyprland)
 		(modules.local + /theming)
 		(modules.local + /alacritty)
 		(modules.local + /ssh)
 		(modules.local + /impermanence)
 		(modules.common + /Emacs)
     (modules.common + /tldr)
-    (modules.common + /eww)
+    # (modules.common + /eww)
     (modules.common + /pidgin)
     (modules.common + /systemd)
     (modules.common + /gnunet)
     (modules.common + /kdeConnect)
+
+    # (modules.local + /Hyprland)
+    (modules.local + /plasma)
     
 		(modules.local.games + /prismlauncher)
 		# (modules.local.games + /vinegar)
@@ -49,8 +55,5 @@ in {
 
 	home.stateVersion = "23.11";
 
-	_module.args = {
-    inherit homeDirectory persistDirectory;
-    modules = finalModules;
-  };
+	_module.args = { inherit homeDirectory persistDirectory modules; };
 }

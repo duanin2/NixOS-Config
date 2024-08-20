@@ -26,7 +26,7 @@
 		(modules.local.software + /nix)
 		(modules.common.software + /home-manager)
     (modules.local.software + /firejail)
-    (modules.local.software + /tlp)
+    # (modules.local.software + /tlp)
     (modules.common.software + /gnunet)
     (modules.common.software + /kdeConnect)
     (modules.local.software + /pipewire)
@@ -65,13 +65,13 @@
     (modules.local.software.virtualization + /libvirt)
 
 		# software.desktops
-		(modules.local.software.desktop + /plasma)
-		(modules.local.software.desktop + /Hyprland)
-    # (modules.local.software.desktop + /QTile)
+		(modules.local.software.desktops + /plasma)
+		# (modules.local.software.desktops + /Hyprland)
+    # (modules.local.software.desktops + /QTile)
 
 		# software.greeters
-		(modules.local.software.greeters + /GreetD)
-    # (modules.local.software.greeters + /SDDM)
+		# (modules.local.software.greeters + /GreetD)
+    (modules.local.software.greeters + /SDDM)
 
 		# software.theming
 		(modules.local.software.theming)
