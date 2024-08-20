@@ -3,7 +3,7 @@
     ./cursor.nix
     ./gtk.nix
     ./colors.nix
-    ./qt.nix
+    # ./qt.nix
 
     ./catppuccin.nix
   ];

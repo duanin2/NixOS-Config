@@ -112,6 +112,14 @@
 		};
 
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
+
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
 	};
 
 	outputs = inputs: let
@@ -123,23 +131,23 @@
 		nixosConfigurations = let
 			nixosCdDvd = path: inputs.nixpkgs + "/nixos/modules/installer/cd-dvd" + path;
 
-      commonModules = rec {
+      commonModules = {
         outPath = ./common/modules;
 
-        hardware = outPath + /hardware;
+        hardware.outPath = commonModules.outPath + /hardware;
         software = {
-          outPath = outPath + /software;
+          outPath = commonModules.outPath + /software;
 
-          network = outPath + /network;
-          shell = outPath + /shell;
-          kernel = rec {
-            outPath = outPath + /kernel;
+          network = commonModules.software.outPath + /network;
+          shell = commonModules.software.outPath + /shell;
+          kernel = {
+            outPath = commonModules.software.outPath + /kernel;
 
-            RaspberryPi = outPath + /RaspberryPi;
+            RaspberryPi = commonModules.software.kernel.outPath + /RaspberryPi;
           };
         };
       };
-      isoModules = ./common/iso;
+      isoModules.outPath = ./common/iso;
 		in {
 			"Duanin2Aspire" = let
 				system = "x86_64-linux";
@@ -154,21 +162,21 @@
 				inherit system;
 				specialArgs = {
           inherit inputs lib customPkgs nur;
-          modules = {
-            local = rec {
+          modules = rec {
+            local = {
               outPath = path + /modules;
 
-              hardware = outPath + /hardware;
+              hardware = local.outPath + /hardware;
               software = {
-                outPath = outPath + /software;
+                outPath = local.outPath + /software;
 
-                network = outPath + /network;
-                games = outPath + /games;
-                bootloader = outPath + /bootloader;
-                virtualization = outPath + /virtualization;
-                desktops = outPath + /desktop;
-                greeters = outPath + /greeter;
-                theming = outPath + /theming;
+                network = local.software.outPath + /network;
+                games = local.software.outPath + /games;
+                bootloader = local.software.outPath + /bootloader;
+                virtualization = local.software.outPath + /virtualization;
+                desktops = local.software.outPath + /desktop;
+                greeters = local.software.outPath + /greeters;
+                theming = local.software.outPath + /theming;
               };
             };
             common = commonModules;
@@ -195,17 +203,17 @@
 				inherit system;
 				specialArgs = {
           inherit inputs lib customPkgs nur;
-          modules = {
-            local = rec {
+          modules = rec {
+            local = {
               outPath = path + /modules;
 
-              hardware = outPath + /hardware;
+              hardware.outPath = local.outPath + /hardware;
               software = {
-                outPath = outPath + /software;
+                outPath = local.outPath + /software;
 
-                network = outPath + /network;
-                bootloader = outPath + /bootloader;
-                web = outPath + /web;
+                network = local.software.outPath + /network;
+                bootloader = local.software.outPath + /bootloader;
+                web = local.software.outPath + /web;
               };
             };
             common = commonModules;
@@ -280,16 +288,16 @@
 				inherit pkgs;
 				extraSpecialArgs = {
           inherit pkgs inputs lib customPkgs nur;
-          modules = {
-            local = path + /modules;
-            common = rec {
+          modules = rec {
+            local.outPath = path + /modules;
+            common = {
               outPath = ./common/duanin2/modules;
 
-              Mozilla = outPath + /Mozilla;
+              Mozilla = common.outPath + /Mozilla;
               shell = {
-                outPath = outPath + /shell;
+                outPath = common.outPath + /shell;
 
-                prompts = outPath + /prompts;
+                prompts = common.shel.outPathl + /prompts;
               };
             };
           };

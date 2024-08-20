@@ -8,7 +8,7 @@
 		bluez-qt
 	]);
 	
-	services.xserver.displayManager.defaultSession = "plasmawayland";
+	services.displayManager.defaultSession = "plasmawayland";
 
-	services.xserver.desktopManager.plasma5.enable = true;
+	services.desktopManager.plasma5.enable = true;
 }

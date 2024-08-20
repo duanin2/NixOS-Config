@@ -1,10 +1,10 @@
 { inputs, pkgs, lib, ... }: {
 	services.desktopManager.plasma6.enable = true;
 
-	services.xserver.displayManager.defaultSession = "plasma";
+	services.displayManager.defaultSession = "plasma";
 
 	environment.systemPackages = with pkgs; [
-		blurredwallpaper
+		plasma-plugin-blurredwallpaper
 		
 		(applet-window-title.overrideAttrs (old: let 
 			pname = "applet-window-title6";

@@ -1,6 +1,8 @@
 { lib, config, pkgs, modules, ... }: {
+  disabledModules = [ (modules.local.software + /tlp) ];
+  
   imports = [
-    (modules.local + /X)
+    (modules.local.software + /X)
     ./plasma6.nix
     (modules.common.software + /kdeConnect)
   ];
@@ -34,5 +36,5 @@
 	services.fwupd.enable = true;
 	chaotic.appmenu-gtk3-module.enable = true;
 
-	programs.gnupg.agent.pinentryPackage = if config.programs.gnupg.enable then pkgs.pinetry-qt else config.programs.gnupg.agent.pinentryPackage;
+	programs.gnupg.agent.pinentryPackage = if config.programs.gnupg.agent.enable then pkgs.pinentry-qt else config.programs.gnupg.agent.pinentryPackage;
 }
