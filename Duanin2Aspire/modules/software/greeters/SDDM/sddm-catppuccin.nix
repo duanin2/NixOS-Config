@@ -7,7 +7,7 @@
 	validFlavours = [ "mocha" "macchiato" "frappe" "latte" ];
 in
 	lib.checkListOfEnum "Invalid flavour, valid flavours are ${toString validFlavours}" validFlavours flavour
-stdenvNoCC.mkDerivation rec {
+stdenvNoCC.mkDerivation {
 	pname = "catppuccin-sddm";
   version = "unstable-2024-02-06";
 

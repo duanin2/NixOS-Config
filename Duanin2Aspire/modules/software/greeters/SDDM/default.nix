@@ -4,12 +4,12 @@
 	NumLock=0
 	'';
 in {
-  environment.systemPackages = with pkgs; [ (pkgs.callPackage ./sddm-catppuccin.nix { }) ];
+  # environment.systemPackages = with pkgs; [ (pkgs.callPackage ./sddm-catppuccin.nix { }) ];
 
   services.xserver.displayManager.sddm = {
 		enable = true;
 
-		theme = "catppuccin-sddm-frappe";
+		# theme = "catppuccin-sddm-frappe";
 		autoNumlock = true;
 		wayland = {
 			enable = true;
