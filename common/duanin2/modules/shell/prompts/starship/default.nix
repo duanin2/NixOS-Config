@@ -9,8 +9,8 @@
       command_timeout = 1000;
 
       format = lib.concatStrings [
-        "$shell at $os $username@$hostname$nix_shell$line_break"
-        "$directory $direnv $git_branch$git_status $character"
+        "$shell at $username@$os$hostname$nix_shell$line_break"
+        "$directory$direnv$git_branch$git_status$character"
       ];
       right_format = lib.concatStrings [
         "$all"
@@ -82,7 +82,7 @@
           FreeBSD = "";
           Garuda = "";
           Gentoo = "";
-          Hardened = "🛡️";
+          HardenedBSD = "🛡️";
           Illumos = "";
           Kali = "";
           Linux = "";
@@ -159,14 +159,14 @@
         unloaded_msg = "()[red bold]";
       };
       nix_shell = {
-        heurisitc = true;
+        heuristic = true;
 
         format = " via [$symbol$state(\($name\))]($style)";
         symbol = "";
 
         pure_msg = " pure ";
         impure_msg = " impure ";
-        unknown_msg = " ";
+        unknown_msg = "unknown ";
       };
     };
   };
