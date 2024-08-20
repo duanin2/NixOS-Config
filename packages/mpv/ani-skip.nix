@@ -2,7 +2,9 @@
   lib,
   fetchFromGitHub,
   gitUpdater,
-  stdenvNoCC
+  stdenvNoCC,
+  fzf,
+  bash
 }: stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "ani-skip";
   version = "1.0.1";
@@ -14,6 +16,11 @@
     hash = "sha256-VEEG3d6rwTAS7/+gBKHFKIg9zFfBu5eBOu6Z23621gM=";
   };
   passthru.updateScript = gitUpdater { };
+
+  buildInputs = [
+    fzf
+    bash
+  ];
 
   installPhase = ''
 runHook preInstall
