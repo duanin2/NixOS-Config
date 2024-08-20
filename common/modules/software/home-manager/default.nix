@@ -6,15 +6,15 @@
   home-manager = {
     extraSpecialArgs = {
       inherit inputs lib customPkgs nur;
-      modules = {
-        common = rec {
+      modules' = rec {
+        common = {
           outPath = ../../../duanin2/modules;
 
-          Mozilla = outPath + /Mozilla;
+          Mozilla = common.outPath + /Mozilla;
           shell = {
-            outPath = outPath + /shell;
+            outPath = common.outPath + /shell;
 
-            prompts = outPath + /prompts;
+            prompts = common.shell.outPath + /prompts;
           };
         };
       };
