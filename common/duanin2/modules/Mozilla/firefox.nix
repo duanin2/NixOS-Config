@@ -2,18 +2,21 @@
   disabledModules = [ ./mullvad.nix ];
 
   home.packages = with pkgs; [
-    firefoxpwa
+    # firefoxpwa
   ];
-  
+
 	programs.firefox = {
 		enable = true;
     package = pkgs.firefox;
 
-    /*
+    languagePacks = [
+      "en-GB"
+      "cs"
+    ];
     nativeMessagingHosts = with pkgs; [
       # firefoxpwa
+      kdePackages.plasma-browser-integration
     ];
-    */
     policies = {
       DisableFirefoxAccounts = true;
       DisableFirefoxStudies = true;
@@ -55,6 +58,7 @@
 					terms-of-service-didnt-read
           sidebery
           aria2-integration
+          plasma-integration
 				]
 				++ (with customPkgs.mozilla.firefoxAddons; [
 					librejs
@@ -66,7 +70,8 @@
 		    })).res // {
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
           "javascript.enabled" = true;
-          
+          "widget.use-xdg-desktop-portal.file-picker" = 1;
+
 					# Arkenfox overrides
           "browser.startup.page" = 3;
           "privacy.clearOnShutdown.history" = false;
