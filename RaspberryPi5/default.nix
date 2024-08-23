@@ -15,6 +15,7 @@
     (modules.local.software + /fuse)
     (modules.common.software + /samba)
     (modules.local.software + /mail)
+    (modules.common.software + /nix-ld)
 
     # software/network
 		(modules.common.software.network + /networkmanager)

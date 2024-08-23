@@ -30,6 +30,7 @@
     (modules.common.software + /gnunet)
     (modules.common.software + /kdeConnect)
     (modules.local.software + /pipewire)
+    (modules.common.software + /nix-ld)
 
 		# software.network
 		(modules.common.software.network + /networkmanager)
