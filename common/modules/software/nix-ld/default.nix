@@ -1,5 +1,5 @@
 { inputs, ... }: {
-  imports = [ inputs.nix-ld.nixosModules.nix-ld ];
+  # imports = [ inputs.nix-ld.nixosModules.nix-ld ];
 
-  programs.nix-ld.dev.enable = true;
+  programs.nix-ld.enable = true;
 }

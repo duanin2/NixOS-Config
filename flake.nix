@@ -120,10 +120,19 @@
         home-manager.follows = "home-manager";
       };
     };
+
+    /*
+    nix-ld = {
+      url = "github:nix-community/nix-ld";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+    */
 	};
 
 	outputs = inputs: let
-		lib = inputs.nixpkgs.lib.extend (final: prev: (import ./lib final prev) // inputs.home-manager.lib);
+		lib = inputs.nixpkgs.lib.extend (final: prev: inputs.home-manager.lib // (import ./lib final prev));
 
 		eachSystem = lib.genAttrs (import inputs.systems);
 	in rec {
