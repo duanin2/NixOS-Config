@@ -18,7 +18,7 @@ in {
 		};
 		settings = {
 			General = {
-				GreeterEnvironment = "QT_WAYLAND_SHELL_INTEGRATION=layer-shell";
+				# GreeterEnvironment = "QT_WAYLAND_SHELL_INTEGRATION=layer-shell";
 			};
 		};
 	};
@@ -27,6 +27,7 @@ in {
 		deps = [ "var" ];
 		text = ''
     mkdir -p /var/lib/sddm/.config
+    rm -rf /var/lib/sddm/.config/kcminputrc
 		ln -s ${sddm-numlock} /var/lib/sddm/.config/kcminputrc
   	'';
 	};
