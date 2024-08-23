@@ -1,12 +1,12 @@
 { pkgs, ... }: let
 	sddm-numlock = pkgs.writeText "sddm-numlock-fix" ''
-	[Keyboard]
-	NumLock=0
+[Keyboard]
+NumLock=0
 	'';
 in {
   # environment.systemPackages = with pkgs; [ (pkgs.callPackage ./sddm-catppuccin.nix { }) ];
 
-  services.xserver.displayManager.sddm = {
+  services.displayManager.sddm = {
 		enable = true;
 
 		# theme = "catppuccin-sddm-frappe";
@@ -14,7 +14,7 @@ in {
 		wayland = {
 			enable = true;
 
-			compositorCommand = "kwin_wayland --drm --no-lockscreen --no-global-shortcuts --locale1";
+			# compositorCommand = "kwin_wayland --drm --no-lockscreen --no-global-shortcuts --locale1";
 		};
 		settings = {
 			General = {

@@ -28,16 +28,18 @@ in {
       {
         alignment = "center";
         floating = false;
-        height = 20;
+        height = 32;
         hiding = "none";
         lengthMode = "fill";
         location = "top";
         widgets = [
           "org.kde.windowtitle"
+          "org.kde.windowbuttons"
           "org.kde.plasma.appmenu"
           "org.kde.plasma.panelspacer"
           "org.kde.plasma.systemtray"
           "org.kde.plasma.digitalclock"
+          "org.kde.windowbuttons"
           "org.kde.plasma.showdesktop"
         ];
       }
@@ -50,12 +52,12 @@ in {
         };
         dimDisplay = {
           enable = true;
-          idleTimeout = 60 * 5;
+          idleTimeOut = 60 * 9;
         };
         powerButtonAction = "lockScreen";
         turnOffDisplay = {
           idleTimeout = 60 * 10;
-          idleTimeoutWhenLocked = 60 * 7.5;
+          idleTimeoutWhenLocked = 60 * 10;
         };
         whenLaptopLidClosed = "sleep";
         whenSleepingEnter = "standby";
@@ -67,7 +69,7 @@ in {
         };
         dimDisplay = {
           enable = true;
-          idleTimeout = 60 * 2;
+          idleTimeOut = 60 * 4;
         };
         powerButtonAction = "sleep";
         turnOffDisplay = {
@@ -80,26 +82,26 @@ in {
       lowBattery = {
         autoSuspend = {
           action = "sleep";
-          idleTimeout = 60 * 5;
+          idleTimeout = 60 * 2;
         };
         dimDisplay = {
           enable = true;
-          idleTimeout = 60 * 0.5;
+          idleTimeOut = 30;
         };
         powerButtonAction = "sleep";
         turnOffDisplay = {
           idleTimeout = 60 * 1;
-          idleTimeoutWhenLocked = 60 * 1;
+          idleTimeoutWhenLocked = "immediately";
         };
         whenLaptopLidClosed = "sleep";
         whenSleepingEnter = "standby";
       };
     };
-    windows-rules = [ ];
+    window-rules = [ ];
     windows = {
       allowWindowsToRememberPositions = true;
     };
-    workspaces = {
+    workspace = {
       colorScheme = "CatppuccinFrappeGreen";
       cursor = let
         cfg = config.home.pointerCursor;
@@ -125,10 +127,11 @@ in {
       iconTheme = "Papirus-Dark";
       lookAndFeel = "Catppuccin-Frappe-Green";
       splashScreen = {
-        theme = "Catppuccin-Frappe-Green";
+        theme = "catppuccin-frappe-green-cursors";
       };
       inherit wallpaper;
       windowDecorations = {
+        library = "org.kde.kwin.aurorae";
         theme = "__aurorae__svg__CatppuccinFrappe-Modern";
       };
     };
@@ -137,10 +140,10 @@ in {
         layouts = [
           {
             layout = "cz";
-            model = "acer_laptop";
-            numlockOnStartup = true;
           }
         ];
+        model = "acer_laptop";
+        numlockOnStartup = "on";
       };
       touchpads = [
         {
@@ -186,19 +189,24 @@ in {
         desktopSwitching = { animation = "slide"; };
         dimAdminMode = { enable = true; };
         dimInactive = { enable = false; };
-        fallApart = { enable = true; };
+        fallApart = { enable = false; };
         fps = { enable = false; };
         minimization = { animation = "squash"; };
         shakeCursor = { enable = false; };
-        slideBack = { enable = true; };
+        slideBack = { enable = false; };
         snapHelper = { enable = true; };
         translucency = { enable = false; };
         windowOpenClose = { animation = "scale"; };
       };
       nightLight = {
         enable = true;
-        mode = "location";
+        mode = "times";
         temperature = { day = 6500; night = 4500; };
+        time = {
+          evening = "20:00";
+          morning = "06:00";
+        };
+        transitionTime = 60;
       };
       titlebarButtons = {
         left = [
@@ -252,6 +260,70 @@ in {
       windowTitle = {
         family = "Fira Code Nerd Font";
         pointSize = 10;
+      };
+    };
+    startup.desktopScript = {
+      "set_panel_widget_settings" = {
+        text = ''
+let allPanels = panels();
+for (const panel of allPanels) {
+  let allWidgets = panel.widgets();
+  for (const widget of allWidgets) {
+    switch (widget.type) {
+      case "org.kde.plasma.icontasks":
+        widget.currentConfigGroup = [ "General" ];
+        widget.writeConfig("groupedTaskVisualization", 1);
+        widget.writeConfig("iconSpacing", 0);
+        widget.currentConfigGroup = [ ];
+        break;
+      case "org.kde.plasma.kickoff":
+        widget.currentConfigGroup = [ "General" ];
+        widget.writeConfig("icon", "distributor-logo-nixos");
+        widget.writeConfig("systemFavorites", "suspend\\,hibernate\\,reboot\\,shutdown");
+        widget.currentConfigGroup = [ ];
+        break;
+      case "org.kde.windowtitle":
+        widget.currentConfigGroup = [ "General" ];
+        widget.writeConfig("filterActivityInfo", false);
+        widget.writeConfig("lengthFirstMargin", 2);
+        widget.writeConfig("lengthLastMargin", 2);
+        widget.writeConfig("spacing", 2);
+        widget.writeConfig("placeHolder", "NixOS");
+        widget.writeConfig("subsMatch", [
+          "Plasma-Interactiveconsole",
+          "Mpv Přehrávač"
+        ]);
+        widget.writeConfig("subsReplace", [
+          "Interactive Plasma Console",
+          "MPV"
+        ]);
+        widget.currentConfigGroup = [ ];
+        break;
+      case "org.kde.plasma.digitalclock":
+        widget.currentConfigGroup = [ "Appearance" ];
+        widget.writeConfig("displayTimezoneFormat", "FullText");
+        widget.writeConfig("showDate", false);
+        widget.writeConfig("showSeconds", "Always");
+        widget.writeConfig("showWeekNumbers", true);
+        widget.currentConfigGroup = [ ];
+        break;
+      case "org.kde.windowbuttons":
+        widget.currentConfigGroup = [ "General" ];
+        widget.writeConfig("inactiveStateEnabled", true);
+        widget.writeConfig("perScreenActive", true);
+        widget.writeConfig("useCurrentDecoration", true);
+        widget.writeConfig("visibility", "ActiveMaximizedWindow");
+        if (widget.x < panel.width / 2) {
+          widget.writeConfig("buttons", "2|10|3|4|5|9");
+        } else {
+          widget.writeConfig("buttons", "3|4|5|10|2|9");
+        }
+        widget.currentConfigGroup = [ ];
+        break;
+    }
+  }
+}
+        '';
       };
     };
     
@@ -488,13 +560,13 @@ in {
           "Places Icons Auto-resize" = false;
           "Places Icons Static Size" = 22;
         };
-        "kactivitymanagerdrc" = {
-          "activities" = {
-            "717a174e-b3dc-4181-bdbb-4bef9ea50e5b" = "Výchozí";
-          };
-          "main" = {
-            "currentActivity" = "717a174e-b3dc-4181-bdbb-4bef9ea50e5b";
-          };
+      };
+      "kactivitymanagerdrc" = {
+        "activities" = {
+          "717a174e-b3dc-4181-bdbb-4bef9ea50e5b" = "Výchozí";
+        };
+        "main" = {
+          "currentActivity" = "717a174e-b3dc-4181-bdbb-4bef9ea50e5b";
         };
       };
       "kded5rc" = {
@@ -533,6 +605,10 @@ in {
           "inactiveBlend" = "239,240,241";
           "inactiveForeground" = "112,125,138";
         };
+        "KScreen" = {
+          "ScreenScaleFactors" = "eDP-1=1;";
+          "XwaylandClientsScale" = false;
+        };
       };
       "kwinrc" = {
         "Tiling" = {
@@ -540,9 +616,6 @@ in {
         };
         "Tiling/1c624b6b-fbd3-5af5-93a9-4a7d55ba7893" = {
           "tiles" = "{\"layoutDirection\":\"horizontal\",\"tiles\":[{\"width\":0.25},{\"width\":0.5},{\"width\":0.25}]}";
-        };
-        "Xwayland" = {
-          "Scale" = 1;
         };
       };
       "plasma-localerc" = {

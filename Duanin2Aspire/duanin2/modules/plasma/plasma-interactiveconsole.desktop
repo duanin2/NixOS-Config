@@ -1,0 +1,17 @@
+[Desktop Entry]
+Comment[cs_CZ]=
+Comment=
+Exec=plasma-interactiveconsole
+GenericName[cs_CZ]=
+GenericName=
+Icon=system-run
+MimeType=
+Name[cs_CZ]=KDE Plasma Interactive Console
+Name=KDE Plasma Interactive Console
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-KDE-SubstituteUID=false
+X-KDE-Username=
