@@ -21,35 +21,33 @@ in {
         hashedPasswordFile = "/var/lib/secrets/mailPass/duanin2";
         aliases = [
           "postmaster@duanin2.top"
-          "admin@duanin2.top"
           "abuse@duanin2.top"
-          "dusan.till@duanin2.top"
         ];
         aliasesRegexp = [
-          "/^duanin2-.*@duanin2\\.top$/"
-          "/^dusan.till-.*@duanin2\\.top$/"
-          "/^.*-admin@duanin2.top$/"
+          "/^duanin2(-.+)?@duanin2\\.top$/"
+          "/^dusan.till(-.+)?@duanin2\\.top$/"
+          "/^admin(-.+)?@duanin2.top$/"
         ];
         sieveScript = ''
 require ["fileinto", "mailbox"];
 
 if address :matches :localpart ["to", "Deliver-To"] "abuse" {
-    fileinfo :create "AbuseReport";
+    fileinto :create "AbuseReport";
     stop;
 }
 if address :matches :localpart ["to", "Deliver-To"] ["postmaster", "*admin"] {
-    fileinfo :create "Admin";
+    fileinto :create "Admin";
     stop;
 }
 if address :matches :localpart ["to", "Deliver-To"] "dusan.till" {
-    fileinfo :create "Personal";
+    fileinto :create "Personal";
     stop;
 }
 if address :matches :localpart ["to", "Deliver-To"] "dusan.till-*" {
-    fileinfo :create "MassMail-Personal";
+    fileinto :create "MassMail-Personal";
 }
 if address :matches :localpart ["to", "Deliver-To"] "duanin2-*" {
-    fileinfo :create "MassMail";
+    fileinto :create "MassMail";
 }
 
 # This must be the last rule, it will check if list-id is set, and
