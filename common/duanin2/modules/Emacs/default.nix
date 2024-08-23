@@ -7,7 +7,7 @@
   home.packages = with pkgs; [
     typescript-language-server
     typescript
-    vscode-langservers-extracted
+    # vscode-langservers-extracted
     nodePackages.intelephense
   ];
   
@@ -201,7 +201,7 @@
 
 ;; nix-nil
 (setq lsp-nix-nil-server-path "${lib.getExe pkgs.nil}")
-(setq lsp-nix-nil-max-mem ${toString (6 * 1024)})
+(setq lsp-nix-nil-max-mem ${toString (4 * 1024)})
 ;; (setq lsp-nix-nil-formatter "nix fmt")
 
 ;; OpenSCAD
