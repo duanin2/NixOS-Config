@@ -106,7 +106,7 @@ in {
       cursor = let
         cfg = config.home.pointerCursor;
       in {
-        theme = "Catppuccin-Frappe-Green";
+        theme = "catppuccin-frappe-green-cursors";
         size = cfg.size;
       };
       desktop = {
@@ -239,27 +239,27 @@ in {
     fonts = {
       fixedWidth = {
         family = "Fira Code Nerd Font Mono";
-        pointSize = 10;
+        pointSize = 11;
       };
       general = {
         family = "Fira Code Nerd Font";
-        pointSize = 10;
+        pointSize = 11;
       };
       menu = {
         family = "Fira Code Nerd Font";
-        pointSize = 10;
+        pointSize = 11;
       };
       small = {
         family = "Fira Code Nerd Font";
-        pointSize = 8;
+        pointSize = 9;
       };
       toolbar = {
         family = "Fira Code Nerd Font";
-        pointSize = 10;
+        pointSize = 11;
       };
       windowTitle = {
         family = "Fira Code Nerd Font";
-        pointSize = 10;
+        pointSize = 11;
       };
     };
     startup.desktopScript = {
@@ -313,12 +313,14 @@ for (const panel of allPanels) {
         widget.writeConfig("perScreenActive", true);
         widget.writeConfig("useCurrentDecoration", true);
         widget.writeConfig("visibility", "ActiveMaximizedWindow");
-        if (widget.x < panel.width / 2) {
+        if (widget.geometry.x < panel.length / 2) {
           widget.writeConfig("buttons", "2|10|3|4|5|9");
         } else {
           widget.writeConfig("buttons", "3|4|5|10|2|9");
         }
         widget.currentConfigGroup = [ ];
+        break;
+      default:
         break;
     }
   }
