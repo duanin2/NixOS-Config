@@ -6,7 +6,10 @@
     preset = "catppuccin-frappe-rainbow";
   }}/share/wallpapers/nixos-wallpaper.png";
 in {
-  imports = [ inputs.plasma-manager.homeManagerModules.plasma-manager ];
+  imports = [
+    inputs.plasma-manager.homeManagerModules.plasma-manager
+    ./konsole.nix
+  ];
   
   programs.plasma = {
     enable = true;
