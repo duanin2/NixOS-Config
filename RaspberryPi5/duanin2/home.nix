@@ -7,7 +7,7 @@
   };
 in {
   imports = [
-    (modules.common.shell.prompts + /nushell)
+    (modules.common.shell + /nushell)
 		(modules.common.shell.prompts + /starship)
     (modules.local + /impermanence)
     (modules.common + /tldr)
