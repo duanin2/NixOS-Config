@@ -4,8 +4,9 @@
     hostname = "github.com";
     port = 22;
     user = "git";
+    identityFile = "${homeDirectory}/.ssh/github";
+    
     forwardX11 = false;
     forwardX11Trusted = false;
-    identityFile = "${homeDirectory}/.ssh/github";
   };
 }

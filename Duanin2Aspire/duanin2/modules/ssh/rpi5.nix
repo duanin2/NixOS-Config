@@ -1,4 +1,4 @@
-{ lib, pkgs, homeDirectory, ... }: {
+{ homeDirectory, ... }: {
   programs.ssh.matchBlocks."RPi5" = {
     host = "RPi5";
     hostname = "duanin2.top";
