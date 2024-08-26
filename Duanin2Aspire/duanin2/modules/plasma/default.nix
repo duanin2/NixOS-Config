@@ -36,8 +36,8 @@ in {
         lengthMode = "fill";
         location = "top";
         widgets = [
-          "org.kde.windowtitle"
           "org.kde.windowbuttons"
+          "org.kde.windowtitle"
           "org.kde.plasma.appmenu"
           "org.kde.plasma.panelspacer"
           "org.kde.plasma.systemtray"
@@ -100,7 +100,22 @@ in {
         whenSleepingEnter = "standby";
       };
     };
-    window-rules = [ ];
+    window-rules = [
+      {
+        description = "Center the About Mozilla Firefox window";
+        match = {
+          title = {
+            value = "About Mozilla Firefox";
+            type = "exact";
+          };
+          window-class = {
+            value = "firefox firefox";
+            match-whole = true;
+            type = "exact";
+          };
+        };
+      }
+    ];
     windows = {
       allowWindowsToRememberPositions = true;
     };
@@ -271,64 +286,90 @@ in {
 let allPanels = panels();
 for (const panel of allPanels) {
   let allWidgets = panel.widgets();
-  for (const widget of allWidgets) {
-    switch (widget.type) {
-      case "org.kde.plasma.icontasks":
-        widget.currentConfigGroup = [ "General" ];
-        widget.writeConfig("groupedTaskVisualization", 1);
-        widget.writeConfig("iconSpacing", 0);
-        widget.currentConfigGroup = [ ];
-        break;
-      case "org.kde.plasma.kickoff":
-        widget.currentConfigGroup = [ "General" ];
-        widget.writeConfig("icon", "distributor-logo-nixos");
-        widget.writeConfig("systemFavorites", "suspend\\,hibernate\\,reboot\\,shutdown");
-        widget.currentConfigGroup = [ ];
-        break;
-      case "org.kde.windowtitle":
-        widget.currentConfigGroup = [ "General" ];
-        widget.writeConfig("filterActivityInfo", false);
-        widget.writeConfig("lengthFirstMargin", 2);
-        widget.writeConfig("lengthLastMargin", 2);
-        widget.writeConfig("spacing", 2);
-        widget.writeConfig("placeHolder", "NixOS");
-        widget.writeConfig("subsMatch", [
-          "Plasma-Interactiveconsole",
-          "Mpv Přehrávač"
-        ]);
-        widget.writeConfig("subsReplace", [
-          "Interactive Plasma Console",
-          "MPV"
-        ]);
-        widget.currentConfigGroup = [ ];
-        break;
-      case "org.kde.plasma.digitalclock":
-        widget.currentConfigGroup = [ "Appearance" ];
-        widget.writeConfig("displayTimezoneFormat", "FullText");
-        widget.writeConfig("showDate", false);
-        widget.writeConfig("showSeconds", "Always");
-        widget.writeConfig("showWeekNumbers", true);
-        widget.currentConfigGroup = [ ];
-        break;
-      case "org.kde.windowbuttons":
-        widget.currentConfigGroup = [ "General" ];
-        widget.writeConfig("inactiveStateEnabled", true);
-        widget.writeConfig("perScreenActive", true);
-        widget.writeConfig("useCurrentDecoration", true);
-        widget.writeConfig("visibility", "ActiveMaximizedWindow");
-        if (widget.geometry.x < panel.length / 2) {
-          widget.writeConfig("buttons", "2|10|3|4|5|9");
-        } else {
-          widget.writeConfig("buttons", "3|4|5|10|2|9");
-        }
-        widget.currentConfigGroup = [ ];
-        break;
-      default:
-        break;
-    }
+  let widgetOrder = panel.readConfig("AppletOrder", "").split(";");
+  for (let i = 0; i < widgetOrder.length; i++) {
+    widgetOrder[i] = parseInt(widgetOrder[i]);
   }
+
+  switch (panel.alignment) {
+    case "top":
+      for (const widget of allWidgets) {
+        switch (widget.index) {
+          case 0:
+            widget.currentConfigGroup = [ "General" ];
+            widget.writeConfig("inactiveStateEnabled", true);
+            widget.writeConfig("perScreenActive", true);
+            widget.writeConfig("useCurrentDecoration", true);
+            widget.writeConfig("visibility", "ActiveMaximizedWindow");
+            widget.writeConfig("buttons", "2|10|3|4|5|9");
+            widget.currentConfigGroup = [ ];
+            break;
+          case 1:
+            widget.currentConfigGroup = [ "General" ];
+            widget.writeConfig("filterActivityInfo", false);
+            widget.writeConfig("lengthFirstMargin", 2);
+            widget.writeConfig("lengthLastMargin", 2);
+            widget.writeConfig("spacing", 2);
+            widget.writeConfig("placeHolder", "NixOS");
+            widget.writeConfig("subsMatch", [
+              "Plasma-Interactiveconsole",
+              "Mpv Přehrávač"
+            ]);
+            widget.writeConfig("subsReplace", [
+              "Interactive Plasma Console",
+              "MPV"
+            ]);
+            widget.currentConfigGroup = [ ];
+            break;
+          case 5:
+            widget.currentConfigGroup = [ "Appearance" ];
+            widget.writeConfig("displayTimezoneFormat", "FullText");
+            widget.writeConfig("showDate", false);
+            widget.writeConfig("showSeconds", "Always");
+            widget.writeConfig("showWeekNumbers", true);
+            widget.currentConfigGroup = [ ];
+            break;
+          case 6:
+            widget.currentConfigGroup = [ "General" ];
+            widget.writeConfig("inactiveStateEnabled", true);
+            widget.writeConfig("perScreenActive", true);
+            widget.writeConfig("useCurrentDecoration", true);
+            widget.writeConfig("visibility", "ActiveMaximizedWindow");
+            widget.writeConfig("buttons", "3|4|5|10|2|9");
+            widget.currentConfigGroup = [ ];
+            break;
+          default:
+            break;
+        }
+        widget.reloadConfig();
+      }
+      break;
+    case "bottom":
+      for (const widget of allWidgets) {
+        switch (widget.index) {
+          case 0:
+            widget.currentConfigGroup = [ "General" ];
+            widget.writeConfig("icon", "distributor-logo-nixos");
+            widget.writeConfig("systemFavorites", "suspend\\,hibernate\\,reboot\\,shutdown");
+            widget.currentConfigGroup = [ ];
+            break;
+          case 1:
+            widget.currentConfigGroup = [ "General" ];
+            widget.writeConfig("groupedTaskVisualization", 1);
+            widget.writeConfig("iconSpacing", 0);
+            widget.currentConfigGroup = [ ];
+            break;
+          default:
+            break;
+        }
+        widget.reloadConfig();
+      }
+      break;
+  }
+  panel.reloadConfig();
 }
         '';
+        priority = 3;
       };
     };
     

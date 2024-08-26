@@ -1,21 +1,40 @@
 let allPanels = panels();
+print(`panels:\n`);
 for (const panel of allPanels) {
-  print(`${panel.id}:\n`);
+  print(`  ${panel.id}:\n`);
+  print(`    formFactor: ${panel.formFactor}\n`);
+  print(`    screen: ${panel.screen}\n`);
+  print(`    version: ${panel.version}\n`);
+  print(`    lengthMode: ${panel.lengthMode}\n`);
+  print(`    config:\n`);
+  printConfig(panel, [], 3);
+  print(`    globalConfig:\n`);
+  printGlobalConfig(panel, [], 3);
+
+  panel.currentConfigGroup = [ "General" ];
+  let widgetOrder = panel.readConfig("AppletOrder", "").split(";");
+  for (let i = 0; i < widgetOrder.length; i++) {
+    widgetOrder[i] = parseInt(widgetOrder[i]);
+  }
+
+  print(`    widgets:\n`);
   let allWidgets = panel.widgets();
   for (const widget of allWidgets) {
-    print(`  ${widget.id}:\n`);
-    print(`    type: ${widget.type}\n`);
-    print(`    version: ${widget.version}\n`);
-    print(`    index: ${widget.index}\n`);
-    print(`    geometry:\n`);
-    print(`      x: ${widget.geometry.x}\n`);
-    print(`      y: ${widget.geometry.y}\n`);
-    print(`      width: ${widget.geometry.width}\n`);
-    print(`      height: ${widget.geometry.height}\n`);
-    print(`    config:\n`);
-    printConfig(widget, [], 3);
-    print(`    globalConfig:\n`);
-    printGlobalConfig(widget, [], 3);
+    let index = widgetOrder.indexOf(widget.id);
+
+    print(`      ${widget.id}:\n`);
+    print(`        type: ${widget.type}\n`);
+    print(`        version: ${widget.version}\n`);
+    print(`        index: ${index}\n`);
+    print(`        geometry:\n`);
+    print(`          x: ${widget.geometry.x}\n`);
+    print(`          y: ${widget.geometry.y}\n`);
+    print(`          width: ${widget.geometry.width}\n`);
+    print(`          height: ${widget.geometry.height}\n`);
+    print(`        config:\n`);
+    printConfig(widget, [], 5);
+    print(`        globalConfig:\n`);
+    printGlobalConfig(widget, [], 5);
   }
 }
 
