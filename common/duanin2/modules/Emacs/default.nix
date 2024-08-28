@@ -387,9 +387,9 @@
       ".cache/nix/eval-cache-v5"
       ".emacs.d/auto-save-list"
       ".emacs.d/lsp-cache"
+      ".emacs.d/.cache"
     ];
     files = [
-      ".emacs.d/.cache/treemacs-persist"
       ".emacs.d/.lsp-session-v1"
     ];
   };
