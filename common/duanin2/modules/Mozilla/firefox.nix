@@ -59,6 +59,7 @@
           sidebery
           aria2-integration
           plasma-integration
+          foxyproxy-standard
 				]
 				++ (with customPkgs.mozilla.firefoxAddons; [
 					librejs
