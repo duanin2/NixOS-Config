@@ -59,4 +59,6 @@ final: prev: with final; with builtins; {
       value
     else
       defaultValue;
+
+  boolToString = value: if value == true then "true" else "false";
 }
