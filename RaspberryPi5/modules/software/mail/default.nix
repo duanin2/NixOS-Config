@@ -35,10 +35,12 @@ if address :matches :localpart ["to", "Deliver-To"] "abuse" {
     fileinto :create "AbuseReport";
     stop;
 }
-if address :matches :localpart ["to", "Deliver-To"] ["postmaster", "*admin"] {
+
+if address :matches :localpart ["to", "Deliver-To"] ["postmaster", "admin", "admin-*"] {
     fileinto :create "Admin";
     stop;
 }
+
 if address :matches :localpart ["to", "Deliver-To"] "dusan.till" {
     fileinto :create "Personal";
     stop;
@@ -46,8 +48,12 @@ if address :matches :localpart ["to", "Deliver-To"] "dusan.till" {
 if address :matches :localpart ["to", "Deliver-To"] "dusan.till-*" {
     fileinto :create "MassMail-Personal";
 }
+
+if address :matches :localpart ["to", "Deliver-To"] "duanin2" {
+    fileinto :create "Public";
+}
 if address :matches :localpart ["to", "Deliver-To"] "duanin2-*" {
-    fileinto :create "MassMail";
+    fileinto :create "MassMail-Public";
 }
 
 # This must be the last rule, it will check if list-id is set, and
