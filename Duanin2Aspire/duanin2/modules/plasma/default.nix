@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, persistDirectory, ... }: let
+{ inputs, config, pkgs, persistDirectory, lib, ... }: let
   wallpaper = "${inputs.nix-wallpaper.packages.${pkgs.system}.default.override {
     width = 1920;
     height = 1080;
@@ -15,38 +15,178 @@ in {
     enable = true;
 
     overrideConfig = true;
-    panels = [
-      {
-        alignment = "center";
-        floating = true;
-        height = 50;
-        hiding = "dodgewindows";
-        lengthMode = "fit";
-        location = "bottom";
-        widgets = [
-          "org.kde.plasma.kickoff"
-          "org.kde.plasma.icontasks"
+    
+    startup.desktopScript = {
+      "setup_panels" = let
+        windowTitleList = list: lib.concatMapStringsSep "," (value: toString value) list;
+        windowButtonsList = list: lib.concatMapStringsSep "|" (value: ''${toString value}'') list;
+        panels = [
+          {
+            height = 50;
+            floating = true;
+            alignment = "center";
+            hiding = "dodgewindows";
+            location = "bottom";
+            lengthMode = "fit";
+            widgets = [
+              {
+                type = "org.kde.plasma.kickoff";
+                config = {
+                  General = {
+                    icon = "distributor-logo-nixos";
+                    systemFavorites = "suspend\\,hibernate\\,reboot\\,shutdown";
+                  };
+                };
+                globalConfig = { };
+              }
+              {
+                type = "org.kde.plasma.icontasks";
+                config = {
+                  General = {
+                    groupedTaskVisualization = 1;
+                    iconSpacing = 0;
+                  };
+                };
+                globalConfig = { };
+              }
+            ];
+          }
+          {
+            height = 32;
+            floating = false;
+            alignment = "center";
+            hiding = "none";
+            location = "top";
+            lengthMode = "fill";
+            widgets = [
+              {
+                type = "org.kde.windowbuttons";
+                config = {
+                  General = {
+                    inactiveStateEnabled = true;
+                    perScreenActive = true;
+                    useCurrentDecoration = true;
+                    visibility = "ActiveMaximizedWindow";
+                    buttons = windowButtonsList [ 2 10 3 4 5 9 ];
+                  };
+                };
+                globalConfig = { };
+              }
+              {
+                type = "org.kde.windowtitle";
+                config = {
+                  General = {
+                    filterActivityInfo = false;
+                    lengthFirstMargin = 2;
+                    lengthLastMargin = 2;
+                    spacing = 2;
+                    placeHolder = "NixOS";
+                    subsMatch = windowTitleList [
+                      "Plasma-Interactiveconsole"
+                      "Mpv Přehrávač"
+                    ];
+                    subsReplace = windowTitleList [
+                      "Interactive Plasma Console"
+                      "MPV"
+                    ];
+                  };
+                };
+                globalConfig = { };
+              }
+              {
+                type = "org.kde.plasma.appmenu";
+                config = { };
+                globalConfig = { };
+              }
+              {
+                type = "org.kde.plasma.panelspacer";
+                config = { };
+                globalConfig = { };
+              }
+              {
+                type = "org.kde.plasma.systemtray";
+                config = { };
+                globalConfig = { };
+              }
+              {
+                type = "org.kde.plasma.digitalclock";
+                config = {
+                  Appearance = {
+                    displayTimezoneFormat = "FullText";
+                    showDate = false;
+                    showSeconds = "Always";
+                    showWeekNumbers = true;
+                  };
+                };
+                globalConfig = { };
+              }
+              {
+                type = "org.kde.windowbuttons";
+                config = {
+                  General = {
+                    inactiveStateEnabled = true;
+                    perScreenActive = true;
+                    useCurrentDecoration = true;
+                    visibility = "ActiveMaximizedWindow";
+                    buttons = windowButtonsList [ 3 4 5 10 2 9 ];
+                  };
+                };
+                globalConfig = { };
+              }
+              {
+                type = "org.kde.plasma.showdesktop";
+                config = { };
+                globalConfig = { };
+              }
+            ];
+          }
         ];
-      }
-      {
-        alignment = "center";
-        floating = false;
-        height = 32;
-        hiding = "none";
-        lengthMode = "fill";
-        location = "top";
-        widgets = [
-          "org.kde.windowbuttons"
-          "org.kde.windowtitle"
-          "org.kde.plasma.appmenu"
-          "org.kde.plasma.panelspacer"
-          "org.kde.plasma.systemtray"
-          "org.kde.plasma.digitalclock"
-          "org.kde.windowbuttons"
-          "org.kde.plasma.showdesktop"
-        ];
-      }
-    ];
+      in {
+        text = ''
+panels().forEach((panel) => panel.remove());
+
+${lib.concatMapStringsSep "\n" (panel: ''
+{
+  const panel = new Panel();
+  panel.height = ${toString panel.height};
+  panel.floating = ${lib.boolToString panel.floating};
+  panel.alignment = "${toString panel.alignment}";
+  panel.hiding = "${toString panel.hiding}";
+  panel.location = "${toString panel.location}";
+	panel.lengthMode = "${toString panel.lengthMode}";
+
+  ${lib.concatMapStringsSep "\n" (widget: let
+    recurseIntoConfig = groups: config: lib.mapAttrsToList (name: value: if
+        builtins.isAttrs value
+      then
+        recurseIntoConfig (groups ++ [ name ]) value
+      else 
+        { inherit groups; name = (toString name); value = (if builtins.isBool value then (lib.boolToString value) else toString value); })
+      config;
+  in ''
+  {
+    const widget = panel.addWidget("${toString widget.type}");
+
+    ${lib.concatMapStringsSep "\n" (config: ''
+    widget.currentConfigGroup = [ ${lib.concatMapStringsSep " " (group: "'${builtins.replaceStrings [ "'" ] [ "\'" ] group}'") config.groups} ];
+    widget.writeConfig('${builtins.replaceStrings [ ''"'' ] [ ''\"'' ] config.name}', '${builtins.replaceStrings [ "'" ] [ "\'" ] config.value}');
+    '') (lib.lists.flatten (recurseIntoConfig [ ] widget.config))}
+    widget.currentConfigGroup = [ ];
+
+    ${lib.concatMapStringsSep "\n" (config: ''
+    widget.currentGlobalConfigGroup = [ ${lib.concatMapStringsSep " " (group: "'${builtins.replaceStrings [ "'" ] [ "\'" ] group}'") config.groups} ];
+    widget.writeGlobalConfig('${builtins.replaceStrings [ "'" ] [ "\'" ] config.name}', '${builtins.replaceStrings [ "'" ] [ "\'" ] config.value}');
+    '') (lib.lists.flatten (recurseIntoConfig [ ] widget.globalConfig))}
+    widget.currentGlobalConfigGroup = [ ];
+  }
+  '') panel.widgets}
+}
+'') panels}
+        '';
+        priority = 3;
+      };
+    };
+    
     powerdevil = {
       AC = {
         autoSuspend = {
@@ -127,21 +267,6 @@ in {
         theme = "catppuccin-frappe-green-cursors";
         size = cfg.size;
       };
-      desktop = {
-        icons = {
-          alignment = "left";
-          arrangement = "topToBottom";
-          lockInPlace = false;
-          previewPlugins = [
-            "audiothumbnail"
-            "fontthumbnail"
-          ];
-          sorting = {
-            foldersFirst = true;
-            mode = "name";
-          };
-        };
-      };
       iconTheme = "Papirus-Dark";
       lookAndFeel = "Catppuccin-Frappe-Green";
       splashScreen = {
@@ -151,6 +276,21 @@ in {
       windowDecorations = {
         library = "org.kde.kwin.aurorae";
         theme = "__aurorae__svg__CatppuccinFrappe-Modern";
+      };
+    };
+    desktop = {
+      icons = {
+        alignment = "left";
+        arrangement = "topToBottom";
+        lockInPlace = false;
+        previewPlugins = [
+          "audiothumbnail"
+          "fontthumbnail"
+        ];
+        sorting = {
+          foldersFirst = true;
+          mode = "name";
+        };
       };
     };
     input = {
@@ -278,98 +418,6 @@ in {
       windowTitle = {
         family = "Fira Code Nerd Font";
         pointSize = 11;
-      };
-    };
-    startup.desktopScript = {
-      "set_panel_widget_settings" = {
-        text = ''
-let allPanels = panels();
-for (const panel of allPanels) {
-  let allWidgets = panel.widgets();
-  let widgetOrder = panel.readConfig("AppletOrder", "").split(";");
-  for (let i = 0; i < widgetOrder.length; i++) {
-    widgetOrder[i] = parseInt(widgetOrder[i]);
-  }
-
-  switch (panel.alignment) {
-    case "top":
-      for (const widget of allWidgets) {
-        switch (widget.index) {
-          case 0:
-            widget.currentConfigGroup = [ "General" ];
-            widget.writeConfig("inactiveStateEnabled", true);
-            widget.writeConfig("perScreenActive", true);
-            widget.writeConfig("useCurrentDecoration", true);
-            widget.writeConfig("visibility", "ActiveMaximizedWindow");
-            widget.writeConfig("buttons", "2|10|3|4|5|9");
-            widget.currentConfigGroup = [ ];
-            break;
-          case 1:
-            widget.currentConfigGroup = [ "General" ];
-            widget.writeConfig("filterActivityInfo", false);
-            widget.writeConfig("lengthFirstMargin", 2);
-            widget.writeConfig("lengthLastMargin", 2);
-            widget.writeConfig("spacing", 2);
-            widget.writeConfig("placeHolder", "NixOS");
-            widget.writeConfig("subsMatch", [
-              "Plasma-Interactiveconsole",
-              "Mpv Přehrávač"
-            ]);
-            widget.writeConfig("subsReplace", [
-              "Interactive Plasma Console",
-              "MPV"
-            ]);
-            widget.currentConfigGroup = [ ];
-            break;
-          case 5:
-            widget.currentConfigGroup = [ "Appearance" ];
-            widget.writeConfig("displayTimezoneFormat", "FullText");
-            widget.writeConfig("showDate", false);
-            widget.writeConfig("showSeconds", "Always");
-            widget.writeConfig("showWeekNumbers", true);
-            widget.currentConfigGroup = [ ];
-            break;
-          case 6:
-            widget.currentConfigGroup = [ "General" ];
-            widget.writeConfig("inactiveStateEnabled", true);
-            widget.writeConfig("perScreenActive", true);
-            widget.writeConfig("useCurrentDecoration", true);
-            widget.writeConfig("visibility", "ActiveMaximizedWindow");
-            widget.writeConfig("buttons", "3|4|5|10|2|9");
-            widget.currentConfigGroup = [ ];
-            break;
-          default:
-            break;
-        }
-        widget.reloadConfig();
-      }
-      break;
-    case "bottom":
-      for (const widget of allWidgets) {
-        switch (widget.index) {
-          case 0:
-            widget.currentConfigGroup = [ "General" ];
-            widget.writeConfig("icon", "distributor-logo-nixos");
-            widget.writeConfig("systemFavorites", "suspend\\,hibernate\\,reboot\\,shutdown");
-            widget.currentConfigGroup = [ ];
-            break;
-          case 1:
-            widget.currentConfigGroup = [ "General" ];
-            widget.writeConfig("groupedTaskVisualization", 1);
-            widget.writeConfig("iconSpacing", 0);
-            widget.currentConfigGroup = [ ];
-            break;
-          default:
-            break;
-        }
-        widget.reloadConfig();
-      }
-      break;
-  }
-  panel.reloadConfig();
-}
-        '';
-        priority = 3;
       };
     };
     
