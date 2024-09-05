@@ -1,4 +1,4 @@
-{ lib, nushell, writeScriptBin, socat }: writeScriptBin "hyprlandSock2.nu" ''
+{ lib, socat, writers }: writers.writeNuBin "hyprlandSock2.nu" ''
 let socket = $"UNIX-CONNECT:($env.XDG_RUNTIME_DIR)/hypr/($env.HYPRLAND_INSTANCE_SIGNATURE)/.socket2.sock"
 
 let data = ${lib.getExe socat} -U - $socket | lines
@@ -44,4 +44,4 @@ let parsedData = $splitData | each {
         "pin" => ($in | upsert data ($in.data | parse "{windoAddress},{pinState}"))
     }
 }
-'';
+''

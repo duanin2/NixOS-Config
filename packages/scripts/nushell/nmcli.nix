@@ -1,6 +1,4 @@
-{ lib, nushell, writeScriptBin }: writeScriptBin "nmcli.nu" ''
-#!${lib.getExe nushell}
-
+{ writers }: writers.writeNuBin "nmcli.nu" ''
 # the NetworkManager CLI utility for Nushell
 export def "main" [
     --ask(-a)          # ask for missing parameters

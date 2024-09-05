@@ -1,6 +1,4 @@
-{ lib, ueventNu, nushell, writeScriptBin }: writeScriptBin "battery.nu" ''
-#!${lib.getExe nushell}
-
+{ lib, ueventNu, writers }: writers.writeNuBin "battery.nu" ''
 use ${lib.getExe ueventNu}
 
 def intPadding [
@@ -21,7 +19,7 @@ def batteries [] {
     } else {
       null
     }
-  }
+                                                 }
 }
 
 def main [] {
@@ -51,69 +49,69 @@ def main [] {
 	      } else {
 	        "󰁹"
 	      }
-      } else if ($capacity >= 85) {
+          } else if ($capacity >= 85) {
     	  if ($status == "Charging") {
 	        "󰂋"
 	      } else {
 	        "󰂂"
 	      }
-      } else if ($capacity >= 75) {
+          } else if ($capacity >= 75) {
     	  if ($status == "Charging") {
 	        "󰂊"
 	      } else {
 	        "󰂁"
 	      }
-      } else if ($capacity >= 65) {
+          } else if ($capacity >= 65) {
     	  if ($status == "Charging") {
 	        "󰢞"
 	      } else {
 	        "󰂀"
 	      }
-      } else if ($capacity >= 55) {
+          } else if ($capacity >= 55) {
      	  if ($status == "Charging") {
 	        "󰂉"
 	      } else {
 	        "󰁿"
 	      }
-      } else if ($capacity >= 45) {
+          } else if ($capacity >= 45) {
     	  if ($status == "Charging") {
 	        "󰢝"
 	      } else {
 	        "󰁾"
 	      }
-      } else if ($capacity > 35) {
+          } else if ($capacity > 35) {
     	  if ($status == "Charging") {
 	        "󰂈"
 	      } else {
 	        "󰁽"
 	      }
-      } else if ($capacity >= 25) {
+          } else if ($capacity >= 25) {
     	  if ($status == "Charging") {
 	        "󰂇"
 	      } else {
 	        "󰁼"
 	      }
-      } else if ($capacity >= 15) {
+          } else if ($capacity >= 15) {
     	  if ($status == "Charging") {
 	        "󰂆"
 	      } else {
 	        "󰁻"
 	      }
-      } else if ($capacity >= 5) {
+          } else if ($capacity >= 5) {
     	  if ($status == "Charging") {
 	        "󰢜"
 	      } else {
 	        "󰁺"
 	      }
-      } else if ($capacity >= 0) {
+          } else if ($capacity >= 0) {
     	  if ($status == "Charging") {
 	        "󰢟"
 	      } else {
 	        "󰂎"
 	      }
-      } else {
+          } else {
     	  "󰂑"
-      }
+          }
       let icon = $icon
       {
         name: $name
@@ -122,7 +120,7 @@ def main [] {
 	      remainTime: $remainTime
 	      icon: $icon
       }
-    } | sort-by -n name | to json -r | print
+                     } | sort-by -n name | to json -r | print
   }
 }
 ''
