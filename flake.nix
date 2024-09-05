@@ -111,6 +111,10 @@
 			url = "github:ilikefrogs101/nixpkgs";
 		};
 
+    ani-skip-nixpkgs = {
+      url = "github:diniamo/nixpkgs/ani-skip";
+    };
+
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
 
     plasma-manager = {

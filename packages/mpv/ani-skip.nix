@@ -25,7 +25,7 @@
   installPhase = ''
 runHook preInstall
 
-install -D ani-skip $out/bin/ani-skip
+install -Dm 755 ani-skip $out/bin/ani-skip
 install -D skip.lua $out/share/mpv/scripts/skip.lua
 
 runHook postInstall
