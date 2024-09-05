@@ -7,7 +7,7 @@
   home.packages = with pkgs; [
     typescript-language-server
     typescript
-    # vscode-langservers-extracted
+    vscode-langservers-extracted
     nodePackages.intelephense
   ];
   
@@ -70,7 +70,7 @@
       usePackage = {
         nix-mode = {
 	        enable = true;
-	  
+	        
 	        mode = [
 	          ''"\\.nix\\'"''
 	          ''"\\.nix.in\\'"''
@@ -111,7 +111,7 @@
         
 	      catppuccin-theme = {
 	        enable = true;
-         
+          
 	        defer = true;
 	        # I borrowed this from https://git.sr.ht/~rycee/configurations/tree/master/item/user/emacs.nix#L291-296
 	        earlyInit = ''
@@ -187,6 +187,8 @@
             ''(php-mode . lsp)''
             ''(css-mode . lsp)''
             ''(css-ts-mode . lsp)''
+            ''(csharp-mode . lsp)''
+            ''(csharp-ts-mode . lsp)''
           ];
           command = [
             "lsp"
@@ -206,6 +208,9 @@
 
 ;; OpenSCAD
 (setq lsp-openscad-server ${lib.getExe pkgs.openscad-lsp})
+
+;; C#
+(setq lsp-csharp-server-path ${lib.getExe pkgs.omnisharp-roslyn})
           '';
         };
 
