@@ -10,6 +10,8 @@
 
   port = 8008;
   address = "127.0.0.1";
+
+  secretsFile = "/var/lib/secrets/matrix-secrets.yaml";
 in {
   services.matrix-synapse = {
     enable = true;
@@ -66,7 +68,7 @@ in {
 
       admin_contact = "mailto:admin-matrix@duanin2.top";
     };
-    extraConfigFiles = [ "/var/lib/secrets/matrix-secrets.yaml" ];
+    extraConfigFiles = [ secretsFile ];
   };
 
   services.nginx.virtualHosts = {
@@ -111,4 +113,15 @@ in {
       "/var/lib/private/matrix-synapse"
     ];
   };
+
+  # Automatic config fixes
+  /*
+  system.activationScripts = {
+    synapse-config-fix.text = ''
+cat <<EOF > ${secretsFile}
+${lib.generators.toYAML (builtins.mapAttrs (name: value: ) ((builtins.readFile secretsFile)))}
+EOF
+    '';
+  };
+  */
 }
