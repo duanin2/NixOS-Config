@@ -48,7 +48,7 @@ in {
         smtp_host = "duanin2.top";
         smtp_user = "matrix-noreply@duanin2.top";
         force_tls = true;
-        notif_from = ''"Your %(app)s homeserver <matrix-noreply@duanin2.top>"'';
+        notif_from = "\"Your %(app)s homeserver <matrix-noreply@duanin2.top>\"";
         enable_notifs = true;
         notif_for_new_users = false;
         notif_delay_before_mail = "1h";
