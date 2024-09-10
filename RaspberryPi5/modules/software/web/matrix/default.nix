@@ -54,6 +54,16 @@ in {
         notif_delay_before_mail = "1h";
       };
 
+      database = {
+        args = {
+          user = "synapse_user";
+          dbname = "synapse";
+          host = "localhost";
+          cp_min = 5;
+          cp_max = 10;
+        };
+      };
+
       admin_contact = "mailto:admin-matrix@duanin2.top";
     };
     extraConfigFiles = [ "/var/lib/secrets/matrix-secrets.yaml" ];
