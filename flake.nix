@@ -107,10 +107,6 @@
 		catppuccin.url = "github:catppuccin/nix";
     nix-wallpaper.url = "github:lunik1/nix-wallpaper";
 
-		godot-nixpkgs = {
-			url = "github:ilikefrogs101/nixpkgs";
-		};
-
     ani-skip-nixpkgs = {
       url = "github:diniamo/nixpkgs/ani-skip";
     };

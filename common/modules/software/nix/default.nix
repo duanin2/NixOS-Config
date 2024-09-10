@@ -158,14 +158,6 @@
 				};
 				flake = nix-colors;
 			};
-
-			"godot-nixpkgs" = {
-				from = {
-					id = "godot-nixpkgs";
-					type = "indirect";
-				};
-				flake = godot-nixpkgs;
-			};
 		};
 
 		gc = {
