@@ -3,9 +3,9 @@
   baseUrl = "https://matrix.${domain}";
   clientConfig."m.homeserver".base_url = baseUrl;
   mkWellKnown = data: ''
-    default_type application/json;
-    add_header Access-Control-Allow-Origin *;
-    return 200 '${builtins.toJSON data}';
+default_type application/json;
+add_header Access-Control-Allow-Origin *;
+return 200 '${builtins.toJSON data}';
   '';
 
   port = 8008;
@@ -13,6 +13,10 @@
 
   secretsFile = "/var/lib/secrets/matrix-secrets.yaml";
 in {
+  imports = [
+    (import ./element.nix { inherit clientConfig; })
+  ];
+  
   services.matrix-synapse = {
     enable = true;
     enableRegistrationScript = true;
@@ -50,7 +54,7 @@ in {
         smtp_host = "duanin2.top";
         smtp_user = "matrix-noreply@duanin2.top";
         force_tls = true;
-        notif_from = "\"Your %(app)s homeserver <matrix-noreply@duanin2.top>\"";
+        notif_from = "Your %(app)s homeserver <matrix-noreply@duanin2.top>";
         enable_notifs = true;
         notif_for_new_users = false;
         notif_delay_before_mail = "1h";
@@ -94,15 +98,6 @@ in {
         "/_synapse/client" = {
           proxyPass = "http://${address}:${toString port}";
           priority = 0;
-        };
-      };
-    };
-    "element.duanin2.top" = {
-      useACMEHost = "duanin2.top";
-      onlySSL = true;
-      root = pkgs.element-web.override {
-        conf = {
-          default_server_config = clientConfig; # see `clientConfig` from the snippet above.
         };
       };
     };
