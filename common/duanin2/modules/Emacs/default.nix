@@ -213,6 +213,15 @@
 (setq lsp-csharp-server-path ${lib.getExe pkgs.omnisharp-roslyn})
           '';
         };
+        
+        emmet-mode = {
+          enable = true;
+
+          hook = [
+            ''sgml-mode''
+            ''css-mode''
+          ];
+        };
 
         magit = {
           enable = true;
