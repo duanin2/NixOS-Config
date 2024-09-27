@@ -3,8 +3,8 @@
     enable = true;
 
     nsswins = true;
-    enableWinbindd = true;
-    enableNmbd = true;
+    winbindd.enable = true;
+    nmbd.enable = true;
     openFirewall = true;
     settings = {
       global = {
