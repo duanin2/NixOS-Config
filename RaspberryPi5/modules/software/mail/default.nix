@@ -78,6 +78,13 @@ if header :matches "list-id" "<?*>" {
     acmeCertificateName = "duanin2.top";
   };
 
+  services.postfix.config = {
+    smtpd_tls_protocols = lib.mkForce "TLSv1.3, TLSv1.2, !TLSv1.1, !TLSv1, !SSLv2, !SSLv3";
+    smtp_tls_protocols = lib.mkForce "TLSv1.3, TLSv1.2, !TLSv1.1, !TLSv1, !SSLv2, !SSLv3";
+    smtpd_tls_mandatory_protocols = lib.mkForce "TLSv1.3, TLSv1.2, !TLSv1.1, !TLSv1, !SSLv2, !SSLv3";
+    smtp_tls_mandatory_protocols = lib.mkForce "TLSv1.3, TLSv1.2, !TLSv1.1, !TLSv1, !SSLv2, !SSLv3";
+  };
+
   services.nginx.virtualHosts."rspamd.duanin2.top" = {
     onlySSL = true;
     useACMEHost = "duanin2.top";
