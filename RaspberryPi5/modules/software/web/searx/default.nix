@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, securitySetupNGINX, ... }: {
   services.searx = {
     enable = true;
 
@@ -61,11 +61,12 @@
 
   services.nginx.virtualHosts."searx.duanin2.top" = {
     useACMEHost = "duanin2.top";
+    onlySSL = true;
     
     locations."/" = {
       proxyPass = "http://${config.services.searx.settings.server.bind_address}:${builtins.toString config.services.searx.settings.server.port}";
     };
 
-    onlySSL = true;
+    extraConfig = securitySetupNGINX "searx.duanin2.top";
   };
 }

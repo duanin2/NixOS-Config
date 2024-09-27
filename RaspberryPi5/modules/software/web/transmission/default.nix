@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: let
+{ pkgs, config, securitySetupNGINX, ... }: let
   cfg = config.services.transmission;
 in {
   services.transmission = {
@@ -25,5 +25,7 @@ in {
     onlySSL = true;
 
     locations."/".proxyPass = "http://${cfg.settings.rpc-bind-address}:${builtins.toString cfg.settings.rpc-port}";
+
+    extraConfig = securitySetupNGINX "transmission.duanin2.top";
   };
 }

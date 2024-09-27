@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }: let
+{ pkgs, lib, securitySetupNGINX, ... }: let
   domain = "duanin2.top";
   baseUrl = "https://matrix.${domain}";
   clientConfig."m.homeserver".base_url = baseUrl;
@@ -89,6 +89,7 @@ in {
     "matrix.${domain}" = {
       useACMEHost = "duanin2.top";
       onlySSL = true;
+      
       locations = {
         "/".return = "301 https://element.duanin2.top";
         "/_matrix" = {
@@ -100,6 +101,8 @@ in {
           priority = 0;
         };
       };
+
+      extraConfig = securitySetupNGINX "matrix.duanin2.top";
     };
   };
 

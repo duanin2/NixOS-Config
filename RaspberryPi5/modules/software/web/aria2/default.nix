@@ -1,4 +1,4 @@
-{ config, ... }: let
+{ config, securitySetupNGINX, ... }: let
 	cfg = config.services.aria2;
   dir = "/var/lib/aria2";
 in {
@@ -16,10 +16,13 @@ in {
 	services.nginx.virtualHosts."aria2.duanin2.top" = {
 		useACMEHost = "duanin2.top";
     onlySSL = true;
+    
 		locations."/" = {
 			proxyPass = "http://localhost:${toString cfg.settings.rpc-listen-port}";
 			proxyWebsockets = true;
 		};
+
+    extraConfig = securitySetupNGINX "aria2.duanin2.top";
 	};
 
   environment.persistence."/persist" = {

@@ -1,4 +1,4 @@
-{ ... }: {
+{ securitySetupNGINX, ... }: {
   security.acme = {
     defaults = {
       email = "tilldusan30+acme@gmail.com";
@@ -18,6 +18,19 @@
       environmentFile = "/var/lib/secrets/certs.secret";
     };*/
     acceptTerms = true;
+  };
+
+  services.nginx.virtualHosts."acmechallenge.duanin2.top" = {
+    default = true;
+    useACMEHost = "duanin2.top";
+    addSSL = true;
+    
+    locations."/.well-known/acme-challenge" = {
+      root = "/var/lib/acme/.challenges";
+      priority = 0;
+    };
+
+    extraConfig = securitySetupNGINX "acmechallenge.duanin2.top";
   };
 
   environment.persistence."/persist" = {

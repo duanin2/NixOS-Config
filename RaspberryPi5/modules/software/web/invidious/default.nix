@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, securitySetupNGINX, ... }: {
   services.invidious = {
     enable = true;
     package = pkgs.invidious.override {
@@ -56,6 +56,8 @@
     useACMEHost = "duanin2.top";
     forceSSL = lib.mkForce false;
     onlySSL = true;
+
+    extraConfig = securitySetupNGINX "invidious.duanin2.top";
   };
 
   environment.persistence."/persist" = {

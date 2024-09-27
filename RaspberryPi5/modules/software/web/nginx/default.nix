@@ -1,16 +1,33 @@
-{ ... }: let
-  httpsUpgrade = ''
-set $do_http_upgrade "$https$http_upgrade_insecure_requests";
-if ($do_http_upgrade = "1") {
-    return 307 https://$host$request_uri;
-}
+{ pkgs, lib, ... }: let
+  securitySetupNGINX = origin: let
+    isoTime = when: accuracy: lib.readFile (pkgs.runCommand "timestamp" { } "echo -n `date -d @${builtins.toString when} --iso-8601=${accuracy} > $out`");
+    
+    expiration = {
+      humanReadable = "30 days";
+      seconds = 60 * 60 * 24 * 30;
+    };
+    paths = [ "/security.txt" "/.well-known/security.txt" ];
+    
+    finalSecurity = pkgs.writeText "security.txt" ''
+${lib.strings.concatMapStrings (path: ''Canonical: http://${origin}${path}
+Canonical: https://${origin}${path}'') paths}
+
+Contact: mailto:admin-security@duanin2.top
+
+# Always expires ${expiration.humanReadable} after generation
+Expires: ${isoTime (builtins.currentTime + expiration.seconds) "seconds"}
+
+Preferred-Languages: cs, en
+    '';
+  in ''
+${lib.strings.concatMapStrings (path: "location =${path} { alias ${finalSecurity}; }\n") paths}
   '';
 in {
   imports = [
     ../acme
   ];
 
-  _module.args = { inherit httpsUpgrade; };
+  _module.args = { inherit securitySetupNGINX; };
 
   services.nginx = {
     enable = true;
@@ -20,31 +37,20 @@ in {
     recommendedProxySettings = true;
 
     virtualHosts = {
-      "acmechallenge.duanin2.top" = {
-        # Catchall vhost, will redirect users to HTTPS for all vhosts
-        serverAliases = [ "*.duanin2.top" "bohousek10d1979.asuscomm.com" ];
-        default = true;
-        useACMEHost = "duanin2.top";
-        addSSL = true;
-        
-        locations."/.well-known/acme-challenge" = {
-          root = "/var/lib/acme/.challenges";
-          priority = 0;
-        };
-        extraConfig = httpsUpgrade;
-      };
       "duanin2.top" = {
         useACMEHost = "duanin2.top";
         addSSL = true;
-        extraConfig = httpsUpgrade;
+
+        extraConfig = securitySetupNGINX "duanin2.top";
       };
       /*
       "bohousek10d1979.asuscomm.com" = {
         useACMEHost = "asuscomm.com";
+        addSSL = true;
 
         locations."/".proxyPass = "https://192.168.1.1";
 
-        addSSL = true;
+        extraConfig = securitySetupNGINX "bohousek10d1979.asuscomm.com";
       };
       */
     };
@@ -52,6 +58,12 @@ in {
     commonHttpConfig = ''
 log_format custom '$remote_user@$remote_addr:$remote_port [$time_local] - "$request_method $scheme://$host$request_uri" $uri $status - $server_name[$server_protocol $server_addr:$server_port] - $body_bytes_sent "$http_referer" "$http_user_agent"';
 access_log /var/log/nginx/access.log custom;
+
+add_header Strict-Transport-Security max-age=300;
+add_header X-Frame-Options DENY;
+add_header X-Content-Type-Options nosniff;
+add_header Content-Security-Policy "default-src 'self' duanin2.top *.duanin2.top; base-uri 'self' duanin2.top *.duanin2.top; base-uri 'self' duanin2.top *.duanin2.top; frame-src 'self' duanin2.top *.duanin2.top; frame-ancestors 'self' duanin2.top *.duanin2.top; form-action 'self' duanin2.top *.duanin2.top;"
+add_header Referrer-Policy no-referrer;
     '';
   };
 
