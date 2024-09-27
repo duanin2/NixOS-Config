@@ -157,7 +157,7 @@ ${lib.concatMapStringsSep "\n" (panel: ''
 
   ${lib.concatMapStringsSep "\n" (widget: let
     recurseIntoConfig = groups: config: lib.mapAttrsToList (name: value: if
-        builtins.isAttrs value
+      builtins.isAttrs value
       then
         recurseIntoConfig (groups ++ [ name ]) value
       else 
@@ -195,7 +195,7 @@ ${lib.concatMapStringsSep "\n" (panel: ''
         };
         dimDisplay = {
           enable = true;
-          idleTimeOut = 60 * 9;
+          idleTimeout = 60 * 9;
         };
         powerButtonAction = "lockScreen";
         turnOffDisplay = {
@@ -212,7 +212,7 @@ ${lib.concatMapStringsSep "\n" (panel: ''
         };
         dimDisplay = {
           enable = true;
-          idleTimeOut = 60 * 4;
+          idleTimeout = 60 * 4;
         };
         powerButtonAction = "sleep";
         turnOffDisplay = {
@@ -229,7 +229,7 @@ ${lib.concatMapStringsSep "\n" (panel: ''
         };
         dimDisplay = {
           enable = true;
-          idleTimeOut = 30;
+          idleTimeout = 30;
         };
         powerButtonAction = "sleep";
         turnOffDisplay = {
