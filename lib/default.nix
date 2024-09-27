@@ -23,7 +23,7 @@ final: prev: with final; with builtins; {
 
   convertor = {
 		default,
-    ...
+      ...
 	}@types: value: types.${typeOf value} or types.default;
 
   concatedString = seperator: list: (convertor {
@@ -34,16 +34,16 @@ final: prev: with final; with builtins; {
   
 	overrideAll = {
     package,
-    args ? {},
-    attrs ? {}
+      args ? {},
+      attrs ? {}
 	}: (package.override args).overrideAttrs attrs;
 
 	isSamePackage = origPkg: modPkg: if
 		((hasAttr "pname" origPkg) && (hasAttr "pname" modPkg))
-	then
-		(origPkg.pname == modPkg.pname)
-	else
-		(origPkg.name == modPkg.name);
+	  then
+		  (origPkg.pname == modPkg.pname)
+	  else
+		  (origPkg.name == modPkg.name);
 	
 	containsPackage = modPkg: origPkgs: any (origPkg: final.isSamePackage origPkg modPkg) origPkgs;
 
