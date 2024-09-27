@@ -22,11 +22,13 @@ Preferred-Languages: cs, en
   in ''
 ${lib.strings.concatMapStrings (path: "location =${path} { alias ${finalSecurity}; }\n") paths}
   '';
-  securityHeaders = ''
+  securityHeaders = let
+    allowedSrc = "'self' duanin2.top *.duanin2.top";
+  in ''
 add_header Strict-Transport-Security max-age=300;
 add_header X-Frame-Options DENY;
 add_header X-Content-Type-Options nosniff;
-add_header Content-Security-Policy "default-src 'self' duanin2.top *.duanin2.top; base-uri 'self' duanin2.top *.duanin2.top; base-uri 'self' duanin2.top *.duanin2.top; frame-src 'self' duanin2.top *.duanin2.top; frame-ancestors 'self' duanin2.top *.duanin2.top; form-action 'self' duanin2.top *.duanin2.top;"
+add_header Content-Security-Policy "default-src ${allowedSrc}; base-uri ${allowedSrc}; frame-src ${allowedSrc}; frame-ancestors ${allowedSrc}; form-action ${allowedSrc};"
 add_header Referrer-Policy no-referrer;
   '';
   httpsUpgrade = ''
