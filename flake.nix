@@ -250,7 +250,7 @@
 				modules = [
 					(nixosCdDvd + /installation-cd-graphical-plasma5.nix)
 
-          (commonModules.software.kernel + /cachyos.nix)
+          				(commonModules.software.kernel + /cachyos.nix)
 					(isoModules + /default.nix)
 				] ++ (with inputs; [
 					chaotic.nixosModules.default
