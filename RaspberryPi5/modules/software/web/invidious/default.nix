@@ -1,4 +1,4 @@
-{ config, lib, pkgs, securitySetupNGINX, ... }: {
+{ config, lib, pkgs, securitySetupNGINX, securityHeaders, httpsUpgrade, ... }: {
   services.invidious = {
     enable = true;
     package = pkgs.invidious.override {
@@ -57,7 +57,7 @@
     forceSSL = lib.mkForce false;
     onlySSL = true;
 
-    extraConfig = securitySetupNGINX "invidious.duanin2.top";
+    extraConfig = (securitySetupNGINX "invidious.duanin2.top") + securityHeaders + httpsUpgrade;
   };
 
   environment.persistence."/persist" = {

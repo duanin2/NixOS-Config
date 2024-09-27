@@ -1,4 +1,4 @@
-{ securitySetupNGINX, ... }: {
+{ securitySetupNGINX, securityHeaders, httpsUpgrade, ... }: {
   security.acme = {
     defaults = {
       email = "tilldusan30+acme@gmail.com";
@@ -30,7 +30,7 @@
       priority = 0;
     };
 
-    extraConfig = securitySetupNGINX "acmechallenge.duanin2.top";
+    extraConfig = (securitySetupNGINX "acmechallenge.duanin2.top") + securityHeaders + httpsUpgrade;
   };
 
   environment.persistence."/persist" = {

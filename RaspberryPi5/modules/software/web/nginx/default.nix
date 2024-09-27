@@ -22,12 +22,25 @@ Preferred-Languages: cs, en
   in ''
 ${lib.strings.concatMapStrings (path: "location =${path} { alias ${finalSecurity}; }\n") paths}
   '';
+  securityHeaders = ''
+add_header Strict-Transport-Security max-age=300;
+add_header X-Frame-Options DENY;
+add_header X-Content-Type-Options nosniff;
+add_header Content-Security-Policy "default-src 'self' duanin2.top *.duanin2.top; base-uri 'self' duanin2.top *.duanin2.top; base-uri 'self' duanin2.top *.duanin2.top; frame-src 'self' duanin2.top *.duanin2.top; frame-ancestors 'self' duanin2.top *.duanin2.top; form-action 'self' duanin2.top *.duanin2.top;"
+add_header Referrer-Policy no-referrer;
+  '';
+  httpsUpgrade = ''
+set $do_http_upgrade "$https$http_upgrade_insecure_requests";
+if ($do_http_upgrade = "1") {
+    return 307 https://$host$request_uri;
+    }
+  '';
 in {
   imports = [
     ../acme
   ];
 
-  _module.args = { inherit securitySetupNGINX; };
+  _module.args = { inherit securitySetupNGINX securityHeaders httpsUpgrade; };
 
   services.nginx = {
     enable = true;
@@ -41,7 +54,7 @@ in {
         useACMEHost = "duanin2.top";
         addSSL = true;
 
-        extraConfig = securitySetupNGINX "duanin2.top";
+        extraConfig = (securitySetupNGINX "duanin2.top") + securityHeaders + httpsUpgrade;
       };
       /*
       "bohousek10d1979.asuscomm.com" = {
@@ -50,7 +63,7 @@ in {
 
         locations."/".proxyPass = "https://192.168.1.1";
 
-        extraConfig = securitySetupNGINX "bohousek10d1979.asuscomm.com";
+        extraConfig = (securitySetupNGINX "bohousek10d1979.asuscomm.com") + securityHeaders + httpsUpgrade;
       };
       */
     };
@@ -58,12 +71,6 @@ in {
     commonHttpConfig = ''
 log_format custom '$remote_user@$remote_addr:$remote_port [$time_local] - "$request_method $scheme://$host$request_uri" $uri $status - $server_name[$server_protocol $server_addr:$server_port] - $body_bytes_sent "$http_referer" "$http_user_agent"';
 access_log /var/log/nginx/access.log custom;
-
-add_header Strict-Transport-Security max-age=300;
-add_header X-Frame-Options DENY;
-add_header X-Content-Type-Options nosniff;
-add_header Content-Security-Policy "default-src 'self' duanin2.top *.duanin2.top; base-uri 'self' duanin2.top *.duanin2.top; base-uri 'self' duanin2.top *.duanin2.top; frame-src 'self' duanin2.top *.duanin2.top; frame-ancestors 'self' duanin2.top *.duanin2.top; form-action 'self' duanin2.top *.duanin2.top;"
-add_header Referrer-Policy no-referrer;
     '';
   };
 
