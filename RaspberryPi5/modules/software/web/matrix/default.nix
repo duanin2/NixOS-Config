@@ -78,11 +78,11 @@ in {
   services.nginx.virtualHosts = {
     "duanin2.top".locations = {
       "/.well-known/matrix/server" = {
-        extraConfig = mkWellKnown { "m.server" = "matrix.${domain}:443"; };
+        extraConfig = (mkWellKnown { "m.server" = "matrix.${domain}:443"; }) + securityHeaders;
         priority = 0;
       };
       "/.well-known/matrix/client" = {
-        extraConfig = mkWellKnown clientConfig;
+        extraConfig = (mkWellKnown clientConfig) + securityHeaders;
         priority = 0;
       };
     };
