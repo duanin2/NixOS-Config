@@ -6,9 +6,11 @@
     enableWinbindd = true;
     enableNmbd = true;
     openFirewall = true;
-    extraConfig = ''
-    client min protocol = NT1
-    '';
+    settings = {
+      global = {
+        "client min protocol" = "NT1";
+      };
+    };
   };
 
   services.samba-wsdd = {
