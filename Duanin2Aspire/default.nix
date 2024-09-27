@@ -15,9 +15,9 @@
 		(modules.local.software + /printing)
 		(modules.common.software + /localization)
 		(modules.common.software + /appimage)
-		(modules.local.software + /plymouth)
+		#(modules.local.software + /plymouth)
 		(modules.local.software + /ssh)
-		(modules.local.software + /protonmail)
+		#(modules.local.software + /protonmail)
 		(modules.local.software + /git)
 		(modules.local.software + /mesa)
 		(modules.local.software + /gnupg)
@@ -25,8 +25,8 @@
 		(modules.local.software + /impermanence)
 		(modules.local.software + /nix)
 		(modules.common.software + /home-manager)
-    (modules.local.software + /firejail)
-    # (modules.local.software + /tlp)
+    #(modules.local.software + /firejail)
+    #(modules.local.software + /tlp)
     (modules.common.software + /gnunet)
     (modules.common.software + /kdeConnect)
     (modules.local.software + /pipewire)
@@ -44,7 +44,7 @@
     (modules.local.software.network + /resolvd)
     (modules.local.software.network + /networkmanager)
     (modules.local.software.network + /tor)
-		# (modules.local.software.network + /vpn/protonvpn.nix)
+		#(modules.local.software.network + /vpn/protonvpn.nix)
 
 		# software.kernel
 		(modules.common.software.kernel + /cachyos.nix)
@@ -59,20 +59,21 @@
     (modules.local.software.games + /mangohud.nix)
 
 		# software.bootloader
-		(modules.local.software.bootloader + /systemd-boot)
+		#(modules.local.software.bootloader + /systemd-boot)
+		(modules.local.software.bootloader + /grub)
 
 		# software.virtualization
-		# (modules.local.software.virtualization + /waydroid)
-		# (modules.local.software.virtualization + /darling)
+		#(modules.local.software.virtualization + /waydroid)
+		#(modules.local.software.virtualization + /darling)
     (modules.local.software.virtualization + /libvirt)
 
 		# software.desktops
 		(modules.local.software.desktops + /plasma)
-		# (modules.local.software.desktops + /Hyprland)
-    # (modules.local.software.desktops + /QTile)
+		#(modules.local.software.desktops + /Hyprland)
+    #(modules.local.software.desktops + /QTile)
 
 		# software.greeters
-		# (modules.local.software.greeters + /GreetD)
+		#(modules.local.software.greeters + /GreetD)
     (modules.local.software.greeters + /SDDM)
 
 		# software.theming
