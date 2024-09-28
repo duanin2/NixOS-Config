@@ -45,6 +45,7 @@
     (modules.local.software.network + /networkmanager)
     (modules.local.software.network + /tor)
 		#(modules.local.software.network + /vpn/protonvpn.nix)
+    (modules.common.software.network + /miredo)
 
 		# software.kernel
 		(modules.common.software.kernel + /cachyos.nix)
