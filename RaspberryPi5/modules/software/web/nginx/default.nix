@@ -24,7 +24,7 @@ ${lib.strings.concatMapStrings (path: "location =${path} { alias ${finalSecurity
   securityHeaders = let
     allowedSrc = "'self' $scheme://duanin2.top $scheme://*.duanin2.top";
   in ''
-add_header Strict-Transport-Security "max-age=604800" always;
+add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 add_header X-Frame-Options "DENY" always;
 add_header X-Content-Type-Options "nosniff" always;
 add_header Content-Security-Policy "default-src ${allowedSrc}; base-uri ${allowedSrc}; frame-src ${allowedSrc}; frame-ancestors ${allowedSrc}; form-action ${allowedSrc}" always;
