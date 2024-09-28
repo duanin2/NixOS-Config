@@ -23,7 +23,7 @@ Preferred-Languages: cs, en
 ${lib.strings.concatMapStrings (path: "location =${path} { alias ${finalSecurity}; }\n") paths}
   '';
   securityHeaders = let
-    allowedSrc = "'self' https://duanin2.top https://*.duanin2.top http://duanin2.top http://*.duanin2.top";
+    allowedSrc = "'self' $scheme://duanin2.top $scheme://*.duanin2.top";
   in ''
 add_header Strict-Transport-Security "max-age=300" always;
 add_header X-Frame-Options "DENY" always;
