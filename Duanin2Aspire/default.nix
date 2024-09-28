@@ -34,18 +34,12 @@
     (modules.common.software + /chrony)
 
 		# software.network
-		(modules.common.software.network + /networkmanager)
-		(modules.common.software.network + /firewall)
-		(modules.common.software.network + /resolvd)
-		(modules.common.software.network + /avahi)
-    (modules.local.software.network + /firewall)
-    (modules.local.software.network + /sysctl)
-    (modules.local.software.network + /nftables)
-    (modules.local.software.network + /resolvd)
-    (modules.local.software.network + /networkmanager)
-    (modules.local.software.network + /tor)
-		#(modules.local.software.network + /vpn/protonvpn.nix)
-    (modules.common.software.network + /miredo)
+    (modules.common.software.network + /avahi)
+		#(modules.common.software.network + /vpn/protonvpn.nix)
+    #(modules.common.software.network + /miredo)
+    (modules.common.software.network + /firewall)
+    (modules.common.software.network + /resolvd)
+    (modules.common.software.network + /networkmanager)
 
 		# software.kernel
 		(modules.common.software.kernel + /cachyos.nix)
