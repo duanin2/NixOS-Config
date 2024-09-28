@@ -1,4 +1,4 @@
-{ clientConfig }: { pkgs, securitySetupNGINX, securityHeaders, httpsUpgrade, ... }: {
+{ clientConfig }: { pkgs, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: {
   services.nginx.virtualHosts = {
     "element.duanin2.top" = {
       useACMEHost = "duanin2.top";
@@ -10,7 +10,7 @@
         };
       };
 
-      extraConfig = (securitySetupNGINX "element.duanin2.top") + securityHeaders + httpsUpgrade;
+      extraConfig = (securitySetupNGINX "element.duanin2.top") + securityHeaders + httpsUpgrade + ocspStapling;
     };
   };
 }

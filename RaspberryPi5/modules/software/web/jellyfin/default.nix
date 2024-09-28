@@ -1,4 +1,4 @@
-{ pkgs, config, securitySetupNGINX, securityHeaders, httpsUpgrade, ... }: {
+{ pkgs, config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: {
   services.jellyfin = {
     enable = true;
   };
@@ -16,7 +16,7 @@
       proxyPass = "http://localhost:8096";
     };
 
-    extraConfig = (securitySetupNGINX "jellyfin.duanin2.top") + securityHeaders + httpsUpgrade;
+    extraConfig = (securitySetupNGINX "jellyfin.duanin2.top") + securityHeaders + httpsUpgrade + ocspStapling;
   };
 
   environment.persistence."/persist" = let

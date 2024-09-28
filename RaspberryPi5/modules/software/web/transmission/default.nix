@@ -1,4 +1,4 @@
-{ pkgs, config, securitySetupNGINX, securityHeaders, httpsUpgrade, ... }: let
+{ pkgs, config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: let
   cfg = config.services.transmission;
 in {
   services.transmission = {
@@ -26,6 +26,6 @@ in {
 
     locations."/".proxyPass = "http://${cfg.settings.rpc-bind-address}:${builtins.toString cfg.settings.rpc-port}";
 
-    extraConfig = (securitySetupNGINX "transmission.duanin2.top") + securityHeaders + httpsUpgrade;
+    extraConfig = (securitySetupNGINX "transmission.duanin2.top") + securityHeaders + httpsUpgrade + ocspStapling;
   };
 }

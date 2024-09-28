@@ -1,4 +1,4 @@
-{ config, securitySetupNGINX, securityHeaders, httpsUpgrade, ... }: let
+{ config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: let
 	cfg = config.services.aria2;
   dir = "/var/lib/aria2";
 in {
@@ -22,7 +22,7 @@ in {
 			proxyWebsockets = true;
 		};
 
-    extraConfig = (securitySetupNGINX "aria2.duanin2.top") + securityHeaders + httpsUpgrade;
+    extraConfig = (securitySetupNGINX "aria2.duanin2.top") + securityHeaders + httpsUpgrade + ocspStapling;
 	};
 
   environment.persistence."/persist" = {

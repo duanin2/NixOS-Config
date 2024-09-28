@@ -1,4 +1,4 @@
-{ inputs, config, lib, securitySetupNGINX, securityHeaders, httpsUpgrade, ... }: let
+{ inputs, config, lib, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: let
   cfg = config.mailserver;
 in {
   imports = [ inputs.simple-nixos-mailserver.nixosModule ];
@@ -92,7 +92,7 @@ if header :matches "list-id" "<?*>" {
     
     locations."/".proxyPass = "http://unix:/run/rspamd/worker-controller.sock:/";
 
-    extraConfig = (securitySetupNGINX "duanin2.top") + securityHeaders + httpsUpgrade;
+    extraConfig = (securitySetupNGINX "duanin2.top") + securityHeaders + httpsUpgrade + ocspStapling;
   };
 
   environment.persistence."/persist" = {

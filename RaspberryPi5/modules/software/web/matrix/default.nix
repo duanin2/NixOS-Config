@@ -1,4 +1,4 @@
-{ pkgs, lib, securitySetupNGINX, securityHeaders, httpsUpgrade, ... }: let
+{ pkgs, lib, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: let
   domain = "duanin2.top";
   baseUrl = "https://matrix.${domain}";
   clientConfig."m.homeserver".base_url = baseUrl;
@@ -102,7 +102,7 @@ in {
         };
       };
 
-      extraConfig = (securitySetupNGINX "matrix.duanin2.top") + securityHeaders + httpsUpgrade;
+      extraConfig = (securitySetupNGINX "matrix.duanin2.top") + securityHeaders + httpsUpgrade + ocspStapling;
     };
   };
 

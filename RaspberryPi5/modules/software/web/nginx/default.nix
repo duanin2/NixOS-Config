@@ -9,7 +9,7 @@
     paths = [ "/security.txt" "/.well-known/security.txt" ];
     
     finalSecurity = pkgs.writeText "security.txt" ''
-${lib.strings.concatMapStrings (path: ''Canonical: https://${origin}${path}'') paths}
+${lib.strings.concatMapStrings (path: "Canonical: https://${origin}${path}\n") paths}
 
 Contact: mailto:admin-security@duanin2.top
 
@@ -36,12 +36,16 @@ if ($do_http_upgrade = "1") {
     return 307 https://$host$request_uri;
     }
   '';
+  ocspStapling = ''
+ssl_stapling on;
+ssl_stapling_verify on;
+  '';
 in {
   imports = [
     ../acme
   ];
 
-  _module.args = { inherit securitySetupNGINX securityHeaders httpsUpgrade; };
+  _module.args = { inherit securitySetupNGINX securityHeaders httpsUpgrade ocspStapling; };
 
   services.nginx = {
     enable = true;
@@ -55,7 +59,7 @@ in {
         useACMEHost = "duanin2.top";
         addSSL = true;
 
-        extraConfig = (securitySetupNGINX "duanin2.top") + securityHeaders + httpsUpgrade;
+        extraConfig = (securitySetupNGINX "duanin2.top") + securityHeaders + httpsUpgrade + ocspStapling;
       };
       /*
       "bohousek10d1979.asuscomm.com" = {

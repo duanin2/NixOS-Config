@@ -1,4 +1,4 @@
-{ config, securitySetupNGINX, securityHeaders, httpsUpgrade, ... }: {
+{ config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: {
   services.searx = {
     enable = true;
 
@@ -67,6 +67,6 @@
       proxyPass = "http://${config.services.searx.settings.server.bind_address}:${builtins.toString config.services.searx.settings.server.port}";
     };
 
-    extraConfig = (securitySetupNGINX "searx.duanin2.top") + securityHeaders + httpsUpgrade;
+    extraConfig = (securitySetupNGINX "searx.duanin2.top") + securityHeaders + httpsUpgrade + ocspStapling;
   };
 }
