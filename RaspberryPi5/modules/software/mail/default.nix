@@ -1,4 +1,4 @@
-{ inputs, config, lib, ... }: let
+{ inputs, config, lib, securitySetupNGINX, securityHeaders, httpsUpgrade, ... }: let
   cfg = config.mailserver;
 in {
   imports = [ inputs.simple-nixos-mailserver.nixosModule ];
@@ -89,7 +89,10 @@ if header :matches "list-id" "<?*>" {
     onlySSL = true;
     useACMEHost = "duanin2.top";
     basicAuthFile = "/var/lib/secrets/rspamdBasicAuth";
+    
     locations."/".proxyPass = "http://unix:/run/rspamd/worker-controller.sock:/";
+
+    extraConfig = (securitySetupNGINX "duanin2.top") + securityHeaders + httpsUpgrade;
   };
 
   environment.persistence."/persist" = {

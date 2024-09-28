@@ -25,11 +25,11 @@ ${lib.strings.concatMapStrings (path: "location =${path} { alias ${finalSecurity
   securityHeaders = let
     allowedSrc = "'self' duanin2.top *.duanin2.top";
   in ''
-add_header Strict-Transport-Security max-age=300;
-add_header X-Frame-Options DENY;
-add_header X-Content-Type-Options nosniff;
-add_header Content-Security-Policy "default-src ${allowedSrc}; base-uri ${allowedSrc}; frame-src ${allowedSrc}; frame-ancestors ${allowedSrc}; form-action ${allowedSrc};"
-add_header Referrer-Policy no-referrer;
+add_header Strict-Transport-Security "max-age=300" always;
+add_header X-Frame-Options "DENY" always;
+add_header X-Content-Type-Options "nosniff" always;
+add_header Content-Security-Policy "default-src ${allowedSrc}; base-uri ${allowedSrc}; frame-src ${allowedSrc}; frame-ancestors ${allowedSrc}; form-action ${allowedSrc}" always;
+add_header Referrer-Policy "no-referrer" always;
   '';
   httpsUpgrade = ''
 set $do_http_upgrade "$https$http_upgrade_insecure_requests";
