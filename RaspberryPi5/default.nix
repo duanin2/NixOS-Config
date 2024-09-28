@@ -23,6 +23,7 @@
 		(modules.common.software.network + /resolvd)
 		(modules.common.software.network + /avahi)
     (modules.local.software.network + /region)
+    (modules.common.software.network + /miredo)
 
     # software/web
     (modules.local.software.web + /nginx)

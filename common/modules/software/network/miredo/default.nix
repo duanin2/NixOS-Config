@@ -2,6 +2,6 @@
   services.miredo = {
     enable = true;
 
-    serverAddress = "teredo.remlab.net";
+    serverAddress = "teredo.iks-jena.de";
   };
 }
