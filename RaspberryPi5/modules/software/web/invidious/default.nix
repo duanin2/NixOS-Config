@@ -59,9 +59,9 @@
 
     extraConfig = (securitySetupNGINX [ "invidious.duanin2.top" ]) + ''
 add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
-add_header X-Frame-Options "DENY" always;
-add_header X-Content-Type-Options "nosniff" always;
-add_header Referrer-Policy "no-referrer" always;
+
+proxy_cache_key "$proxy_host$proxy_port$request_uri$args$cookie_sid";
+proxy_cache_valid any 10m;
     '' + httpsUpgrade + ocspStapling;
   };
 

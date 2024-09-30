@@ -33,7 +33,9 @@
       priority = 0;
     };
 
-    extraConfig = (securitySetupNGINX [ "acmechallenge.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
+    extraConfig = (securitySetupNGINX [ "acmechallenge.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling + ''
+proxy_cache off;
+    '';
   };
 
   environment.persistence."/persist" = {

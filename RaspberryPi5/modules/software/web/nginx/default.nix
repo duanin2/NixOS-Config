@@ -46,6 +46,8 @@ if ($do_http_upgrade = "1") {
 ssl_stapling on;
 ssl_stapling_verify on;
   '';
+
+  nginxCacheName = "cache";
 in {
   imports = [
     ../acme
@@ -84,7 +86,25 @@ in {
     commonHttpConfig = ''
 log_format custom '$remote_user@$remote_addr:$remote_port [$time_local] - "$request_method $scheme://$host$request_uri" $uri $status - $server_name[$server_protocol $server_addr:$server_port] - $body_bytes_sent "$http_referer" "$http_user_agent"';
 access_log /var/log/nginx/access.log custom;
+
+proxy_cache ${nginxCacheName};
+proxy_cache_background_update on;
+proxy_cache_key "$proxy_host$proxy_port$request_uri$args";
+proxy_cache_revalidate on;
+proxy_cache_lock on;
+proxy_cache_use_stale error updating http_500 http_502 http_503 http_504;
     '';
+    proxyCachePath.${nginxCacheName} = {
+      enable = true;
+
+      inactive = "1w";
+    };
+  };
+
+  environment.persistence."/persist" = {
+    directories = [
+      "/var/cache/nginx/${nginxCacheName}"
+    ];
   };
 
   users.users.nginx.extraGroups = [ "acme" "searx" ];
