@@ -14,6 +14,7 @@
     
     locations."/" = {
       proxyPass = "http://localhost:8096";
+			proxyWebsockets = true;
     };
 
     extraConfig = (securitySetupNGINX [ "jellyfin.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
