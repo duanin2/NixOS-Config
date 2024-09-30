@@ -4,12 +4,15 @@ in {
   services.gnunet = {
     enable = true;
 
-    udp.port = 0;
-    tcp.port = 0;
     extraOptions = ''
 [arm]
 START_SYSTEM_SERVICES = YES
 START_USER_SERVICES = NO
+
+[nat]
+PUNCHED_NAT = YES
+ENABLE_UPNP = NO
+EXTERNAL_ADDRESS = 109.80.156.99
     '';
   };
 

@@ -16,17 +16,14 @@ WAN_QUOTA_OUT = 50000 b
 [datastore]
 QUOTA = 1024 MB
 
-[transport-udp]
-PORT = 0
-ADVERTISED_PORT = 0
-
-[transport-tcp]
-PORT = 0
-ADVERTISED_PORT = 0
-
 [arm]
 START_SYSTEM_SERVICES = NO
 START_USER_SERVICES = YES
+
+[nat]
+PUNCHED_NAT = YES
+ENABLE_UPNP = NO
+EXTERNAL_ADDRESS = 109.80.156.99
     '';
   };
 }
