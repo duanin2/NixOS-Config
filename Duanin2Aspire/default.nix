@@ -27,7 +27,6 @@
 		(modules.common.software + /home-manager)
     #(modules.local.software + /firejail)
     #(modules.local.software + /tlp)
-    (modules.common.software + /gnunet)
     (modules.common.software + /kdeConnect)
     (modules.local.software + /pipewire)
     (modules.common.software + /nix-ld)
@@ -40,6 +39,7 @@
     (modules.common.software.network + /firewall)
     (modules.common.software.network + /resolvd)
     (modules.common.software.network + /networkmanager)
+    (modules.common.software.network + /gnunet)
 
 		# software.kernel
 		(modules.common.software.kernel + /cachyos.nix)
