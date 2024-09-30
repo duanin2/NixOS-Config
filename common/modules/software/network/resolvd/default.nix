@@ -1,5 +1,5 @@
 { ... }: {
-  networking.nameservers = [ "194.242.2.4#base.dns.mullvad.net" ];
+  networking.nameservers = [ "194.242.2.2#dns.mullvad.net" ];
 
   services.resolved = {
     enable = true;
