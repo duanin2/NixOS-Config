@@ -67,6 +67,6 @@
       proxyPass = "http://${config.services.searx.settings.server.bind_address}:${builtins.toString config.services.searx.settings.server.port}";
     };
 
-    extraConfig = (securitySetupNGINX "searx.duanin2.top") + securityHeaders + httpsUpgrade + ocspStapling;
+    extraConfig = (securitySetupNGINX [ "searx.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
   };
 }

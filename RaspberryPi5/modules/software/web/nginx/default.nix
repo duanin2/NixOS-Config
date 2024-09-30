@@ -1,5 +1,5 @@
 { pkgs, lib, ... }: let
-  securitySetupNGINX = origin: let
+  securitySetupNGINX = origins: let
     isoTime = when: accuracy: lib.readFile (pkgs.runCommand "timestamp" { } "echo -n `date -d @${builtins.toString when} --iso-8601=${accuracy} > $out`");
     
     expiration = {
@@ -9,7 +9,7 @@
     paths = [ "/security.txt" "/.well-known/security.txt" ];
     
     finalSecurity = pkgs.writeText "security.txt" ''
-${lib.strings.concatMapStrings (path: "Canonical: https://${origin}${path}\n") paths}
+${lib.strings.concatMapStrings (path: lib.strings.concatMapStrings (origin: "Canonical: https://${origin}${path}\n") origins) paths}
 
 Contact: mailto:admin-security@duanin2.top
 
@@ -19,7 +19,13 @@ Expires: ${isoTime (builtins.currentTime + expiration.seconds) "seconds"}
 Preferred-Languages: cs, en
     '';
   in ''
-${lib.strings.concatMapStrings (path: "location =${path} { alias ${finalSecurity}; }\n") paths}
+${lib.strings.concatMapStrings (path: ''
+location =${path} {
+    alias ${finalSecurity};
+    add_header Content-Type "text/plain" always;
+    ${securityHeaders}
+                         }
+'') paths}
   '';
   securityHeaders = let
     allowedSrc = "'self' $scheme://duanin2.top $scheme://*.duanin2.top";
@@ -59,7 +65,9 @@ in {
         useACMEHost = "duanin2.top";
         addSSL = true;
 
-        extraConfig = (securitySetupNGINX "duanin2.top") + securityHeaders + httpsUpgrade + ocspStapling;
+        serverAliases = [ "www.duanin2.top" ];
+
+        extraConfig = (securitySetupNGINX [ "duanin2.top" "www.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
       };
       /*
       "bohousek10d1979.asuscomm.com" = {
@@ -68,7 +76,7 @@ in {
 
         locations."/".proxyPass = "https://192.168.1.1";
 
-        extraConfig = (securitySetupNGINX "bohousek10d1979.asuscomm.com") + securityHeaders + httpsUpgrade;
+        extraConfig = (securitySetupNGINX [ "bohousek10d1979.asuscomm.com" ]) + securityHeaders + httpsUpgrade;
       };
       */
     };

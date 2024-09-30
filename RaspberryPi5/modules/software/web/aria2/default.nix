@@ -22,7 +22,7 @@ in {
 			proxyWebsockets = true;
 		};
 
-    extraConfig = (securitySetupNGINX "aria2.duanin2.top") + securityHeaders + httpsUpgrade + ocspStapling;
+    extraConfig = (securitySetupNGINX [ "aria2.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
 	};
 
   environment.persistence."/persist" = {

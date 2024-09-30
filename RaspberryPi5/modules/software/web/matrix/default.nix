@@ -102,7 +102,7 @@ in {
         };
       };
 
-      extraConfig = (securitySetupNGINX "matrix.duanin2.top") + securityHeaders + httpsUpgrade + ocspStapling;
+      extraConfig = (securitySetupNGINX [ "matrix.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
     };
   };
 

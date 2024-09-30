@@ -1,22 +1,25 @@
 { securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: {
   security.acme = {
     defaults = {
+      # webroot = "/var/lib/acme/.challenges";
       email = "tilldusan30+acme@gmail.com";
     };
     certs."duanin2.top" = {
-      # webroot = "/var/lib/acme/.challenges";
       group = "nginx";
       domain = "duanin2.top";
       extraDomainNames = [ "*.duanin2.top" ];
       dnsProvider = "cloudflare";
       environmentFile = "/var/lib/secrets/certs.secret";
+      extraLegoRunFlags = [ /*"--must-staple"*/ ];
+      extraLegoRenewFlags = [ "--reuse-key" /*"--must-staple"*/ ];
     };
-    /*certs."asuscomm.com" = {
-      webroot = "/var/lib/acme/.challenges";
+    /*
+    certs."asuscomm.com" = {
       group = "nginx";
       domain = "bohousek10d1979.asuscomm.com";
       environmentFile = "/var/lib/secrets/certs.secret";
-    };*/
+    };
+    */
     acceptTerms = true;
   };
 
@@ -30,7 +33,7 @@
       priority = 0;
     };
 
-    extraConfig = (securitySetupNGINX "acmechallenge.duanin2.top") + securityHeaders + httpsUpgrade + ocspStapling;
+    extraConfig = (securitySetupNGINX [ "acmechallenge.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
   };
 
   environment.persistence."/persist" = {

@@ -16,7 +16,7 @@
       proxyPass = "http://localhost:8096";
     };
 
-    extraConfig = (securitySetupNGINX "jellyfin.duanin2.top") + securityHeaders + httpsUpgrade + ocspStapling;
+    extraConfig = (securitySetupNGINX [ "jellyfin.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
   };
 
   environment.persistence."/persist" = let

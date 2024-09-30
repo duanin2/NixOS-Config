@@ -92,7 +92,7 @@ if header :matches "list-id" "<?*>" {
     
     locations."/".proxyPass = "http://unix:/run/rspamd/worker-controller.sock:/";
 
-    extraConfig = (securitySetupNGINX "duanin2.top") + securityHeaders + httpsUpgrade + ocspStapling;
+    extraConfig = (securitySetupNGINX [ "rspamd.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
   };
 
   environment.persistence."/persist" = {
