@@ -4,7 +4,7 @@
 	];
 	
 	boot.kernelPackages = lib.mkForce (pkgs.linuxPackagesFor (pkgs.callPackage "${inputs.rpi5}/linux-rpi.nix" (let
-		modDirVersion = "6.8.7";
+		modDirVersion = "6.11.0";
 	in {
 		argsOverride = {
 			inherit modDirVersion;
@@ -13,8 +13,8 @@
 			src = pkgs.fetchFromGitHub {
 				owner = "raspberrypi";
 				repo = "linux";
-				rev = "12dadc409c2bd8538c6ee0e56e191efde6d92007"; # Linux 6.8.7
-				hash = "sha256-eqterW9A+opVmUvDGCNLBV3I2Vpf1DAE4+RHn6VxGMg=";
+				rev = "8063035e26a3ab8b3640b59511e4600bf45b515e"; # Linux 6.11.0
+				hash = "";
 			};
 		};
 
@@ -24,4 +24,11 @@
 		];
 		rpiVersion = 5;
 	})));
+
+  nixpkgs.overlays = [
+    (final: super: {
+      makeModulesClosure = x:
+        super.makeModulesClosure (x // { allowMissing = true; });
+    })
+  ];
 }
