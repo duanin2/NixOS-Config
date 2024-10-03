@@ -39,7 +39,7 @@
     (modules.common.software.network + /firewall)
     (modules.common.software.network + /resolvd)
     (modules.common.software.network + /networkmanager)
-    (modules.common.software.network + /gnunet)
+    #(modules.common.software.network + /gnunet)
 
 		# software.kernel
 		(modules.common.software.kernel + /cachyos.nix)
