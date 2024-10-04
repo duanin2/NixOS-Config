@@ -1,4 +1,4 @@
-{ inputs, config, lib, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: let
+{ inputs, config, lib, pkgs, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: let
   cfg = config.mailserver;
 in {
   imports = [ inputs.simple-nixos-mailserver.nixosModule ];
@@ -85,14 +85,32 @@ if header :matches "list-id" "<?*>" {
     smtp_tls_mandatory_protocols = lib.mkForce "TLSv1.3, TLSv1.2, !TLSv1.1, !TLSv1, !SSLv2, !SSLv3";
   };
 
-  services.nginx.virtualHosts."rspamd.duanin2.top" = {
-    onlySSL = true;
-    useACMEHost = "duanin2.top";
-    basicAuthFile = "/var/lib/secrets/rspamdBasicAuth";
-    
-    locations."/".proxyPass = "http://unix:/run/rspamd/worker-controller.sock:/";
+  services.nginx.virtualHosts = {
+    "rspamd.duanin2.top" = {
+      onlySSL = true;
+      useACMEHost = "duanin2.top";
+      basicAuthFile = "/var/lib/secrets/rspamdBasicAuth";
+      
+      locations."/".proxyPass = "http://unix:/run/rspamd/worker-controller.sock:/";
 
-    extraConfig = (securitySetupNGINX [ "rspamd.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
+      extraConfig = (securitySetupNGINX [ "rspamd.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
+    };
+    "mta-sts.duanin2.top" = {
+      onlySSL = true;
+      useACMEHost = "duanin2.top";
+
+      locations."= /.well-known/mta-sts.txt" = {
+        alias = pkgs.writeText "mta-sts.txt" (builtins.replaceStrings [ "\n" ] [ "\r\n" ] ''
+version: STSv1
+mode: enforce
+max_age: ${toString (3 * 30 * 24 * 60 * 60)}
+mx: mail.duanin2.top
+mx: *.duanin2.top
+        '');
+      };
+
+      extraConfig = (securitySetupNGINX [ "mta-sts.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
+    };
   };
 
   environment.persistence."/persist" = {
