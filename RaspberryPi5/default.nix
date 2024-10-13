@@ -28,7 +28,7 @@
     # software/web
     (modules.local.software.web + /nginx)
     # (modules.local.software.web + /transmission)
-    (modules.local.software.web + /invidious)
+    #(modules.local.software.web + /invidious)
     (modules.local.software.web + /aria2)
     # (modules.local.software.web + /openvscode-server)
     (modules.local.software.web + /searx)
