@@ -9,6 +9,10 @@
 
     compression = true;
     addKeysToAgent = "yes";
+
+    extraConfig = ''
+VerifyHostKeyDNS yes
+    '';
   };
 
   home.persistence.${persistDirectory} = {
