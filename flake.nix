@@ -7,6 +7,7 @@
 			"https://nix-community.cachix.org/"
 			"https://hyprland.cachix.org"
 			"https://nyx.chaotic.cx/"
+      "https://cuda-maintainers.cachix.org"
 		];
 		extra-trusted-public-keys = [
 			"0uptime.cachix.org-1:ctw8yknBLg9cZBdqss+5krAem0sHYdISkw/IFdRbYdE="
@@ -14,6 +15,7 @@
 			"hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
 			"nyx.chaotic.cx-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
 			"chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
+      "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
 		];
 	};
 
@@ -252,7 +254,7 @@
 				modules = [
 					(nixosCdDvd + /installation-cd-graphical-plasma5.nix)
 
-          				(commonModules.software.kernel + /cachyos.nix)
+          (commonModules.software.kernel + /cachyos.nix)
 					(isoModules + /default.nix)
 				] ++ (with inputs; [
 					chaotic.nixosModules.default
