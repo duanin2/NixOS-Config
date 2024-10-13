@@ -109,6 +109,13 @@ proxy_cache_use_stale error updating http_500 http_502 http_503 http_504;
 
   users.users.nginx.extraGroups = [ "acme" "searx" ];
 
+  systemd.services.nginx = let
+    eraseCache = "${pkgs.coreutils}/bin/rm -rf /var/cache/nginx/${nginxCacheName}/*";
+  in {
+    preStart = lib.mkBefore eraseCache;
+    serviceConfig.ExecReload = lib.mkBefore [ "${lib.getExe pkgs.bash} -c \"${eraseCache}\"" ];
+  };
+
   networking.firewall.allowedTCPPorts = [
     80
     443
