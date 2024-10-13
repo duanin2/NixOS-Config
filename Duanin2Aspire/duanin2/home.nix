@@ -52,6 +52,7 @@ in {
 
 		(modules.local + /mpv)
 		(modules.local + /mpv/ani-cli.nix)
+    (modules.local + /yt-dlp)
 	];
 
 	home.stateVersion = "23.11";
