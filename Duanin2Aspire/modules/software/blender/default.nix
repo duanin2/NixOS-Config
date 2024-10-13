@@ -1,6 +1,6 @@
 { pkgs, modules, ... }: {
   imports = [
-    (modules.common.software + /cuda)
+    (modules.local.software + /cuda)
   ];
 
   environment.systemPackages = with pkgs; [ blender ];

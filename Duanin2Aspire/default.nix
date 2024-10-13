@@ -31,7 +31,7 @@
     (modules.local.software + /pipewire)
     (modules.common.software + /nix-ld)
     (modules.common.software + /chrony)
-    (modules.common.software + /blender)
+    (modules.local.software + /blender)
 
 		# software.network
     (modules.common.software.network + /avahi)
