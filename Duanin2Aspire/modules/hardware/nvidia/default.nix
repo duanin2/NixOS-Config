@@ -1,5 +1,14 @@
-{ lib, config, ... }: {
-  hardware.graphics.enable = lib.mkForce true;
+{ lib, config, pkgs, ... }: {
+  hardware.graphics = {
+    enable = lib.mkForce true;
+
+    extraPackages = with pkgs; [
+      nvidia-vaapi-driver
+    ];
+    extraPackages32 = with pkgs; [
+      nvidia-vaapi-driver
+    ];
+  };
   chaotic.mesa-git.enable = lib.mkForce false;
 
   services.xserver.videoDrivers = [ "nvidia" ];

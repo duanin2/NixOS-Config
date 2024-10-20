@@ -1,18 +1,11 @@
 { lib, pkgs, ... }: let
   baseExtraPackages = pkgs': extraPackages: with pkgs'; [
-    intel-media-driver
-    vaapiIntel
     vaapiVdpau
-    libvdpau-va-gl
   ] ++ extraPackages;
 in {
   # Stable
   hardware.graphics = {
-    enable = lib.mkForce true;
-
     extraPackages = baseExtraPackages pkgs (with pkgs; [
-      intel-ocl
-      intel-compute-runtime
       mesa.opencl
     ]);
     extraPackages32 = baseExtraPackages pkgs.pkgsi686Linux [];
@@ -25,17 +18,14 @@ in {
 
     method = "replaceRuntimeDependencies";
     extraPackages = baseExtraPackages pkgs (with pkgs; [
-      intel-ocl
-      intel-compute-runtime
       mesa_git.opencl
     ]);
     extraPackages32 = baseExtraPackages pkgs.pkgsi686Linux [];
   };
 
-  nixpkgs.overlays = [
-    /*
-    (final: prev: builtins.mapAttrs (name: value: lib.overrideAll {
-      package = value;
+  nixpkgs.overlays = let
+    newMesa = package: lib.overrideAll {
+      inherit package;
       args = (old: {
         galliumDrivers = [
           "nouveau"
@@ -49,7 +39,15 @@ in {
           "intel"
         ];
       });
-    }) { inherit (prev) mesa_git mesa32_git; })
-    */
+    };
+  in [
+    #(final: prev: {
+    #  mesa = newMesa prev.pkgsx86_64_v3.mesa;
+    #  pkgsi686Linux = prev.pkgsi686Linux // {
+    #    mesa = newMesa prev.pkgsi686Linux.mesa;
+    #  };
+    #  mesa_git = newMesa prev.pkgsx86_64_v3.mesa_git;
+    #  mesa32_git = newMesa prev.mesa32_git;
+    #})
   ];
 }
