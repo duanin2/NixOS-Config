@@ -29,7 +29,7 @@
     #(modules.local.software + /tlp)
     (modules.common.software + /kdeConnect)
     (modules.local.software + /pipewire)
-    (modules.common.software + /nix-ld)
+    #(modules.common.software + /nix-ld)
     (modules.common.software + /chrony)
     (modules.local.software + /blender)
 
