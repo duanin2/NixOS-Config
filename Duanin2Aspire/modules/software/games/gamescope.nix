@@ -2,7 +2,7 @@
   programs.gamescope = {
     enable = true;
     package = pkgs.gamescope_git;
-    capSysNice = true;
+    #capSysNice = true;
 
     env = { } // (if !config.chaotic.mesa-git.enable then {
       "__NV_PRIME_RENDER_OFFLOAD" = "1";
