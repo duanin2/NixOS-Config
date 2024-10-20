@@ -102,7 +102,7 @@
 	      nushell-mode = {
 	        enable = true;
 	      };
-
+        
         php-mode = {
           enable = true;
 
