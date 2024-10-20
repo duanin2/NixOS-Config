@@ -37,7 +37,7 @@
       
       recommendedGcSettings = true;
 
-      # Borrowed from https://git.sr.ht/~rycee/configurations/tree/master/item/user/emacs.nix#L35-39
+      # https://git.sr.ht/~rycee/configurations/tree/master/item/user/emacs.nix#L35-39
       earlyInit = let
         font = config.gtk.font;
       in ''
@@ -113,7 +113,7 @@
 	        enable = true;
           
 	        defer = true;
-	        # I borrowed this from https://git.sr.ht/~rycee/configurations/tree/master/item/user/emacs.nix#L291-296
+	        # https://git.sr.ht/~rycee/configurations/tree/master/item/user/emacs.nix#L291-296
 	        earlyInit = ''
 ;; Set color theme in early init to avoid flashing during start.
 (require 'catppuccin-theme)
