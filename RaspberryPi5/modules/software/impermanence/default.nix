@@ -11,17 +11,35 @@
       "/etc/NetworkManager/system-connections"
       "/var/lib/secrets"
       "/var/lib/postgresql"
+      {
+        directory = "/tmp";
+        user = "root";
+        group = "root";
+        mode = "1777";
+      }
     ];
     files = [
       "/etc/machine-id"
     ];
   };
 
-  systemd.services."home-manager-duanin2-fix-home" = {
-    wantedBy = [ "home-manager-duanin2.service" ];
-    script = ''
-      mkdir -p /home/duanin2
-      chown -R duanin2:users /home/duanin2
+  systemd.services = {
+    "home-manager-duanin2-fix-home" = {
+      wantedBy = [ "home-manager-duanin2.service" ];
+      script = ''
+mkdir -p /home/duanin2
+chown -R duanin2:users /home/duanin2
     '';
+    };
+    "clear-tmp" = {
+      wantedBy = [ "tmp.mount" ];
+
+      after = [ "persist.mount" ];
+      before = [ "tmp.mount" ];
+
+      script = ''
+rm -rf /persist/tmp/*
+      '';
+    };
   };
 }
