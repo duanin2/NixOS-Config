@@ -7,12 +7,17 @@
 
     settings = {
       base-url = "https://ntfy.duanin2.top";
+      upstream-base-url = "https://ntfy.sh";
+      
       listen-http = "127.0.0.1:1280";
       behind-proxy = true;
-      # smtp-sender-addr = "duanin2.top:465";
-      # smtp-sender-from = "ntfy@duanin2.top";
-      upstream-base-url = "https://ntfy.sh";
       visitor-request-limit-exempt-hosts = "duanin2.top,192.168.1.0/24,127.0.0.0/8";
+
+      #smtp-sender-addr = "duanin2.top:465";
+      #smtp-sender-from = "ntfy@duanin2.top";
+
+      auth-file = "/var/lib/ntfy/user.db";
+      auth-default-access = "deny-all";
     };
   };
   
@@ -33,5 +38,11 @@ add_header X-Content-Type-Options "nosniff" always;
 add_header Referrer-Policy "no-referrer" always;
       '' + httpsUpgrade + ocspStapling;
     };
+  };
+
+  environment.persistence."/persist" = {
+    directories = [
+      "/var/lib/ntfy/"
+    ];
   };
 }
