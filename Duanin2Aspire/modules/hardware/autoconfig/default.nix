@@ -13,36 +13,42 @@
 	boot.kernelModules = [ "kvm-intel" ];
 	boot.extraModulePackages = [ ];
 
-	fileSystems."/" =
-    { device = "none";
-      fsType = "tmpfs";
-      options = [ "size=64M" "mode=755" ];
-    };
+	fileSystems."/" = {
+    device = "none";
+    fsType = "tmpfs";
+    options = [
+      "size=64M"
+      "mode=755"
+    ];
+  };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/C22B-6D35";
-      fsType = "vfat";
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/C22B-6D35";
+    fsType = "vfat";
+  };
 
-  fileSystems."/persist" =
-    { device = "UUID=31f7b817-661e-4b2d-9e42-47e69dfcfd25";
-      fsType = "bcachefs";
-      neededForBoot = true;
-    };
+  fileSystems."/persist" = {
+    device = "UUID=31f7b817-661e-4b2d-9e42-47e69dfcfd25";
+    fsType = "bcachefs";
+    neededForBoot = true;
+  };
 
-  fileSystems."/nix" =
-    { device = "/persist/nix";
-			depends = [ "/persist" ];
-      fsType = "none";
-      neededForBoot = true;
-      options = [ "bind" ];
-    };
+  fileSystems."/nix" = {
+    device = "/persist/nix";
+		depends = [ "/persist" ];
+    fsType = "none";
+    neededForBoot = true;
+    options = [ "bind" ];
+  };
 
-  fileSystems."/home/duanin2" =
-    { device = "none";
-      fsType = "tmpfs";
-      options = [ "size=1G" "mode=755" ];
-    };
+  fileSystems."/home/duanin2" = {
+    device = "none";
+    fsType = "tmpfs";
+    options = [
+      "size=1G"
+      "mode=755"
+    ];
+  };
 
 	swapDevices = [
 		{
