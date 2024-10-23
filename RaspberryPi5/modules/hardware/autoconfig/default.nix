@@ -4,9 +4,9 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+  ];
 
   boot.initrd.availableKernelModules = [ "usb_storage" ];
   boot.initrd.kernelModules = [ ];
@@ -14,27 +14,30 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/persist" = {
-    device = "/dev/disk/by-label/RootFS";
+    device = "/dev/disk/by-label/data";
     fsType = "btrfs";
-    options =  [
-      "compress-force=zstd:4"
+    options = [
+      "compress-force=zstd:8"
+      "autodefrag"
+      "nodiscard"
     ];
     neededForBoot = true;
   };
 
-  fileSystems."/nix" =
-    { device = "/persist/nix";
-			depends = [ "/persist" ];
-      fsType = "none";
-      neededForBoot = true;
-      options = [ "bind" ];
-    };
+  fileSystems."/nix" = {
+    device = "/dev/disk/by-label/Nix";
+    fsType = "btrfs";
+    options =  [
+      "compress-force=zstd:15"
+    ];
+    neededForBoot = true;
+  };
 
   fileSystems."/" = {
     device = "none";
     fsType = "tmpfs";
     options = [
-      "size=3G"
+      "size=64M"
       "mode=755"
     ];
   };
@@ -43,16 +46,8 @@
     device = "none";
     fsType = "tmpfs";
     options = [
-      "size=3G"
+      "size=1G"
       "mode=755"
-    ];
-  };
-  
-  fileSystems."/tmp" = {
-    device = "none";
-    fsType = "tmpfs";
-    options = [
-      "size=80%"
     ];
   };
 
@@ -64,6 +59,10 @@
   fileSystems."/boot/firmware" = {
     device = "/dev/disk/by-uuid/12EF-1B5C";
     fsType = "vfat";
+  };
+
+  services.btrfs.autoScrub = {
+    enable = true;
   };
 
   swapDevices = [ ];
