@@ -20,17 +20,18 @@
 
     # software/network
 		(modules.common.software.network + /networkmanager)
-		(modules.common.software.network + /resolvd)
+		#(modules.common.software.network + /resolvd)
 		(modules.common.software.network + /avahi)
     (modules.local.software.network + /region)
     (modules.common.software.network + /miredo)
+    (modules.common.software.network + /dnsmasq)
 
     # software/web
     (modules.local.software.web + /nginx)
-    # (modules.local.software.web + /transmission)
+    #(modules.local.software.web + /transmission)
     #(modules.local.software.web + /invidious)
     (modules.local.software.web + /aria2)
-    # (modules.local.software.web + /openvscode-server)
+    #(modules.local.software.web + /openvscode-server)
     (modules.local.software.web + /searx)
     (modules.local.software.web + /matrix)
     (modules.local.software.web + /jellyfin)

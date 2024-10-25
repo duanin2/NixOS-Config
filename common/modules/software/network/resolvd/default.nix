@@ -1,4 +1,4 @@
-{ ... }: {
+{ lib, ... }: {
   networking.nameservers = [ "194.242.2.2#dns.mullvad.net" ];
 
   services.resolved = {
@@ -16,4 +16,6 @@ MulticastDNS=false
   };
 
   networking.resolvconf.enable = false;
+  
+  services.kresd.enable = lib.mkForce false;
 }
