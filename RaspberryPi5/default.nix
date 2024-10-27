@@ -25,7 +25,7 @@
     (modules.local.software.network + /region)
     (modules.common.software.network + /miredo)
     #(modules.common.software.network + /dnsmasq)
-    (modules.local.software.network + /unbound)
+    (modules.common.software.network + /unbound)
 
     # software/web
     (modules.local.software.web + /nginx)
