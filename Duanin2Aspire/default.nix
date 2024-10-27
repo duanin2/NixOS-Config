@@ -41,7 +41,8 @@
     #(modules.common.software.network + /resolvd)
     (modules.common.software.network + /networkmanager)
     #(modules.common.software.network + /gnunet)
-    (modules.common.software.network + /dnsmasq)
+    #(modules.common.software.network + /dnsmasq)
+    (modules.common.software.network + /unbound)
 
 		# software.kernel
 		(modules.common.software.kernel + /cachyos.nix)

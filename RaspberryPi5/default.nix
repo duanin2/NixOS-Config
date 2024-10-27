@@ -19,12 +19,13 @@
     (modules.common.software + /chrony)
 
     # software/network
-		(modules.common.software.network + /networkmanager)
-		#(modules.common.software.network + /resolvd)
-		(modules.common.software.network + /avahi)
+    (modules.common.software.network + /networkmanager)
+    #(modules.common.software.network + /resolvd)
+    (modules.common.software.network + /avahi)
     (modules.local.software.network + /region)
     (modules.common.software.network + /miredo)
-    (modules.common.software.network + /dnsmasq)
+    #(modules.common.software.network + /dnsmasq)
+    (modules.local.software.network + /unbound)
 
     # software/web
     (modules.local.software.web + /nginx)
