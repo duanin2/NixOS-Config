@@ -16,6 +16,8 @@ in {
   imports = [
     (import ./element.nix { inherit clientConfig; })
   ];
+
+  services.postgresql.enable = lib.mkForce true;
   
   services.matrix-synapse = {
     enable = true;
