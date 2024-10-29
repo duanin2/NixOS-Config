@@ -14,6 +14,10 @@ in {
     enableSubmission = false;
     enablePop3Ssl = true;
 
+    localDnsResolver = false;
+    messageSizeLimit = 512 * 1024 * 1024;
+    lmtpSaveToDetailMailbox = "yes";
+
     # A list of all login accounts. To create the password hashes, use
     # nix-shell -p mkpasswd --run 'mkpasswd -sm bcrypt'
     loginAccounts = {
@@ -26,7 +30,7 @@ in {
         aliasesRegexp = [
           "/^duanin2(-.+)?@duanin2\\.top$/"
           "/^dusan.till(-.+)?@duanin2\\.top$/"
-          "/^admin(-.+)?@duanin2.top$/"
+          "/^admin(-.+)?@duanin2\\.top$/"
         ];
         sieveScript = ''
 require ["fileinto", "mailbox"];
@@ -118,6 +122,7 @@ mx: *.duanin2.top
       cfg.mailDirectory
       cfg.sieveDirectory
       cfg.dkimKeyDirectory
+      "/var/lib/postfix/queue"
     ] ++ (if (builtins.typeOf cfg.indexDir == "string") then [ cfg.indexDir ] else [ ]);
   };
 }
