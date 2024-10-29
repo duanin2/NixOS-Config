@@ -9,14 +9,9 @@
 			
 			jnoortheen.nix-ide
 			mkhl.direnv
-		] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-      {
-				name = "vscode-nushell-lang";
-				publisher = "TheNuProjectContributors";
-				version = "1.8.0";
-				sha256 = "4a2ecde74be89e91bbf653e29e019988d0198dea11278e4f0eea259d1f5af6d6";
-			}
-    ];
+
+			thenuprojectcontributors.vscode-nushell-lang
+		] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [ ];
 		mutableExtensionsDir = false;
 		userSettings = {
 			"workbench.colorTheme" = "Catppuccin Frappé";

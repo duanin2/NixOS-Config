@@ -84,10 +84,12 @@ in {
                     subsMatch = windowTitleList [
                       "Plasma-Interactiveconsole"
                       "Mpv Přehrávač"
+                      "VSCodium - URL Handler"
                     ];
                     subsReplace = windowTitleList [
                       "Interactive Plasma Console"
                       "MPV"
+                      "VSCodium"
                     ];
                   };
                 };

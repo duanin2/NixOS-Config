@@ -11,7 +11,7 @@
   };
 in {
 	imports = [
-		#(modules.local + /vscode)
+		(modules.local + /vscode)
 		(modules.local + /syncthing)
 		(modules.local + /keepassxc)
 		#(modules.local + /libreoffice)
@@ -25,34 +25,34 @@ in {
 		#(modules.local + /alacritty)
 		(modules.local + /ssh)
 		(modules.local + /impermanence)
-		(modules.common + /Emacs)
-    (modules.common + /tldr)
-    #(modules.common + /eww)
-    #(modules.common + /pidgin)
-    (modules.common + /systemd)
-    #(modules.common + /gnunet)
-    (modules.common + /kdeConnect)
+		#(modules.common + /Emacs)
+    		(modules.common + /tldr)
+    		#(modules.common + /eww)
+    		#(modules.common + /pidgin)
+    		(modules.common + /systemd)
+    		#(modules.common + /gnunet)
+    		(modules.common + /kdeConnect)
 
-    #(modules.local + /Hyprland)
-    (modules.local + /plasma)
+    		#(modules.local + /Hyprland)
+    		(modules.local + /plasma)
     
 		(modules.local.games + /prismlauncher)
 		#(modules.local.games + /vinegar)
 		(modules.local.games + /lutris)
 		#(modules.local.games + /godot)
-    (modules.local.games + /mangohud)
-    (modules.local.games + "/osu!")
+    		(modules.local.games + /mangohud)
+    		(modules.local.games + "/osu!")
 
 		(modules.common.shell + /nushell)
 		(modules.common.shell.prompts + /starship)
 
 		(modules.common.Mozilla + /firefox.nix)
-    #(modules.common.Mozilla + /mullvad.nix)
+    		#(modules.common.Mozilla + /mullvad.nix)
 		(modules.common.Mozilla + /thunderbird.nix)
 
 		(modules.local + /mpv)
 		(modules.local + /mpv/ani-cli.nix)
-    (modules.local + /yt-dlp)
+    		(modules.local + /yt-dlp)
 	];
 
 	home.stateVersion = "23.11";
