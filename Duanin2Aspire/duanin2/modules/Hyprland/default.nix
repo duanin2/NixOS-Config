@@ -7,13 +7,6 @@
 	hypridle = inputs.hypridle.packages.${pkgs.system};
 	hyprlock = inputs.hyprlock.packages.${pkgs.system};
 
-  wallpaper = "${inputs.nix-wallpaper.packages.${pkgs.system}.default.override {
-    width = 1920;
-    height = 1080;
-    logoSize = 80;
-    preset = "catppuccin-frappe-rainbow";
-  }}/share/wallpapers/nixos-wallpaper.png";
-
 	minimize = let
 		hyprlandPackage = config.wayland.windowManager.hyprland.package;
 	in pkgs.writeTextFile {
@@ -42,7 +35,7 @@ if (hyprctl activewindow -j | from json).workspace.id == -99 {
 	listToWindowrules = window: list: map (rule: "${rule}, ${window}") list;
 in {
 	imports = let
-		configAttrs = { inherit hyprland hyprland-plugins hyprcursor hyprpaper hyprpicker hypridle hyprlock wallpaper; };
+		configAttrs = { inherit hyprland hyprland-plugins hyprcursor hyprpaper hyprpicker hypridle hyprlock; };
 	in [
 		(import ./hypridle.nix configAttrs)
 		(import ./hyprlock.nix configAttrs)
@@ -312,7 +305,6 @@ plugin {
 	home.persistence.${persistDirectory} = {
     directories = [
       ".cache/hyprland"
-      ".config/autostart"
     ];
   };
 

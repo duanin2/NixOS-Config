@@ -1,4 +1,4 @@
-{ wallpaper, hyprpaper, ... }: { pkgs, customPkgs, lib, ... }: {
+{ hyprpaper, ... }: { pkgs, customPkgs, lib, wallpaper, ... }: {
   services.hyprpaper = {
     enable = true;
     package = hyprpaper.hyprpaper;
