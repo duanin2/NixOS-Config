@@ -1,7 +1,7 @@
-result
+**/result
 **/*~
 **/.#*
 **/#*#
-.vscode
-os-config.code-workspace
-nohup.out
+**/.vscode
+**/*.code-workspace
+**/nohup.out
