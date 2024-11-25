@@ -13,44 +13,81 @@
 	boot.kernelModules = [ "kvm-intel" ];
 	boot.extraModulePackages = [ ];
 
-	fileSystems."/" = {
-    device = "none";
-    fsType = "tmpfs";
+  fileSystems."/" = {
+    device = "/dev/mapper/RootFS";
+    fsType = "btrfs";
+    neededForBoot = true;
     options = [
-      "size=64M"
-      "mode=755"
+      "subvol=rootfs"
+      "compress-force=zstd:4"
+    ];
+  };
+
+  fileSystems."/persist" = {
+    device = "/dev/mapper/RootFS";
+    fsType = "btrfs";    
+    neededForBoot = true;
+    options = [
+      "subvol=persist"
+      "compress-force=zstd:4"
+    ];
+  };
+
+  fileSystems."/nix" = {
+    device = "/dev/mapper/RootFS";
+    fsType = "btrfs";    
+    neededForBoot = true;
+    options = [
+      "subvol=nix"
+      "compress-force=zstd:4"
     ];
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/C22B-6D35";
-    fsType = "vfat";
-  };
-
-  fileSystems."/persist" = {
-    device = "UUID=31f7b817-661e-4b2d-9e42-47e69dfcfd25";
-    fsType = "bcachefs";
+    device = "/dev/mapper/RootFS";
+    fsType = "btrfs";    
     neededForBoot = true;
-  };
-
-  fileSystems."/nix" = {
-    device = "/persist/nix";
-		depends = [ "/persist" ];
-    fsType = "none";
-    neededForBoot = true;
-    options = [ "bind" ];
-  };
-
-  fileSystems."/home/duanin2" = {
-    device = "none";
-    fsType = "tmpfs";
     options = [
-      "size=1G"
-      "mode=755"
+      "subvol=boot"
+      "compress-force=zstd:4"
     ];
   };
 
-	swapDevices = [ ];
+  fileSystems."/efi" = {
+    device = "/dev/disk/by-label/ESP";
+    fsType = "vfat";
+  };
+
+  boot.initrd.luks.devices."RootFS" = {
+    device = "/dev/disk/by-partlabel/LUKS";
+    postOpenCommands = lib.mkAfter ''
+TEMPMNT=/tmp/tempMnt
+
+echo "mounting to $TEMPMNT..."
+mkdir -p $TEMPMNT
+mount /dev/mapper/RootFS $TEMPMNT
+
+echo "rolling $TEMPMNT back to empty..."
+btrfs subvolume delete $TEMPMNT/rootfs
+btrfs subvolume snapshot $TEMPMNT/.snapshots/rootfs-empty $TEMPMNT/rootfs
+
+echo "unmounting from $TEMPMNT..."
+umount $TEMPMNT
+rm -rf $TEMPMNT
+    '';
+    bypassWorkqueues = true;
+    allowDiscards = true;
+  };
+
+	swapDevices = [
+          {
+            device = "/persist/swap/swapfile";
+            priority = 0;
+          }
+        ];
+	zramSwap = {
+	  writebackDevice = "/persist/swap/swapfile-writeback";
+	};
 
 	# Enables DHCP on each ethernet and wireless interface. In case of scripted networking
 	# (the default) this is the recommended approach. When using systemd-networkd it's

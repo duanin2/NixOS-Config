@@ -1,4 +1,4 @@
-{ wallpaper, hyprlock, ... }: { config, ... }: {
+{ hyprlock, ... }: { config, wallpaper, ... }: {
   programs.hyprlock = {
     enable = true;
     package = hyprlock.hyprlock;

@@ -15,7 +15,7 @@
         windowButtonsList = list: lib.concatMapStringsSep "|" (value: ''${toString value}'') list;
         panels = [
           {
-            height = 50;
+            height = 52;
             floating = true;
             alignment = "center";
             hiding = "dodgewindows";
@@ -190,7 +190,7 @@ ${lib.concatMapStringsSep "\n" (panel: ''
         };
         dimDisplay = {
           enable = true;
-          idleTimeout = 60 * 9;
+          idleTimeout = 60 * 5;
         };
         powerButtonAction = "lockScreen";
         turnOffDisplay = {
@@ -207,7 +207,7 @@ ${lib.concatMapStringsSep "\n" (panel: ''
         };
         dimDisplay = {
           enable = true;
-          idleTimeout = 60 * 4;
+          idleTimeout = 60 * 2 + 30;
         };
         powerButtonAction = "sleep";
         turnOffDisplay = {
@@ -220,7 +220,7 @@ ${lib.concatMapStringsSep "\n" (panel: ''
       lowBattery = {
         autoSuspend = {
           action = "sleep";
-          idleTimeout = 60 * 2;
+          idleTimeout = 120;
         };
         dimDisplay = {
           enable = true;
@@ -228,7 +228,7 @@ ${lib.concatMapStringsSep "\n" (panel: ''
         };
         powerButtonAction = "sleep";
         turnOffDisplay = {
-          idleTimeout = 60 * 1;
+          idleTimeout = 60;
           idleTimeoutWhenLocked = "immediately";
         };
         whenLaptopLidClosed = "sleep";
@@ -249,6 +249,16 @@ ${lib.concatMapStringsSep "\n" (panel: ''
             type = "exact";
           };
         };
+	apply = {
+	  "above" = {
+	    apply = "force";
+	    value = true;
+	  };
+	  "placement" = {
+	    apply = "force";
+	    value = 2;
+	  };
+	};
       }
     ];
     windows = {

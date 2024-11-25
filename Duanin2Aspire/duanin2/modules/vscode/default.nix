@@ -16,16 +16,35 @@
 		userSettings = {
 			"workbench.colorTheme" = "Catppuccin Frappé";
 			"workbench.iconTheme" = "catppuccin-frappe";
+			"catppuccin.accentColor" = "green";
+
 			"editor.fontFamily" = "Fira Code Nerd Fonts Mono";
-			"editor.tabSize" = 2;
-			"editor.multiCursorModifier" = "ctrlCmd";
-			"editor.insertSpaces" = false;
-			"editor.wordWrap" = "on";
 			"editor.fontLigatures" = true;
 			"editor.fontWeight" = "normal";
-			"catppuccin.accentColor" = "green";
+			"editor.fontSize" = 11;
+
+			"editor.tabSize" = 2;
+			"editor.insertSpaces" = false;
+			"editor.detectIndentation" = true;
+
+			"editor.multiCursorModifier" = "ctrlCmd";
+			"editor.wordWrap" = "on";
+
+			"files.autoSave" = "onFocusChange";
+
+			"git.autofetch" = true;
+			"git.autofetchPeriod" = 300;
+			#"git.enableCommitSigning" = true;
+			"git.enableSmartCommit" = true;
+			"git.mergeEditor" = true;
+			"git.terminalGitEditor" = true;
+			"github.gitProtocol" = "ssh";
+			"merge-conflict.autoNavigateNextConflict.enabled" = true;
+
 			"direnv.restart.automatic" = true;
+
 			"nix.enableLanguageServer" = true;
+			"nix.serverPath" = (lib.getExe pkgs.nil);
 			"nix.serverSettings" = {
 				"nil" = {
 					"diagnostics" = {
@@ -41,8 +60,31 @@
 					};
 				};
 			};
-			"nix.serverPath" = (lib.getExe pkgs.nil);
+
 			"nushellLanguageServer.nushellExecutablePath" = lib.getExe config.programs.nushell.package;
+
+			"php.validate.executablePath" = lib.getExe pkgs.php;
+
+			"javascript.inlayHints.enumMemberValues.enabled" = true;
+			"javascript.inlayHints.functionLikeReturnTypes.enabled" = true;
+			"javascript.inlayHints.parameterNames.enabled" = "all";
+			"javascript.inlayHints.parameterTypes.enabled" = true;
+			"javascript.inlayHints.propertyDeclarationTypes.enabled" = true;
+			"javascript.inlayHints.variableTypes.enabled" = true;
+			"javascript.preferences.importModuleSpecifier" = "projectRelative";
+			"javascript.preferGoToSourceDefinition" = true;
+			"typescript.inlayHints.enumMemberValues.enabled" = true;
+			"typescript.inlayHints.functionLikeReturnTypes.enabled" = true;
+			"typescript.inlayHints.parameterNames.enabled" = "all";
+			"typescript.inlayHints.parameterTypes.enabled" = true;
+			"typescript.inlayHints.propertyDeclarationTypes.enabled" = true;
+			"typescript.inlayHints.variableTypes.enabled" = true;
+			"typescript.npm" = "${pkgs.nodejs_22}/bin/npm";
+			"typescript.preferences.importModuleSpecifier" = "projectRelative";
+			"typescript.preferGoToSourceDefinition" = true;
+			"typescript.tsdk" = "${pkgs.typescript}/lib/node_modules/typescript/lib";
+			"typescript.tsserver.nodePath" = lib.getExe pkgs.nodejs_22;
+			"typescript.tsserver.useSyntaxServer" = "never";
 		};
 	};
 }

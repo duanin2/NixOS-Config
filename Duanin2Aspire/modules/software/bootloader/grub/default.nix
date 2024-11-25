@@ -12,5 +12,7 @@
     efiInstallAsRemovable = true;
     device = "nodev";
     configurationLimit = 5;
+
+    enableCryptodisk = true;
   };
 }

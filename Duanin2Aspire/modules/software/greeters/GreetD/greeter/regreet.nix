@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ lib, config, pkgs, ... }: {
   fonts.packages = with pkgs; [
     fira-code-nerdfont
   ];
@@ -25,12 +25,12 @@
 
     settings = {
       GTK = {
-        application_prefer_dark_theme = true;
-        cursor_theme_name = "Catppuccin-Frappe-Green-Cursors";
-        cursor_theme_size = 24;
-        font_name = "FiraCode Nerd Font 10";
-        icon_theme_name = "Papirus-Dark";
-        theme_name = "Colloid-Green-Dark-Catppuccin";
+        application_prefer_dark_theme = lib.mkForce true;
+        cursor_theme_name = lib.mkForce "Catppuccin-Frappe-Green-Cursors";
+        cursor_theme_size = lib.mkForce 24;
+        font_name = lib.mkForce "FiraCode Nerd Font 10";
+        icon_theme_name = lib.mkForce "Papirus-Dark";
+        theme_name = lib.mkForce "Colloid-Green-Dark-Catppuccin";
       };
     };
   };

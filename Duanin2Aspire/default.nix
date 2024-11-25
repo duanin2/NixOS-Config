@@ -15,7 +15,7 @@
 		(modules.local.software + /printing)
 		(modules.common.software + /localization)
 		(modules.common.software + /appimage)
-		#(modules.local.software + /plymouth)
+		(modules.local.software + /plymouth)
 		(modules.local.software + /ssh)
 		#(modules.local.software + /protonmail)
 		(modules.local.software + /git)
@@ -63,7 +63,7 @@
 		# software.virtualization
 		#(modules.local.software.virtualization + /waydroid)
 		#(modules.local.software.virtualization + /darling)
-    (modules.local.software.virtualization + /libvirt)
+    #(modules.local.software.virtualization + /libvirt)
 
 		# software.desktops
 		(modules.local.software.desktops + /plasma)
@@ -86,8 +86,6 @@
 	];
 
 	boot.binfmt.emulatedSystems = [ "aarch64-linux" "armv7l-linux" ];
-
-  services.blueman.enable = true;
 
 	networking.hostName = "Duanin2Aspire";
 	system.stateVersion = "23.11";

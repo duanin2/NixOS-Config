@@ -59,7 +59,7 @@
 			};
 		};
 
-    /*
+
 		hyprland = {
 			url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
 			inputs = {
@@ -104,7 +104,7 @@
 				nixpkgs.follows = "nixpkgs";
 			};
 		};
-    */
+
 		systems.url = "github:nix-systems/default-linux";
 
 		nix-colors.url = "github:misterio77/nix-colors";

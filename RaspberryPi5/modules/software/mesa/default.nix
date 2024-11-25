@@ -1,5 +1,11 @@
 { lib, pkgs, ... }: {
+  /*
   chaotic.mesa-git = {
+    enable = true;
+  };
+  */
+
+  hardware.graphics = {
     enable = true;
   };
 
