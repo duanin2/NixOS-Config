@@ -24,7 +24,7 @@ location =${path} {
     alias ${finalSecurity};
     add_header Content-Type "text/plain" always;
     ${securityHeaders}
-                         }
+}
 '') paths}
   '';
   securityHeaders = let

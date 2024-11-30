@@ -2,9 +2,9 @@
 	nixpkgs = {
 		config = {
 			allowUnfree = true;
-			allowUnsupportedSystem = true;
 		};
 		overlays = [
+			/*
 			(final: prev: {
 				invidious = prev.invidious.overrideAttrs (_oldAttrs: {
 					src = prev.fetchFromGitHub {
@@ -16,6 +16,7 @@
 					};
 				});
 			})
+			*/
 		];
 	};
 }
