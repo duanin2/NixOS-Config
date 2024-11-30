@@ -54,9 +54,9 @@ in {
       enable_registration_captcha = true;
       email = {
         smtp_host = "duanin2.top";
-        smtp_user = "matrix-noreply@duanin2.top";
+        smtp_user = "noreply@matrix.duanin2.top";
         force_tls = true;
-        notif_from = "Your %(app)s homeserver <matrix-noreply@duanin2.top>";
+        notif_from = "Your %(app)s homeserver <noreply@matrix.duanin2.top>";
         enable_notifs = true;
         notif_for_new_users = false;
         notif_delay_before_mail = "1h";
@@ -72,7 +72,7 @@ in {
         };
       };
 
-      admin_contact = "mailto:admin-matrix@duanin2.top";
+      admin_contact = "mailto:admin@matrix.duanin2.top";
     };
     extraConfigFiles = [ secretsFile ];
   };

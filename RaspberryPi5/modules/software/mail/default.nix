@@ -23,14 +23,12 @@ in {
     loginAccounts = {
       "duanin2@duanin2.top" = {
         hashedPasswordFile = "/var/lib/secrets/mailPass/duanin2";
-        aliases = [
-          "postmaster@duanin2.top"
-          "abuse@duanin2.top"
-        ];
         aliasesRegexp = [
+          "/^postmaster@([A-Za-z0-9-]+-\.)*duanin2.top$/"
+          "/^abuse@([A-Za-z0-9-]+-\.)*duanin2.top$/"
           "/^duanin2(-.+)?@duanin2\\.top$/"
           "/^dusan.till(-.+)?@duanin2\\.top$/"
-          "/^admin(-.+)?@duanin2\\.top$/"
+          "/^admin(-.+)?@([A-Za-z0-9-]+-\.)*duanin2\\.top$/"
         ];
         sieveScript = ''
 require ["fileinto", "mailbox"];
@@ -68,9 +66,13 @@ if header :matches "list-id" "<?*>" {
 }
         '';
       };
-      "matrix-noreply@duanin2.top" = {
+      "noreply@matrix.duanin2.top" = {
         sendOnly = true;
         hashedPasswordFile = "/var/lib/secrets/mailPass/matrix";
+
+        aliases = [
+          "matrix-noreply@duanin2.top"
+        ];
       };
     };
 
