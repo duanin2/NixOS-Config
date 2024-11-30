@@ -11,7 +11,6 @@
     (modules.common.hardware + /steam-hardware)
 
 		# software
-		(modules.common.software + /nix)
 		(modules.local.software + /printing)
 		(modules.common.software + /localization)
 		(modules.common.software + /appimage)
@@ -23,7 +22,7 @@
 		(modules.local.software + /gnupg)
 		(modules.common.software + /samba)
 		(modules.local.software + /impermanence)
-		(modules.local.software + /nix)
+		(modules.common.software + /nix/lix.nix)
 		(modules.common.software + /home-manager)
     #(modules.local.software + /firejail)
     #(modules.local.software + /tlp)

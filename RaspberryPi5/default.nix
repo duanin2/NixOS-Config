@@ -5,8 +5,7 @@
     (modules.common.hardware + /zram)
 
     # software
-    (modules.common.software + /nix)
-    (modules.local.software + /nix)
+    (modules.common.software + /nix/lix.nix)
     (modules.common.software + /localization)
     (modules.local.software + /ssh)
     (modules.local.software + /mesa)

@@ -1,5 +1,7 @@
-{ ... }: {
+{ modules, ... }: {
 	imports = [
+		(modules.common.software + /nix)
+
 		./nixpkgs
 	];
 
