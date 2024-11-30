@@ -12,15 +12,15 @@ in {
     ];
   };
 
-  services.nginx.virtualHosts."matrix.duanin2.top" = {
+  services.nginx.virtualHosts."anki.duanin2.top" = {
     useACMEHost = "duanin2.top";
     onlySSL = true;
     
     locations."/" = {
-      proxyPass = "http://${address}:${port}";
+      proxyPass = "http://${address}:${toString port}";
 			proxyWebsockets = true;
     };
 
-    extraConfig = (securitySetupNGINX [ "matrix.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
+    extraConfig = (securitySetupNGINX [ "anki.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
   };
 }

@@ -11,7 +11,7 @@
     finalSecurity = pkgs.writeText "security.txt" ''
 ${lib.strings.concatMapStrings (path: lib.strings.concatMapStrings (origin: "Canonical: https://${origin}${path}\n") origins) paths}
 
-Contact: mailto:admin-security@duanin2.top
+Contact: mailto:admin@security.duanin2.top
 
 # Always expires ${expiration.humanReadable} after generation
 Expires: ${isoTime (builtins.currentTime + expiration.seconds) "seconds"}
@@ -39,8 +39,8 @@ add_header Referrer-Policy "no-referrer" always;
   httpsUpgrade = ''
 set $do_http_upgrade "$https$http_upgrade_insecure_requests";
 if ($do_http_upgrade = "1") {
-    return 307 https://$host$request_uri;
-    }
+  return 307 https://$host$request_uri;
+}
   '';
   ocspStapling = ''
 ssl_stapling on;
