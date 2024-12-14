@@ -15,7 +15,7 @@
     (modules.common.software + /samba)
     (modules.local.software + /mail)
     (modules.common.software + /nix-ld)
-    (modules.common.software + /chrony)
+    (modules.local.software + /chrony)
 
     # software/network
     (modules.common.software.network + /networkmanager)
