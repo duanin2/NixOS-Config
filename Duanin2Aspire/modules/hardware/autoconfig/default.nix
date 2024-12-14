@@ -68,7 +68,7 @@ mkdir -p $TEMPMNT
 mount /dev/mapper/RootFS $TEMPMNT
 
 echo "rolling $TEMPMNT back to empty..."
-rm -rf --one-file-system $TEMPMNT/rootfs
+rm -rf $TEMPMNT/rootfs
 btrfs subvolume snapshot $TEMPMNT/.snapshots/rootfs-empty $TEMPMNT/rootfs
 
 echo "unmounting from $TEMPMNT..."
