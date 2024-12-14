@@ -249,16 +249,16 @@ ${lib.concatMapStringsSep "\n" (panel: ''
             type = "exact";
           };
         };
-	apply = {
-	  "above" = {
-	    apply = "force";
-	    value = true;
-	  };
-	  "placement" = {
-	    apply = "force";
-	    value = 2;
-	  };
-	};
+        apply = {
+          "above" = {
+            apply = "force";
+            value = true;
+          };
+          "placement" = {
+            apply = "force";
+            value = 2;
+          };
+        };
       }
     ];
     windows = {
@@ -273,7 +273,7 @@ ${lib.concatMapStringsSep "\n" (panel: ''
         size = cfg.size;
       };
       iconTheme = "Papirus-Dark";
-      lookAndFeel = "Catppuccin-Frappe-Green";
+      #clookAndFeel = "Catppuccin-Frappe-Green";
       splashScreen = {
         theme = "catppuccin-frappe-green-cursors";
       };
@@ -302,12 +302,39 @@ ${lib.concatMapStringsSep "\n" (panel: ''
       keyboard = {
         layouts = [
           {
+            displayName = "cz";
             layout = "cz";
+          }
+          {
+            displayName = "rus";
+            layout = "cz";
+            variant = "rus";
+          }
+          {
+            displayName = "us";
+            layout = "us";
+            variant = "intl";
           }
         ];
         model = "acer_laptop";
         numlockOnStartup = "on";
       };
+      mice = [
+        {
+          enable = true;
+
+          name = "YICHIP Wireless Device Mouse";
+          vendorId = "3151c";
+          productId = "1002";
+
+          acceleration = 0;
+          accelerationProfile = "none";
+          leftHanded = false;
+          middleButtonEmulation = false;
+          naturalScroll = false;
+          scrollSpeed = 1;
+        }
+      ];
       touchpads = [
         {
           enable = true;
@@ -339,7 +366,7 @@ ${lib.concatMapStringsSep "\n" (panel: ''
       autoLock = true;
       lockOnResume = true;
       passwordRequired = true;
-      passwordRequiredDelay = 10;
+      passwordRequiredDelay = 30;
       timeout = 2;
     };
     kwin = {
