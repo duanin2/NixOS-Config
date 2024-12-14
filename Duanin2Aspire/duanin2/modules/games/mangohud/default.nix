@@ -69,8 +69,8 @@
       ## Font
       "font_size" = 11;
       "font_size_text" = 11;
-      "font_file" = "${pkgs.fira-code-nerdfont}/share/fonts/truetype/NerdFonts/FiraCodeNerdFont-Medium.ttf";
-      "font_file_text" = "${pkgs.fira-code-nerdfont}/share/fonts/truetype/NerdFonts/FiraCodeNerdFont-Medium.ttf";
+      "font_file" = "${pkgs.nerd-fonts.fira-code}/share/fonts/truetype/NerdFonts/FiraCodeNerdFont-Medium.ttf";
+      "font_file_text" = "${pkgs.nerd-fonts.fira-code}/share/fonts/truetype/NerdFonts/FiraCodeNerdFont-Medium.ttf";
       ## Position
       "position" = "top-left";
       "round_corners" = 8;

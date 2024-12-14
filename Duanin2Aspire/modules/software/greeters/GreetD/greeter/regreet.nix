@@ -1,6 +1,6 @@
 { lib, config, pkgs, ... }: {
   fonts.packages = with pkgs; [
-    fira-code-nerdfont
+    nerd-fonts.fira-code
   ];
 
   environment.systemPackages = with pkgs; [
