@@ -68,7 +68,7 @@ mkdir -p $TEMPMNT
 mount /dev/mapper/RootFS $TEMPMNT
 
 echo "rolling $TEMPMNT back to empty..."
-btrfs subvolume delete $TEMPMNT/rootfs
+rm -rf --one-file-system $TEMPMNT/rootfs
 btrfs subvolume snapshot $TEMPMNT/.snapshots/rootfs-empty $TEMPMNT/rootfs
 
 echo "unmounting from $TEMPMNT..."
@@ -80,11 +80,11 @@ rm -rf $TEMPMNT
   };
 
 	swapDevices = [
-          {
-            device = "/persist/swap/swapfile";
-            priority = 0;
-          }
-        ];
+    {
+      device = "/persist/swap/swapfile";
+      priority = 0;
+    }
+  ];
 	zramSwap = {
 	  writebackDevice = "/persist/swap/swapfile-writeback";
 	};
