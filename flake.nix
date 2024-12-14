@@ -111,10 +111,6 @@
 		catppuccin.url = "github:catppuccin/nix";
     nix-wallpaper.url = "github:lunik1/nix-wallpaper";
 
-    ani-skip-nixpkgs = {
-      url = "github:diniamo/nixpkgs/ani-skip";
-    };
-
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
 
     plasma-manager = {

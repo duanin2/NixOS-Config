@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "ani-skip-nixpkgs": {
-      "locked": {
-        "lastModified": 1725382466,
-        "narHash": "sha256-MQwD4nQb7S8q7H27Zh++xkoZKULRwX9HtsMaJgpun+Y=",
-        "owner": "diniamo",
-        "repo": "nixpkgs",
-        "rev": "268db320794c93e632614a88d77955085c823007",
-        "type": "github"
-      },
-      "original": {
-        "owner": "diniamo",
-        "ref": "ani-skip",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "aquamarine": {
       "inputs": {
         "hyprutils": [
@@ -1415,7 +1399,6 @@
     },
     "root": {
       "inputs": {
-        "ani-skip-nixpkgs": "ani-skip-nixpkgs",
         "catppuccin": "catppuccin",
         "chaotic": "chaotic",
         "emacs": "emacs",
