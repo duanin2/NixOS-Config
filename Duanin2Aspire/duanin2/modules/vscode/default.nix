@@ -6,9 +6,11 @@
 		extensions = with pkgs.vscode-extensions; [
 			catppuccin.catppuccin-vsc
 			catppuccin.catppuccin-vsc-icons
+
+			mkhl.direnv
+			wakatime.vscode-wakatime
 			
 			jnoortheen.nix-ide
-			mkhl.direnv
 
 			thenuprojectcontributors.vscode-nushell-lang
 		] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [ ];
