@@ -428,27 +428,27 @@ ${lib.concatMapStringsSep "\n" (panel: ''
     };
     fonts = {
       fixedWidth = {
-        family = "Fira Code Nerd Font Mono";
+        family = "FiraCode Nerd Font Mono";
         pointSize = 11;
       };
       general = {
-        family = "Fira Code Nerd Font";
+        family = "FiraCode Nerd Font";
         pointSize = 11;
       };
       menu = {
-        family = "Fira Code Nerd Font";
+        family = "FiraCode Nerd Font";
         pointSize = 11;
       };
       small = {
-        family = "Fira Code Nerd Font";
+        family = "FiraCode Nerd Font";
         pointSize = 9;
       };
       toolbar = {
-        family = "Fira Code Nerd Font";
+        family = "FiraCode Nerd Font";
         pointSize = 11;
       };
       windowTitle = {
-        family = "Fira Code Nerd Font";
+        family = "FiraCode Nerd Font";
         pointSize = 11;
       };
     };
