@@ -1,7 +1,7 @@
-{ inputs, ... }: {
+{ inputs, persistDirectory, ... }: {
   imports = [ inputs.impermanence.nixosModules.home-manager.impermanence ];
 
-  home.persistence."/persist/home/duanin2" = {
+  home.persistence.${persistDirectory} = {
     directories = [
       ".gnupg"
       ".ssh"
