@@ -169,4 +169,11 @@
 			persistent = true;
 		};
 	};
+
+	environment.persistence."/persist".users.root = {
+		home = "/root";
+		directories = [
+			".cache/nix"
+		];
+	};
 }

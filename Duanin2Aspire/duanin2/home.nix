@@ -32,6 +32,7 @@ in {
 		(modules.common + /systemd)
 		#(modules.common + /gnunet)
 		(modules.common + /kdeConnect)
+		(modules.common + /nix)
 
 		#(modules.local + /Hyprland)
 		(modules.local + /plasma)

@@ -11,6 +11,7 @@ in {
 		(modules.common.shell.prompts + /starship)
     (modules.local + /impermanence)
     (modules.common + /tldr)
+		(modules.common + /nix)
   ];
 
   home.stateVersion = "23.11";
