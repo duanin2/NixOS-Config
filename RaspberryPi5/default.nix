@@ -37,6 +37,7 @@
     (modules.local.software.web + /jellyfin)
     (modules.local.software.web + /ntfy)
     (modules.local.software.web + /anki)
+    (modules.local.software.web + /freshrss)
 
     # software/kernel
     (modules.common.software.kernel.RaspberryPi + /vendor-nixpkgs.nix)
