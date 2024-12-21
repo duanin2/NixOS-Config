@@ -5,8 +5,8 @@
     # firefoxpwa
   ];
 
-	programs.firefox = {
-		enable = true;
+  programs.firefox = {
+    enable = true;
     package = pkgs.firefox;
 
     languagePacks = [
@@ -28,8 +28,8 @@
       SearchBar = "unified";
       NewTabPage = false;
     };
-		profiles = {
-		  "default" = {
+    profiles = {
+      "default" = {
         search = rec {
           engines = {
             "SearXNG" = {
@@ -48,37 +48,44 @@
           default = "SearXNG";
           privateDefault = default;
         };
-				extensions = with nur.repos.rycee.firefox-addons; [
-					ublock-origin
-					stylus
-					# firefox-color
-					canvasblocker
-				  violentmonkey
-          redirector
-					terms-of-service-didnt-read
+        extensions = with nur.repos.rycee.firefox-addons; [
+          sponsorblock
+          dearrow
+
+          violentmonkey
+          stylus
           sidebery
+          # firefox-color
+
+          ublock-origin
+          canvasblocker
+          redirector
+          # foxyproxy-standard
+
+          terms-of-service-didnt-read
+          rsspreview
+
           aria2-integration
           plasma-integration
-          foxyproxy-standard
-				]
-				++ (with customPkgs.mozilla.firefoxAddons; [
-					librejs
+        ]
+        ++ (with customPkgs.mozilla.firefoxAddons; [
+          # librejs
           # firefoxpwa
-				]);
-				settings = (customPkgs.mozilla.addUserJsPrefs (pkgs.fetchurl {
-			    url = "https://raw.githubusercontent.com/arkenfox/user.js/master/user.js";
-			    hash = "sha256-XRtG0iLKh8uqbeX7Rc2H6VJwZYJoNZPBlAfZEfrSCP4=";
-		    })).res // {
+        ]);
+        settings = (customPkgs.mozilla.addUserJsPrefs (pkgs.fetchurl {
+          url = "https://raw.githubusercontent.com/arkenfox/user.js/master/user.js";
+          hash = "sha256-XRtG0iLKh8uqbeX7Rc2H6VJwZYJoNZPBlAfZEfrSCP4=";
+        })).res // {
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
           "javascript.enabled" = true;
           "widget.use-xdg-desktop-portal.file-picker" = 1;
 
-					# Arkenfox overrides
+          # Arkenfox overrides
           "browser.startup.page" = 3;
           "privacy.clearOnShutdown.history" = false;
           "privacy.clearOnShutdown.sessions" = false;
           "privacy.clearOnShutdown_v2.historyFormDataAndDownloads" = false;
-					"webgl.disabled" = false;
+          "webgl.disabled" = false;
           "privacy.resistFingerprinting" = false;
           "privacy.resistFingerprinting.letterboxing" = false;
           "javascript.options.asmjs" = true;
@@ -86,20 +93,20 @@
           "javascript.options.ion" = true;
           "javascript.options.wasm" = true;
           "browser.tabs.inTitlebar" = 0;
-				};
+        };
         userChrome = ''
-/* Hide the TabBar */
-#TabsToolbar {
-  visibility: collapse !important;
-}
+          /* Hide the TabBar */
+          #TabsToolbar {
+            visibility: collapse !important;
+          }
 
-/* Hide the Sidebar header */
-#sidebar-header, .sidebar-splitter {
-  visibility: collapse !important;
-}
+          /* Hide the Sidebar header */
+          #sidebar-header, .sidebar-splitter {
+            visibility: collapse !important;
+          }
         '';
-		  };
-	  };
+      };
+    };
   };
 
   home.persistence.${persistDirectory} = {
