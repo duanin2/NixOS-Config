@@ -36,6 +36,9 @@
 
 		nur = {
 			url = "github:nix-community/nur";
+			inputs = {
+				nixpkgs.follows = "nixpkgs";
+			};
 		};
 		chaotic = {
 			url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
@@ -135,8 +138,10 @@
     };
     lix-module = {
       url = "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.lix.follows = "lix";
+      inputs = {
+				nixpkgs.follows = "nixpkgs";
+      	lix.follows = "lix";
+			};
     };
 	};
 
