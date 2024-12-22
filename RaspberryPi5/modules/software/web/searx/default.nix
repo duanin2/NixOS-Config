@@ -32,10 +32,14 @@
       };
       search = {
         safe_search = 1;
-	autocomplete = "seznam";
+	      autocomplete = "duckduckgo";
         default_lang = "cs";
-        ban_time_on_fail = 60;
-        max_ban_time_on_fail = 3600;
+        formats = [
+          "html"
+          "csv"
+          "json"
+          "rss"
+        ];
       };
       server = {
         base_url = "https://searx.duanin2.top/";
@@ -44,18 +48,18 @@
         image_proxy = true;
       };
       ui = {
-	static_use_hash = true;
+	      static_use_hash = true;
         default_locale = "cs";
         query_in_title = false;
         infinite_scroll = true;
-	center_alignment = true;
+	      center_alignment = true;
         results_on_new_tab = true;
         search_on_category_select = false;
       };
       outgoing = {
         request_timeout = 2.0;
         max_request_timeout = 10.0;
-        useragent_suffix = "admin-searx@duanin2.top";
+        useragent_suffix = "admin@searx.duanin2.top";
         max_redirects = 10;
       };
     };
