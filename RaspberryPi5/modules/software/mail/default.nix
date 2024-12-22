@@ -24,10 +24,10 @@ in {
       "duanin2@duanin2.top" = {
         hashedPasswordFile = "/var/lib/secrets/mailPass/duanin2";
         aliasesRegexp = [
-          "/^postmaster@([A-Za-z0-9-]+-\.)*duanin2.top$/"
-          "/^abuse@([A-Za-z0-9-]+-\.)*duanin2.top$/"
-          "/^duanin2(-.+)?@duanin2\\.top$/"
-          "/^dusan.till(-.+)?@duanin2\\.top$/"
+          "/^postmaster(-.+)?@([A-Za-z0-9-]+-\.)*duanin2.top$/"
+          "/^abuse(-.+)?@([A-Za-z0-9-]+-\.)*duanin2.top$/"
+          "/^duanin2(-.+)?@([A-Za-z0-9-]+-\.)*duanin2\\.top$/"
+          "/^dusan.till(-.+)?@([A-Za-z0-9-]+-\.)*duanin2\\.top$/"
           "/^admin(-.+)?@([A-Za-z0-9-]+-\.)*duanin2\\.top$/"
         ];
         sieveScript = ''
