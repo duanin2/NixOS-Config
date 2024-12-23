@@ -1,4 +1,4 @@
-{ config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: let
+{ pkgs, config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: let
   host = "freshrss.duanin2.top";
 in {
   services.freshrss = {
@@ -6,6 +6,12 @@ in {
 
     virtualHost = host;
     language = "cs";
+
+    extensions = with pkgs.freshrss-extensions; [
+      youtube
+      title-wrap
+      reading-time
+    ];
 
     defaultUser = "admin";
     passwordFile = "/var/lib/secrets/freshrss/adminPass";
