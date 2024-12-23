@@ -6,9 +6,6 @@ in {
 
     virtualHost = host;
 
-    user = "rssbridge";
-    group = "rssbridge";
-
     config = {
       system = {
         enabled_bridges = ["*"];

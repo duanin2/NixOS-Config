@@ -38,7 +38,7 @@
     (modules.local.software.web + /ntfy)
     (modules.local.software.web + /anki)
     (modules.local.software.web + /freshrss)
-    (modules.local.software.web + /rssbridge)
+    (modules.local.software.web + /rss-bridge)
 
     # software/kernel
     (modules.common.software.kernel.RaspberryPi + /vendor-nixpkgs.nix)
