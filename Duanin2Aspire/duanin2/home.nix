@@ -60,6 +60,9 @@ in {
     directories = [
       ".config/autostart"
     ];
+		files = [
+			".wakatime.cfg"
+		];
   };
 
 	home.stateVersion = "23.11";
