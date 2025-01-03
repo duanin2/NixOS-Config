@@ -33,6 +33,7 @@ in {
 		#(modules.common + /gnunet)
 		(modules.common + /kdeConnect)
 		(modules.common + /nix)
+		(modules.local + /anki)
 
 		#(modules.local + /Hyprland)
 		(modules.local + /plasma)
