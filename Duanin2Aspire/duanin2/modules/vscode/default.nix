@@ -8,7 +8,8 @@
 			catppuccin.catppuccin-vsc-icons
 
 			mkhl.direnv
-			wakatime.vscode-wakatime
+			# wakatime.vscode-wakatime
+			leonardssh.vscord
 			
 			jnoortheen.nix-ide
 
@@ -44,6 +45,17 @@
 			"merge-conflict.autoNavigateNextConflict.enabled" = true;
 
 			"direnv.restart.automatic" = true;
+
+			"vscord.status.image.large.debugging.key" = "https://vscord.catppuccin.com/frappe/debugging.webp";
+			"vscord.status.image.large.editing.key" = "https://vscord.catppuccin.com/frappe/{lang}.webp";
+			"vscord.status.image.large.idle.key" = "https://vscord.catppuccin.com/frappe/idle-{app_id}.webp";
+			"vscord.status.image.large.notInFile.key" = "https://vscord.catppuccin.com/frappe/idle-{app_id}.webp";
+			"vscord.status.image.large.viewing.key" = "https://vscord.catppuccin.com/frappe/{lang}.webp";
+			"vscord.status.image.small.debugging.key" = "https://vscord.catppuccin.com/frappe/debugging.webp";
+			"vscord.status.image.small.editing.key" = "https://vscord.catppuccin.com/frappe/{app_id}.webp";
+			"vscord.status.image.small.idle.key" = "https://vscord.catppuccin.com/frappe/idle.webp";
+			"vscord.status.image.small.notInFile.key" = "https://vscord.catppuccin.com/frappe/idle.webp";
+			"vscord.status.image.small.viewing.key" = "https://vscord.catppuccin.com/frappe/{app_id}.webp";
 
 			"nix.enableLanguageServer" = true;
 			"nix.serverPath" = (lib.getExe pkgs.nil);

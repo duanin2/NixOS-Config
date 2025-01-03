@@ -15,7 +15,7 @@ in {
 		(modules.local + /syncthing)
 		(modules.local + /keepassxc)
 		(modules.local + /libreoffice)
-		#(modules.local + /discord)
+		(modules.local + /discord)
 		(modules.local + /direnv)
 		(modules.local + /xdg)
 		(modules.local + /bash)

@@ -1,6 +1,10 @@
-{ pkgs, ... }: {
+{ pkgs, persistDirectory, ... }: {
   home.packages = with pkgs; [
-    discord
-    betterdiscordctl
+    webcord-vencord
+    arrpc
+  ];
+
+  home.persistence.${persistDirectory}.directories = [
+    ".config/WebCord"
   ];
 }
