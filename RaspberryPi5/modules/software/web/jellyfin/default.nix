@@ -1,4 +1,6 @@
-{ pkgs, config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: {
+{ pkgs, config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: let
+  host = "jellyfin.duanin2.top";
+in {
   services.jellyfin = {
     enable = true;
   };
@@ -8,7 +10,7 @@
     7359
   ];
 
-  services.nginx.virtualHosts."jellyfin.duanin2.top" = {
+  services.nginx.virtualHosts.${host} = {
     useACMEHost = "duanin2.top";
     onlySSL = true;
     
@@ -17,7 +19,7 @@
 			proxyWebsockets = true;
     };
 
-    extraConfig = (securitySetupNGINX [ "jellyfin.duanin2.top" ]) + ''
+    extraConfig = (securitySetupNGINX [ host ]) + ''
 add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 add_header X-Frame-Options "DENY" always;
 add_header X-Content-Type-Options "nosniff" always;

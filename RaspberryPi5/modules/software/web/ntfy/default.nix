@@ -1,4 +1,6 @@
-{ config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: {
+{ config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: let
+  host = "ntfy.duanin2.top";
+in {
   services.ntfy-sh = {
     enable = true;
 
@@ -6,7 +8,7 @@
     group = "ntfy";
 
     settings = {
-      base-url = "https://ntfy.duanin2.top";
+      base-url = "https://${host}";
       upstream-base-url = "https://ntfy.sh";
       
       listen-http = "127.0.0.1:1280";
@@ -21,23 +23,21 @@
     };
   };
   
-  services.nginx.virtualHosts = {
-    "ntfy.duanin2.top" = {
-      useACMEHost = "duanin2.top";
-      onlySSL = true;
+  services.nginx.virtualHosts.${host} = {
+    useACMEHost = "duanin2.top";
+    onlySSL = true;
 
-      locations."/" = {
-        proxyPass = "http://${config.services.ntfy-sh.settings.listen-http}";
-			  proxyWebsockets = true;
-      };
+    locations."/" = {
+      proxyPass = "http://${config.services.ntfy-sh.settings.listen-http}";
+      proxyWebsockets = true;
+    };
 
-      extraConfig = (securitySetupNGINX [ "ntfy.duanin2.top" ]) + ''
+    extraConfig = (securitySetupNGINX [ host ]) + ''
 add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 add_header X-Frame-Options "DENY" always;
 add_header X-Content-Type-Options "nosniff" always;
 add_header Referrer-Policy "no-referrer" always;
-      '' + httpsUpgrade + ocspStapling;
-    };
+    '' + httpsUpgrade + ocspStapling;
   };
 
   environment.persistence."/persist" = {

@@ -1,6 +1,8 @@
 { config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: let
   address = "127.0.0.1";
   port = 8123;
+
+  host = "anki.duanin2.top";
 in {
   services.anki-sync-server = {
     inherit address port;
@@ -12,7 +14,7 @@ in {
     ];
   };
 
-  services.nginx.virtualHosts."anki.duanin2.top" = {
+  services.nginx.virtualHosts.${host} = {
     useACMEHost = "duanin2.top";
     onlySSL = true;
     
@@ -21,6 +23,6 @@ in {
 			proxyWebsockets = true;
     };
 
-    extraConfig = (securitySetupNGINX [ "anki.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
+    extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling;
   };
 }

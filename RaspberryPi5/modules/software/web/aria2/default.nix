@@ -1,6 +1,8 @@
 { config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: let
 	cfg = config.services.aria2;
   dir = "/var/lib/aria2";
+
+  host = "aria2.duanin2.top";
 in {
 	services.aria2 = {
 		enable = true;
@@ -53,7 +55,7 @@ in {
     };
 	};
   
-	services.nginx.virtualHosts."aria2.duanin2.top" = {
+	services.nginx.virtualHosts.${host} = {
 		useACMEHost = "duanin2.top";
     onlySSL = true;
     
@@ -62,7 +64,7 @@ in {
 			proxyWebsockets = true;
 		};
 
-    extraConfig = (securitySetupNGINX [ "aria2.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
+    extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling;
 	};
 
   environment.persistence."/persist" = {

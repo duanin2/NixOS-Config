@@ -1,6 +1,7 @@
 { pkgs, lib, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: let
   domain = "duanin2.top";
-  baseUrl = "https://matrix.${domain}";
+  host = "matrix.${domain}";
+  baseUrl = "https://${host}";
   clientConfig."m.homeserver".base_url = baseUrl;
   mkWellKnown = data: ''
 default_type application/json;
@@ -54,9 +55,9 @@ in {
       enable_registration_captcha = true;
       email = {
         smtp_host = "duanin2.top";
-        smtp_user = "noreply@matrix.duanin2.top";
+        smtp_user = "noreply@${host}";
         force_tls = true;
-        notif_from = "Your %(app)s homeserver <noreply@matrix.duanin2.top>";
+        notif_from = "Your %(app)s homeserver <noreply@${host}>";
         enable_notifs = true;
         notif_for_new_users = false;
         notif_delay_before_mail = "1h";
@@ -72,15 +73,15 @@ in {
         };
       };
 
-      admin_contact = "mailto:admin@matrix.duanin2.top";
+      admin_contact = "mailto:admin@${host}";
     };
     extraConfigFiles = [ secretsFile ];
   };
 
   services.nginx.virtualHosts = {
-    "duanin2.top".locations = {
+    ${domain}.locations = {
       "/.well-known/matrix/server" = {
-        extraConfig = (mkWellKnown { "m.server" = "matrix.${domain}:443"; }) + securityHeaders;
+        extraConfig = (mkWellKnown { "m.server" = "${host}:443"; }) + securityHeaders;
         priority = 0;
       };
       "/.well-known/matrix/client" = {
@@ -88,7 +89,7 @@ in {
         priority = 0;
       };
     };
-    "matrix.${domain}" = {
+    ${host} = {
       useACMEHost = "duanin2.top";
       onlySSL = true;
       
@@ -104,7 +105,7 @@ in {
         };
       };
 
-      extraConfig = (securitySetupNGINX [ "matrix.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
+      extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling;
     };
   };
 

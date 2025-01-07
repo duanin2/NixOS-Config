@@ -20,7 +20,9 @@ in {
     useACMEHost = "duanin2.top";
     addSSL = true;
     
-    extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling;
+    extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling + ''
+proxy_cache off;
+    '';
   };
 
   environment.persistence."/persist" = let

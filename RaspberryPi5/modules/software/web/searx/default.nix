@@ -1,4 +1,6 @@
-{ config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: {
+{ config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: let
+  host = "searx.duanin2.top";
+in {
   services.searx = {
     enable = true;
 
@@ -42,7 +44,7 @@
         ];
       };
       server = {
-        base_url = "https://searx.duanin2.top/";
+        base_url = "https://${host}/";
         port = 9393;
         bind_address = "127.0.0.1";
         image_proxy = true;
@@ -59,14 +61,14 @@
       outgoing = {
         request_timeout = 2.0;
         max_request_timeout = 10.0;
-        useragent_suffix = "admin@searx.duanin2.top";
+        useragent_suffix = "admin@${host}";
         max_redirects = 10;
       };
     };
     environmentFile = "/var/lib/secrets/searx.env";
   };
 
-  services.nginx.virtualHosts."searx.duanin2.top" = {
+  services.nginx.virtualHosts.${host} = {
     useACMEHost = "duanin2.top";
     onlySSL = true;
     
@@ -74,6 +76,6 @@
       proxyPass = "http://${config.services.searx.settings.server.bind_address}:${builtins.toString config.services.searx.settings.server.port}";
     };
 
-    extraConfig = (securitySetupNGINX [ "searx.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
+    extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling;
   };
 }

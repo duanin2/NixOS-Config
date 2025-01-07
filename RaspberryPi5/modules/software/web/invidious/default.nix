@@ -1,4 +1,6 @@
-{ config, lib, pkgs, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: {
+{ config, lib, pkgs, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: let
+  host = "invidious.duanin2.top";
+in {
   services.invidious = {
     enable = true;
     package = pkgs.invidious.override {
@@ -20,7 +22,7 @@
       enable = true;
     };
 
-    domain = "invidious.duanin2.top";
+    domain = host;
     nginx.enable = true;
 
     settings.db.user = "invidious";
@@ -51,13 +53,13 @@
     };
   };
 
-  services.nginx.virtualHosts.${config.services.invidious.domain} = {
+  services.nginx.virtualHosts.${host} = {
     enableACME = lib.mkForce false;
     useACMEHost = "duanin2.top";
     forceSSL = lib.mkForce false;
     onlySSL = true;
 
-    extraConfig = (securitySetupNGINX [ "invidious.duanin2.top" ]) + ''
+    extraConfig = (securitySetupNGINX [ host ]) + ''
 add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 
 proxy_cache_key "$proxy_host$proxy_port$request_uri$args$cookie_sid";
