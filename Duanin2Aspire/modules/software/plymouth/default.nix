@@ -5,7 +5,7 @@ in {
     enable = true;
 
     themePackages = with pkgs; [
-      (catppuccin-plymouth.override { inherit variant; })
+      # (catppuccin-plymouth.override { inherit variant; })
     ];
     theme = "catppuccin-${variant}";
   };
