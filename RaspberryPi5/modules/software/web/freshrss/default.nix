@@ -1,6 +1,10 @@
-{ pkgs, config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: let
+{ pkgs, config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, modules, ... }: let
   host = "freshrss.duanin2.top";
 in {
+  imports = [
+    (modules.local.software + /postgres)
+  ];
+
   services.freshrss = {
     enable = true;
 

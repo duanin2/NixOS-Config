@@ -1,6 +1,10 @@
-{ config, lib, pkgs, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: let
+{ config, lib, pkgs, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, modules, ... }: let
   host = "invidious.duanin2.top";
 in {
+  imports = [
+    (modules.local.software + /postgres)
+  ];
+
   services.invidious = {
     enable = true;
     package = pkgs.invidious.override {

@@ -1,4 +1,4 @@
-{ pkgs, lib, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: let
+{ inputs, pkgs, lib, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, modules, ... }: let
   domain = "duanin2.top";
   host = "matrix.${domain}";
   baseUrl = "https://${host}";
@@ -16,9 +16,8 @@ return 200 '${builtins.toJSON data}';
 in {
   imports = [
     (import ./element.nix { inherit clientConfig; })
+    (modules.local.software + /postgres)
   ];
-
-  services.postgresql.enable = lib.mkForce true;
   
   services.matrix-synapse = {
     enable = true;
