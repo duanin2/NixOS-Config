@@ -27,4 +27,9 @@ in {
     ]);
     extraPackages32 = baseExtraPackages pkgs.pkgsi686Linux [];
   };
+
+  environment.sessionVariables = {
+    "VDPAU_DRIVER" = "va_gl";
+    "LIBVA_DRIVER_NAME" = "iHD";
+  };
 }
