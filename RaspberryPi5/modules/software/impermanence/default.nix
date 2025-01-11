@@ -10,7 +10,6 @@
       "/var/lib/systemd/coredump"
       "/etc/NetworkManager/system-connections"
       "/var/lib/secrets"
-      "/var/lib/postgresql"
       {
         directory = "/tmp";
         user = "root";
