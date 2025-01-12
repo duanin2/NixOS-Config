@@ -1,9 +1,15 @@
-{ lib, config, pkgs, ... }: {
-	programs.vscode = {
+{ inputs, lib, config, pkgs, ... }: {
+	nixpkgs.overlays = [
+		inputs.vscode-extensions.overlays.default
+	];
+
+	programs.vscode = let
+		vscodeExt = pkgs.forVSCodeVersion config.programs.vscode.package.version;
+	in {
 		enable = true;
 		package = pkgs.vscodium;
 
-		extensions = with pkgs.vscode-extensions; [
+		extensions = (with vscodeExt.vscode-extensions; [
 			catppuccin.catppuccin-vsc
 			catppuccin.catppuccin-vsc-icons
 
@@ -14,7 +20,15 @@
 			jnoortheen.nix-ide
 
 			thenuprojectcontributors.vscode-nushell-lang
-		] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [ ];
+		]) ++ (with vscodeExt.vscode-extensions-release; [
+
+		]) ++ (with vscodeExt.open-vsx; [
+
+		]) ++ (with vscodeExt.open-vsx-release; [
+
+		]) ++ (pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+
+		]);
 		mutableExtensionsDir = false;
 		userSettings = {
 			"workbench.colorTheme" = "Catppuccin Frappé";
