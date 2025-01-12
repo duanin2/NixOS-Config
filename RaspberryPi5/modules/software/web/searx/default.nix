@@ -1,4 +1,4 @@
-{ config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: let
+{ config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, modules, ... }: let
   host = "searx.duanin2.top";
 in {
   services.searx = {
@@ -78,4 +78,8 @@ in {
 
     extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling;
   };
+
+  environment.persistence."/persist".directories = [
+    "/var/lib/redis-searx"
+  ];
 }
