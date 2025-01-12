@@ -2,6 +2,7 @@
   nativeGLFW = true;
 in {
 	home.packages = with pkgs; [
+		/*
 		(prismlauncher.override {
 			prismlauncher-unwrapped = (prismlauncher-unwrapped.overrideAttrs (old: {
 				patches = (old.patches or []) ++ [
@@ -9,6 +10,8 @@ in {
 				];
 			}));
 		})
+		*/
+		prismlauncher
 		kdialog
 	];
 

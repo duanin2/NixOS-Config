@@ -125,6 +125,7 @@ mx: *.duanin2.top
       cfg.sieveDirectory
       cfg.dkimKeyDirectory
       "/var/lib/postfix/queue"
+      "/var/lib/redis-rspamd"
     ] ++ (if (builtins.typeOf cfg.indexDir == "string") then [ cfg.indexDir ] else [ ]);
   };
 }

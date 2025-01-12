@@ -18,7 +18,7 @@ in {
       #smtp-sender-addr = "duanin2.top:465";
       #smtp-sender-from = "ntfy@duanin2.top";
 
-      auth-file = "/var/lib/ntfy/user.db";
+      auth-file = "/var/lib/ntfy-sh/user.db";
       auth-default-access = "deny-all";
     };
   };
@@ -42,7 +42,7 @@ add_header Referrer-Policy "no-referrer" always;
 
   environment.persistence."/persist" = {
     directories = [
-      "/var/lib/ntfy/"
+      "/var/lib/private/ntfy-sh"
     ];
   };
 }

@@ -1,4 +1,4 @@
-{ modules, ... }: {
+{ lib, modules, ... }: {
 	imports = [
 		(modules.common.software + /nix)
 
@@ -17,6 +17,8 @@
         "nixos-test"
         "big-parallel"
 			];
+
+			cores = lib.mkForce 2;
 		};
 	};
 }
