@@ -20,12 +20,14 @@
 
     # software/network
     (modules.common.software.network + /networkmanager)
-    #(modules.common.software.network + /resolvd)
     (modules.common.software.network + /avahi)
     (modules.local.software.network + /region)
     #(modules.common.software.network + /miredo)
-    #(modules.common.software.network + /dnsmasq)
-    (modules.common.software.network + /unbound)
+
+		# software.network.dns
+    #(modules.common.software.network.dns + /resolvd)
+    #(modules.common.software.network.dns + /dnsmasq)
+    (modules.common.software.network.dns + /unbound)
 
     # software/web
     (modules.local.software.web + /nginx)

@@ -168,7 +168,11 @@
         software = {
           outPath = commonModules.outPath + /software;
 
-          network = commonModules.software.outPath + /network;
+          network = {
+						outPath = commonModules.software.outPath + /network;
+
+						dns = commonModules.software.network.outPath + /dns;
+					};
           shell = commonModules.software.outPath + /shell;
           kernel = {
             outPath = commonModules.software.outPath + /kernel;
