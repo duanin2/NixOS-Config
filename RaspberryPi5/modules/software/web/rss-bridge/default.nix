@@ -1,4 +1,8 @@
-{ config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: let
+{ config, lib, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, pkgs, ... }: with lib; let
+  cfg = config.services.rss-bridge;
+
+  curl = pkgs.curl-impersonate-ff;
+
   host = "rssbridge.duanin2.top";
 in {
   services.rss-bridge = {
@@ -25,9 +29,25 @@ proxy_cache off;
     '';
   };
 
-  environment.persistence."/persist" = let
-    cfg = config.services.rss-bridge;
-  in {
+  services.phpfpm.pools.${cfg.pool} = {
+    phpPackage = with pkgs; php.override {
+      inherit curl;
+    };
+    phpOptions = ''
+extension=${with pkgs; phpExtensions.curl.override {
+  inherit curl;
+}}/lib/php/extensions/curl.so
+    '';
+  };
+
+  systemd.services."phpfpm-${cfg.pool}" = {
+    environment = {
+      "LD_PRELOAD" = "${curl}/lib/libcurl-impersonate.so";
+      "CURL_IMPERSONATE" = "ff117";
+    };
+  };
+
+  environment.persistence."/persist" = {
     directories = [
       cfg.dataDir
     ];
