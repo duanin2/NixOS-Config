@@ -1,15 +1,11 @@
 { inputs, lib, config, pkgs, ... }: {
-	nixpkgs.overlays = [
-		inputs.vscode-extensions.overlays.default
-	];
-
 	programs.vscode = let
-		vscodeExt = pkgs.forVSCodeVersion config.programs.vscode.package.version;
+		vscodeExt = inputs.vscode-extensions.extensions.${pkgs.system}.forVSCodeVersion config.programs.vscode.package.version;
 	in {
 		enable = true;
 		package = pkgs.vscodium;
 
-		extensions = (with vscodeExt.vscode-extensions; [
+		extensions = (with vscodeExt.vscode-marketplace; [
 			catppuccin.catppuccin-vsc
 			catppuccin.catppuccin-vsc-icons
 
@@ -20,7 +16,7 @@
 			jnoortheen.nix-ide
 
 			thenuprojectcontributors.vscode-nushell-lang
-		]) ++ (with vscodeExt.vscode-extensions-release; [
+		]) ++ (with vscodeExt.vscode-marketplace-release; [
 
 		]) ++ (with vscodeExt.open-vsx; [
 

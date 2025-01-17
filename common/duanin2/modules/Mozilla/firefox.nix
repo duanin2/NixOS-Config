@@ -51,6 +51,7 @@
         extensions = with nur.repos.rycee.firefox-addons; [
           sponsorblock
           dearrow
+          enhanced-h264ify
 
           violentmonkey
           stylus
