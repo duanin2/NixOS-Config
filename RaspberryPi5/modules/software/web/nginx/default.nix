@@ -74,6 +74,9 @@ in {
             root = "/persist/www/duanin2.top";
             index = "index.html index.htm";
           };
+          "/twtxt.txt" = {
+            alias = "/persist/duanin2-twtxt.txt";
+          };
         };
 
         extraConfig = (securitySetupNGINX [ "duanin2.top" "www.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;

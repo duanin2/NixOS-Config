@@ -34,6 +34,7 @@ in {
 		(modules.common + /kdeConnect)
 		(modules.common + /nix)
 		(modules.local + /anki)
+		(modules.local + /twtxt)
 
 		#(modules.local + /Hyprland)
 		(modules.local + /plasma)
