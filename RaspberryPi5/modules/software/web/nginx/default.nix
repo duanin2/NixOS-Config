@@ -74,7 +74,7 @@ in {
             root = "/persist/www/duanin2.top";
             index = "index.html index.htm";
           };
-          "/twtxt.txt" = {
+          "=/twtxt.txt" = {
             alias = "/persist/duanin2-twtxt.txt";
           };
         };
