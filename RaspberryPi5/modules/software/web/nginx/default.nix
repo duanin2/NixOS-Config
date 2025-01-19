@@ -69,6 +69,13 @@ in {
 
         serverAliases = [ "www.duanin2.top" ];
 
+        locations = {
+          "/" = {
+            root = "/persist/www/duanin2.top";
+            index = "index.html index.htm";
+          };
+        };
+
         extraConfig = (securitySetupNGINX [ "duanin2.top" "www.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
       };
       /*
