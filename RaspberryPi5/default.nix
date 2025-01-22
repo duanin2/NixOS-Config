@@ -17,6 +17,7 @@
     (modules.local.software + /mail)
     (modules.common.software + /nix-ld)
     (modules.local.software + /chrony)
+    (modules.local.software + /fail2ban)
 
     # software/network
     (modules.common.software.network + /networkmanager)
