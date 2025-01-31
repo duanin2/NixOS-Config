@@ -758,5 +758,11 @@ ${lib.concatMapStringsSep "\n" (panel: ''
       ".local/share/krdpserver"
       ".local/share/klipper"
     ];
+    files = [
+      ".local/state/xdg-desktop-portal-kdestaterc"
+      ".local/state/plasmashellstaterc"
+      ".local/share/recently-used.xbel"
+      ".local/share/user-places.xbel"
+    ];
   };
 }

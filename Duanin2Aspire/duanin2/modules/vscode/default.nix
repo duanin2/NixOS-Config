@@ -1,4 +1,4 @@
-{ inputs, lib, config, pkgs, ... }: {
+{ inputs, lib, config, pkgs, persistDirectory, ... }: {
 	programs.vscode = let
 		vscodeExt = inputs.vscode-extensions.extensions.${pkgs.system}.forVSCodeVersion config.programs.vscode.package.version;
 	in {
@@ -111,4 +111,8 @@
 			"typescript.tsserver.useSyntaxServer" = "never";
 		};
 	};
+
+	home.persistence.${persistDirectory}.directories = [
+		".config/VSCodium"
+	];
 }

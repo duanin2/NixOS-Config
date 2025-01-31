@@ -21,6 +21,7 @@
     ];
     files = [
       ".config/keepassxc/keepassxc.ini"
+      ".config/KeePassXCrc"
     ];
   };
 }
