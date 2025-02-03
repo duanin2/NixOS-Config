@@ -72,6 +72,14 @@ in {
         };
       };
 
+      enable_authenticated_media = true;
+      enable_media_repo = true;
+      max_pending_media_uploads = 10;
+      unused_expiration_time = "12h";
+      max_upload_size = "50M";
+      max_image_pixels = "50M";
+      dynamic_thumbnails = true;
+
       admin_contact = "mailto:admin@${host}";
     };
     extraConfigFiles = [ secretsFile ];
@@ -104,13 +112,15 @@ in {
         };
       };
 
-      extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling;
+      extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling + ''
+client_max_body_size 50M;
+      '';
     };
   };
 
   environment.persistence."/persist" = {
     directories = [
-      "/var/lib/private/matrix-synapse"
+      "/var/lib/matrix-synapse"
     ];
   };
 
