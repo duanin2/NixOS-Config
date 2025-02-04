@@ -22,4 +22,8 @@ CipherString = Default:@SECLEVEL=0
 	'';
 
 	users.users."duanin2".extraGroups = [ "networkmanager" ];
+
+	environment.persistence."/persist".directories = [
+		"/etc/NetworkManager/system-connections"
+	];
 }

@@ -5,10 +5,8 @@
     hideMounts = true;
     directories = [
       "/var/log"
-      "/var/lib/bluetooth"
       "/var/lib/nixos"
       "/var/lib/systemd/coredump"
-      "/etc/NetworkManager/system-connections"
       "/var/lib/secrets"
       {
         directory = "/tmp";

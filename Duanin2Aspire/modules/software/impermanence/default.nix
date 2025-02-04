@@ -5,16 +5,8 @@
     hideMounts = true;
     directories = [
       "/var/log"
-      "/var/lib/bluetooth"
       "/var/lib/nixos"
       "/var/lib/systemd/coredump"
-      "/etc/NetworkManager/system-connections"
-      {
-        directory = "/tmp";
-        user = "root";
-        group = "root";
-        mode = "1777";
-      }
     ];
     files = [
       "/etc/machine-id"
@@ -34,16 +26,6 @@
 mkdir -p /home/duanin2
 chown -R duanin2:users /home/duanin2
     '';
-    };
-    "clear-tmp" = {
-      wantedBy = [ "tmp.mount" ];
-
-      after = [ "persist.mount" ];
-      before = [ "tmp.mount" ];
-
-      script = ''
-rm -rf /persist/tmp/*
-      '';
     };
   };
 }
