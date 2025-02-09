@@ -1,4 +1,4 @@
-{ pkgs, config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: let
+{ pkgs, config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, quic, ... }: let
   cfg = config.services.transmission;
 
   host = "transmission.duanin2.top";
@@ -25,9 +25,10 @@ in {
   services.nginx.virtualHosts.${host} = {
     useACMEHost = "duanin2.top";
     onlySSL = true;
+    quic = true;
 
     locations."/".proxyPass = "http://${cfg.settings.rpc-bind-address}:${builtins.toString cfg.settings.rpc-port}";
 
-    extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling;
+    extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling + quic;
   };
 }

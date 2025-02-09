@@ -1,4 +1,4 @@
-{ config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, modules, ... }: let
+{ config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, quic, modules, ... }: let
   host = "searx.duanin2.top";
 in {
   services.searx = {
@@ -71,12 +71,13 @@ in {
   services.nginx.virtualHosts.${host} = {
     useACMEHost = "duanin2.top";
     onlySSL = true;
+    quic = true;
     
     locations."/" = {
       proxyPass = "http://${config.services.searx.settings.server.bind_address}:${builtins.toString config.services.searx.settings.server.port}";
     };
 
-    extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling;
+    extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling + quic;
   };
 
   environment.persistence."/persist".directories = [

@@ -1,4 +1,4 @@
-{ config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: let
+{ config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, quic, ... }: let
   address = "127.0.0.1";
   port = 8123;
 
@@ -17,12 +17,13 @@ in {
   services.nginx.virtualHosts.${host} = {
     useACMEHost = "duanin2.top";
     onlySSL = true;
+    quic = true;
     
     locations."/" = {
       proxyPass = "http://${address}:${toString port}";
 			proxyWebsockets = true;
     };
 
-    extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling;
+    extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling + quic;
   };
 }

@@ -1,4 +1,4 @@
-{ config, lib, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, pkgs, ... }: with lib; let
+{ config, lib, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, quic, pkgs, ... }: with lib; let
   cfg = config.services.rss-bridge;
 
   curl = pkgs.curl-impersonate-ff;
@@ -23,10 +23,11 @@ in {
   services.nginx.virtualHosts.${host} = {
     useACMEHost = "duanin2.top";
     addSSL = true;
+    quic = true;
     
     extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling + ''
 proxy_cache off;
-    '';
+    '' + quic;
   };
 
   services.phpfpm.pools.${cfg.pool} = {

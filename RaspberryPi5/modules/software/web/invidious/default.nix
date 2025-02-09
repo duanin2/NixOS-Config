@@ -1,4 +1,4 @@
-{ config, lib, pkgs, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, modules, ... }: let
+{ config, lib, pkgs, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, quic, modules, ... }: let
   host = "invidious.duanin2.top";
 in {
   imports = [
@@ -62,13 +62,14 @@ in {
     useACMEHost = "duanin2.top";
     forceSSL = lib.mkForce false;
     onlySSL = true;
+    quic = true;
 
     extraConfig = (securitySetupNGINX [ host ]) + ''
 add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 
 proxy_cache_key "$proxy_host$proxy_port$request_uri$args$cookie_sid";
 proxy_cache_valid any 10m;
-    '' + httpsUpgrade + ocspStapling;
+    '' + httpsUpgrade + ocspStapling + quic;
   };
 
   environment.persistence."/persist" = {

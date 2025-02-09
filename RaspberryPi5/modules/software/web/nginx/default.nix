@@ -24,6 +24,7 @@ location =${path} {
     alias ${finalSecurity};
     add_header Content-Type "text/plain" always;
     ${securityHeaders}
+    add_header Cache-Control "public, max-age=${toString (expiration.seconds)}, no-transform, must-revalidate";
 }
 '') paths}
   '';
@@ -46,6 +47,10 @@ if ($do_http_upgrade = "1") {
 ssl_stapling on;
 ssl_stapling_verify on;
   '';
+  quic = ''
+# used to advertise the availability of HTTP/3
+add_header Alt-Svc 'h3=":443"';
+  '';
 
   nginxCacheName = "cache";
 in {
@@ -53,10 +58,14 @@ in {
     ../acme
   ];
 
-  _module.args = { inherit securitySetupNGINX securityHeaders httpsUpgrade ocspStapling; };
+  _module.args = { inherit securitySetupNGINX securityHeaders httpsUpgrade ocspStapling quic; };
 
   services.nginx = {
     enable = true;
+    package = pkgs.nginxQuic;
+
+    enableQuicBPF = true;
+
     recommendedTlsSettings = true;
     recommendedOptimisation = true;
     recommendedGzipSettings = true;
@@ -66,6 +75,7 @@ in {
       "duanin2.top" = {
         useACMEHost = "duanin2.top";
         addSSL = true;
+        quic = true;
 
         serverAliases = [ "www.duanin2.top" ];
 
@@ -87,7 +97,8 @@ add_header X-Frame-Options "DENY" always;
 add_header X-Content-Type-Options "nosniff" always;
 add_header Content-Security-Policy "default-src ${allowedSrc}; base-uri ${allowedSrc}; frame-src ${allowedSrc} https://john.citrons.xyz; frame-ancestors ${allowedSrc}; form-action ${allowedSrc}" always;
 add_header Referrer-Policy "no-referrer" always;
-        '') + httpsUpgrade + ocspStapling;
+add_header Cache-Control "public, s-maxage=${toString (5 * 24 * 60 * 60)}, max-age=${toString (24 * 60 * 60)}, stale-while-revalidate=${toString (60 * 60)}, stale-if-error=${toString (60 * 60)}, no-transform, no-cache";
+        '') + httpsUpgrade + ocspStapling + quic;
       };
       /*
       "bohousek10d1979.asuscomm.com" = {
@@ -96,7 +107,7 @@ add_header Referrer-Policy "no-referrer" always;
 
         locations."/".proxyPass = "https://192.168.1.1";
 
-        extraConfig = (securitySetupNGINX [ "bohousek10d1979.asuscomm.com" ]) + securityHeaders + httpsUpgrade;
+        extraConfig = (securitySetupNGINX [ "bohousek10d1979.asuscomm.com" ]) + securityHeaders + httpsUpgrade + quic;
       };
       */
     };
@@ -136,8 +147,13 @@ proxy_cache_use_stale error updating http_500 http_502 http_503 http_504;
     serviceConfig.ExecReload = lib.mkBefore [ "${lib.getExe pkgs.bash} -c \"${eraseCache}\"" ];
   };
 
-  networking.firewall.allowedTCPPorts = [
-    80
-    443
-  ];
+  networking.firewall = {
+    allowedTCPPorts = [
+      80
+      443
+    ];
+    allowedUDPPorts = [
+      443
+    ];
+  };
 }

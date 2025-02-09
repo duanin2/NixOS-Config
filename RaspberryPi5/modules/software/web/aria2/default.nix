@@ -1,4 +1,4 @@
-{ config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, ... }: let
+{ config, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, quic, ... }: let
 	cfg = config.services.aria2;
   dir = "/var/lib/aria2";
 
@@ -58,13 +58,14 @@ in {
 	services.nginx.virtualHosts.${host} = {
 		useACMEHost = "duanin2.top";
     onlySSL = true;
+    quic = true;
     
 		locations."/" = {
 			proxyPass = "http://localhost:${toString cfg.settings.rpc-listen-port}";
 			proxyWebsockets = true;
 		};
 
-    extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling;
+    extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling + quic;
 	};
 
   environment.persistence."/persist" = {

@@ -1,4 +1,4 @@
-{ inputs, pkgs, lib, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, modules, ... }: let
+{ inputs, pkgs, lib, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, quic, modules, ... }: let
   domain = "duanin2.top";
   host = "matrix.${domain}";
   baseUrl = "https://${host}";
@@ -88,17 +88,22 @@ in {
   services.nginx.virtualHosts = {
     ${domain}.locations = {
       "/.well-known/matrix/server" = {
-        extraConfig = (mkWellKnown { "m.server" = "${host}:443"; }) + securityHeaders;
+        extraConfig = (mkWellKnown { "m.server" = "${host}:443"; }) + securityHeaders + quic + ''
+add_header Cache-Control "public, max-age=${toString (24 * 60 * 60)}, no-transform, no-cache, must-revalidate";
+        '';
         priority = 0;
       };
       "/.well-known/matrix/client" = {
-        extraConfig = (mkWellKnown clientConfig) + securityHeaders;
+        extraConfig = (mkWellKnown clientConfig) + securityHeaders + quic + ''
+add_header Cache-Control "public, max-age=${toString (24 * 60 * 60)}, no-transform, no-cache, must-revalidate";
+        '';
         priority = 0;
       };
     };
     ${host} = {
       useACMEHost = "duanin2.top";
       onlySSL = true;
+      quic = true;
       
       locations = {
         "/".return = "301 https://element.duanin2.top";
@@ -114,7 +119,7 @@ in {
 
       extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling + ''
 client_max_body_size 50M;
-      '';
+      ''  + quic;
     };
   };
 
