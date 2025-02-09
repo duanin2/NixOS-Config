@@ -52,6 +52,8 @@
           sponsorblock
           dearrow
           enhanced-h264ify
+          annotations-restored
+          return-youtube-dislikes
 
           violentmonkey
           stylus
