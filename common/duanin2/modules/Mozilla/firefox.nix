@@ -54,6 +54,7 @@
           enhanced-h264ify
           annotations-restored
           return-youtube-dislikes
+          blocktube
 
           violentmonkey
           stylus
