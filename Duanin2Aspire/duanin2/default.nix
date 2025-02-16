@@ -1,4 +1,8 @@
 { pkgs, ... }: {
+	imports = [
+		./modules/keepassxc/system.nix
+	];
+
 	users.users."duanin2" = {
 		isNormalUser = true;
 		description = "Dušan Till";

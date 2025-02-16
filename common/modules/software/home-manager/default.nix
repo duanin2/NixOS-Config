@@ -27,6 +27,10 @@
 
     users."duanin2".imports = with inputs; [
       chaotic.homeManagerModules.default
+
+      {
+        chaotic.nyx.overlay.enable = false;
+      }
     ];
   };
 }
