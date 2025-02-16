@@ -24,6 +24,7 @@
     (modules.common.software.network + /avahi)
     (modules.local.software.network + /region)
     #(modules.common.software.network + /miredo)
+    (modules.local.software.network + /firewall)
 
 		# software.network.dns
     #(modules.common.software.network.dns + /resolvd)
