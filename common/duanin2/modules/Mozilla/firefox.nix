@@ -48,7 +48,7 @@
           default = "SearXNG";
           privateDefault = default;
         };
-        extensions = with nur.repos.rycee.firefox-addons; [
+        extensions.packages = with nur.repos.rycee.firefox-addons; [
           sponsorblock
           dearrow
           enhanced-h264ify
@@ -83,6 +83,7 @@
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
           "javascript.enabled" = true;
           "widget.use-xdg-desktop-portal.file-picker" = 1;
+          "image.jxl.enabled" = true;
 
           # Arkenfox overrides
           "browser.startup.page" = 3;

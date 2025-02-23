@@ -6,8 +6,6 @@
   gtk = {
     enable = true;
 
-    catppuccin.enable = false;
-
     theme = {
       package = (pkgs.colloid-gtk-theme.override {
         tweaks = [ "catppuccin" "rimless" "float" ];
@@ -31,6 +29,8 @@
       gtk-decoration-layout = "";
     };
   };
+
+  catppuccin.gtk.enable = false;
 
   fonts.fontconfig.enable = true;
 }
