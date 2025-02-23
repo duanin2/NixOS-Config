@@ -52,7 +52,7 @@
             location = "top";
             lengthMode = "fill";
             widgets = [
-              {
+              /*{
                 type = "org.kde.windowbuttons";
                 config = {
                   General = {
@@ -64,7 +64,7 @@
                   };
                 };
                 globalConfig = { };
-              }
+              }*/
               {
                 type = "org.kde.windowtitle";
                 config = {
@@ -115,7 +115,7 @@
                 };
                 globalConfig = { };
               }
-              {
+              /*{
                 type = "org.kde.windowbuttons";
                 config = {
                   General = {
@@ -127,7 +127,7 @@
                   };
                 };
                 globalConfig = { };
-              }
+              }*/
               {
                 type = "org.kde.plasma.showdesktop";
                 config = { };
@@ -273,7 +273,7 @@ ${lib.concatMapStringsSep "\n" (panel: ''
         size = cfg.size;
       };
       iconTheme = "Papirus-Dark";
-      #clookAndFeel = "Catppuccin-Frappe-Green";
+      #lookAndFeel = "Catppuccin-Frappe-Green";
       splashScreen = {
         theme = "catppuccin-frappe-green-cursors";
       };
@@ -370,7 +370,7 @@ ${lib.concatMapStringsSep "\n" (panel: ''
       timeout = 2;
     };
     kwin = {
-      borderlessMaximizedWindows = true;
+      borderlessMaximizedWindows = false;
       cornerBarrier = false;
       edgeBarrier = 0;
       effects = {

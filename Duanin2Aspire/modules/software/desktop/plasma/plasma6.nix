@@ -12,7 +12,7 @@
 		bluedevil
 		bluez-qt
 
-		applet-window-buttons6
+		#applet-window-buttons6
 		applet-window-title
 	]);
 
