@@ -56,6 +56,9 @@
           return-youtube-dislikes
           blocktube
 
+          steam-database
+          protondb-for-steam
+
           violentmonkey
           stylus
           sidebery
