@@ -12,7 +12,7 @@ in {
 		})
 		*/
 		prismlauncher
-		kdialog
+		kdePackages.kdialog
 	];
 
   home.activation."PrismLauncherCFG" = let
