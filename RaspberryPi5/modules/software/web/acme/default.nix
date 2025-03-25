@@ -4,10 +4,10 @@
       # webroot = "/var/lib/acme/.challenges";
       email = "tilldusan30+acme@gmail.com";
     };
-    certs."duanin2.top" = {
+    certs."duanin2.eu" = {
       group = "nginx";
       domain = "duanin2.top";
-      extraDomainNames = [ "*.duanin2.top" ];
+      extraDomainNames = [ "*.duanin2.eu" "duanin2.top" "*.duanin2.top" ];
       dnsProvider = "cloudflare";
       environmentFile = "/var/lib/secrets/certs.secret";
       extraLegoRunFlags = [ /*"--must-staple"*/ ];
@@ -23,19 +23,21 @@
     acceptTerms = true;
   };
 
-  services.nginx.virtualHosts."acmechallenge.duanin2.top" = {
+  services.nginx.virtualHosts."acmechallenge.duanin2.eu" = {
     default = true;
-    useACMEHost = "duanin2.top";
+    useACMEHost = "duanin2.eu";
     addSSL = true;
     quic = true;
+
+    serverAliases = [ "acmechallenge.duanin2.top" ];
     
     locations."/.well-known/acme-challenge" = {
       root = "/var/lib/acme/.challenges";
       priority = 0;
     };
 
-    extraConfig = (securitySetupNGINX [ "acmechallenge.duanin2.top" ]) + (let
-          allowedSrc = "'self' $scheme://duanin2.top $scheme://*.duanin2.top";
+    extraConfig = (securitySetupNGINX [ "acmechallenge.duanin2.eu" "acmechallenge.duanin2.top" ]) + (let
+          allowedSrc = "'self' $scheme://duanin2.eu $scheme://*.duanin2.eu $scheme://duanin2.top $scheme://*.duanin2.top";
         in ''
 add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 add_header X-Frame-Options "DENY" always;

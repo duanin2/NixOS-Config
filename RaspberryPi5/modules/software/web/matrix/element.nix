@@ -1,11 +1,13 @@
 { clientConfig }: { pkgs, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, quic, ... }: let
-  host = "element.duanin2.top";
+  host = "element.duanin2.eu";
 in {
   services.nginx.virtualHosts = {
     ${host} = {
-      useACMEHost = "duanin2.top";
+      useACMEHost = "duanin2.eu";
       onlySSL = true;
       quic = true;
+
+    serverAliases = [ "element.duanin2.top" ];
       
       root = pkgs.element-web.override {
         conf = {
@@ -13,7 +15,7 @@ in {
         };
       };
 
-      extraConfig = (securitySetupNGINX [ host ]) + ''
+      extraConfig = (securitySetupNGINX [ host "element.duanin2.top" ]) + ''
 add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 add_header X-Frame-Options "DENY" always;
 add_header X-Content-Type-Options "nosniff" always;

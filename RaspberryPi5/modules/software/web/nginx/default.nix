@@ -11,7 +11,7 @@
     finalSecurity = pkgs.writeText "security.txt" ''
 ${lib.strings.concatMapStrings (path: lib.strings.concatMapStrings (origin: "Canonical: https://${origin}${path}\n") origins) paths}
 
-Contact: mailto:admin@security.duanin2.top
+Contact: mailto:admin@security.duanin2.eu
 
 # Always expires ${expiration.humanReadable} after generation
 Expires: ${isoTime (builtins.currentTime + expiration.seconds) "seconds"}
@@ -29,7 +29,7 @@ location =${path} {
 '') paths}
   '';
   securityHeaders = let
-    allowedSrc = "'self' $scheme://duanin2.top $scheme://*.duanin2.top";
+    allowedSrc = "'self' $scheme://duanin2.eu $scheme://*.duanin2.eu $scheme://duanin2.top $scheme://*.duanin2.top";
   in ''
 add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 add_header X-Frame-Options "DENY" always;
@@ -72,12 +72,12 @@ in {
     recommendedProxySettings = true;
 
     virtualHosts = {
-      "duanin2.top" = {
-        useACMEHost = "duanin2.top";
+      "duanin2.eu" = {
+        useACMEHost = "duanin2.eu";
         addSSL = true;
         quic = true;
 
-        serverAliases = [ "www.duanin2.top" ];
+        serverAliases = [ "www.duanin2.eu" "duanin2.top" "www.duanin2.top" ];
 
         locations = {
           "/" = {
@@ -89,8 +89,8 @@ in {
           };
         };
 
-        extraConfig = (securitySetupNGINX [ "duanin2.top" "www.duanin2.top" ]) + (let
-          allowedSrc = "'self' $scheme://duanin2.top $scheme://*.duanin2.top";
+        extraConfig = (securitySetupNGINX [ "duanin2.eu" "www.duanin2.eu" "duanin2.top" "www.duanin2.top" ]) + (let
+          allowedSrc = "'self' $scheme://duanin2.eu $scheme://*.duanin2.eu $scheme://duanin2.top $scheme://*.duanin2.top";
         in ''
 add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 add_header X-Frame-Options "DENY" always;

@@ -1,5 +1,5 @@
 { config, lib, pkgs, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, quic, modules, ... }: let
-  host = "invidious.duanin2.top";
+  host = "invidious.duanin2.eu";
 in {
   imports = [
     (modules.local.software + /postgres)
@@ -59,12 +59,14 @@ in {
 
   services.nginx.virtualHosts.${host} = {
     enableACME = lib.mkForce false;
-    useACMEHost = "duanin2.top";
+    useACMEHost = "duanin2.eu";
     forceSSL = lib.mkForce false;
     onlySSL = true;
     quic = true;
 
-    extraConfig = (securitySetupNGINX [ host ]) + ''
+    serverAliases = [ "invidious.duanin2.top" ];
+
+    extraConfig = (securitySetupNGINX [ host "invidious.duanin2.top" ]) + ''
 add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 
 proxy_cache_key "$proxy_host$proxy_port$request_uri$args$cookie_sid";

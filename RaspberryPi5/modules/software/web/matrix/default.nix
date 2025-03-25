@@ -1,5 +1,5 @@
 { inputs, pkgs, lib, securitySetupNGINX, securityHeaders, httpsUpgrade, ocspStapling, quic, modules, ... }: let
-  domain = "duanin2.top";
+  domain = "duanin2.eu";
   host = "matrix.${domain}";
   baseUrl = "https://${host}";
   clientConfig."m.homeserver".base_url = baseUrl;
@@ -53,7 +53,7 @@ in {
       url_preview_enabled = true;
       enable_registration_captcha = true;
       email = {
-        smtp_host = "duanin2.top";
+        smtp_host = domain;
         smtp_user = "noreply@${host}";
         force_tls = true;
         notif_from = "Your %(app)s homeserver <noreply@${host}>";
@@ -101,12 +101,14 @@ add_header Cache-Control "public, max-age=${toString (24 * 60 * 60)}, no-transfo
       };
     };
     ${host} = {
-      useACMEHost = "duanin2.top";
+      useACMEHost = domain;
       onlySSL = true;
       quic = true;
+
+      serverAliases = [ "matrix.duanin2.top" ];
       
       locations = {
-        "/".return = "301 https://element.duanin2.top";
+        "/".return = "301 https://element.duanin2.eu";
         "/_matrix" = {
           proxyPass = "http://${address}:${toString port}";
           priority = 0;
@@ -117,7 +119,7 @@ add_header Cache-Control "public, max-age=${toString (24 * 60 * 60)}, no-transfo
         };
       };
 
-      extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling + ''
+      extraConfig = (securitySetupNGINX [ host "matrix.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling + ''
 client_max_body_size 50M;
       ''  + quic;
     };

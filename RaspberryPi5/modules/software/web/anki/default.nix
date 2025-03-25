@@ -2,7 +2,7 @@
   address = "127.0.0.1";
   port = 8123;
 
-  host = "anki.duanin2.top";
+  host = "anki.duanin2.eu";
 in {
   services.anki-sync-server = {
     inherit address port;
@@ -15,15 +15,17 @@ in {
   };
 
   services.nginx.virtualHosts.${host} = {
-    useACMEHost = "duanin2.top";
+    useACMEHost = "duanin2.eu";
     onlySSL = true;
     quic = true;
+
+    serverAliases = [ "anki.duanin2.top" ];
     
     locations."/" = {
       proxyPass = "http://${address}:${toString port}";
 			proxyWebsockets = true;
     };
 
-    extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling + quic;
+    extraConfig = (securitySetupNGINX [ host "anki.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling + quic;
   };
 }

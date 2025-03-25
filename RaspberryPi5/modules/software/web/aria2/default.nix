@@ -2,7 +2,7 @@
 	cfg = config.services.aria2;
   dir = "/var/lib/aria2";
 
-  host = "aria2.duanin2.top";
+  host = "aria2.duanin2.eu";
 in {
 	services.aria2 = {
 		enable = true;
@@ -56,16 +56,18 @@ in {
 	};
   
 	services.nginx.virtualHosts.${host} = {
-		useACMEHost = "duanin2.top";
+		useACMEHost = "duanin2.eu";
     onlySSL = true;
     quic = true;
+
+    serverAliases = [ "aria2.duanin2.top" ];
     
 		locations."/" = {
 			proxyPass = "http://localhost:${toString cfg.settings.rpc-listen-port}";
 			proxyWebsockets = true;
 		};
 
-    extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling + quic;
+    extraConfig = (securitySetupNGINX [ host "aria2.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling + quic;
 	};
 
   environment.persistence."/persist" = {
