@@ -27,7 +27,7 @@
 
 			]);
 			userSettings = {
-				"workbench.colorTheme" = "Catppuccin Frappé";
+				"workbench.colorTheme" = lib.mkForce "Catppuccin Frappé";
 				"workbench.iconTheme" = "catppuccin-frappe";
 				"catppuccin.accentColor" = "green";
 

@@ -16,7 +16,6 @@ in {
   chaotic.mesa-git = {
     enable = true;
 
-    method = "replaceRuntimeDependencies";
     extraPackages = baseExtraPackages pkgs (with pkgs; [
       mesa_git.opencl
     ]);
