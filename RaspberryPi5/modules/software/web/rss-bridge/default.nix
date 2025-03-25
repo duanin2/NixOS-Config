@@ -3,7 +3,7 @@
 
   curl = pkgs.curl-impersonate-ff;
 
-  host = "rssbridge.duanin2.top";
+  host = "rssbridge.duanin2.eu";
 in {
   services.rss-bridge = {
     enable = true;
@@ -21,11 +21,13 @@ in {
   };
 
   services.nginx.virtualHosts.${host} = {
-    useACMEHost = "duanin2.top";
+    useACMEHost = "duanin2.eu";
     addSSL = true;
     quic = true;
+
+    serverAliases = [ "rssbridge.duanin2.top" ];
     
-    extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling + ''
+    extraConfig = (securitySetupNGINX [ host "rssbridge.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling + ''
 proxy_cache off;
     '' + quic;
   };

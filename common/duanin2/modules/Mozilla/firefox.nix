@@ -35,7 +35,7 @@
             "SearXNG" = {
               urls = [
                 {
-                  template = "https://searx.duanin2.top/search";
+                  template = "https://searx.duanin2.eu/search";
                   params = [
                     { name = "q"; value = "{searchTerms}"; }
                   ];

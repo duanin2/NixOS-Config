@@ -5,9 +5,9 @@ in {
 
   mailserver = {
     enable = true;
-    fqdn = "mail.duanin2.top";
+    fqdn = "mail.duanin2.eu";
     # sendingFqdn = "109-80-156-99.rcr.o2.cz"; # Residential ISPs don't allow you to change rDNS.
-    domains = [ "duanin2.top" ];
+    domains = [ "duanin2.eu" "duanin2.top" ];
 
     enableImap = false;
     enablePop3 = false;
@@ -24,11 +24,11 @@ in {
       "duanin2@duanin2.top" = {
         hashedPasswordFile = "/var/lib/secrets/mailPass/duanin2";
         aliasesRegexp = [
-          "/^postmaster(-.+)?@([A-Za-z0-9-]+-\.)*duanin2.top$/"
-          "/^abuse(-.+)?@([A-Za-z0-9-]+-\.)*duanin2.top$/"
-          "/^duanin2(-.+)?@([A-Za-z0-9-]+-\.)*duanin2\\.top$/"
-          "/^dusan.till(-.+)?@([A-Za-z0-9-]+-\.)*duanin2\\.top$/"
-          "/^admin(-.+)?@([A-Za-z0-9-]+-\.)*duanin2\\.top$/"
+          "/^postmaster(-.+)?@([A-Za-z0-9-]+-\.)*duanin2.(top|eu)$/"
+          "/^abuse(-.+)?@([A-Za-z0-9-]+-\.)*duanin2.(top|eu)$/"
+          "/^duanin2(-.+)?@([A-Za-z0-9-]+-\.)*duanin2\\.(top|eu)$/"
+          "/^dusan.till(-.+)?@([A-Za-z0-9-]+-\.)*duanin2\\.(top|eu)$/"
+          "/^admin(-.+)?@([A-Za-z0-9-]+-\.)*duanin2\\.(top|eu)$/"
         ];
         sieveScript = ''
 require ["fileinto", "mailbox"];
@@ -70,8 +70,8 @@ if header :matches "list-id" "<?*>" {
         sendOnly = true;
         hashedPasswordFile = "/var/lib/secrets/mailPass/matrix";
 
-        aliases = [
-          "matrix-noreply@duanin2.top"
+        aliasesRegexp = [
+          "^matrix-noreply@duanin2\\.(top|eu)$"
         ];
       };
     };
@@ -81,7 +81,7 @@ if header :matches "list-id" "<?*>" {
 
     # Use my preexisting wildcard acme certificate.
     certificateScheme = "acme";
-    acmeCertificateName = "duanin2.top";
+    acmeCertificateName = "duanin2.eu";
   };
 
   services.postfix.config = {
@@ -92,30 +92,36 @@ if header :matches "list-id" "<?*>" {
   };
 
   services.nginx.virtualHosts = {
-    "rspamd.duanin2.top" = {
+    "rspamd.duanin2.eu" = {
       onlySSL = true;
-      useACMEHost = "duanin2.top";
+      useACMEHost = "duanin2.eu";
       basicAuthFile = "/var/lib/secrets/rspamdBasicAuth";
+
+      serverAliases = [ "rspamd.duanin2.top" ];
       
       locations."/".proxyPass = "http://unix:/run/rspamd/worker-controller.sock:/";
 
-      extraConfig = (securitySetupNGINX [ "rspamd.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
+      extraConfig = (securitySetupNGINX [ "rspamd.duanin2.eu" "rspamd.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
     };
-    "mta-sts.duanin2.top" = {
+    "mta-sts.duanin2.eu" = {
       onlySSL = true;
-      useACMEHost = "duanin2.top";
+      useACMEHost = "duanin2.eu";
+
+      serverAliases = [ "mta-sts.duanin2.top" ];
 
       locations."= /.well-known/mta-sts.txt" = {
         alias = pkgs.writeText "mta-sts.txt" (builtins.replaceStrings [ "\n" ] [ "\r\n" ] ''
 version: STSv1
 mode: enforce
 max_age: ${toString (3 * 30 * 24 * 60 * 60)}
+mx: mail.duanin2.eu
+mx: *.duanin2.eu
 mx: mail.duanin2.top
 mx: *.duanin2.top
         '');
       };
 
-      extraConfig = (securitySetupNGINX [ "mta-sts.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
+      extraConfig = (securitySetupNGINX [ "mta-sts.duanin2.top" "mta-sts.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
     };
   };
 

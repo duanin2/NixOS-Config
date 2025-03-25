@@ -6,7 +6,7 @@
     };
     certs."duanin2.eu" = {
       group = "nginx";
-      domain = "duanin2.top";
+      domain = "duanin2.eu";
       extraDomainNames = [ "*.duanin2.eu" "duanin2.top" "*.duanin2.top" ];
       dnsProvider = "cloudflare";
       environmentFile = "/var/lib/secrets/certs.secret";

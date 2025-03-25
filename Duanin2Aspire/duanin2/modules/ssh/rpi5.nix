@@ -1,7 +1,7 @@
 { homeDirectory, ... }: {
   programs.ssh.matchBlocks."RPi5" = {
     host = "RPi5";
-    hostname = "duanin2.top";
+    hostname = "duanin2.eu";
     port = 22;
     user = "duanin2";
     identityFile = "${homeDirectory}/.ssh/rpi5";

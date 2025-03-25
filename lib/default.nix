@@ -6,7 +6,7 @@ final: prev: with final; with builtins; {
 
   maintainers = (prev.maintainers or {}) // {
     duanin2 = {
-      email = "duanin2-nix@duanin2.top";
+      email = "duanin2-nix@duanin2.eu";
       github = "duanin2";
       githubId = 1778670;
       name = "Duanin2";

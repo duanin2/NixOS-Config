@@ -7,7 +7,7 @@ in {
       onlySSL = true;
       quic = true;
 
-    serverAliases = [ "element.duanin2.top" ];
+      serverAliases = [ "element.duanin2.top" ];
       
       root = pkgs.element-web.override {
         conf = {
