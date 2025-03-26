@@ -33,28 +33,28 @@ in {
         sieveScript = ''
 require ["fileinto", "mailbox"];
 
-if address :matches :localpart ["to", "Deliver-To"] "abuse" {
+if address :matches :localpart "to" "abuse" {
     fileinto :create "AbuseReport";
     stop;
 }
 
-if address :matches :localpart ["to", "Deliver-To"] ["postmaster", "admin", "admin-*"] {
+if address :matches :localpart to" ["postmaster", "admin", "admin-*"] {
     fileinto :create "Admin";
     stop;
 }
 
-if address :matches :localpart ["to", "Deliver-To"] "dusan.till" {
+if address :matches :localpart "to" "dusan.till" {
     fileinto :create "Personal";
     stop;
 }
-if address :matches :localpart ["to", "Deliver-To"] "dusan.till-*" {
+if address :matches :localpart "to" "dusan.till-*" {
     fileinto :create "MassMail-Personal";
 }
 
-if address :matches :localpart ["to", "Deliver-To"] "duanin2" {
+if address :matches :localpart "to" "duanin2" {
     fileinto :create "Public";
 }
-if address :matches :localpart ["to", "Deliver-To"] "duanin2-*" {
+if address :matches :localpart "to" "duanin2-*" {
     fileinto :create "MassMail-Public";
 }
 
