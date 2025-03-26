@@ -38,7 +38,7 @@
     (modules.local.software.web + /aria2)
     #(modules.local.software.web + /openvscode-server)
     (modules.local.software.web + /searx)
-    (modules.local.software.web + /matrix)
+    #(modules.local.software.web + /matrix)
     (modules.local.software.web + /jellyfin)
     (modules.local.software.web + /ntfy)
     (modules.local.software.web + /anki)
