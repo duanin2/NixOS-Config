@@ -78,7 +78,7 @@ in {
         quic = true;
 
         locations."/" = {
-          return = "308 $scheme://$name.duanin2.eu$request_uri";
+          return = "308 $scheme://$nameduanin2.eu$request_uri";
         };
 
         extraConfig = securityHeaders + httpsUpgrade + ocspStapling + quic;
