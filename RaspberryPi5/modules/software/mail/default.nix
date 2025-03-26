@@ -96,18 +96,14 @@ if header :matches "list-id" "<?*>" {
       onlySSL = true;
       useACMEHost = "duanin2.eu";
       basicAuthFile = "/var/lib/secrets/rspamdBasicAuth";
-
-      serverAliases = [ "rspamd.duanin2.top" ];
       
       locations."/".proxyPass = "http://unix:/run/rspamd/worker-controller.sock:/";
 
-      extraConfig = (securitySetupNGINX [ "rspamd.duanin2.eu" "rspamd.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
+      extraConfig = (securitySetupNGINX [ "rspamd.duanin2.eu" ]) + securityHeaders + httpsUpgrade + ocspStapling;
     };
     "mta-sts.duanin2.eu" = {
       onlySSL = true;
       useACMEHost = "duanin2.eu";
-
-      serverAliases = [ "mta-sts.duanin2.top" ];
 
       locations."= /.well-known/mta-sts.txt" = {
         alias = pkgs.writeText "mta-sts.txt" (builtins.replaceStrings [ "\n" ] [ "\r\n" ] ''
@@ -121,7 +117,7 @@ mx: *.duanin2.top
         '');
       };
 
-      extraConfig = (securitySetupNGINX [ "mta-sts.duanin2.top" "mta-sts.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling;
+      extraConfig = (securitySetupNGINX [ "mta-sts.duanin2.eu" ]) + securityHeaders + httpsUpgrade + ocspStapling;
     };
   };
 

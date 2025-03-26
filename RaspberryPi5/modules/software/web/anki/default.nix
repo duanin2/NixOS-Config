@@ -18,14 +18,12 @@ in {
     useACMEHost = "duanin2.eu";
     onlySSL = true;
     quic = true;
-
-    serverAliases = [ "anki.duanin2.top" ];
     
     locations."/" = {
       proxyPass = "http://${address}:${toString port}";
 			proxyWebsockets = true;
     };
 
-    extraConfig = (securitySetupNGINX [ host "anki.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling + quic;
+    extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling + quic;
   };
 }

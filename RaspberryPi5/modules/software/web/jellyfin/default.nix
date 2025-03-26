@@ -14,15 +14,13 @@ in {
     useACMEHost = "duanin2.eu";
     onlySSL = true;
     quic = true;
-
-    serverAliases = [ "jellyfin.duanin2.top" ];
     
     locations."/" = {
       proxyPass = "http://localhost:8096";
 			proxyWebsockets = true;
     };
 
-    extraConfig = (securitySetupNGINX [ host "jellyfin.duanin2.top" ]) + ''
+    extraConfig = (securitySetupNGINX [ host ]) + ''
 add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 add_header X-Frame-Options "DENY" always;
 add_header X-Content-Type-Options "nosniff" always;

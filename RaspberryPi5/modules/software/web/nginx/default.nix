@@ -72,12 +72,23 @@ in {
     recommendedProxySettings = true;
 
     virtualHosts = {
+      "~^(?<name>[^.]+\.)*duanin2\.top$" = {
+        useACMEHost = "duanin2.eu";
+        addSSL = true;
+        quic = true;
+
+        locations."/" = {
+          return = "308 $scheme://$name.duanin2.eu$request_uri";
+        };
+
+        extraConfig = securityHeaders + httpsUpgrade + ocspStapling + quic;
+      };
       "duanin2.eu" = {
         useACMEHost = "duanin2.eu";
         addSSL = true;
         quic = true;
 
-        serverAliases = [ "www.duanin2.eu" "duanin2.top" "www.duanin2.top" ];
+        serverAliases = [ "www.duanin2.eu" ];
 
         locations = {
           "/" = {
@@ -89,7 +100,7 @@ in {
           };
         };
 
-        extraConfig = (securitySetupNGINX [ "duanin2.eu" "www.duanin2.eu" "duanin2.top" "www.duanin2.top" ]) + (let
+        extraConfig = (securitySetupNGINX [ "duanin2.eu" "www.duanin2.eu" ]) + (let
           allowedSrc = "'self' $scheme://duanin2.eu $scheme://*.duanin2.eu $scheme://duanin2.top $scheme://*.duanin2.top";
         in ''
 add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;

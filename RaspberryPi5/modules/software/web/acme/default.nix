@@ -28,21 +28,19 @@
     useACMEHost = "duanin2.eu";
     addSSL = true;
     quic = true;
-
-    serverAliases = [ "acmechallenge.duanin2.top" ];
     
     locations."/.well-known/acme-challenge" = {
       root = "/var/lib/acme/.challenges";
       priority = 0;
     };
 
-    extraConfig = (securitySetupNGINX [ "acmechallenge.duanin2.eu" "acmechallenge.duanin2.top" ]) + (let
+    extraConfig = (securitySetupNGINX [ "acmechallenge.duanin2.eu" ]) + (let
           allowedSrc = "'self' $scheme://duanin2.eu $scheme://*.duanin2.eu $scheme://duanin2.top $scheme://*.duanin2.top";
         in ''
 add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 add_header X-Frame-Options "DENY" always;
 add_header X-Content-Type-Options "nosniff" always;
-add_header Content-Security-Policy "default-src ${allowedSrc}; base-uri ${allowedSrc}; frame-src ${allowedSrc} https://john.citrons.xyz; frame-ancestors ${allowedSrc}; form-action ${allowedSrc}" always;
+add_header Content-Security-Policy "default-src ${allowedSrc}; base-uri ${allowedSrc}; frame-src ${allowedSrc}; frame-ancestors ${allowedSrc}; form-action ${allowedSrc}" always;
 add_header Referrer-Policy "no-referrer" always;
 add_header Cache-Control "no-store";
         '') + httpsUpgrade + ocspStapling + ''

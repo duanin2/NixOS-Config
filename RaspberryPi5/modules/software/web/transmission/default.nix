@@ -27,10 +27,8 @@ in {
     onlySSL = true;
     quic = true;
 
-    serverAliases = [ "transmission.duanin2.top" ];
-
     locations."/".proxyPass = "http://${cfg.settings.rpc-bind-address}:${builtins.toString cfg.settings.rpc-port}";
 
-    extraConfig = (securitySetupNGINX [ host "transmission.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling + quic;
+    extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling + quic;
   };
 }

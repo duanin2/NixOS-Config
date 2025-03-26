@@ -6,8 +6,6 @@ in {
       useACMEHost = "duanin2.eu";
       onlySSL = true;
       quic = true;
-
-      serverAliases = [ "element.duanin2.top" ];
       
       root = pkgs.element-web.override {
         conf = {
@@ -15,7 +13,7 @@ in {
         };
       };
 
-      extraConfig = (securitySetupNGINX [ host "element.duanin2.top" ]) + ''
+      extraConfig = (securitySetupNGINX [ host ]) + ''
 add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 add_header X-Frame-Options "DENY" always;
 add_header X-Content-Type-Options "nosniff" always;

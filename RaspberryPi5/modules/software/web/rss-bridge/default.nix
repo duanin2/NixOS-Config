@@ -24,10 +24,8 @@ in {
     useACMEHost = "duanin2.eu";
     addSSL = true;
     quic = true;
-
-    serverAliases = [ "rssbridge.duanin2.top" ];
     
-    extraConfig = (securitySetupNGINX [ host "rssbridge.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling + ''
+    extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling + ''
 proxy_cache off;
     '' + quic;
   };

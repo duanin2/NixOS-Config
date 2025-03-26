@@ -64,9 +64,7 @@ in {
     onlySSL = true;
     quic = true;
 
-    serverAliases = [ "invidious.duanin2.top" ];
-
-    extraConfig = (securitySetupNGINX [ host "invidious.duanin2.top" ]) + ''
+    extraConfig = (securitySetupNGINX [ host ]) + ''
 add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 
 proxy_cache_key "$proxy_host$proxy_port$request_uri$args$cookie_sid";

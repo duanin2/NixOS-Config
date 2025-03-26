@@ -104,8 +104,6 @@ add_header Cache-Control "public, max-age=${toString (24 * 60 * 60)}, no-transfo
       useACMEHost = domain;
       onlySSL = true;
       quic = true;
-
-      serverAliases = [ "matrix.duanin2.top" ];
       
       locations = {
         "/".return = "301 https://element.duanin2.eu";
@@ -119,7 +117,7 @@ add_header Cache-Control "public, max-age=${toString (24 * 60 * 60)}, no-transfo
         };
       };
 
-      extraConfig = (securitySetupNGINX [ host "matrix.duanin2.top" ]) + securityHeaders + httpsUpgrade + ocspStapling + ''
+      extraConfig = (securitySetupNGINX [ host ]) + securityHeaders + httpsUpgrade + ocspStapling + ''
 client_max_body_size 50M;
       ''  + quic;
     };
