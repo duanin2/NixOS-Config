@@ -38,7 +38,7 @@ if address :matches :localpart "to" "abuse" {
     stop;
 }
 
-if address :matches :localpart to" ["postmaster", "admin", "admin-*"] {
+if address :matches :localpart "to" ["postmaster", "admin", "admin-*"] {
     fileinto :create "Admin";
     stop;
 }
