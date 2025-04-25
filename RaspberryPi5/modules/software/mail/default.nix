@@ -74,6 +74,14 @@ if header :matches "list-id" "<?*>" {
           "^matrix-noreply@duanin2\\.(top|eu)$"
         ];
       };
+      */
+      "noreply@pds.duanin2.eu" = {
+        hashedPasswordFile = "/var/lib/secrets/mailPass/atprotoPds";
+
+        aliasesRegexp = [
+          "^modmail@pds\.duanin2\.eu$"
+        ];
+      };
     };
 
     useUTF8FolderNames = true;

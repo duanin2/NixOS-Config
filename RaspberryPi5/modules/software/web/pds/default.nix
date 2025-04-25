@@ -9,6 +9,11 @@ in {
     environmentFiles = [ "/var/lib/secrets/atproto-pds" ];
     settings = {
       PDS_HOSTNAME = host;
+
+      PDS_CONTACT_EMAIL_ADDRESS = "admin@pds.duanin2.eu";
+
+      PDS_EMAIL_FROM_ADDRESS = "noreply@pds.duanin2.eu";
+      PDS_MODERATION_EMAIL_ADDRESS = "modmail@pds.duanin2.eu";
     };
   };
 
