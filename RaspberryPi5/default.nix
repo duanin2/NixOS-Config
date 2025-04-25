@@ -44,6 +44,7 @@
     (modules.local.software.web + /anki)
     (modules.local.software.web + /freshrss)
     (modules.local.software.web + /rss-bridge)
+    (modules.local.software.web + /pds)
 
     # software/kernel
     (modules.common.software.kernel.RaspberryPi + /vendor-nixpkgs.nix)
