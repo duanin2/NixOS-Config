@@ -24,48 +24,14 @@ in {
       "duanin2@duanin2.top" = {
         hashedPasswordFile = "/var/lib/secrets/mailPass/duanin2";
         aliasesRegexp = [
-          "/^postmaster(-.+)?@([A-Za-z0-9-]+-\.)*duanin2.(top|eu)$/"
-          "/^abuse(-.+)?@([A-Za-z0-9-]+-\.)*duanin2.(top|eu)$/"
-          "/^duanin2(-.+)?@([A-Za-z0-9-]+-\.)*duanin2\\.(top|eu)$/"
-          "/^dusan.till(-.+)?@([A-Za-z0-9-]+-\.)*duanin2\\.(top|eu)$/"
-          "/^admin(-.+)?@([A-Za-z0-9-]+-\.)*duanin2\\.(top|eu)$/"
+          "/^postmaster(-.+)?@([A-Za-z0-9-]+\.)*duanin2.(top|eu)$/"
+          "/^abuse(-.+)?@([A-Za-z0-9-]+\.)*duanin2.(top|eu)$/"
+          "/^duanin2(-.+)?@([A-Za-z0-9-]+\.)*duanin2\\.(top|eu)$/"
+          "/^dusan.till(-.+)?@([A-Za-z0-9-]+\.)*duanin2\\.(top|eu)$/"
+          "/^admin(-.+)?@([A-Za-z0-9-]+\.)*duanin2\\.(top|eu)$/"
         ];
-        sieveScript = ''
-require ["fileinto", "mailbox"];
-
-if address :matches :localpart "to" "abuse" {
-    fileinto :create "AbuseReport";
-    stop;
-}
-
-if address :matches :localpart "to" ["postmaster", "admin", "admin-*"] {
-    fileinto :create "Admin";
-    stop;
-}
-
-if address :matches :localpart "to" "dusan.till" {
-    fileinto :create "Personal";
-    stop;
-}
-if address :matches :localpart "to" "dusan.till-*" {
-    fileinto :create "MassMail-Personal";
-}
-
-if address :matches :localpart "to" "duanin2" {
-    fileinto :create "Public";
-}
-if address :matches :localpart "to" "duanin2-*" {
-    fileinto :create "MassMail-Public";
-}
-
-# This must be the last rule, it will check if list-id is set, and
-# file the message into the Lists folder for further investigation
-if header :matches "list-id" "<?*>" {
-    fileinto :create "Lists";
-    stop;
-}
-        '';
       };
+      /*
       "noreply@matrix.duanin2.top" = {
         sendOnly = true;
         hashedPasswordFile = "/var/lib/secrets/mailPass/matrix";
