@@ -31,6 +31,7 @@ in {
 add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 add_header X-Frame-Options "DENY" always;
 add_header X-Content-Type-Options "nosniff" always;
+add_header Access-Control-Allow-Origin * always;
     '' + httpsUpgrade + ocspStapling + quic;
   };
 
