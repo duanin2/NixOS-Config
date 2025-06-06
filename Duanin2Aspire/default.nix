@@ -67,13 +67,13 @@
     #(modules.local.software.virtualization + /libvirt)
 
 		# software.desktops
-		(modules.local.software.desktops + /plasma)
-		#(modules.local.software.desktops + /Hyprland)
+		#(modules.local.software.desktops + /plasma)
+		(modules.local.software.desktops + /Hyprland)
     #(modules.local.software.desktops + /QTile)
 
 		# software.greeters
-		#(modules.local.software.greeters + /GreetD)
-    (modules.local.software.greeters + /SDDM)
+		(modules.local.software.greeters + /GreetD)
+    #(modules.local.software.greeters + /SDDM)
 
 		# software.theming
 		(modules.local.software.theming)

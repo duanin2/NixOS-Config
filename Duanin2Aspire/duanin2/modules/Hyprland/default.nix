@@ -41,8 +41,6 @@ in {
 		(import ./hyprlock.nix configAttrs)
 		(import ./hyprcursor.nix configAttrs)
     (import ./hyprpaper.nix configAttrs)
-
-		(modules.local + /mako)
 	];
 
   services.blueman-applet.enable = true;
@@ -58,9 +56,7 @@ in {
 		xwayland = {
 			enable = true;
 		};
-		plugins = with hyprland-plugins; [
-			hyprbars
-		];
+		plugins = with hyprland-plugins; [ ];
 		settings = {
 			monitor = [
 				"eDP-1, 1920x1080@60, 0x0, 1"
@@ -194,7 +190,7 @@ def main [ action: string, id: string, value: string ] {
 
 				allow_tearing = true;
 
-				layout = "master";
+				layout = "dwindle";
 			};
 
 			decoration = {
@@ -208,10 +204,13 @@ def main [ action: string, id: string, value: string ] {
 					new_optimizations = true;
 				};
 
-				drop_shadow = true;
-				shadow_range = 4;
-				shadow_render_power = 3;
-				"col.shadow" = "rgba($mantleAlphaee)";
+				shadow = {
+					enabled = true;
+
+					range = 4;
+					render_power = 3;
+					color = "rgba($mantleAlphaee)";
+				};
 			};
 
 			animations = {
@@ -241,7 +240,6 @@ def main [ action: string, id: string, value: string ] {
 				new_status = "slave";
         mfact = "0.8";
         orientation = "right";
-        no_gaps_when_only = 0;
 			};
 
 			gestures = {
@@ -283,7 +281,7 @@ def main [ action: string, id: string, value: string ] {
         "noborder"
         "stayfocused"
         "pin"
-        "plugin:hyprbars:nobar"
+        #"plugin:hyprbars:nobar"
         "tag +noidle"
       ]) ++ (listToWindowrules "tag:dialog,xwayland:1" [
         "allowsinput"
@@ -292,7 +290,7 @@ def main [ action: string, id: string, value: string ] {
       ]);
 		};
 
-		extraConfig = ''
+		/*extraConfig = ''
 plugin {
 	hyprbars {
 		bar_height = 25
@@ -311,7 +309,7 @@ plugin {
 		hyprbars-button = $blue, 15, 󰖰, ${minimize}
 	}
 }
-		'';
+		'';*/
 	};
 
 	home.persistence.${persistDirectory} = {
@@ -332,7 +330,7 @@ plugin {
         ExecStart = customPkgs.systemdScript "polkit-agent" "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
       };
     };
-    "networkmanager-applet" = {
+    /*"networkmanager-applet" = {
       Unit = {
         Description = "An applet for controling NetworkManager";
         After = [ "tray.target" ];
@@ -343,6 +341,6 @@ plugin {
       Service = {
         ExecStart = customPkgs.systemdScript "nm-applet" "${lib.getExe pkgs.networkmanagerapplet}";
       };
-    };
+    };*/
   };
 }

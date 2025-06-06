@@ -22,7 +22,7 @@ in {
 		(modules.local + /bottles)
 		(modules.local + /git)
 		(modules.local + /theming)
-		#(modules.local + /alacritty)
+		(modules.local + /alacritty)
 		(modules.local + /ssh)
 		(modules.local + /impermanence)
 		#(modules.common + /Emacs)
