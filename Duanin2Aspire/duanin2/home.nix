@@ -36,8 +36,10 @@ in {
 		(modules.local + /anki)
 		(modules.local + /twtxt)
 
-		#(modules.local + /Hyprland)
-		(modules.local + /plasma)
+		(modules.local + /Hyprland)
+		#(modules.local + /plasma)
+
+		(modules.local + /mako)
     
 		(modules.local.games + /prismlauncher)
 		#(modules.local.games + /vinegar)

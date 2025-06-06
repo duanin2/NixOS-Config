@@ -41,6 +41,8 @@ in {
 		(import ./hyprlock.nix configAttrs)
 		(import ./hyprcursor.nix configAttrs)
     (import ./hyprpaper.nix configAttrs)
+
+		(modules.local + /mako)
 	];
 
   services.blueman-applet.enable = true;
@@ -126,21 +128,31 @@ in {
 				{ keys = "XF86MonBrightnessUp"; params = "${setBrightness} +5%"; }
 				{ keys = "XF86MonBrightnessDown"; params = "${setBrightness} 5%-"; }
 			]) ++ listToBinds "exec" null (let # Volume Control
-				setVolume = with lib; type: action: "${pkgs.pulseaudio}/bin/pactl set-${
-          oneOfOrDefault
-            type
-            "sink"
-            [ "sink" "source" ]
-        }-${
-          oneOfOrDefault
-            action
-            "volume"
-            [ "volume" "mute" ]
-        }";
+				setVolume = with lib; pkgs.writeTextFile {
+					name = "set-volume.sh";
+					executable = true;
+					text = ''
+#!${lib.getExe pkgs.nushell}
+
+def main [ action: string, id: string, value: string ] {
+	try {
+		if ($action == "volume") {
+			${pkgs.wireplumber}/bin/wpctl set-volume $id $value;
+		} else if ($action == "mute") {
+			${pkgs.wireplumber}/bin/wpctl set-mute $id $value;
+		}
+
+		let info = wpctl get-volume @DEFAULT_AUDIO_SINK@ | parse -r '^Volume:\s+(?P<volume>\d+(?:\.\d+)?)(?: (?P<muted>\[MUTED\]))?$' | par-each { |value| $value | update volume (($value.volume | into float) * 100 | math round --precision 2) } | par-each { |value| $value | upsert muted (if ($value.muted != "") { true } else { false }) };
+
+		${pkgs.libnotify}/bin/notify-send -t 1000 -a "set-volume" -h $"int:value:($info)" $"Volume(if ($info.muted) { " (muted)" } else { "" }): ($info)%"
+	}
+}
+					'';
+				};
 			in [
-				{ keys = "XF86AudioRaiseVolume"; params = "${setVolume "sink" "volume"} @DEFAULT_SINK@ +5%"; }
-				{ keys = "XF86AudioLowerVolume"; params = "${setVolume "sink" "volume"} @DEFAULT_SINK@ -5%"; }
-				{ keys = "XF86AudioMute"; params = "${setVolume "sink" "mute"} @DEFAULT_SINK@ toggle"; }
+				{ keys = "XF86AudioRaiseVolume"; params = "${setVolume} volume @DEFAULT_SINK@ +5%"; }
+				{ keys = "XF86AudioLowerVolume"; params = "${setVolume} volume @DEFAULT_SINK@ -5%"; }
+				{ keys = "XF86AudioMute"; params = "${setVolume} mute @DEFAULT_SINK@ toggle"; }
 			]) ++ listToBinds "exec" mod [ # Execute on bind
 				{ keys = "T"; params = term; }
 				{ keys = "H"; params = "${minimize}"; }
