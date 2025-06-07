@@ -36,13 +36,5 @@
     };
   };
 
-  systemd.user.services.hypridle = {
-    Install = {
-      WantedBy = [ "hyprland-session.target" ];
-    };
-    Unit = {
-      PartOf = [ "hyprland-session.target" ];
-      Before = [ "hyprland-session.target" ];
-    };
-  };
+  wayland.windowManager.hyprland.settings.exec-once = [ (lib.getExe hypridle.hypridle) ];
 }
