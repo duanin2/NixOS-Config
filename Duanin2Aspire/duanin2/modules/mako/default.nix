@@ -12,6 +12,9 @@ max-visible = 1;
         group-by = "app-name";
         format = "<b>%s</b>\\n%b";
       };
+      "anchor=center" = {
+        max-visible = 1;
+      };
     };
   };
 }

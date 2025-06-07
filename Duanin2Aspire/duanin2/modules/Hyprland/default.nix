@@ -117,11 +117,27 @@ in {
 				{ keys = "8"; params = "8"; }
 				{ keys = "9"; params = "9"; }
 				{ keys = "0"; params = "10"; }
-			] ++ listToBinds "movetoworkspace" mod [
+
 				{ keys = "mouse_up"; params = "e+1"; }
 				{ keys = "mouse_down"; params = "e-1"; }
-			] ++ listToBinds "exec" null (let # Brightness Control
-			setBrightness = with lib; pkgs.writeTextFile {
+			] ++ listToBinds "exec" mod [ # Execute on bind
+				{ keys = "T"; params = term; }
+				{ keys = "H"; params = "${minimize}"; }
+
+				{ keys = "R"; params = "${term} --hold -e \"${lib.getExe pkgs.wofi} -e --show run\""; }
+			] ++ listToBinds "moveFocus" mod [ # Focus movement
+				{ keys = "left"; params = "l"; }
+				{ keys = "right"; params = "r"; }
+				{ keys = "up"; params = "u"; }
+				{ keys = "down"; params = "d"; }
+			];
+
+			bindr = listToBinds "exec" "SUPER" [
+				{ keys = "SUPER_L"; params = "${lib.getExe pkgs.wofi} --term \"${term}\" --show drun"; }
+			];
+
+			bindle = listToBinds "exec" null (let
+				setBrightness = with lib; pkgs.writeTextFile { # Brightness Control
 					name = "set-volume.sh";
 					executable = true;
 					text = ''
@@ -133,17 +149,12 @@ def main [ value ] {
 	/nix/store/83ylyj90k545nykk95sd8vndfbypshjj-brightnessctl-0.5.1/bin/brightnessctl -m i | split column "," | rename deviceName deviceClass bright bright% brightMax | par-each { |value|
 		$value | update bright% ($value.bright% | str replace -r '%$' "")
 	} | into value | each { |info|
-		${lib.getExe customPkgs.osd} "Brightness" $info.bright%
+		${lib.getExe customPkgs.scripts.osd} "Brightness" $info.bright%
 	}
 }
 					'';
 				};
-				# setBrightness = "${lib.getExe pkgs.brightnessctl} -s set";
-			in [
-				{ keys = "XF86MonBrightnessUp"; params = "${setBrightness} +5%"; }
-				{ keys = "XF86MonBrightnessDown"; params = "${setBrightness} 5%-"; }
-			]) ++ listToBinds "exec" null (let # Volume Control
-				setVolume = with lib; pkgs.writeTextFile {
+				setVolume = with lib; pkgs.writeTextFile { # Volume Control
 					name = "set-volume.sh";
 					executable = true;
 					text = ''
@@ -161,24 +172,19 @@ def main [ action, id, value ] {
 			upsert muted (if ($value.muted != "") { true } else { false }) |
 			update volume (($value.volume | into float) * 100 | math round)
 	} | each { |info|
-		${getExe customPkgs.osd} $"Volume(if $info.muted { ' (muted)' } else { ''' })" ($info.volume)
+		${getExe customPkgs.scripts.osd} $"Volume(if $info.muted { ' (muted)' } else { ''' })" ($info.volume)
 	};
 }
 					'';
 				};
 			in [
-				{ keys = "XF86AudioRaiseVolume"; params = "${setVolume} volume @DEFAULT_SINK@ 5%+"; }
-				{ keys = "XF86AudioLowerVolume"; params = "${setVolume} volume @DEFAULT_SINK@ 5%-"; }
-				{ keys = "XF86AudioMute"; params = "${setVolume} mute @DEFAULT_SINK@ toggle"; }
-			]) ++ listToBinds "exec" mod [ # Execute on bind
-				{ keys = "T"; params = term; }
-				{ keys = "H"; params = "${minimize}"; }
-			] ++ listToBinds "moveFocus" mod [ # Focus movement
-				{ keys = "left"; params = "l"; }
-				{ keys = "right"; params = "r"; }
-				{ keys = "up"; params = "u"; }
-				{ keys = "down"; params = "d"; }
-			];
+				{ keys = "XF86MonBrightnessUp"; params = "${setBrightness} +5%"; }
+				{ keys = "XF86MonBrightnessDown"; params = "${setBrightness} 5%-"; }
+				
+				{ keys = "XF86AudioRaiseVolume"; params = "${setVolume} volume @DEFAULT_AUDIO_SINK@ 5%+"; }
+				{ keys = "XF86AudioLowerVolume"; params = "${setVolume} volume @DEFAULT_AUDIO_SINK@ 5%-"; }
+				{ keys = "XF86AudioMute"; params = "${setVolume} mute @DEFAULT_AUDIO_SINK@ toggle"; }
+			]);
 
 			bindm = [
 				"${mod}, mouse:272, movewindow"
