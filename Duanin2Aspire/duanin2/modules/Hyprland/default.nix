@@ -82,6 +82,7 @@ in {
 			# Autostart
 			exec-once = [
 				"${lib.getExe pkgs.dex} -a"
+				"${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
 			];
 
 			bind = [
