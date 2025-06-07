@@ -36,6 +36,7 @@ in {
 		(modules.common + /nix)
 		(modules.local + /anki)
 		(modules.local + /twtxt)
+		(modules.common + /neovim)
 
 		(modules.local + /Hyprland)
 		#(modules.local + /plasma)

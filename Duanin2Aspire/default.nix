@@ -31,6 +31,7 @@
     (modules.common.software + /nix-ld)
     (modules.local.software + /chrony)
     (modules.local.software + /blender)
+		(modules.common.software + /neovim)
 
 		# software.network
     (modules.common.software.network + /avahi)
