@@ -58,6 +58,7 @@ in {
 
 		(modules.local.media + /mpv)
 		(modules.local.media + /mpv/ani-cli.nix)
+		(modules.local.media + /mpris-proxy)
 		#(modules.local.media + /yt-dlp)
 	];
 
