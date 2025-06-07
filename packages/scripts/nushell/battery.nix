@@ -19,7 +19,7 @@ def batteries [] {
     } else {
       null
     }
-                                                 }
+  }
 }
 
 def main [] {
@@ -120,7 +120,7 @@ def main [] {
 	      remainTime: $remainTime
 	      icon: $icon
       }
-                     } | sort-by -n name | to json -r | print
+    } | sort-by -n name | to json -r | print
   }
 }
 ''
