@@ -119,7 +119,24 @@ in {
 				{ keys = "mouse_up"; params = "e+1"; }
 				{ keys = "mouse_down"; params = "e-1"; }
 			] ++ listToBinds "exec" null (let # Brightness Control
-				setBrightness = "${lib.getExe pkgs.brightnessctl} -s set";
+			setBrightness = with lib; pkgs.writeTextFile {
+					name = "set-volume.sh";
+					executable = true;
+					text = ''
+#!${getExe pkgs.nushell}
+
+def main [ value ] {
+	${getExe pkgs.brightnessctl} -s set $value
+
+	/nix/store/83ylyj90k545nykk95sd8vndfbypshjj-brightnessctl-0.5.1/bin/brightnessctl -m i | split column "," | rename deviceName deviceClass bright bright% brightMax | par-each { |value|
+		$value | update bright% ($value.bright% | str replace -r '%$' "")
+	} | into value | each { |info|
+		${lib.getExe customPkgs.osd} "Brightness" $info.bright%
+	}
+}
+					'';
+				};
+				# setBrightness = "${lib.getExe pkgs.brightnessctl} -s set";
 			in [
 				{ keys = "XF86MonBrightnessUp"; params = "${setBrightness} +5%"; }
 				{ keys = "XF86MonBrightnessDown"; params = "${setBrightness} 5%-"; }
@@ -128,26 +145,28 @@ in {
 					name = "set-volume.sh";
 					executable = true;
 					text = ''
-#!${lib.getExe pkgs.nushell}
+#!${getExe pkgs.nushell}
 
-def main [ action: string, id: string, value: string ] {
-	try {
-		if ($action == "volume") {
-			${pkgs.wireplumber}/bin/wpctl set-volume $id $value;
-		} else if ($action == "mute") {
-			${pkgs.wireplumber}/bin/wpctl set-mute $id $value;
-		}
-
-		let info = wpctl get-volume @DEFAULT_AUDIO_SINK@ | parse -r '^Volume:\s+(?P<volume>\d+(?:\.\d+)?)(?: (?P<muted>\[MUTED\]))?$' | par-each { |value| $value | update volume (($value.volume | into float) * 100 | math round --precision 2) } | par-each { |value| $value | upsert muted (if ($value.muted != "") { true } else { false }) };
-
-		${pkgs.libnotify}/bin/notify-send -t 1000 -a "set-volume" -h $"int:value:($info)" $"Volume(if ($info.muted) { " (muted)" } else { "" }): ($info)%"
+def main [ action, id, value ] {
+	if ($action == "volume") {
+		${pkgs.wireplumber}/bin/wpctl set-volume $id $value;
+	} else if ($action == "mute") {
+		${pkgs.wireplumber}/bin/wpctl set-mute $id $value;
 	}
+
+	wpctl get-volume @DEFAULT_AUDIO_SINK@ | parse -r '^Volume:\s+(?P<volume>\d+(?:\.\d+)?)(?: (?P<muted>\[MUTED\]))?$' | par-each { |value|
+		$value |
+			upsert muted (if ($value.muted != "") { true } else { false }) |
+			update volume (($value.volume | into float) * 100 | math round)
+	} | each { |info|
+		${getExe customPkgs.osd} $"Volume(if $info.muted { ' (muted)' } else { ''' })" ($info.volume)
+	};
 }
 					'';
 				};
 			in [
-				{ keys = "XF86AudioRaiseVolume"; params = "${setVolume} volume @DEFAULT_SINK@ +5%"; }
-				{ keys = "XF86AudioLowerVolume"; params = "${setVolume} volume @DEFAULT_SINK@ -5%"; }
+				{ keys = "XF86AudioRaiseVolume"; params = "${setVolume} volume @DEFAULT_SINK@ 5%+"; }
+				{ keys = "XF86AudioLowerVolume"; params = "${setVolume} volume @DEFAULT_SINK@ 5%-"; }
 				{ keys = "XF86AudioMute"; params = "${setVolume} mute @DEFAULT_SINK@ toggle"; }
 			]) ++ listToBinds "exec" mod [ # Execute on bind
 				{ keys = "T"; params = term; }
