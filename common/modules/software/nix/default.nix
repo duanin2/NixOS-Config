@@ -94,7 +94,6 @@
 				flake = emacs;
 			};
 
-      /*
 			"hyprland" = {
 				from = {
 					id = "hyprland";
@@ -144,7 +143,6 @@
 				};
 				flake = hyprlock;
 			};
-      */
 			"systems" = {
 				from = {
 					id = "systems";
