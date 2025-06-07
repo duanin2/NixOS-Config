@@ -80,7 +80,9 @@ in {
 			];
 
 			# Autostart
-			exec-once = [ ];
+			exec-once = [
+				"${lib.getExe pkgs.dex} -a"
+			];
 
 			bind = [
 				"${mod}, C, killactive,"
