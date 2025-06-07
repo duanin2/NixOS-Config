@@ -7,6 +7,7 @@
       outPath = ./modules;
 
       games = local.outPath + /games;
+			media = local.outPath + /media;
     };
   };
 in {
@@ -55,9 +56,9 @@ in {
 		#(modules.common.Mozilla + /mullvad.nix)
 		(modules.common.Mozilla + /thunderbird.nix)
 
-		(modules.local + /mpv)
-		(modules.local + /mpv/ani-cli.nix)
-		(modules.local + /yt-dlp)
+		(modules.local.media + /mpv)
+		(modules.local.media + /mpv/ani-cli.nix)
+		#(modules.local.media + /yt-dlp)
 	];
 
 	home.persistence.${persistDirectory} = {

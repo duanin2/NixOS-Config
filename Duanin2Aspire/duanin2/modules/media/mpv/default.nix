@@ -6,6 +6,9 @@ in {
   programs.mpv = {
     enable = true;
 
-    scripts = [ ani-skip ];
+    scripts = with pkgs.mpvScripts; [
+      mpris
+      ani-skip
+    ];
   };
 }
