@@ -338,30 +338,4 @@ plugin {
       ".cache/hyprland"
     ];
   };
-
-  systemd.user.services = {
-    "polkit-agent" = {
-      Unit = {
-        Description = "A Graphical PolKit Agent";
-      };
-      Install = {
-        WantedBy = [ "hyprland-session.target" ];
-      };
-      Service = {
-        ExecStart = customPkgs.systemdScript "polkit-agent" "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-      };
-    };
-    /*"networkmanager-applet" = {
-      Unit = {
-        Description = "An applet for controling NetworkManager";
-        After = [ "tray.target" ];
-      };
-      Install = {
-        WantedBy = [ "hyprland-session.target" ];
-      };
-      Service = {
-        ExecStart = customPkgs.systemdScript "nm-applet" "${lib.getExe pkgs.networkmanagerapplet}";
-      };
-    };*/
-  };
 }
